@@ -1,12 +1,12 @@
 import React,{useState} from 'react'
 import { BiCookie } from 'react-icons/bi';
-import { BsMoon, BsPlusCircleFill, BsSave, BsSave2Fill, BsSun } from 'react-icons/bs';
+import { BsFire, BsMoon, BsPlusCircleFill, BsSave, BsSave2Fill, BsSun } from 'react-icons/bs';
 import { FaBowlFood, FaFire } from 'react-icons/fa6';
 import { HiOutlineChevronUpDown } from 'react-icons/hi2';
 import { PiPlus } from 'react-icons/pi';
 import AdditionPage from './AdditionPage';
 import { useNavigate } from "react-router-dom";
-import { GiChickenOven } from 'react-icons/gi';
+import { GiBiceps, GiChickenOven } from 'react-icons/gi';
 import { MdDelete } from 'react-icons/md';
 type MealPlan = {
   Breakfast: string[][],
@@ -102,9 +102,14 @@ const ToggleWindow = (e: React.MouseEvent<HTMLDivElement>) => {
 
   const Save = () => {
     if (confirm("Save Date and go back to home page")) {
-      localStorage.setItem('Diet',JSON.stringify(mealPlan));
+   if (mealPlan.Breakfast[0].length > 0 && mealPlan.Lunch[0].length > 0 && mealPlan.Snacks[0].length > 0 && mealPlan.Dinner[0].length > 0) {
+       localStorage.setItem('Diet',JSON.stringify(mealPlan));
       navigate('/me/home');
-    }else{return null;}
+    
+   }else{
+    alert("Please add all dishes to save the diet");
+      }
+    }
 
   }
   // نطبع الوجبات بعد كل تغيير (setState غير متزامن)
@@ -116,7 +121,7 @@ const ToggleWindow = (e: React.MouseEvent<HTMLDivElement>) => {
     return Object.values(mealPlan).reduce((acc, curr: any) => acc + curr[1][1], 0);
   };
   return (
-<div className='relative min-h-screen w-full p-5 flex flex-col gap-5 justify-start show-first'>
+<div className='relative min-h-screen w-full p-5 flex flex-col gap-5 justify-start show-first mb-20'>
         <div className='w-full absolute top-0 left-0 h-44 bg-linear-to-b from-indigo-600  via-sky-300 to-transparent rounded-b-3xl '>
         <h1 className='text-indigo-100 text-4xl font-bold text-center mt-5'>Make Your Own Diet</h1>
       </div>
@@ -129,24 +134,23 @@ const ToggleWindow = (e: React.MouseEvent<HTMLDivElement>) => {
         <div>Age : <span>{age} Years</span></div>
         <div>Challenge Period : <span>{ChallengePeriod} Month</span></div>
 { !Number.isNaN(calcAllCalories()) && (
-    <div>Cal in meals: <span>{calcAllCalories()} kcal</span></div>
+    <div className='flex flex-row '>Cal in meals: <span className='flex flex-row '>{calcAllCalories().toFixed(1)} <BsFire className='text-orange-400'/> </span></div>
 )}
 { !Number.isNaN(calcAllProtein()) && (
-    <div>Protein in meals: <span>{calcAllProtein()} g</span></div>
+    <div className='flex flex-row '>Protein in meals: <span className='flex flex-row '>{calcAllProtein().toFixed(2)} <GiBiceps className='text-teal-500 text-lg -mt-0.5'/></span></div>
 )}
       </div>
-    <div className='relative  flex flex-row w-fit top-20 bg-red-400 border-rose-100 border-4 outline-4 outline-red-50 shadow-red-200 shadow-2xl text-black font-black p-2.5 rounded-xl'>Reset Diet <MdDelete /></div>
       {/* Meal Plans */}
       {
         (Object.keys(mealPlan) as Array<keyof MealPlan>).map((meal) => (
       <div
   aria-details="mainContainer"
-  className="container relative top-26 shadow w-full overflow-hidden bg-white active:bg-gray-200 border-purple-50 border-4 px-5 py-1 rounded-4xl transition-all duration-500 ease-in-out"
+  className="container relative top-26 shadow w-full overflow-hidden bg-white active:bg-gray-200 active:opacity-60 border-blue-100 border-2 outline-teal-50 outline-2 px-5 py-1 rounded-4xl transition-all duration-500 ease-in-out"
   style={{ height: '56px' }}   // initial closed height
   key={meal}
 >
             <div className="w-full h-12 hover:cursor-pointer flex flex-row justify-between items-center p-2 text-2xl" onClick={e => ToggleWindow(e)}>
-              <h1 className='flex flex-row gap-3 text-gray-500'>
+              <h1 className='flex flex-row gap-3 text-gray-600'>
                 {meal}
                 {meal === 'Breakfast' && <BsSun />} 
                 {meal === 'Lunch' && <FaBowlFood />}

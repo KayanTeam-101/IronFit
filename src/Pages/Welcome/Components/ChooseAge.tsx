@@ -3,7 +3,7 @@ import { period } from '../../../utilities/utilities';
 import CounterY from '../../../utilities/CounterY';
 
 const ChooseHight : React.FC = () => {
-    let numbers: number[] = period(14, 60);
+    let numbers: number[] = period(10, 60);
 
      const handleChange = (value: number) => {
     console.log("Selected:", value);

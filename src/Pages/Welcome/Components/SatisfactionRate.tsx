@@ -15,7 +15,7 @@ const SatisfactionRate : React.FC = () => {
     <div className=' h-11/12 show-first flex items-center justify-between flex-col  ' >
         <div className=' relative top-3 flex flex-col gap-4'>
             <h2 className='text-4xl translate-y-0 text-indigo-400 font-extrabold  text-center '> ما مدي رضاك عن شكل جسمك <span className='text-indigo-500'>؟</span></h2>
-        <h5 className=' text-md text-gray-600 text-center'>الرقم مجرد رأي لحظي — أنت أكبر من رقم. ابدأ بخطوة بسيطة النهاردة، ومهم تفتكر إن التغيّر الحقيقي بيبدأ بالاستمرار مش بالسرعة,مبتصش لنفسك ابداً انك قليل</h5>
+        <h5 className=' text-md text-orange-800 font-thin  text-center'>الرقم مجرد رأي لحظي — أنت أكبر من رقم. ابدأ بخطوة بسيطة النهاردة، ومهم تفتكر إن التغيّر الحقيقي بيبدأ بالاستمرار مش بالسرعة</h5>
         </div>
       <CounterY arr={numbers} size='md' onChange={handleChange} />
     </div>

@@ -29,6 +29,10 @@ const Welcome : React.FC= () => {
     }, 500);
   };
 
+  onload = () => {
+    localStorage.clear();
+  }
+
   return (
     <div className="w-screen h-screen overflow-hidden flex flex-col p-0 m-0 items-center bg-linear-to-b from-indigo-50 via-white to-white">
       {(() => {

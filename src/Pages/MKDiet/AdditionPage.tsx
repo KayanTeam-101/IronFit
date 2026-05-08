@@ -9,6 +9,9 @@ const AdditionPage = (props: any) => {
 
   const [text, setText] = useState('');
   const [FoodArray, setFoodArray] = useState<string[]>([]);
+const [FoodInfo, setFoodInfo] = useState<any[]>(
+  JSON.parse(localStorage.getItem('FoodInfo_s') || '[]')
+);
   const [Calories, setCalories] = useState<number>(0);
   const [Proteins, setProteins] = useState<number>(0);
   const [Vitamines, setVitamines] = useState<string[]>([]);
@@ -20,10 +23,12 @@ const AdditionPage = (props: any) => {
       );
   };
   const handleAdd = (food: string) => {
-    let getAmount = prompt(`How much ${food} do you want to add? (in grams)`);
+   if (!FoodArray.includes(food)) {
+     let getAmount = prompt(`How much ${food} do you want to add? (in grams)`);
     
     if (getAmount) {
       setFoodArray(prev => [...prev, food]);
+      setFoodInfo((prev : any) => [...prev, [props.Meal , food,  getAmount ]]);
       // Search for the food in the foods array to get its nutritional info
         const SearchFood = () =>{
             const GetInformations = foods.find(item => item.FoodName === food);
@@ -31,7 +36,7 @@ const AdditionPage = (props: any) => {
   
               setCalories(prev => prev + Number(GetInformations.calForOneKilo) * (Number(getAmount) / 1000));
               setProteins(prev => prev + Number(GetInformations.ProtineForOneKilo) * (Number(getAmount) / 1000));
-              GetInformations.MostVitamens.map(vit => {
+              GetInformations.MostVitamens.forEach(vit => {
                 if (vit && !Vitamines.includes(vit)) {
                   setVitamines(prev => [...prev, vit]);
                 }
@@ -40,6 +45,9 @@ const AdditionPage = (props: any) => {
         }
         SearchFood();
     }
+   }else{
+    alert(`${food} is already added to the meal.`);
+   }
 
   }
   const handleGetInfo = (food: string) => {
@@ -67,11 +75,12 @@ const handleSave = () => {
   };
 
   localStorage.setItem('Diet', JSON.stringify(NewData));
+  localStorage.setItem('FoodInfo_s', JSON.stringify(FoodInfo));
   window.location.reload();
 };
 
   return (
-    <div className='absolute top-0 left-0 w-full min-h-screen flex flex-col gap-5 bg-purple-50 p-5 show-first'>
+    <div className='fixed top-0 left-0 w-screen min-h-screen flex flex-col gap-5 bg-purple-50 p-5 show-first'>
 
       <div className='w-full absolute top-0 left-0 h-44 bg-linear-to-b from-indigo-600 via-purple-300 to-transparent rounded-b-3xl'>
         <h1 className='text-indigo-50 text-3xl font-bold text-center mt-5'>
@@ -139,7 +148,7 @@ const handleSave = () => {
                 </div>
               ) : (
                 <div
-                  className='w-full p-3.5 bg-gray-100 rounded-lg text-md active:bg-indigo-100 active:text-indigo-600 text-center cursor-pointer'
+                  className=' p-3.5 bg-gray-100 rounded-lg text-md active:bg-indigo-100 active:text-indigo-600 text-center cursor-pointer'
                 >
                   No Foods Added Yet
                 </div>
