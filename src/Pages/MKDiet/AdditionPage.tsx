@@ -28,22 +28,27 @@ const [FoodInfo, setFoodInfo] = useState<any[]>(
     
     if (getAmount) {
       setFoodArray(prev => [...prev, food]);
-      setFoodInfo((prev : any) => [...prev, [props.Meal , food,  getAmount ]]);
       // Search for the food in the foods array to get its nutritional info
-        const SearchFood = () =>{
-            const GetInformations = foods.find(item => item.FoodName === food);
-            if (GetInformations) {
-  
-              setCalories(prev => prev + Number(GetInformations.calForOneKilo) * (Number(getAmount) / 1000));
-              setProteins(prev => prev + Number(GetInformations.ProtineForOneKilo) * (Number(getAmount) / 1000));
-              GetInformations.MostVitamens.forEach(vit => {
-                if (vit && !Vitamines.includes(vit)) {
-                  setVitamines(prev => [...prev, vit]);
-                }
-              });
+      const SearchFood = () =>{
+        const GetInformations = foods.find(item => item.FoodName === food);
+        if (GetInformations) {
+          
+          setCalories(prev => prev + Number(GetInformations.calForOneKilo) * (Number(getAmount) / 1000));
+          console.log(Calories);
+          
+          setProteins(prev => prev + Number(GetInformations.ProtineForOneKilo) * (Number(getAmount) / 1000));
+          console.log(Proteins);
+          
+          setFoodInfo((prev : any) => [...prev, [props.Meal , food,  getAmount , Number(GetInformations.calForOneKilo), Number(GetInformations.ProtineForOneKilo)]]);
+          GetInformations.MostVitamens.forEach(vit => {
+            if (vit && !Vitamines.includes(vit)) {
+              setVitamines(prev => [...prev, vit]);
             }
+          });
         }
-        SearchFood();
+      }
+      SearchFood();
+      
     }
    }else{
     alert(`${food} is already added to the meal.`);
@@ -61,21 +66,22 @@ const [FoodInfo, setFoodInfo] = useState<any[]>(
   }
 const handleSave = () => {
   const getData = JSON.parse(localStorage.getItem('Diet') || '{}');
+  const mealData = getData[props.Meal] || [[], []];   // [foods, [cal, prot, vitamins]]
 
-  const mealData = getData[props.Meal] || [[], []];
+  const UpdatedFoods = [...new Set([...mealData[0], ...FoodArray])];
+const UpdatedInfo = [Calories, Proteins, Vitamines];
 
-  const UpdatedFoods = [...mealData[0], ...FoodArray];
-  const UpdatedInfo = [Calories, Proteins, Vitamines];
   const NewData = {
     ...getData,
     [props.Meal]: [
-      UpdatedFoods, // foods
-      UpdatedInfo      // nutrition info
+      UpdatedFoods,
+      UpdatedInfo
     ]
   };
 
   localStorage.setItem('Diet', JSON.stringify(NewData));
   localStorage.setItem('FoodInfo_s', JSON.stringify(FoodInfo));
+
   window.location.reload();
 };
 

@@ -40,9 +40,9 @@ const Table = () => {
 
   return (
     <div className='relative flex items-center flex-col w-full min-h-14 p-2 bg-white rounded-2xl border-indigo-50'>
-      <div className='w-full h-10 flex items-center justify-between border-b-2 border-gray-200 mb-2'>
+      <div className='w-full h-10 flex items-center justify-between border-b-2 border-indigo-100 mb-2'>
         <div className='flex items-center'>
-          <span className='font-black'>Trip progress</span>
+          <span className='font-black'>تقدمي</span>
         </div>
         <div className='flex items-center'>
           <BsFlagFill className=' text-2xl' />
@@ -73,7 +73,7 @@ const Table = () => {
           
           const totalDays = calculateDays().length;
           
-          return `Day ${Math.min(daysSinceStart + 1, totalDays)} of ${totalDays}`;
+          return `اليوم ${Math.min(daysSinceStart + 1, totalDays)} من  ${totalDays}`;
         })()}
       </div>
     </div>

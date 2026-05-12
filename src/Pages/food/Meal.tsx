@@ -2,6 +2,7 @@ import { FaFire } from "react-icons/fa6";
 import { IoInformationCircle } from "react-icons/io5";
 import { Eaten } from "../../utilities/utilities";
 import { GiBiceps } from "react-icons/gi";
+import { useEffect } from "react";
 
 const Meal = (props: any) => {
   const getData: string | null = localStorage.getItem("Diet");
@@ -16,6 +17,10 @@ const IsEaten = (dish: string, meal: string): boolean => {
   console.log(mealDishes)
   return Array.isArray(mealDishes) ? mealDishes.includes(dish) : false;
 };
+
+useEffect(() => {
+  console.log("History data:", History);
+}, [History]);
   const chooseIconsForMeal = (mealName: string) => {
     switch (mealName) {
       case "Breakfast":
@@ -32,7 +37,7 @@ const IsEaten = (dish: string, meal: string): boolean => {
   };
 
   return (
-    <div className="relative bg-white/70 backdrop-blur-lg border border-white/50 shadow-xl rounded-3xl p-6 space-y-6 transition-all hover:shadow-2xl">
+    <div className="relative bg-white/70 backdrop-blur-lg border border-white/50 show-third shadow-xl rounded-3xl p-6 space-y-6 transition-all hover:shadow-2xl">
       {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
