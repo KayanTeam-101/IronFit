@@ -62,7 +62,7 @@ h1, h2, h3, h4, h5, h6{
     width: 0;
     height: 0;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.514);
+    background-color: rgb(255, 255, 255);
     animation: activeAnim 0.5s ease-in-out ;
 }
 @keyframes activeAnim {
