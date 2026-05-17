@@ -14,7 +14,7 @@ const SelectGender: React.FC = () => {
 
   return (
     <div className='h-11/12 flex flex-col items-center'>
-        <h2 className='text-5xl translate-y-10 text-indigo-400 font-extrabold mb-4 text-center '> ذكر أم انثي<span className='text-indigo-500'>؟</span></h2>
+        <h2 className='text-3xl translate-y-10 text-indigo-400 font-extrabold mb-4 text-center '> ذكر أم انثي<span className='text-indigo-500'>؟</span></h2>
 
       <div className='relative top-15 grid grid-cols-2 gap-2'>
         {genders.map((g, i) => {
@@ -29,7 +29,7 @@ const SelectGender: React.FC = () => {
                   ? 'bg-indigo-500 text-white'
                   : 'bg-white border-2 border-indigo-500 text-indigo-600'}`}
             >
-              {g}
+              {g} {g === 'ذكر' ? '♂️' : '♀️'}
             </button>
           );
         })}

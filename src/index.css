@@ -50,10 +50,11 @@ h1, h2, h3, h4, h5, h6{
     align-items: center;
     height: 100%;
     width: 100%;
-    overflow: hidden;
 }
 .navbar a.active{
-    color: rgb(153, 0, 255);
+    color: rgb(119, 0, 255);
+    overflow: hidden;
+    
 }
 .navbar a.active::after{
     content: "";
@@ -61,7 +62,7 @@ h1, h2, h3, h4, h5, h6{
     width: 0;
     height: 0;
     border-radius: 50%;
-    background-color: rgba(146, 146, 146, 0.5);
+    background-color: rgba(146, 146, 146, 0.514);
     animation: activeAnim 0.5s ease-in-out ;
 }
 @keyframes activeAnim {
@@ -71,6 +72,16 @@ h1, h2, h3, h4, h5, h6{
         opacity: 0.5;
         scale: 1;
     }
+  
+      50%,70%{
+        width: 100px;
+        height: 100px;
+        opacity: .5;
+        scale: 2;
+
+    }
+
+    
     100%{
         width: 100px;
         height: 100px;

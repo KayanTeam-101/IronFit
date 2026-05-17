@@ -34,7 +34,7 @@ const Welcome : React.FC= () => {
   }
 
   return (
-    <div className="w-screen h-screen overflow-hidden flex flex-col p-0 m-0 items-center bg-linear-to-b from-indigo-50 via-white to-white">
+    <div className="w-screen h-screen overflow-hidden flex flex-col p-2 m-0 items-center bg-linear-to-b from-indigo-50 via-white to-white">
       {(() => {
         switch (turn) {
           case 1:
@@ -62,17 +62,17 @@ const Welcome : React.FC= () => {
         }
       })()}
       <div className="absolute bottom-24 duration-1000 flex items-center justify-around flex-row gap-1 p-1 text-center min-w-5 rounded-2xl  h-5 bg-gray-50 ">
-        <div className={turn === 1 ? "w-10 h-3 bg-indigo-400  rounded-3xl shadow-2xl shadow-purple-500  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm  "}></div>
-        <div className={turn === 2 ? "w-10 h-3 bg-indigo-400  rounded-3xl shadow-2xl shadow-purple-500  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
-        <div className={turn === 3 ? "w-10 h-3 bg-indigo-400  rounded-3xl shadow-2xl shadow-purple-500  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
-        <div className={turn === 4 ? "w-10 h-3 bg-indigo-400  rounded-3xl shadow-2xl shadow-purple-500  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
-        <div className={turn === 5 ? "w-10 h-3 bg-indigo-400  rounded-3xl shadow-2xl shadow-purple-500  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
-        <div className={turn === 6 ? "w-10 h-3 bg-indigo-400  rounded-3xl shadow-2xl shadow-purple-500  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
-        <div className={turn === 7 ? "w-10 h-3 bg-indigo-400  rounded-3xl shadow-2xl shadow-purple-500  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
-        <div className={turn === 8 ? "w-10 h-3 bg-indigo-400  rounded-3xl shadow-2xl shadow-purple-500  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
-        <div className={turn === 9 ? "w-10 h-3 bg-indigo-400  rounded-3xl shadow-2xl shadow-purple-500  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
-        <div className={turn === 10 ? "w-10 h-3 bg-indigo-400  rounded-3xl shadow-2xl shadow-purple-500 animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
-        <div className={turn === 11 ? "w-10 h-3 bg-indigo-400  rounded-3xl shadow-2xl shadow-purple-500 animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 1 ? "w-10 h-3 bg-indigo-500   rounded-3xl drop-shadow-xl drop-shadow-indigo-500/80  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm  "}></div>
+        <div className={turn === 2 ? "w-10 h-3 bg-indigo-500   rounded-3xl drop-shadow-xl drop-shadow-indigo-500/80  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 3 ? "w-10 h-3 bg-indigo-500   rounded-3xl drop-shadow-xl drop-shadow-indigo-500/80  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 4 ? "w-10 h-3 bg-indigo-500   rounded-3xl drop-shadow-xl drop-shadow-indigo-500/80  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 5 ? "w-10 h-3 bg-indigo-500   rounded-3xl drop-shadow-xl drop-shadow-indigo-500/80  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 6 ? "w-10 h-3 bg-indigo-500   rounded-3xl drop-shadow-xl drop-shadow-indigo-500/80  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 7 ? "w-10 h-3 bg-indigo-500   rounded-3xl drop-shadow-xl drop-shadow-indigo-500/80  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 8 ? "w-10 h-3 bg-indigo-500   rounded-3xl drop-shadow-xl drop-shadow-indigo-500/80  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 9 ? "w-10 h-3 bg-indigo-500   rounded-3xl drop-shadow-xl drop-shadow-indigo-500/80  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 10 ? "w-10 h-3 bg-indigo-500   rounded-3xl drop-shadow-xl drop-shadow-indigo-500/80 animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 11 ? "w-10 h-3 bg-indigo-500   rounded-3xl drop-shadow-xl drop-shadow-indigo-500/80 animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
       </div>
       <button disabled={IsDisabled} className={`absolute w-11/12 h-16 bottom-4  bg-white ${IsDisabled ? "text-gray-400 border-gray-200" : "text-indigo-400 border-b-indigo-400 shadow-2xs shadow-indigo-500"} border-2 rounded-3xl font-extrabold active:bg-indigo-500 active:text-white `} onClick={handleClick}>التالي</button>
     </div>
