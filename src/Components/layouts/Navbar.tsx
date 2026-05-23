@@ -5,6 +5,7 @@ import { FaChartSimple } from "react-icons/fa6";
 import { FaPersonRunning } from "react-icons/fa6";
 import { FaBowlFood } from "react-icons/fa6";
 import { LuSettings2 } from 'react-icons/lu';
+import { FaAppleAlt } from 'react-icons/fa';
 
 const Navbar = () => {
   const vebrate = () =>{
@@ -13,13 +14,13 @@ const Navbar = () => {
     }
   }
   return (
-    <div className="navbar overflow-hidden fixed bottom-0 left-0 right-0 grid grid-cols-5 items-center h-16 backdrop-blur-[20px] bg-white/30 border-t  border-gray-200 text-2xl text-sky-950">
+    <div className="navbar overflow-hidden fixed bottom-0 left-0 right-0 grid grid-cols-5 items-center h-16 backdrop-blur-[20px] bg-white/30 border-t  border-gray-200 text-xl text-sky-950">
         <NavLink onClick={() => vebrate()} className="flex flex-col"  to="me/home">
           <GoHomeFill />
           <p className='text-[13px] mt-2'>الرئسية</p>
         </NavLink>
         <NavLink onClick={() => vebrate()} className="flex flex-col" to="me/food">
-          <FaBowlFood />
+          <FaAppleAlt />
           <p className='text-[13px] mt-2'>نظامي الغذائي</p>
           
         </NavLink>

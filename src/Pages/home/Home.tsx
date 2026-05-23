@@ -25,7 +25,8 @@ const Home = () => {
           <div className="rounded-full  shadow-2xl bg-linear-to-r from-orange-400 to-yellow-300 text-white text-shadow-lg text-xl font-black tracking-tight flex flex-row justify-between items-center p-5 ">
             <p className="flex flex-row gap-1.5 ">ألايام النشطة <BiInfoCircle /></p>
             <p className="flex flex-row">
-                {9} <FaFire />
+                {/* Set Here */}
+                 <FaFire />
 
             </p>
           </div>

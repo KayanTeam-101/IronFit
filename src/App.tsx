@@ -8,6 +8,7 @@ import Welcome from "./Pages/Welcome/Welcome";
 
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import ExercisePage from "./Pages/Exersices/Exersice";
 
 function App() {
   const isFirstTime: boolean =
@@ -59,7 +60,7 @@ useEffect(() => {
         <Route path="/me/home" element={<Home />} />
         <Route path="/me/food" element={<FoodPage />} />
         <Route path="/mkAdiet" element={<MakeADiet />} />
-        <Route path="/exercises" element={<Exersice />} />
+        <Route path="/exercises" element={<ExercisePage  />} />
 
         <Route
           path="/me/history"

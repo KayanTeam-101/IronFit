@@ -10,6 +10,7 @@ import SelectGender from "./Components/SelectGender";
 import FinalSection from "./Components/FinalSection";
 import ChPreiod from "./Components/ChPreiod";
 import S_Goals from "./Components/SetGoals";
+import { FaArrowLeft } from "react-icons/fa6";
   
 const Welcome : React.FC= () => {
   const [turn, setTurn] = useState(1);
@@ -26,7 +27,7 @@ const Welcome : React.FC= () => {
     setTurn(turn + 1)
     setTimeout(() => {
       setIsDisabled(false);
-    }, 500);
+    }, 50);
   };
 
   onload = () => {
@@ -74,7 +75,17 @@ const Welcome : React.FC= () => {
         <div className={turn === 10 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80 animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
         <div className={turn === 11 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80 animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
       </div>
-      <button disabled={IsDisabled} className={`absolute w-11/12 h-16 bottom-4  bg-white ${IsDisabled ? "text-gray-400 border-gray-200" : "text-sky-400 border-b-sky-400 shadow-2xs shadow-sky-500"} border-2 rounded-3xl font-extrabold active:bg-sky-500 active:text-white `} onClick={handleClick}>التالي</button>
+      <button 
+      disabled={IsDisabled} 
+      className={`absolute w-11/12 h-16 bottom-4   ${IsDisabled ? "text-gray-400 border-gray-200" : "bg-sky-500 text-white  border-sky-300 shadow-2xs shadow-sky-500"} bofrder-2 rounded-4xl font-extrabold `} 
+      onClick={handleClick}
+      >
+        <div className="w-full h-full flex gap-5 items-center justify-center">
+          
+        التالي
+      <FaArrowLeft />
+        </div>
+       </button>
     </div>
   );
 };  

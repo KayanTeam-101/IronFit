@@ -43,6 +43,16 @@ const MakeADiet: React.FC = () => {
   const ChallengePeriod: number = Number(localStorage.getItem('challengePeriod') || 0);
   const getDiv: React.RefObject<HTMLDivElement> | any = React.useRef<HTMLDivElement>(null);
   const Gender: string = localStorage.getItem('SelectedGender') || '';
+    const progress = 75; // النسبة الحالية
+  const size = "75vw"; // 75% من عرض الشاشة
+  const strokeWidth = 7;
+
+  const radius = 70;
+  const circumference = 2 * Math.PI * radius;
+
+  const offset =
+    circumference - (progress / 100) * circumference;
+
   const ChooseNameOfMealInArabic=(mealName:string)=>{
     switch (mealName) {
       case "Breakfast":
@@ -86,7 +96,7 @@ const MakeADiet: React.FC = () => {
 
     // السعرات اليومية للوصول للهدف
     const dailyCalories = tdee + totalCaloriesNeeded / days;
-
+    localStorage.setItem('dailyCalories', dailyCalories.toString());
     return Math.round(dailyCalories);
   };
 
@@ -136,11 +146,80 @@ const ToggleWindow = (e: React.MouseEvent<HTMLDivElement>) => {
   };
   return (
 <div className='relative min-h-screen w-full p-5 flex flex-col gap-5 justify-start show-first mb-20'>
-        <div className='w-full absolute top-0 left-0 h-44 bg-linear-to-b from-blue-600  via-sky-300 to-transparent '>
-        <h1 className='text-blue-100 text-4xl font-bold text-center mt-5'>اصنع نظامك الغذائي</h1>
+        <div className='w-full absolute top-0 left-0 h-44 bg-linear-to-b from-sky-200  via-sky-100 to-transparent '>
+        <h1 className='text-black text-md font-bold text-center mt-5'>اصنع نظامك الغذائي</h1>
       </div>
 
-      <div className='relative top-20 w-full h-fit grid grid-cols-2 gap-2 text-gray-700 '>
+      <div className='relative top-6 w-full h-fit flex justify-center items-center text-gray-700 '>
+
+       <div
+      style={{
+        width: size,
+        aspectRatio: "1/1",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "relative",
+      }}
+    >
+      <svg
+        width="100%"
+        height="100%"
+        viewBox="0 0 220 220"
+      >
+        {/* الخلفية */}
+        <circle
+          cx="110"
+          cy="110"
+          r={radius}
+          stroke="#eff"
+          strokeWidth={strokeWidth}
+          fill="none"
+        />
+
+        {/* التقدم */}
+        <circle
+          cx="110"
+          cy="110"
+          r={radius}
+          stroke="#38bbf8"
+          strokeWidth={strokeWidth}
+          fill="none"
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          transform="rotate(-90 110 110)"
+          style={{
+            transition: "0.5s ease",
+          }}
+        />
+      </svg>
+
+      {/* النص داخل الدائرة */}
+      <div
+        style={{
+          position: "absolute",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+
+        <div
+        
+          className='flex justify-center items-center flex-col'
+        >
+          <div>
+            <span className='text-2xl'>2100</span>
+            <span>/</span>
+            <span>2500</span>
+          </div>
+          سعرة
+        </div>
+      </div>
+    </div>
+{/*         
         <div>الوزن : <span>{CurrentWeight} كجم</span></div>
         <div>الوزن المُستهدف : <span>{targetWeight} كجم</span></div>
         <div className='flex flex-row'>هدف السعرات: <span className='flex flex-row'>{CalculateKals()} <GoGoal  /></span></div>
@@ -151,14 +230,14 @@ const ToggleWindow = (e: React.MouseEvent<HTMLDivElement>) => {
 )}
 { !Number.isNaN(calcAllProtein()) && (
     <div className='flex flex-row '>Protein in meals: <span className='flex flex-row '>{calcAllProtein().toFixed(2)} <GiBiceps className='text-teal-500 text-lg -mt-0.5'/></span></div>
-)}
+)} */}
       </div>
       {/* Meal Plans */}
       {
         (Object.keys(mealPlan) as Array<keyof MealPlan>).map((meal) => (
       <div
   aria-details="mainContainer"
-  className="container relative top-26  w-full overflow-hidden bg-white active:bg-gray-200 active:opacity-60 border-r-blue-500 border-r-4 px-5 py-1 rounded-xl transition-all duration-500 ease-in-out"
+  className="container relative top-6  w-full overflow-hidden bg-white active:bg-gray-200 active:opacity-60 border-r-sky-500 border-r-4 px-5 py-1 rounded-xl transition-all duration-500 ease-in-out"
   style={{ height: '56px' }}   // initial closed height
   key={meal}
 >

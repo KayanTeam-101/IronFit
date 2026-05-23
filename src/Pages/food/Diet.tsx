@@ -6,6 +6,7 @@ import Settings from './Settings'
 import { BiCalendarAlt } from 'react-icons/bi'
 import FoodList from '../../assets/FoodsList.json'
 import { GrAddCircle } from 'react-icons/gr'
+import CircularProgress from './components/circleprogress'
 
 type MealPlan = {
   Breakfast: string[]
@@ -110,10 +111,7 @@ console.log(`Checking calories for ${foodName}:`, food?.calForOneKilo);
       {/* Meals Section */}
       <div className="flex gap-4 flex-col ">
       <div className='grid grid-cols-2 h-32 w-full rounded-2xl overflow-hidden'>
-        <div className="font-bold text-2xl gap-2  flex justify-center  items-center">
-            {eatenCalories} <FaFire className='text-orange-500 mb-1'/>
-       
-        </div>
+<CircularProgress current={eatenCalories} goal={Number(localStorage.getItem('dailyCalories') || "0")} />
          <div className='p-1  bg-gradient-to-b    font-medium w-max flex flex-col justify-center items-center gap-2'>
 اكلت طعام غير مجدول <GrAddCircle className='text-gray-500'  />
 </div>
