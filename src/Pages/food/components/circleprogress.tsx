@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaFire } from "react-icons/fa";
 
 interface CircularProgressProps {
@@ -14,11 +14,31 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
   size = 120,
   strokeWidth = 10,
 }) => {
+const [GetSuccessfullDays, SetGetSuccessfullDays] = useState<string[]>(
+  JSON.parse(localStorage.getItem('GetSuccessfullDays') || '[]')
+);
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
   const percent = goal > 0 ? Math.min((current / goal) * 100, 100) : 0;
   const offset = circumference - (percent / 100) * circumference;
 
+  useEffect(() => {
+    const checkifSuccessfull = () => {
+            if (goal <= current) {
+          const today = new Date();
+          const currentDate = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
+          if (GetSuccessfullDays.includes(currentDate)) {
+            return false
+          }else{
+            const UpdatedData =[...GetSuccessfullDays,currentDate]
+            localStorage.setItem('GetSuccessfullDays',JSON.stringify(UpdatedData))
+            alert('Congratulations! You have achieved your daily calorie goa!')
+          }
+        }
+    }
+    checkifSuccessfull();
+
+  },[])
   return (
     <div className="relative flex flex-col items-center justify-center">
       {/* Outer glow ring */}
@@ -52,7 +72,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
         {/* Gradient definition */}
         <defs>
           <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#f97316" /> {/* orange-500 */}
+            <stop offset="0%" stopColor="#14b8a6" /> {/* teal-500 */}
             <stop offset="100%" stopColor="#3b82f6" /> {/* blue-500 */}
           </linearGradient>
         </defs>
@@ -65,12 +85,14 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
       >
         <div className="flex items-baseline gap-1">
           <span className="text-3xl font-extrabold">{Math.round(percent)}</span>
-          <span className="text-sm opacity-80">%</span>
+          <div className="text-sm  flex-row flex ">%
+          <FaFire className="text-orange-400" />
+
+          </div>
         </div>
         <div className="flex items-center gap-1 mt-1 text-xs font-medium text-black">
-          <FaFire className="text-orange-400" />
           <span>
-            {goal} / {current}
+            {goal.toFixed(0)} / {current}
           </span>
         </div>
       </div>

@@ -12,10 +12,13 @@ import {
   FaFire,
   FaExchangeAlt,
 } from "react-icons/fa";
+import { FaPersonRunning, FaXmark } from "react-icons/fa6";
 import { GiBiceps } from "react-icons/gi";
 import { IoBody } from "react-icons/io5";
 import { LiaDumbbellSolid } from "react-icons/lia";
+import { RiResetRightFill, RiRestTimeFill } from "react-icons/ri";
 import { SiGoogleanalytics } from "react-icons/si";
+import { VscSettings } from "react-icons/vsc";
 
 // ---------- Types ----------
 interface UserData {
@@ -152,8 +155,10 @@ const getHistoryForExercise = (exerciseName: string): number[] => {
 
 // ---------- Main Page ----------
 const ExercisePage: React.FC = () => {
+  
   const userData = useMemo(() => getStoredUserData(), []);
   const [system, setSystem] = useState<SystemName | null>(getStoredSystem());
+  const [IsDisabled, setIsDisabled] = useState<boolean>(false);
   const [showSystemModal, setShowSystemModal] = useState(!system);
   const [days, setDays] = useState<DayData[]>([]);
   const [currentDayIndex, setCurrentDayIndex] = useState<number>(0);
@@ -279,7 +284,7 @@ const ExercisePage: React.FC = () => {
   // System selection modal
   if (!system && showSystemModal) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-sky-100 via-white to-blue-50 flex items-center justify-center pb-16">
+      <div className="min-h-screen  bg-gradient-to-br from-sky-100 via-white to-blue-50 flex items-center justify-center pb-16">
         <div className="relative bg-white/70 backdrop-blur-lg border border-white/50 shadow-xl rounded-3xl p-8 w-11/12 max-w-md space-y-6">
           <h2 className="text-2xl font-bold text-gray-800 text-center">
             اختر نظام التمرين
@@ -289,7 +294,7 @@ const ExercisePage: React.FC = () => {
               <button
                 key={sys}
                 onClick={() => handleSystemSelect(sys)}
-                className="w-full bg-gradient-to-r from-sky-400 to-blue-500 hover:from-sky-500 hover:to-blue-600 text-white font-semibold py-4 px-6 rounded-xl transition-all shadow-md hover:shadow-lg active:scale-[0.98]"
+                className="w-full show-first rounded-3xl bg-gradient-to-r  from-sky-400 to-blue-500 hover:from-sky-500 hover:to-blue-600 text-white font-semibold py-4 px-6  transition-all shadow-md hover:shadow-lg active:scale-[0.98]"
               >
                 {sys}
               </button>
@@ -302,9 +307,11 @@ const ExercisePage: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50 relative"
+      className="min-h-screen show-first bg-gradient-to-br from-sky-50 via-white to-blue-50 relative"
       style={{ paddingBottom: "60px" }}
     >
+      { IsDisabled && <Settings />}
+
       {/* CSS animations */}
       <style>{`
         @keyframes slideUp {
@@ -323,40 +330,17 @@ const ExercisePage: React.FC = () => {
         .animate-scaleIn { animation: scaleIn 0.25s ease-out; }
       `}</style>
 
-      {/* Header card with user stats */}
-      <div className="p-4 pt-6">
-        <div className="relative bg-white/70 backdrop-blur-lg border border-white/50 shadow-xl rounded-3xl p-6 space-y-4 transition-all hover:shadow-2xl">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-              <FaDumbbell className="text-sky-500" /> تمارينك
-            </h1>
-            <div className="flex gap-3 text-sm text-gray-600">
-              <span>{userData.currentWeight} كغ</span>
-              <span>→</span>
-              <span>{userData.targetWeight} كغ</span>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-2.5">
-            <div
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium shadow-sm"
-              style={{
-                background: "linear-gradient(135deg, #fff3c755, #fde68a55)",
-                color: "#92400e",
-              }}
-            >
-              <FaFire className="text-base text-orange-500" />
-              المدة: {userData.challengePeriod} يوم
-            </div>
-            <div
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium shadow-sm"
-              style={{
-                background: "linear-gradient(135deg,pink, #00ffff44)",
-                color: "#be3f5f",
-              }}
-            >
-              <IoBody className="text-base text-pink-500" />
-              الطول: {userData.height} سم
-            </div>
+      <div className="relative w-full min-h-14 flex flex-row p-3 justify-between ">
+ <div className="text-xl flex flex-row">
+          <FaPersonRunning />
+        </div>
+        <div className="flex flex-row gap-2">
+
+          <div
+            onClick={() => setIsDisabled(true)}
+            className="bg-gray-100 text-md flex items-center cursor-pointer flex-row gap-2 mb-5 p-2 rounded-4xl"
+          >
+            الاعدادات <VscSettings />
           </div>
         </div>
       </div>
@@ -364,7 +348,8 @@ const ExercisePage: React.FC = () => {
       {/* Next workout or prompt */}
       <div className="px-4 mb-6">
         {nextWorkoutDayName ? (
-          <div className="relative min-h-[150px] w-full p-5 bg-gradient-to-b from-sky-500 to-sky-700 rounded-2xl border border-sky-50 flex flex-col gap-4 transition-all hover:shadow-lg">
+      <>
+          <div className="relative z-20 min-h-[150px] w-full p-5 bg-gradient-to-b from-sky-500 to-sky-700 rounded-2xl border border-sky-50 flex flex-col gap-4 transition-all hover:shadow-lg">
             <div className="flex flex-row items-center justify-between">
               <span className="text-white/80 text-sm">التمرين القادم</span>
             </div>
@@ -374,7 +359,12 @@ const ExercisePage: React.FC = () => {
               </h1>
               <LiaDumbbellSolid className="absolute text-8xl scale-150 left-0 top-0 opacity-20 text-white" />
             </div>
+          
           </div>
+          <div className="relative z-10 -top-4 w-full min-h-1 scale-97  bg-sky-400/20 py-6 p-2 flex items-end rounded-2xl">
+          {JSON.parse(localStorage.getItem('SelectedDays') || '[]').join(' - ')}          
+          </div>
+      </>
         ) : (
           <div className="relative min-h-[150px] w-full p-5 bg-gradient-to-b from-gray-300 to-gray-500 rounded-2xl border border-gray-200 flex flex-col gap-4 transition-all hover:shadow-lg">
             <div className="flex flex-row items-center justify-between">
@@ -560,13 +550,13 @@ const AddExerciseForm: React.FC<{
       }}
       className="space-y-5"
     >
-      <h3 className="text-xl font-bold text-gray-800">تمرين جديد</h3>
+      <h3 className="text-xl font-bold text-gray-800 pr-5">تمرين جديد</h3>
       <input
         type="text"
         placeholder="اسم التمرين"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 outline-none focus:ring-2 focus:ring-sky-400 transition"
+        className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 outline-none focus:ring-2 focus:ring-sky-400/50 transition"
         required
       />
       <input
@@ -574,7 +564,7 @@ const AddExerciseForm: React.FC<{
         placeholder="الوزن (كغ)"
         value={weight}
         onChange={(e) => setWeight(e.target.value)}
-        className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 outline-none focus:ring-2 focus:ring-sky-400 transition"
+        className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 outline-none focus:ring-2 focus:ring-sky-400/50 transition"
         required
         step="0.5"
       />
@@ -718,5 +708,27 @@ const ModernAnalysisView: React.FC<{
     </div>
   );
 };
+
+const Settings = () => {
+  return (
+  <div className="fixed show-first top-0 left-0 z-50 w-screen h-lvh flex justify-center items-center bg-black/5 backdrop-blur-sm ">
+        <div className="w-10/12 min-h-62 p-5 bg-white rounded-2xl">
+        
+          <div className="w-full h-full flex flex-col gap-3 justify-around">
+            <div className="flex justify-between w-full p-3.5  rounded-lg  text-md cursor-pointer activeAnim">
+              الاعدادات <div onClick={() => window.location.reload()} className="p-1.5 rounded-2xl  bg-gray-50"><FaXmark className="text-blue-600" /></div>
+            </div>
+           
+  
+            <div onClick={() => {localStorage.removeItem("SystemOfExercise");window.location.reload()}}  className="flex justify-between w-full p-3.5 bg-gray-100 rounded-lg text-md active:bg-sky-100 active:text-sky-600 cursor-pointer activeAnim">
+              
+              إعادة تعيين نظام التدريب <RiResetRightFill />
+             
+            </div>
+          </div>
+        </div>
+      </div>
+  )
+}
 
 export default ExercisePage;

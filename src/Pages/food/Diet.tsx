@@ -83,7 +83,7 @@ console.log(`Checking calories for ${foodName}:`, food?.calForOneKilo);
   }, [])
 
   return (
-    <div className='show-first '>
+    <div className='relative show-first '>
       <div className="relative w-full min-h-14 flex flex-row justify-between ">
         <div className="text-xl flex flex-row">
           <FaBowlFood />

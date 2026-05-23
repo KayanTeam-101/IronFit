@@ -1,6 +1,6 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import { BiCookie } from 'react-icons/bi';
-import { BsFire, BsMoon, BsPlusCircleFill, BsSave, BsSave2Fill, BsSun } from 'react-icons/bs';
+import { BsFire, BsMoon, BsPlus, BsPlusCircleFill, BsSave, BsSave2Fill, BsSun } from 'react-icons/bs';
 import { FaBowlFood, FaFire } from 'react-icons/fa6';
 import { HiOutlineChevronUpDown } from 'react-icons/hi2';
 import { PiPlus } from 'react-icons/pi';
@@ -70,7 +70,8 @@ const MakeADiet: React.FC = () => {
   // نشاط متوسط
   const activityFactor = 1.5;
 
-  const CalculateKals = (): number => {
+ useEffect(() =>{
+   const CalculateKals = (): number => {
     if (!ChallengePeriod || ChallengePeriod <= 0) return 0;
 
     let bmr: number;
@@ -98,7 +99,9 @@ const MakeADiet: React.FC = () => {
     const dailyCalories = tdee + totalCaloriesNeeded / days;
     localStorage.setItem('dailyCalories', dailyCalories.toString());
     return Math.round(dailyCalories);
-  };
+  }; 
+  CalculateKals()
+ },[])
 
   // Toggle window (يعمل على العنصر الحاوي)
 const ToggleWindow = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -131,7 +134,7 @@ const ToggleWindow = (e: React.MouseEvent<HTMLDivElement>) => {
       navigate('/me/home');
     
    }else{
-    alert("Please add all dishes to save the diet");
+    alert("برجاء إضافة وجبة واحدة على الأقل لكل وجبة (فطور، غداء، وجبات خفيفة، عشاء) قبل الحفظ.");
       }
     }
 
@@ -146,8 +149,9 @@ const ToggleWindow = (e: React.MouseEvent<HTMLDivElement>) => {
   };
   return (
 <div className='relative min-h-screen w-full p-5 flex flex-col gap-5 justify-start show-first mb-20'>
-        <div className='w-full absolute top-0 left-0 h-44 bg-linear-to-b from-sky-200  via-sky-100 to-transparent '>
-        <h1 className='text-black text-md font-bold text-center mt-5'>اصنع نظامك الغذائي</h1>
+        <div className='w-full absolute top-0 left-0 h-44 bg-gradient-to-r  from-sky-400 to-blue-500 hover:from-sky-500 hover:to-blue-600  '>
+        <h1 className='text-white text-md font-bold text-center mt-5'>اصنع نظامك الغذائي</h1>
+
       </div>
 
       <div className='relative top-6 w-full h-fit flex justify-center items-center text-gray-700 '>
@@ -259,10 +263,10 @@ const ToggleWindow = (e: React.MouseEvent<HTMLDivElement>) => {
                ref={getDiv}
                className={`w-full h-fit flex flex-row gap-1.5 flex-wrap`}>
                 <button
-                  className='w-full flex cursor-pointer items-center gap-2 bg-linear-to-r from-blue-500 to-blue-300 p-3 shadow  rounded-2xl text-white'
+                  className='w-full flex cursor-pointer items-center gap-2 bg-gradient-to-r  from-sky-400 to-blue-500 hover:from-sky-500 hover:to-blue-600 p-3 shadow  rounded-2xl text-white'
                   onClick={() => AddADish(meal)}
                 >
-                  Add a  new dish <BsPlusCircleFill className='-translate-y-0.5' />
+                  إضافة طبق للوجبة <BsPlus className='-translate-y-0.5' />
                 </button>
 
                 {/* عرض الوجبات المضافة */}
@@ -291,8 +295,8 @@ const ToggleWindow = (e: React.MouseEvent<HTMLDivElement>) => {
           </div>
         ))
       }
-  <button className='relative top-26 w-full  p-3 bg-linear-to-r from-blue-500 to-blue-300 text-white rounded-full text-lg font-light flex items-center justify-center gap-2 active:bg-blue-700 activeAnim' onClick={Save}>
-       Save The Diet <BsSave2Fill />
+  <button className='relative top-26 w-full  p-3 bg-linear-to-r from-blue-500 to-blue-500 text-white rounded-full text-lg font-medium flex items-center justify-center gap-2 active:bg-blue-700 activeAnim' onClick={Save}>
+       حفظ<BsSave2Fill />
         </button>
         {IsClicked && <AdditionPage Meal={localStorage.getItem('currentMeal') || ''} />}
     </div>

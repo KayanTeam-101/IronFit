@@ -63,17 +63,17 @@ const Welcome : React.FC= () => {
         }
       })()}
       <div className="absolute bottom-24 duration-1000 flex items-center justify-around flex-row gap-1 p-1 text-center min-w-5 rounded-2xl  h-5 bg-gray-50 ">
-        <div className={turn === 1 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm  "}></div>
-        <div className={turn === 2 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
-        <div className={turn === 3 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
-        <div className={turn === 4 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
-        <div className={turn === 5 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
-        <div className={turn === 6 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
-        <div className={turn === 7 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
-        <div className={turn === 8 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
-        <div className={turn === 9 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80  animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
-        <div className={turn === 10 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80 animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
-        <div className={turn === 11 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80 animate-bounce delay-500" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 1 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80  animate-bounce delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 rounded-sm  "}></div>
+        <div className={turn === 2 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80  animate-bounce delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 3 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80  animate-bounce delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 4 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80  animate-bounce delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 5 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80  animate-bounce delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 6 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80  animate-bounce delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 7 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80  animate-bounce delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 8 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80  animate-bounce delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 9 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80  animate-bounce delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 10 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80 animate-bounce delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
+        <div className={turn === 11 ? "w-10 h-3 bg-sky-500   rounded-3xl drop-shadow-xl drop-shadow-sky-500/80 animate-bounce delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 rounded-sm"}></div>
       </div>
       <button 
       disabled={IsDisabled} 

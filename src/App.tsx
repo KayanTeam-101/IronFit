@@ -61,6 +61,7 @@ useEffect(() => {
         <Route path="/me/food" element={<FoodPage />} />
         <Route path="/mkAdiet" element={<MakeADiet />} />
         <Route path="/exercises" element={<ExercisePage  />} />
+        <Route path="*" element={<h1>Page Not Found</h1>} />
 
         <Route
           path="/me/history"
@@ -74,7 +75,7 @@ useEffect(() => {
         />
       </Routes>
 
-      {!isFirstTime && <Navbar />}
+      {!isFirstTime && window.location.pathname != '/MkADiet' && <Navbar />}
     </>
   );
 }

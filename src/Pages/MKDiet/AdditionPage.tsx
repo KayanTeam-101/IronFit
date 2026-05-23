@@ -4,6 +4,7 @@ import { FaBowlFood } from 'react-icons/fa6';
 import { IoInformation } from 'react-icons/io5';
 import { BsBack, BsSave } from 'react-icons/bs';
 import { BiInfoCircle, BiLeftArrow } from 'react-icons/bi';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const AdditionPage = (props: any) => {
 
@@ -88,11 +89,13 @@ const UpdatedInfo = [Calories, Proteins, Vitamines];
   return (
     <div className='fixed top-0 left-0 w-screen min-h-screen flex flex-col gap-5 bg-blue-50 p-5 show-first'>
 
-      <div className='w-full absolute top-0 left-0 h-44 bg-linear-to-b from-sky-600 via-blue-300 to-transparent rounded-b-3xl'>
+      <div className='w-full absolute top-0 left-0 h-44 bg-gradient-to-r  from-sky-400 to-blue-500 hover:from-sky-500 hover:to-blue-600  '>
         <h1 className='text-sky-50 text-3xl font-bold text-center mt-5'>
-          Add Dishes to {props.Meal}
-          <div className='absolute top-3 bg-white rounded-full left-0 p-1.5 ml-3'>
-            <BiLeftArrow className='text-blue-600 text-[19px] hover:text-sky-100 cursor-pointer' onClick={handleBack} />
+          إضافة أطباق للوجبة 
+          <div
+          onClick={handleBack}
+          className='absolute top-3   rounded-full left-0 p-1.5 ml-3'>
+            <FaArrowLeft className='text-white text-[19px]  cursor-pointer'  />
           </div>
         </h1>
       </div>
@@ -104,7 +107,7 @@ const UpdatedInfo = [Calories, Proteins, Vitamines];
           <input
             type="text"
             value={text}
-            placeholder='Search for a dish...'
+            placeholder='ابحث عن طعام لإضافته للوجبة...'
             onChange={(e) => setText(e.target.value)}
             className='w-full p-3 border-2 border-gray-100 rounded-b-3xl mb-3 rounded-t-2xl outline-none focus:border-sky-500'
           />
@@ -139,7 +142,7 @@ const UpdatedInfo = [Calories, Proteins, Vitamines];
       </div>
           <div className='relative top-8 p-4 w-full min-h-50 z-10 shadow-lg bg-white rounded-xl text-md active:bg-sky-100 active:text-sky-600 cursor-pointer'>
 <h1 className='text-center font-bold text-lg text-gray-700'>
-            Added  Foods <FaBowlFood className='inline-block mb-2' />
+            الطعام المُضاف <FaBowlFood className='inline-block mb-2' />
 
 </h1>
             <div className='w-full min-h-12 max-h-60  flex flex-row flex-wrap p-3 items-center gap-0.5 overflow-x-scroll'>
@@ -156,7 +159,7 @@ const UpdatedInfo = [Calories, Proteins, Vitamines];
                 <div
                   className=' p-3.5 bg-gray-100 rounded-lg text-md active:bg-sky-100 active:text-sky-600 text-center cursor-pointer'
                 >
-                  No Foods Added Yet
+                ...
                 </div>
               )
             ))}
@@ -164,17 +167,17 @@ const UpdatedInfo = [Calories, Proteins, Vitamines];
         </div>
         <div className='relative top-14 p-4 w-full min-h-50 z-0 shadow-xl bg-white rounded-2xl text-md active:bg-sky-100 active:text-sky-600 cursor-pointer'>
 <h1 className='text-center font-bold text-lg text-gray-700'>
-            Health info in this meal <IoInformation className='inline-block mb-2' />
+           المعلومات الغذائية للوجبة <IoInformation className='inline-block mb-2' />
 
 </h1>
-<div className='w-full min-h-12 max-h-60 grid grid-cols-2 gap-2 overflow-x-scroll'>
+<div className='w-full min-h-12 max-h-60 grid grid-cols-2 justify-between items-end gap-2 overflow-x-scroll'>
   <div className='flex gap-2 flex-col'>
-    <div className='bg-blue-200 p-3 rounded-xl text-md text-gray-600'>Calories: <br /> <span>{Calories.toFixed(1)}</span></div>
-    <div className='bg-teal-400 p-3 rounded-xl text-md text-gray-600'>Proteins: <br /> <span>{Proteins.toFixed(1)}g</span></div>
+    <div className='bg-blue-200 p-3 rounded-xl text-md text-gray-600'>السعرات الحرارية: <br /> <span>{Calories.toFixed(1)}</span></div>
+    <div className='bg-teal-400 p-3 rounded-xl text-md text-gray-600'>البروتينات: <br /> <span>{Proteins.toFixed(1)}g</span></div>
   </div>
   <div>
     <div className='p-4'></div>
-    <div className=' min-h-20 bg-linear-210 from-green-100 to-blue-100 p-2 rounded-2xl text-md text-gray-600'>Vitamines: <br /> <span dangerouslySetInnerHTML={{ __html: Vitamines.join("<span class='text-green-900 text-2xl'>  ,  </span>") }} /></div>
+    <div className=' min-h-20 bg-linear-210 from-green-100 to-blue-100 p-2 rounded-2xl text-md text-gray-600'>الفيتامينات: <br /> <span dangerouslySetInnerHTML={{ __html: Vitamines.join("<span class='text-green-900 text-2xl'>  ,  </span>") }} /></div>
   </div>
 </div>
         </div>
