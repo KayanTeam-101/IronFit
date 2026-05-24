@@ -9,7 +9,7 @@ type CounterYProps = {
 };
 
 const SIZE_CONFIG = {
-  sm: { item: 48, visible: 3, font: "text-3xl", perspective: 1000 },
+  sm: { item: 48, visible: 1, font: "text-3xl", perspective: 1000 },
   md: { item: 56, visible: 5, font: "text-4xl", perspective: 1000 },
   lg: { item: 64, visible: 7, font: "text-5xl", perspective: 1000 },
 } as const;
@@ -134,10 +134,10 @@ const CounterY = ({
                 transform: `
                   scale(${.1 + opacity})
                   rotateX(${rotateX * 1.6}deg)
-                  rotateY(${rotateY}deg)
+                  rotateY(${rotateY*1.32}deg)
                   translateZ(${opacity * 50}px)
                 `,
-                color: opacity > .7 ? "#4f46e5" : "#4f46e584",
+                color: opacity > .7 ? "#008ae6" : "#4ddbff",
               }}
             >
               {num}

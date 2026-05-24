@@ -31,6 +31,7 @@ const Table = () => {
       return "bg-linear-to-t from-blue-200 scale-90 opacity-60  show-third to-sky-400  text-white"; // Completed days
     } 
     // If this is today's challenge day
+    
     else if (day === daysSinceStart) {
       return "bg-linear-to-t from-sky-300 to-blue-400 shadow-md text-white"; // Current day
     }else{
@@ -45,15 +46,15 @@ const Table = () => {
           <span className='font-black'>تقدمي</span>
         </div>
         <div className='flex items-center'>
-          <BsFlagFill className=' text-2xl' />
+          <BsFlagFill className=' text-xl' />
         </div>
       </div>
       {/* End Header */}
-      <div className='w-full min-h-2.5 max-h-60 p-2 flex flex-wrap gap-3.5 overflow-y-scroll'>
+      <div className='w-full min-h-2.5 max-h-60 p-2 grid grid-cols-7 gap-1.5 overflow-y-scroll'>
         {calculateDays().map((item,idx) => (
           <div 
             key={item} 
-            className={`w-10 h-10 select-none ${getDayColorAlternative(idx)}  rounded-full  flex items-center justify-center font-blod`}
+            className={`w-7 h-10 select-none ${getDayColorAlternative(idx)}  rounded-full  flex items-center justify-center font-blod`}
           >
             {item}
           </div>

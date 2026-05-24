@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { FaFire } from "react-icons/fa";
 
 interface CircularProgressProps {
   goal: number;     // e.g. from localStorage 'dailyCalories'
@@ -11,8 +10,8 @@ interface CircularProgressProps {
 const CircularProgress: React.FC<CircularProgressProps> = ({
   goal,
   current,
-  size = 120,
-  strokeWidth = 10,
+  size = 150,
+  strokeWidth = 15,
 }) => {
 const [GetSuccessfullDays, SetGetSuccessfullDays] = useState<string[]>(
   JSON.parse(localStorage.getItem('GetSuccessfullDays') || '[]')
@@ -45,7 +44,7 @@ const [GetSuccessfullDays, SetGetSuccessfullDays] = useState<string[]>(
       <svg
         width={size}
         height={size}
-        className="transform -rotate-90 drop-shadow-xl"
+        className="transform -rotate-90"
       >
         {/* Background circle */}
         <circle
@@ -69,11 +68,26 @@ const [GetSuccessfullDays, SetGetSuccessfullDays] = useState<string[]>(
           strokeDashoffset={offset}
           style={{ transition: "stroke-dashoffset 0.8s ease-in-out" }}
         />
+         <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius - 15}
+          fill="transparent"
+          stroke="url(#gradient)"
+          strokeWidth={strokeWidth }
+          strokeLinecap="round"
+          strokeDasharray={circumference }
+          strokeDashoffset={offset}
+          className="blur-md"
+          style={{ transition: "stroke-dashoffset 0.8s ease-in-out"}}
+        />
         {/* Gradient definition */}
         <defs>
           <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#14b8a6" /> {/* teal-500 */}
-            <stop offset="100%" stopColor="#3b82f6" /> {/* blue-500 */}
+            <stop offset="0%" stopColor="#1fb8f6" /> {/* teal-500 */}
+            <stop offset="50%" stopColor="pink" /> {/* blue-600 */}
+            <stop offset="75%" stopColor="skyblue" /> {/* blue-600 */}
+            <stop offset="100%" stopColor="#3b82f6" /> {/* blue-600 */}
           </linearGradient>
         </defs>
       </svg>
@@ -83,16 +97,15 @@ const [GetSuccessfullDays, SetGetSuccessfullDays] = useState<string[]>(
         className="absolute bottom-0 flex flex-col items-center justify-center text-black drop-shadow-lg"
         style={{ width: size, height: size }}
       >
-        <div className="flex items-baseline gap-1">
-          <span className="text-3xl font-extrabold">{Math.round(percent)}</span>
+        <div className="relative flex items-baseline gap-1">
+          <span className="text-3xl font-black">{Math.round(percent)}</span>
           <div className="text-sm  flex-row flex ">%
-          <FaFire className="text-orange-400" />
 
           </div>
         </div>
         <div className="flex items-center gap-1 mt-1 text-xs font-medium text-black">
           <span>
-            {goal.toFixed(0)} / {current}
+            {goal.toFixed(0)} / {current.toFixed(0)} 
           </span>
         </div>
       </div>

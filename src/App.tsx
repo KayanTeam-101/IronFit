@@ -61,7 +61,7 @@ useEffect(() => {
         <Route path="/me/food" element={<FoodPage />} />
         <Route path="/mkAdiet" element={<MakeADiet />} />
         <Route path="/exercises" element={<ExercisePage  />} />
-        <Route path="*" element={<h1>Page Not Found</h1>} />
+        <Route path="*" element={<h1 className="p-5">Coming SOOOOOOOOON إن شاء الله   </h1>} />
 
         <Route
           path="/me/history"

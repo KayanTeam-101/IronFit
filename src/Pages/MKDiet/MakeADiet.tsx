@@ -1,306 +1,378 @@
-import React,{useEffect, useState} from 'react'
-import { BiCookie } from 'react-icons/bi';
-import { BsFire, BsMoon, BsPlus, BsPlusCircleFill, BsSave, BsSave2Fill, BsSun } from 'react-icons/bs';
-import { FaBowlFood, FaFire } from 'react-icons/fa6';
-import { HiOutlineChevronUpDown } from 'react-icons/hi2';
-import { PiPlus } from 'react-icons/pi';
-import AdditionPage from './AdditionPage';
+import React, { useEffect, useState, useMemo } from "react";
+import {
+  BiCookie,
+} from "react-icons/bi";
+import {
+  BsFire,
+  BsMoon,
+  BsPlus,
+  BsSave2Fill,
+  BsSun,
+} from "react-icons/bs";
+import {
+  FaBowlFood,
+  FaFire,
+} from "react-icons/fa6";
+import {
+  HiOutlineChevronUpDown,
+} from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
-import { GiBiceps, GiChickenOven } from 'react-icons/gi';
-import { MdDelete } from 'react-icons/md';
-import { GoGoal } from 'react-icons/go';
+import {
+  GiBiceps,
+} from "react-icons/gi";
+import { IoArrowBack } from "react-icons/io5";
+import AdditionPage from "./AdditionPage";
+
+// ---------- Types ----------
+type MealKey = "Breakfast" | "Lunch" | "Snacks" | "Dinner";
+
 type MealPlan = {
-  Breakfast: string[][],
-  Lunch: string[][],
-  Snacks: string[][],
-  Dinner: string[][]
-}
-
-const MakeADiet: React.FC = () => {
-  if (localStorage.getItem('Diet') === null) {
-    localStorage.setItem('Diet', JSON.stringify({
-      Breakfast: [[], []],
-      Lunch: [[], []],
-      Snacks: [[], []],
-      Dinner: [[], []]
-    }));
-  }
-
-  const mealPlan: MealPlan = JSON.parse(localStorage.getItem('Diet') || '{}') || {
-      Breakfast: [[], []],
-        Lunch: [[], []],
-        Snacks: [[], []],
-        Dinner: [[], []]
-  };
-
-  const CurrentWeight: number = Number(localStorage.getItem('currentWeight') || 0);
-  const targetWeight: number = Number(localStorage.getItem('targetWeight') || 0);
-  const height: number = Number(localStorage.getItem('height') || 0);
-  const age: number = Number(localStorage.getItem('age') || 0);
-  const [IsClicked, setIsClicked] = useState(false);
-  const navigate = useNavigate();
-  // نفترض أنه بالشهور
-  const ChallengePeriod: number = Number(localStorage.getItem('challengePeriod') || 0);
-  const getDiv: React.RefObject<HTMLDivElement> | any = React.useRef<HTMLDivElement>(null);
-  const Gender: string = localStorage.getItem('SelectedGender') || '';
-    const progress = 75; // النسبة الحالية
-  const size = "75vw"; // 75% من عرض الشاشة
-  const strokeWidth = 7;
-
-  const radius = 70;
-  const circumference = 2 * Math.PI * radius;
-
-  const offset =
-    circumference - (progress / 100) * circumference;
-
-  const ChooseNameOfMealInArabic=(mealName:string)=>{
-    switch (mealName) {
-      case "Breakfast":
-        return "الفطور";
-      case "Lunch":
-        return "الغداء";
-      case "Snacks":
-        return "الوجبات الخفيفة";
-      case "Dinner":
-        return "العشاء";
-      default:
-        return mealName;
-    }
-  }
-  // نشاط متوسط
-  const activityFactor = 1.5;
-
- useEffect(() =>{
-   const CalculateKals = (): number => {
-    if (!ChallengePeriod || ChallengePeriod <= 0) return 0;
-
-    let bmr: number;
-
-    if (Gender === 'ذكر') {
-      bmr = 10 * CurrentWeight + 6.25 * height - 5 * age + 5;
-    } else {
-      bmr = 10 * CurrentWeight + 6.25 * height - 5 * age - 161;
-    }
-
-    // سعرات الثبات
-    const tdee = bmr * activityFactor;
-
-    // فرق الوزن (موجب = زيادة، سالب = تخسيس)
-    const weightDiff = targetWeight - CurrentWeight;
-
-    // إجمالي السعرات المطلوبة
-    const totalCaloriesNeeded = weightDiff * 7700;
-
-    // نحول المدة لأيام
-    const days = ChallengePeriod * 30;
-    if (days === 0) return Math.round(tdee);
-
-    // السعرات اليومية للوصول للهدف
-    const dailyCalories = tdee + totalCaloriesNeeded / days;
-    localStorage.setItem('dailyCalories', dailyCalories.toString());
-    return Math.round(dailyCalories);
-  }; 
-  CalculateKals()
- },[])
-
-  // Toggle window (يعمل على العنصر الحاوي)
-const ToggleWindow = (e: React.MouseEvent<HTMLDivElement>) => {
-  const parent = e.currentTarget.parentElement as HTMLDivElement | null;
-  if (!parent) return;
-
-  if (parent.classList.contains('opened')) {
-    // Close: set to a fixed height (e.g., 56px ≈ 3.5rem, matching your h-14)
-    parent.style.height = '56px';
-    parent.classList.remove('opened');
-  } else {
-    // Open: set to the full scroll height (content height + padding)
-    parent.style.height = parent.scrollHeight + 50 + 'px';
-    parent.classList.add('opened');
-  }
+  [key in MealKey]: [string[], number[]];
 };
 
-  // إضافة وجبة: نمرّر المفتاح بدل الاعتماد على DOM classes
-  const AddADish = (mealKey: keyof MealPlan) => {
-  //  Set The Current Meal To Add To It
-  localStorage.setItem('currentMeal', mealKey);
-   setIsClicked(true);
+// ---------- Helpers ----------
+const MEAL_NAMES_AR: Record<MealKey, string> = {
+  Breakfast: "الفطور",
+  Lunch: "الغداء",
+  Snacks: "الوجبات الخفيفة",
+  Dinner: "العشاء",
+};
+
+const MEAL_ICONS: Record<MealKey, React.ReactNode> = {
+  Breakfast: <BsSun className="text-amber-500" />,
+  Lunch: <FaBowlFood className="text-orange-500" />,
+  Snacks: <BiCookie className="text-yellow-600" />,
+  Dinner: <BsMoon className="text-indigo-400" />,
+};
+
+// ---------- Component ----------
+const MakeADiet: React.FC = () => {
+  const navigate = useNavigate();
+
+  // Initialize diet if not present
+  if (!localStorage.getItem("Diet")) {
+    localStorage.setItem(
+      "Diet",
+      JSON.stringify({
+        Breakfast: [[], []],
+        Lunch: [[], []],
+        Snacks: [[], []],
+        Dinner: [[], []],
+      })
+    );
   }
 
+  const [mealPlan, setMealPlan] = useState<MealPlan>(
+    JSON.parse(localStorage.getItem("Diet") || "{}")
+  );
+  const [isClicked, setIsClicked] = useState(false);
 
-  const Save = () => {
-    if (confirm("Save Date and go back to home page")) {
-   if (mealPlan.Breakfast[0].length > 0 && mealPlan.Lunch[0].length > 0 && mealPlan.Snacks[0].length > 0 && mealPlan.Dinner[0].length > 0) {
-       localStorage.setItem('Diet',JSON.stringify(mealPlan));
-      navigate('/me/home');
-    
-   }else{
-    alert("برجاء إضافة وجبة واحدة على الأقل لكل وجبة (فطور، غداء، وجبات خفيفة، عشاء) قبل الحفظ.");
-      }
+  // User data
+  const currentWeight = Number(localStorage.getItem("currentWeight") || 0);
+  const targetWeight = Number(localStorage.getItem("targetWeight") || 0);
+  const height = Number(localStorage.getItem("height") || 0);
+  const age = Number(localStorage.getItem("age") || 0);
+  const challengePeriod = Number(localStorage.getItem("challengePeriod") || 0);
+  const gender = localStorage.getItem("SelectedGender") || "";
+
+  // Calculate daily calorie goal once
+  const dailyCaloriesGoal = useMemo(() => {
+    if (!challengePeriod || challengePeriod <= 0) return 0;
+
+    let bmr: number;
+    if (gender === "ذكر") {
+      bmr = 10 * currentWeight + 6.25 * height - 5 * age + 5;
+    } else {
+      bmr = 10 * currentWeight + 6.25 * height - 5 * age - 161;
     }
 
+    const tdee = bmr * 1.5; // activity factor
+    const weightDiff = targetWeight - currentWeight;
+    const totalCaloriesNeeded = weightDiff * 7700;
+    const days = challengePeriod * 30;
+
+    if (days === 0) return Math.round(tdee);
+    const daily = tdee + totalCaloriesNeeded / days;
+    localStorage.setItem("dailyCalories", Math.round(daily).toString());
+    return Math.round(daily);
+  }, [currentWeight, targetWeight, height, age, challengePeriod, gender]);
+
+  useEffect(() => {
+  if (dailyCaloriesGoal > 0) {
+    localStorage.setItem("dailyCalories", dailyCaloriesGoal.toString());
   }
-  // نطبع الوجبات بعد كل تغيير (setState غير متزامن)
+}, [dailyCaloriesGoal]);
 
-  const calcAllCalories = (): number => {
-    return Object.values(mealPlan).reduce((acc, curr: any) => acc + curr[1][0], 0);
+  // Eaten calories & protein from all meals
+  const eatenCalories = useMemo(
+    () =>
+      Object.values(mealPlan).reduce(
+        (sum, meal) => sum + (meal[1][0] || 0),
+        0
+      ),
+    [mealPlan]
+  );
+  const eatenProtein = useMemo(
+    () =>
+      Object.values(mealPlan).reduce(
+        (sum, meal) => sum + (meal[1][1] || 0),
+        0
+      ),
+    [mealPlan]
+  );
+
+  // Progress percentage
+  const progressPercent = dailyCaloriesGoal > 0
+    ? Math.min((eatenCalories / dailyCaloriesGoal) * 100, 100)
+    : 0;
+
+  // SVG progress ring values
+  const radius = 70;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (progressPercent / 100) * circumference;
+
+  // Toggle a meal section open/closed
+  const toggleMeal = (meal: MealKey) => {
+    const el = document.getElementById(`meal-${meal}`);
+    if (!el) return;
+    if (el.classList.contains("opened")) {
+      el.style.height = "60px";
+      el.classList.remove("opened");
+    } else {
+      el.style.height = el.scrollHeight + "px";
+      el.classList.add("opened");
+    }
   };
-  const calcAllProtein = (): number => {
-    return Object.values(mealPlan).reduce((acc, curr: any) => acc + curr[1][1], 0);
+
+  // Add dish – opens the AdditionPage modal
+  const addDish = (mealKey: MealKey) => {
+    localStorage.setItem("currentMeal", mealKey);
+    setIsClicked(true);
   };
+
+  // Save diet – validate and navigate
+  const saveDiet = () => {
+    const emptyMeal = (Object.keys(mealPlan) as MealKey[]).find(
+      (key) => mealPlan[key][0].length === 0
+    );
+    if (emptyMeal) {
+      alert("يجب إضافة وجبة واحدة على الأقل لكل فئة قبل الحفظ.");
+      return;
+    }
+    localStorage.setItem("Diet", JSON.stringify(mealPlan));
+    navigate("/me/home");
+  };
+
+  // Update mealPlan state whenever localStorage is changed (by AdditionPage)
+  useEffect(() => {
+    const handleStorage = () => {
+      const stored = localStorage.getItem("Diet");
+      if (stored) setMealPlan(JSON.parse(stored));
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
+
+  // Also refresh when AdditionPage closes
+  const handleCloseAddition = () => {
+    const stored = localStorage.getItem("Diet");
+    if (stored) setMealPlan(JSON.parse(stored));
+    setIsClicked(false);
+  };
+
   return (
-<div className='relative min-h-screen w-full p-5 flex flex-col gap-5 justify-start show-first mb-20'>
-        <div className='w-full absolute top-0 left-0 h-44 bg-gradient-to-r  from-sky-400 to-blue-500 hover:from-sky-500 hover:to-blue-600  '>
-        <h1 className='text-white text-md font-bold text-center mt-5'>اصنع نظامك الغذائي</h1>
-
-      </div>
-
-      <div className='relative top-6 w-full h-fit flex justify-center items-center text-gray-700 '>
-
-       <div
-      style={{
-        width: size,
-        aspectRatio: "1/1",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        position: "relative",
-      }}
-    >
-      <svg
-        width="100%"
-        height="100%"
-        viewBox="0 0 220 220"
-      >
-        {/* الخلفية */}
-        <circle
-          cx="110"
-          cy="110"
-          r={radius}
-          stroke="#eff"
-          strokeWidth={strokeWidth}
-          fill="none"
-        />
-
-        {/* التقدم */}
-        <circle
-          cx="110"
-          cy="110"
-          r={radius}
-          stroke="#38bbf8"
-          strokeWidth={strokeWidth}
-          fill="none"
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          strokeDashoffset={offset}
-          transform="rotate(-90 110 110)"
-          style={{
-            transition: "0.5s ease",
-          }}
-        />
-      </svg>
-
-      {/* النص داخل الدائرة */}
-      <div
-        style={{
-          position: "absolute",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-
-        <div
-        
-          className='flex justify-center items-center flex-col'
-        >
-          <div>
-            <span className='text-2xl'>2100</span>
-            <span>/</span>
-            <span>2500</span>
-          </div>
-          سعرة
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50 relative pb-24">
+      {/* Header */}
+      <div className="w-full bg-gradient-to-r from-sky-400 to-blue-500 p-12 pt-10 rounded-b-full shadow-xl">
+        <div className="flex items-center gap-3">
+       
+          <h1 className="text-white text-2xl font-bold">اصنع نظامك الغذائي</h1>
+        </div>
+        {/* Quick stats */}
+        <div className="flex justify-between mt-5 text-white/90 text-sm">
+          <span>الوزن: {currentWeight} كغ</span>
+          <span>الهدف: {targetWeight} كغ</span>
+          <span>المدة: {challengePeriod} شهر</span>
         </div>
       </div>
-    </div>
-{/*         
-        <div>الوزن : <span>{CurrentWeight} كجم</span></div>
-        <div>الوزن المُستهدف : <span>{targetWeight} كجم</span></div>
-        <div className='flex flex-row'>هدف السعرات: <span className='flex flex-row'>{CalculateKals()} <GoGoal  /></span></div>
-        <div>العُمر : <span>{age} </span></div>
-        <div>فترة التحدي : <span>{ChallengePeriod} شهر</span></div>
-{ !Number.isNaN(calcAllCalories()) && (
-    <div className='flex flex-row '>Cal in meals: <span className='flex flex-row '>{calcAllCalories().toFixed(1)} <BsFire className='text-orange-400'/> </span></div>
-)}
-{ !Number.isNaN(calcAllProtein()) && (
-    <div className='flex flex-row '>Protein in meals: <span className='flex flex-row '>{calcAllProtein().toFixed(2)} <GiBiceps className='text-teal-500 text-lg -mt-0.5'/></span></div>
-)} */}
+
+      {/* Progress Ring + Nutrients */}
+      <div className="flex flex-col items-center -mt-5 mb-6">
+        <div className="relative w-44 h-44">
+          <svg
+            width="100%"
+            height="100%"
+            viewBox="0 0 160 160"
+            className="transform -rotate-90 drop-shadow-xl"
+          >
+            <circle
+              cx="80"
+              cy="80"
+              r={radius}
+              fill="none"
+              stroke="rgba(255,255,255,0.6)"
+              strokeWidth="13"
+            />
+            <circle
+              cx="80"
+              cy="80"
+              r={radius}
+              fill="none"
+              stroke="url(#calorieGradient)"
+              strokeWidth="8"
+              strokeLinecap="round"
+              strokeDasharray={circumference}
+              strokeDashoffset={offset}
+              style={{ transition: "stroke-dashoffset 0.8s ease" }}
+            />
+            <defs>
+              <linearGradient id="calorieGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#f97316" />
+                <stop offset="100%" stopColor="#ef4444" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-800">
+            <span className="text-3xl font-extrabold"><span className="text-sm">%</span>{Math.round(progressPercent)}  </span>
+            <div className="flex items-center gap-1 text-sm font-medium mt-1">
+              <FaFire className="text-orange-500" />
+              <span>{dailyCaloriesGoal} / {eatenCalories.toFixed(0)} </span>
+            </div>
+            <span className="text-xs text-gray-500 mt-0.5">سعرة</span>
+          </div>
+        </div>
+
+        {/* Protein chip */}
+        <div className="mt-3 flex items-center gap-2 bg-white/70 backdrop-blur-md border border-white/60 px-4 py-2 rounded-full shadow-md">
+          <GiBiceps className="text-teal-500 text-lg" />
+          <span className="font-semibold text-gray-700">
+            {eatenProtein.toFixed(1)} غرام بروتين
+          </span>
+        </div>
       </div>
-      {/* Meal Plans */}
-      {
-        (Object.keys(mealPlan) as Array<keyof MealPlan>).map((meal) => (
-      <div
-  aria-details="mainContainer"
-  className="container relative top-6  w-full overflow-hidden bg-white active:bg-gray-200 active:opacity-60 border-r-sky-500 border-r-4 px-5 py-1 rounded-xl transition-all duration-500 ease-in-out"
-  style={{ height: '56px' }}   // initial closed height
-  key={meal}
->
-            <div className="w-full h-12 hover:cursor-pointer flex flex-row justify-between items-center p-2 text-xl" onClick={e => ToggleWindow(e)}>
-              <h1 className='flex flex-row gap-3'>
-                {ChooseNameOfMealInArabic(meal)}
-              </h1>
-             <div>
-                 {meal === 'Breakfast' && <BsSun />} 
-                {meal === 'Lunch' && <FaBowlFood />}
-                {meal === 'Snacks' && <BiCookie />}
-                {meal === 'Dinner' && <BsMoon />}
-              <HiOutlineChevronUpDown />
-             </div>
+
+      {/* Meal Cards */}
+      <div className="px-4 space-y-4">
+        {(Object.keys(mealPlan) as MealKey[]).map((meal) => (
+          <div
+            id={`meal-${meal}`}
+            key={meal}
+            className="relative bg-white/70 backdrop-blur-lg border border-white/60 shadow-xl rounded-3xl overflow-hidden transition-all duration-500 ease-in-out"
+            style={{ height: "60px" }}
+          >
+            {/* Header – click to toggle */}
+            <div
+              onClick={() => toggleMeal(meal)}
+              className="flex items-center justify-between px-5 py-4 cursor-pointer select-none"
+            >
+              <div className="flex items-center gap-3">
+                {MEAL_ICONS[meal]}
+                <h2 className="text-xl font-bold text-gray-800">
+                  {MEAL_NAMES_AR[meal]}
+                </h2>
+                {mealPlan[meal][0].length > 0 && (
+                  <span className="text-xs bg-sky-100 text-sky-700 px-2 py-0.5 rounded-full">
+                    {mealPlan[meal][0].length} أطباق
+                  </span>
+                )}
+              </div>
+              <HiOutlineChevronUpDown className="text-gray-400 text-xl" />
             </div>
 
-            <div className='w-full min-h-20 p-3 rounded-2xl'>
-              <div
-               ref={getDiv}
-               className={`w-full h-fit flex flex-row gap-1.5 flex-wrap`}>
-                <button
-                  className='w-full flex cursor-pointer items-center gap-2 bg-gradient-to-r  from-sky-400 to-blue-500 hover:from-sky-500 hover:to-blue-600 p-3 shadow  rounded-2xl text-white'
-                  onClick={() => AddADish(meal)}
-                >
-                  إضافة طبق للوجبة <BsPlus className='-translate-y-0.5' />
-                </button>
+            {/* Expanded content */}
+            <div className="px-5 pb-5 space-y-3">
+              {/* Add button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  addDish(meal);
+                }}
+                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-sky-400 to-blue-500 text-white py-3 rounded-xl font-medium shadow-md hover:shadow-lg active:scale-95 transition"
+              >
+                <BsPlus size={20} /> إضافة طبق
+              </button>
 
-                {/* عرض الوجبات المضافة */}
-                {mealPlan[meal][0].map((dish, idx) => (
-                  <div key={meal + '-' + idx} className='w-full p-3.5 bg-gray-100 rounded-lg text-md active:bg-blue-100 active:text-blue-600 cursor-pointer activeAnim'>
-                    {dish}
-                  </div>
-                ))}
-        {/* SetInformations */}
-              <div className='relative top-3 w-full h-fit flex flex-row gap-0 .5 flex-wrap '>
-                  {mealPlan[meal][1].map((info, idx) => (
-                  <div key={meal + '-info-' + idx} className={`flex w-fit p-2.5 font-medium  bg-gray-50 rounded-2xl  gap-1.5 text-md text-black cursor-pointer activeAnim`}>
-                  {idx ===0 ? ( <div className='flex flex-row gap-1.5'>
-                                          
-                                          Calories: {Number(info).toFixed(1)}
-                    <FaFire className={`text-md  text-orange-400`} />
-                    </div>) : ``}
-                    {idx === 1 ? `Proteins: ${Number(info).toFixed(1)} g` : ``}
-                    {idx === 2 ? `Vitamins: ${info}` : ``}
+              {/* Dishes */}
+              {mealPlan[meal][0].length > 0 ? (
+                <div className="space-y-2">
+                  {mealPlan[meal][0].map((dish, idx) => (
+                    <div
+                      key={`${meal}-${idx}`}
+                      className="flex items-center justify-between bg-gradient-to-r from-green-50 to-sky-50 p-3 rounded-xl border border-sky-100"
+                    >
+                      <span className="font-medium text-gray-700">{dish}</span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-gray-400 text-center py-2">
+                  لا توجد أطباق مضافة
+                </p>
+              )}
 
-                  </div>
-                ))}
-              </div>
+              {/* Nutrition info for this meal */}
+              <div className="flex flex-wrap gap-2 mt-2">
+                {mealPlan[meal][1].map((value, idx) => {
+                  if (idx === 0) {
+                    return (
+                      <div
+                        key={`${meal}-info-0`}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium bg-orange-50 text-orange-700"
+                      >
+                        <FaFire className="text-orange-500" />
+                        السعرات: {Number(value).toFixed(1)}
+                      </div>
+                    );
+                  }
+                  if (idx === 1) {
+                    return (
+                      <div
+                        key={`${meal}-info-1`}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium bg-teal-50 text-teal-700"
+                      >
+                        <GiBiceps className="text-teal-500" />
+                        بروتين: {Number(value).toFixed(1)} غ
+                      </div>
+                    );
+                  }
+                  if (idx === 2) {
+                    return (
+                      <div
+                        key={`${meal}-info-2`}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium bg-purple-50 text-purple-700"
+                      >
+                        فيتامين: {value}
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
               </div>
             </div>
           </div>
-        ))
-      }
-  <button className='relative top-26 w-full  p-3 bg-linear-to-r from-blue-500 to-blue-500 text-white rounded-full text-lg font-medium flex items-center justify-center gap-2 active:bg-blue-700 activeAnim' onClick={Save}>
-       حفظ<BsSave2Fill />
+        ))}
+      </div>
+
+      {/* Save Button */}
+      <div className="relative p-5 left-0 right-0 flex justify-center z-50">
+        <button
+          onClick={saveDiet}
+          className="flex items-center justify-center w-full gap-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-4 rounded-full text-lg font-bold shadow-2xl active:scale-95 transition hover:shadow-3xl"
+        >
+          <BsSave2Fill size={22} />
+          حفظ النظام
         </button>
-        {IsClicked && <AdditionPage Meal={localStorage.getItem('currentMeal') || ''} />}
+      </div>
+
+      {/* AdditionPage Modal */}
+      {isClicked && (
+        <AdditionPage
+          Meal={localStorage.getItem("currentMeal") || ""}
+          onClose={handleCloseAddition}
+        />
+      )}
     </div>
-  )
-}
+  );
+};
 
 export default MakeADiet;
