@@ -57,8 +57,8 @@ const Page = () => {
             <div className="p-3 bg-white rounded-2xl shadow-md">
               <FiCalendar className="text-2xl text-sky-600" />
             </div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-sky-600 to-teal-600 bg-clip-text text-transparent">
-              History
+            <h1 className="text-3xl font-bold  bg-clip-text text-slate-800 ">
+              التاريخ الغذائي
             </h1>
           </div>
          

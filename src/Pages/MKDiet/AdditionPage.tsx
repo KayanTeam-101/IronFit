@@ -32,9 +32,12 @@ const UNIT_OPTIONS: UnitOption[] = [
   { label: "حبة ", grams: 10 },
   { label: "ثلاث حبات", grams: 30 },
   { label: "سبع حبات", grams: 70 },
+  { label: "بيضتان", grams: 100 },
+  { label: "خمس بيضات", grams: 250 },
+  { label: "سبع بيضات", grams: 350 },
   { label: "كوب ", grams: 200 },
   { label: "ملعقة كبيرة )", grams: 15 },
-  { label: "غرام (أدخل الكمية)", grams: null },
+  { label: "غرام (أدخل كمية معينة)", grams: null },
 ];
 
 // ---- Component ----
@@ -87,8 +90,7 @@ const AdditionPage = (props: any) => {
       addFoodWithGrams(selectedFoodName, unit.grams);
       setShowUnitModal(false);
     } else {
-      // Custom grams – we'll show input field in modal
-      // already set via customGrams state, we'll add submit
+    return;
     }
   };
 
@@ -193,9 +195,9 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
   };
 
   return (
-    <div className="fixed show-second top-0 left-0 w-screen h-screen flex flex-col bg-gradient-to-br from-blue-50 via-white to-blue-50 z-50 overflow-y-scroll">
+    <div className="fixed show-first top-0 left-0 w-screen h-screen flex flex-col bg-slate-100 dark:bg-slate-950 z-50 overflow-y-scroll">
       {/* Header */}
-      <div className="relative w-full bg-gradient-to-r from-blue-400 to-blue-500 p-5 pt-10 rounded-b-3xl shadow-xl">
+      <div className="relative w-full bg-gradient-to-b from-blue-400 to-blue-500 dark:from-black/20 dark:to-amber-400/20 p-5 pt-15 rounded-b-full shadow-xl">
         <div className="flex items-center justify-between">
           <button
             onClick={() => window.location.reload()}
@@ -211,8 +213,8 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
       </div>
 
       {/* Search */}
-      <div className="px-4 -mt-6 z-10">
-        <div className="bg-white/70 backdrop-blur-lg border border-white/60 shadow-xl rounded-2xl p-4">
+      <div className="px-4 mt-6 z-10">
+        <div className="bg-white/70  backdrop-blur-lg border border-white/60 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 shadow-xl rounded-2xl p-4">
           <div className="relative">
             <FaSearch className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" />
             <input
@@ -220,7 +222,7 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
               value={text}
               onChange={(e) => setText(e.target.value)}
               placeholder="ابحث عن طعام..."
-            className='w-full bg-gray-50 border-2 border-gray-200 outline-2 outline-sky-200 rounded-b-4xl rounded-xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-blue-400 transition"'
+            className='w-full bg-gray-50 border-2 border-gray-200 outline-2 outline-sky-200 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white text-black rounded-b-4xl rounded-xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-blue-400 transition"'
             />
           </div>
 
@@ -231,19 +233,19 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
                 filteredFoods.map((food, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center justify-between p-3 bg-gray-50 hover:bg-blue-50 rounded-xl transition cursor-pointer group"
+                    className="flex items-center justify-between p-3 bg-gray-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20   hover:bg-blue-50 rounded-xl transition cursor-pointer group"
                   >
                     <span
-                      className="flex-1 font-medium text-gray-700 group-hover:text-blue-700"
+                      className="flex-1 font-medium text-gray-700 dark:text-white group-hover:text-blue-700"
                       onClick={() => handleAddClick(food)}
                     >
                       {food}
                     </span>
                     <button
                       onClick={() => handleGetInfo(food)}
-                      className="p-1.5 bg-white rounded-full shadow-sm hover:bg-blue-100 transition"
+                      className="p-1.5 bg-white rounded-full dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white text-black shadow-sm hover:bg-blue-100 transition"
                     >
-                      <BiInfoCircle className="text-gray-500 group-hover:text-blue-600" />
+                      <BiInfoCircle className="text-gray-500  group-hover:text-blue-600" />
                     </button>
                   </div>
                 ))
@@ -257,8 +259,8 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
 
       {/* Added foods */}
       <div className="px-4 mt-5">
-        <div className="bg-white/70 backdrop-blur-lg border border-white/60 shadow-xl rounded-2xl p-4">
-          <h2 className="text-lg font-bold text-gray-700 mb-3 flex items-center gap-2">
+        <div className="bg-white/70 backdrop-blur-lg border border-white/60 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 shadow-xl rounded-2xl p-4">
+          <h2 className="text-lg font-bold text-gray-700 dark:text-white mb-3 flex items-center gap-2">
             <GiFruitBowl className="text-blue-500" />
             الطعام المُضاف
           </h2>
@@ -272,14 +274,14 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
               {FoodArray.map((food, idx) => (
                 <div
                   key={idx}
-                  className="group relative flex items-center gap-2 bg-gradient-to-r from-green-50 to-blue-50 border border-blue-100 rounded-xl px-3 py-2 shadow-sm hover:shadow-md transition"
+                  className="group relative flex items-center gap-2 bg-white/70 dark:bg-black/20 dark:border-2 dark:border-gray-600/20  border border-blue-100 rounded-xl px-3 py-2 shadow-sm hover:shadow-md transition"
                 >
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="text-sm font-medium text-gray-700 dark:text-white">
                     {food}
                   </span>
                   <button
                     onClick={() => confirmDelete(idx)}
-                    className="p-0.5 rounded-full bg-white/80 hover:bg-red-100 text-gray-400 hover:text-red-500 transition opacity-0 group-hover:opacity-100"
+                    className="p-0.5 rounded-full bg-white/80 hover:bg-red-100 text-gray-400 hover:text-red-500 transition "
                   >
                     <FaTimes size={12} />
                   </button>
@@ -292,20 +294,20 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
 
       {/* Nutrition summary */}
       <div className="px-4 mt-5">
-        <div className="bg-white/70 backdrop-blur-lg border border-white/60 shadow-xl rounded-2xl p-4">
-          <h2 className="text-lg font-bold text-gray-700 mb-3 flex items-center gap-2">
+        <div className="bg-white/70 backdrop-blur-lg border border-white/60 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 shadow-xl rounded-2xl p-4">
+          <h2 className="text-lg font-bold dark:text-white text-gray-700 mb-3 flex items-center gap-2">
             <IoInformation className="text-blue-500" />
             المعلومات الغذائية
           </h2>
 
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-3 border border-orange-200">
+            <div className="bg-amber-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-xl p-3 border border-orange-200">
               <div className="text-xs text-orange-600 mb-1">السعرات</div>
               <div className="text-xl font-bold text-orange-700">
                 {totals.cal.toFixed(0)}
               </div>
             </div>
-            <div className="bg-gradient-to-br from-teal-50 to-emerald-50 rounded-xl p-3 border border-teal-200">
+            <div className="bg-teal-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-xl p-3 border border-teal-200">
               <div className="text-xs text-teal-600 mb-1">بروتين</div>
               <div className="text-xl font-bold text-teal-700">
                 {totals.prot.toFixed(1)} غ
@@ -314,7 +316,7 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
           </div>
 
           {totals.vitamins.length > 0 && (
-            <div className="mt-3 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl p-3 border border-purple-200">
+            <div className="mt-3 bg-indigo-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-xl p-3 border border-purple-200">
               <div className="text-xs text-purple-600 mb-1">الفيتامينات</div>
               <div className="flex flex-wrap gap-1">
                 {totals.vitamins.map((vit, i) => (
@@ -345,9 +347,9 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
       {/* ---------- Unit Selector Modal ---------- */}
       {showUnitModal && (
         <div className="fixed inset-0 z-[60]  flex items-center justify-center  backdrop-blur-sm p-4 animate-fadeIn">
-          <div className="bg-white backdrop-blur-md border border-white/50 shadow-2xl rounded-3xl p-6 w-full max-w-sm animate-scaleIn">
+          <div className="bg-white backdrop-blur-md border border-white/50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 shadow-2xl rounded-3xl p-6 w-full max-w-sm ">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-gray-800">
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">
                 اختر الكمية لـ {selectedFoodName}
               </h3>
               <button
@@ -358,14 +360,14 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
               </button>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 max-h-80 overflow-scroll">
               {UNIT_OPTIONS.filter((u) => u.grams !== null).map((unit, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleSelectUnit(unit)}
-                  className="w-full flex items-center justify-between bg-gradient-to-r from-blue-50 to-blue-50 border border-blue-100 p-3 rounded-xl hover:shadow-md active:scale-[0.98] transition"
+                  className="w-full flex items-center justify-between bg-blue-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 border border-blue-100 p-3 rounded-xl hover:shadow-md active:scale-[0.98] transition"
                 >
-                  <span className="font-medium text-gray-700">{unit.label}</span>
+                  <span className="font-medium text-gray-700  dark:text-white">{unit.label}</span>
                   <span className="text-sm text-blue-600">{unit.grams}غ</span>
                 </button>
               ))}
@@ -397,8 +399,8 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
       {/* Delete confirmation modal */}
       {showDeleteConfirm && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/30 backdrop-blur-sm p-4 animate-fadeIn">
-          <div className="bg-white/90 backdrop-blur-md border border-white/50 shadow-2xl rounded-3xl p-6 w-full max-w-sm animate-scaleIn text-center">
-            <h3 className="text-lg font-bold text-gray-800 mb-2">
+          <div className="bg-white/40 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-md border border-white/50 shadow-2xl rounded-3xl p-6 w-full max-w-sm animate-scaleIn text-center">
+            <h3 className="text-lg font-bold dark:text-white text-gray-800 mb-2">
               إزالة الطعام
             </h3>
             <p className="text-gray-600 mb-4">هل أنت متأكد من إزالة هذا العنصر؟</p>

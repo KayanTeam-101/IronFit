@@ -12,12 +12,11 @@ const SatisfactionRate : React.FC = () => {
   }; 
 
   return (
-    <div className=' h-11/12 show-first flex items-center justify-between flex-col  ' >
-        <div className=' relative top-3 flex flex-col gap-4'>
-            <h2 className='text-3xl translate-y-0 text-sky-400 font-extrabold  text-center '> ما مدي رضاك عن شكل جسمك <span className='text-sky-500'>؟</span></h2>
+       <div className=' min-h-lvh show-first flex items-center justify-between flex-col  ' >
+     <h2 className='text-3xl translate-y-0 text-sky-400 font-extrabold  text-center '> ما مدي رضاك عن شكل جسمك <span className='text-sky-500'>؟</span></h2>
         <div className=' text-sm text-amber-700   text-center'>الرقم مجرد رأي لحظي — أنت أكبر من رقم. ابدأ بخطوة بسيطة النهاردة، ومهم تفتكر إن التغيّر الحقيقي بيبدأ بالاستمرار مش بالسرعة</div>
-        </div>
-      <CounterY arr={numbers} size='md' onChange={handleChange} />
+             <CounterY arr={numbers} size={window.innerWidth <= 390 ? "md" : "lg"} onChange={handleChange} />
+      <div></div>
     </div>
   )
 }

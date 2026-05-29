@@ -14,29 +14,29 @@ const Navbar = () => {
     }
   }
   return (
-    <div className="navbar overflow-hidden fixed bottom-0 left-0 right-0 grid grid-cols-5 items-center h-16 backdrop-blur-[20px] bg-white/30 border-t  border-gray-200 text-xl text-sky-950">
-        <NavLink onClick={() => vebrate()} className="flex flex-col"  to="me/home">
+    <div className="navbar overflow-hidden fixed bottom-0 left-0 right-0 grid grid-cols-5 items-center h-16 backdrop-blur-[20px]  dark:bg-black/30 border-t  border-gray-200 text-xl text-sky-950 dark:from-slate-800/40 dark:to-black/40 dark:border-2 dark:border-gray-600/20">
+        <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white "  to="me/home">
           <GoHomeFill />
-          <p className='text-[13px] mt-2'>الرئسية</p>
+          <p className='text-[12px] mt-2'>الرئسية</p>
         </NavLink>
-        <NavLink onClick={() => vebrate()} className="flex flex-col" to="me/food">
+        <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white " to="me/food">
           <FaAppleAlt />
-          <p className='text-[13px] mt-2'>نظامي الغذائي</p>
+          <p className='text-[12px] mt-2'>نظامي </p>
           
         </NavLink>
-        <NavLink onClick={() => vebrate()} className="flex flex-col" to="/exercises">
+        <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white " to="/exercises">
           <FaPersonRunning />
-          <p className='text-[13px] mt-2'>التمارين</p>
+          <p className='text-[12px] mt-2'>التمارين</p>
 
         </NavLink>
-        <NavLink onClick={() => vebrate()} className="flex flex-col" to="/myStats">
+        <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white " to="/myStats">
           <FaChartSimple />
-          <p className='text-[13px] mt-2'>الاحصائيات</p>
+          <p className='text-[12px] mt-2'>الاحصائيات</p>
 
         </NavLink>
-         <NavLink onClick={() => vebrate()} className="flex flex-col" to="/myStats">
+         <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white " to="/myStats">
           <LuSettings2 />
-          <p className='text-[13px] mt-2'>الأعدادات</p>
+          <p className='text-[12px] mt-2'>الأعدادات</p>
         </NavLink>
         
     </div>

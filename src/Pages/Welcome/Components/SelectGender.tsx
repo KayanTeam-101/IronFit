@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BiFemale, BiMale } from 'react-icons/bi';
 
 const SelectGender: React.FC = () => {
   const genders = ['ذكر', 'أنثى'];
@@ -19,17 +20,17 @@ const SelectGender: React.FC = () => {
       <div className='relative top-15 grid grid-cols-2 gap-2'>
         {genders.map((g, i) => {
           const isSelected = selectedGender === g;
-
+    
           return (
             <button
               key={i}
               onClick={() => handleSelect(g)}
-              className={`p-2 text-2xl rounded-xl
+              className={`p-3 px-5 text-2xl rounded-xl flex flex-row items-center gap-2
                 ${isSelected
                   ? 'bg-sky-500 text-white'
-                  : 'bg-white border-2 border-sky-500 text-sky-600'}`}
+                  : 'bg-white border-4 border-sky-500 text-sky-600 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white'}`}
             >
-              {g} {g === 'ذكر' ? '♂️' : '♀️'}
+              {g} {g === 'ذكر' ? <BiMale /> : <BiFemale />}
             </button>
           );
         })}

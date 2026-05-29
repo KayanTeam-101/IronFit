@@ -39,12 +39,13 @@ const [GetSuccessfullDays, SetGetSuccessfullDays] = useState<string[]>(
 
   },[])
   return (
-    <div className="relative flex flex-col items-center justify-center">
+    <div className="relative  flex flex-col items-center justify-center">
       {/* Outer glow ring */}
       <svg
-        width={size}
-        height={size}
-        className="transform -rotate-90"
+        width={size +10}
+        height={size +10}
+        
+        className="transform -rotate-90 bg-white dark:bg-transparent  rounded-4xl"
       >
         {/* Background circle */}
         <circle
@@ -52,7 +53,7 @@ const [GetSuccessfullDays, SetGetSuccessfullDays] = useState<string[]>(
           cy={size / 2}
           r={radius}
           fill="transparent"
-          stroke="rgba(245,245,245,1)"
+          stroke="rgba(245,245,245,.3)"
           strokeWidth={strokeWidth}
         />
         {/* Progress circle */}
@@ -94,17 +95,17 @@ const [GetSuccessfullDays, SetGetSuccessfullDays] = useState<string[]>(
 
       {/* Center content */}
       <div
-        className="absolute bottom-0 flex flex-col items-center justify-center text-black drop-shadow-lg"
+        className="absolute dark:text-white bottom-0 flex flex-col items-center justify-center text-black drop-shadow-lg"
         style={{ width: size, height: size }}
       >
-        <div className="relative flex items-baseline gap-1">
+        <div className="relative flex items-baseline  gap-1">
           <span className="text-3xl font-black">{Math.round(percent)}</span>
           <div className="text-sm  flex-row flex ">%
 
           </div>
         </div>
         <div className="flex items-center gap-1 mt-1 text-xs font-medium text-black">
-          <span>
+          <span  className="dark:text-white text-slate-800">
             {goal.toFixed(0)} / {current.toFixed(0)} 
           </span>
         </div>

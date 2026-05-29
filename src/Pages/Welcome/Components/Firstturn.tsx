@@ -10,7 +10,7 @@ const Firstturn: React.FC = () => {
       <div className="absolute bottom-0 right-0 w-56 h-56 bg-teal-400 rounded-full opacity-20 blur-3xl animate-pulse delay-2000" />
 
       {/* Main card */}
-      <div className="relative bg-white/70 backdrop-blur-xl show-first border border-white/50 shadow-2xl rounded-4xl p-8 text-center space-y-6">
+      <div className="relative bg-white/20 dark:bg-black/20 dark:border-gray-600/10 dark:border-4 backdrop-blur-xl show-first border border-white/50 shadow-2xl rounded-4xl p-8 text-center space-y-6">
         {/* Icon with glowing ring */}
         <div className="flex justify-center">
           <div className="relative">
@@ -22,8 +22,8 @@ const Firstturn: React.FC = () => {
         </div>
 
         {/* Welcome text */}
-        <div className="show-second">
-          <p className="text-3xl font-extrabold text-gray-800">أهلاً</p>
+        <div className="show-second ">
+          <p className="text-3xl font-extrabold text-gray-800 dark:text-white">أهلاً</p>
           <p className="text-4xl font-black mt-2">
             بك في{" "}
             <span className="bg-gradient-to-r from-blue-500 to-blue-600 bg-clip-text text-transparent">

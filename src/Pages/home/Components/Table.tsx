@@ -28,25 +28,25 @@ const Table = () => {
           
     // If this day is in the past of the challenge
     if (day < daysSinceStart) {
-      return "bg-linear-to-t from-blue-200 scale-90 opacity-60  show-third to-sky-400  text-white"; // Completed days
+      return "bg-linear-to-t from-blue-200 scale-90 opacity-60   dark:from-slate-800/40 dark:to-black/40 dark:border-2 dark:border-gray-600/20  text-white"; // Completed days
     } 
     // If this is today's challenge day
     
     else if (day === daysSinceStart) {
-      return "bg-linear-to-t from-sky-300 to-blue-400 shadow-md text-white"; // Current day
+      return "bg-linear-to-t from-sky-300 to-blue-400 shadow-md text-white dark:from-slate-800/40 dark:to-black/40 dark:border-2 dark:border-gray-600/20 "; // Current day
     }else{
       return " text-gray-500"; // Future days
     }
   }
 
   return (
-    <div className='relative flex items-center flex-col w-full min-h-14 p-2 bg-white rounded-2xl border-sky-50'>
-      <div className='w-full h-10 flex items-center justify-between border-b-2 border-sky-100 mb-2'>
+    <div className='relative flex items-center flex-col w-full min-h-14 p-2 bg-white  dark:bg-black/40 dark:border-2 dark:border-gray-600/20 rounded-2xl border-sky-50 '>
+      <div className='w-full h-10 flex items-center justify-between border-b-2 border-sky-100 dark:border-b-gray-400/20 mb-2'>
         <div className='flex items-center'>
-          <span className='font-black'>تقدمي</span>
+          <span className='dark:text-white'>تقدمي</span>
         </div>
         <div className='flex items-center'>
-          <BsFlagFill className=' text-xl' />
+          <BsFlagFill className=' text-xl dark:text-white' />
         </div>
       </div>
       {/* End Header */}
@@ -61,7 +61,7 @@ const Table = () => {
         ))}
       </div>
       {/* Optional: Display current progress */}
-      <div className='mt-2 text-sm text-gray-600'>
+      <div className='mt-2 text-sm text-gray-600 dark:text-gray-400'>
         {(() => {
           const startTime = Number(localStorage.getItem("StartedAT"));
           console.log("Start Time :" + startTime);

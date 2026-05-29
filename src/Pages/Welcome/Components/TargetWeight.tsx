@@ -14,7 +14,7 @@ const ChooseHight: React.FC = () => {
   };
 
   return (
-    <div className='h-11/12 show-first flex items-center justify-between flex-col'>
+       <div className=' min-h-lvh show-first flex items-center justify-between flex-col  ' >
       <h2 className='text-4xl translate-y-10 text-sky-400 font-extrabold mb-4 text-center'>
         ايه الوزن ال نفسك توصلو<span className='text-sky-500'>؟</span>
       </h2>
@@ -22,10 +22,12 @@ const ChooseHight: React.FC = () => {
       <CounterY
         arr={numbers}
         delValue={CurrentWeight}   // ✅ now number
-        size='lg'
+        size={window.innerWidth <= 390 ? "md" : "lg"}
         onChange={handleChange}
       />
+      <div></div>
     </div>
+    
   )
 }
 

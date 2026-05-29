@@ -28,8 +28,8 @@ const ChanlangePreiod: React.FC = () => {
   };
 
   return (
-    <div className=" h-11/12 show-first flex items-center justify-between flex-col  ">
-      <div>
+       <div className=' min-h-lvh show-first flex items-center justify-between flex-col  ' >
+      <div className="px-3">
         <h2 className="text-3xl translate-y-10 text-sky-400 font-extrabold mb-4 text-center ">
           عايز توصل لهدفك بعد كام شهر <span className="text-sky-500">؟</span>
         </h2>
@@ -46,9 +46,11 @@ const ChanlangePreiod: React.FC = () => {
       <CounterY
         arr={numbers}
         delValue={0} // ✅ now number
-        size="lg"
         onChange={handleChange}
+        size={window.innerWidth <= 390 ? "md" : "lg"}
       />
+
+      <div></div>
     </div>
   );
 };

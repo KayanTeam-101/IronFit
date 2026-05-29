@@ -1,17 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
+
 @import "tailwindcss";
+@font-face {
+    font-family: "Tajawal";
+    src: url(/src/assets/Fonts/Tajawal-Regular.ttf) format("truetype");
+}
 
 *{
   font-family: "Tajawal", sans-serif;
   font-style: normal;
   direction: rtl;
+  transition: .1s cubic-bezier(0.175, 0.885, 0.32);
 }
 body{
+}
+#root{
     position: relative;
     min-height: 100vh;
     width: 100vw;
     overflow-x: hidden;
-    background: rgb(255, 255, 255);
 }
 h1, h2, h3, h4, h5, h6{
      font-weight: 1000;

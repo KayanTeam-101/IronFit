@@ -11,12 +11,14 @@ import {
   FaArrowRight,
   FaFire,
   FaExchangeAlt,
+  FaCookieBite,
 } from "react-icons/fa";
 import { FaPersonRunning, FaXmark } from "react-icons/fa6";
 import { GiBiceps } from "react-icons/gi";
 import { RiResetRightFill } from "react-icons/ri";
 import { VscSettings } from "react-icons/vsc";
 import {GiShoulderArmor} from 'react-icons/gi'
+import SelectDays from "../Welcome/Components/SelectDays";
 
 // ---------- Types ----------
 interface UserData {
@@ -144,6 +146,22 @@ const getTodayWeekday = (): string => {
   return new Date().toLocaleDateString("ar-EG", { weekday: "long" }); // e.g. "السبت"
 };
 
+
+  const ARABIC_WEEKDAY_TO_INDEX: Record<string, number> = {
+  "الأحد": 0,
+  "الاثنين": 1,
+  "الإثنين": 1,   // variant
+  "الثلاثاء": 2,
+  "الأربعاء": 3,
+  "الاربعاء": 3,   // variant
+  "الخميس": 4,
+  "الجمعة": 5,
+  "السبت": 6,
+};
+
+  function getWeekdayIndex(arabicName: string): number {
+  return ARABIC_WEEKDAY_TO_INDEX[arabicName] ?? -1;
+}
 // ---------- Main Page ----------
 const ExercisePage: React.FC = () => {
   const userData = useMemo(() => getStoredUserData(), []);
@@ -153,6 +171,7 @@ const ExercisePage: React.FC = () => {
   const [days, setDays] = useState<DayData[]>([]);
   const [currentDayIndex, setCurrentDayIndex] = useState<number>(-1); // -1 if today is not a training day
   const todayDateStr = useMemo(() => new Date().toISOString().slice(0, 10), []);
+  const todayIndex = new Date().getDay();  // 0=Sun, 1=Mon, …
 
   // Modals
   const [addExerciseModal, setAddExerciseModal] = useState<{
@@ -184,26 +203,27 @@ const ExercisePage: React.FC = () => {
 
   // Build workout schedule: map selected days to system workouts in order
   const schedule = useMemo(() => {
-    if (!system || selectedDays.length === 0) return [];
-    const systemWorkouts = SYSTEMS[system];
-    // Only assign up to the number of selected days
-    return selectedDays.slice(0, systemWorkouts.length).map((weekday, idx) => ({
-      weekday,
+  if (!system || selectedDays.length === 0) return [];
+  const systemWorkouts = SYSTEMS[system];
+  return selectedDays.slice(0, systemWorkouts.length).map((weekday, idx) => {
+    const dayIndex = getWeekdayIndex(weekday);
+    return {
+      weekday,          // keep for display
+      dayIndex,         // numeric index
       workout: systemWorkouts[idx] || "",
-    }));
-  }, [system, selectedDays]);
+    };
+  });
+}, [system, selectedDays]);
 
   // Find today's index
-  useEffect(() => {
-    if (schedule.length > 0) {
-      const todayWeekday = getTodayWeekday();
-      const foundIndex = schedule.findIndex((s) => s.weekday === todayWeekday);
-      setCurrentDayIndex(foundIndex >= 0 ? foundIndex : -1);
-    } else {
-      setCurrentDayIndex(-1);
-    }
-  }, [schedule]);
-
+useEffect(() => {
+  if (schedule.length > 0) {
+    const foundIndex = schedule.findIndex((s) => s.dayIndex === todayIndex);
+    setCurrentDayIndex(foundIndex >= 0 ? foundIndex : -1);
+  } else {
+    setCurrentDayIndex(-1);
+  }
+}, [schedule, todayIndex]);
   // Build DayData objects from schedule, loading exercises per workout
   useEffect(() => {
     if (schedule.length > 0) {
@@ -213,8 +233,7 @@ const ExercisePage: React.FC = () => {
         workout: item.workout,
         exercises: getWorkoutExercises(item.workout),
         completedToday:
-          completedDates.includes(todayDateStr) &&
-          item.weekday === getTodayWeekday(),
+          completedDates.includes(todayDateStr) 
       }));
       setDays(loadedDays);
       setShowSystemModal(false);
@@ -229,6 +248,7 @@ const ExercisePage: React.FC = () => {
     setSystem(chosen);
     // After system select, user should also pick training days; if already stored, schedule will update.
   };
+
 
   const handleAddExercise = (dayIndex: number) =>
     setAddExerciseModal({ open: true, dayIndex });
@@ -283,9 +303,9 @@ const ExercisePage: React.FC = () => {
   // System selection modal
   if (!system && showSystemModal) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-sky-100 via-white to-blue-50 flex items-center justify-center pb-16">
-        <div className="relative bg-white/70 backdrop-blur-lg border border-white/50 shadow-xl rounded-xl p-8 w-11/12 max-w-md space-y-6">
-          <h2 className="text-2xl font-bold text-gray-800 text-center">
+      <div className="min-h-screen bg-white dark:bg-slate-950 flex items-center justify-center pb-16">
+        <div className="relative bg-white/70 backdrop-blur-lg border dark:bg-transparent border-white/50 dark:border-none shadow-xl rounded-xl p-8 w-11/12 max-w-md space-y-6">
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-white text-center">
             اختر نظام التمرين
           </h2>
           <div className="space-y-4">
@@ -293,9 +313,24 @@ const ExercisePage: React.FC = () => {
               <button
                 key={sys}
                 onClick={() => handleSystemSelect(sys)}
-                className="w-full show-first rounded-3xl bg-gradient-to-r from-sky-400 to-blue-500 hover:from-sky-500 hover:to-blue-600 text-white font-semibold py-4 px-6 transition-all shadow-md hover:shadow-lg active:scale-[0.98]"
+                className="w-full show-first rounded-3xl flex justify-between items-center flex-col bg-gradient-to-r from-sky-400 to-blue-500 hover:from-sky-500 dark:from-black/20 dark:to-slate-800/30 dark:border-2 dark:border-gray-600/20  hover:to-blue-600 text-white font-semibold py-4 px-6 transition-all shadow-md hover:shadow-lg active:scale-[0.98]"
               >
-                {sys}
+           <div>
+                 {sys}
+              {sys === "ارنو سبلت" && <FaDumbbell className="inline mr-2" />}
+                {sys === "بروسبلت" && <FaWeightHanging className="inline mr-2" />}
+                {sys === "بوش بون ليج" && <FaFire className="inline mr-2" />}
+           </div>
+                <div className="flex w-full   flex-row justify-around ">
+                  {SYSTEMS[sys].map((w, i) => (
+                    <span
+                      key={i}
+                      className="text-sm rounded-lg bg-white p-1 text-sky-500 dark:bg-slate-600/30 dark:text-white  mt-2"
+                    >
+                      {w}
+                    </span>
+                  ))}
+                </div>
               </button>
             ))}
           </div>
@@ -310,9 +345,11 @@ const ExercisePage: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen show-first bg-gradient-to-br from-sky-50 via-white to-blue-50 relative"
+      className="min-h-screen show-first bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 relative"
       style={{ paddingBottom: "60px" }}
     >
+       
+      
       {IsDisabled && <Settings />}
 
       {/* CSS animations */}
@@ -335,12 +372,12 @@ const ExercisePage: React.FC = () => {
 
       <div className="relative w-full min-h-14 flex flex-row p-3 justify-between">
         <div className="text-xl flex flex-row">
-          <FaPersonRunning />
+          <FaPersonRunning className="dark:text-white"/>
         </div>
         <div className="flex flex-row gap-2">
           <div
             onClick={() => setIsDisabled(true)}
-            className="bg-gray-100 text-md flex items-center cursor-pointer flex-row gap-2 mb-5 p-2 rounded-4xl"
+            className="bg-gray-100 text-md flex dark:bg-black/20 dark:border-2 dark:border-gray-600/20  dark:text-white items-center cursor-pointer flex-row gap-2 mb-5 p-2 rounded-4xl"
           >
             الاعدادات <VscSettings />
           </div>
@@ -349,9 +386,13 @@ const ExercisePage: React.FC = () => {
 
       {/* Next workout / today's workout */}
       <div className="px-4 mb-6">
+               <div className="w-full rounded-3xl mb-2 p-5 shadow-sm dark:bg-black/20 dark:border-2 dark:border-gray-600/20  bg-white flex flex-row gap-2">
+                       <FaCookieBite className="text-2xl text-sky-500 dark:text-amber-300" />
+                       <p className="font-light text-md show-third dark:text-white">Advice</p>
+                     </div>
         {todayWorkout ? (
           <>
-            <div className="relative z-20 min-h-[250px] w-full p-5 bg-gradient-to-b from-sky-400 to-blue-500 rounded-2xl border border-sky-50 flex flex-col gap-4 transition-all hover:shadow-lg">
+            <div className="relative z-20 min-h-[250px] w-full p-5 bg-blue-500 dark:bg-black/20 dark:border-2 dark:border-gray-600/20  rounded-2xl border border-sky-50 flex flex-col gap-4 transition-all hover:shadow-lg">
               <div className="flex flex-row items-center justify-between">
                 <span className="text-white/80 text-sm">تمرين اليوم</span>
                 <span className="text-white/80 text-sm">{getTodayWeekday()}</span>
@@ -363,19 +404,21 @@ const ExercisePage: React.FC = () => {
                 <GiShoulderArmor className="absolute text-8xl scale-150 left-0 top-0 opacity-20 text-white" />
               </div>
             </div>
-            <div className="relative z-10 -top-4 w-full min-h-1 scale-97 bg-sky-400/20 py-6 p-2 flex items-end rounded-2xl">
+            <div className="relative z-10 -top-4 w-full min-h-1 scale-97 bg-sky-400/20 py-6 dark:text-white dark:bg-transparent p-2 flex items-end rounded-2xl">
               {selectedDays.join(" - ")} (أيام التمرين)
             </div>
           </>
         ) : schedule.length > 0 ? (
-          <div className="relative min-h-[250px] w-full p-5 bg-gradient-to-b from-gray-300 to-gray-500 rounded-2xl border border-gray-200 flex flex-col gap-4 transition-all hover:shadow-lg">
+          <div className="relative min-h-[250px] w-full p-5 bg-slate-300 dark:bg-black/20 dark:border-2 dark:border-gray-600/20  rounded-2xl border border-gray-200 flex flex-col gap-4 transition-all hover:shadow-lg">
             <div className="flex flex-row items-center justify-between">
-              <h2 className="text-3xl text-white font-bold">اليوم ليس يوم تمرين</h2>
+              <h1 className="text-4xl text-white font-bold m-3"> إستراحة محارب !</h1>
             </div>
-            <h1 className="text-xl text-white">استرح يا بطل!</h1>
+            {/* <h1 className="text-xl text-white">استرح يا بطل!</h1> */}
+                <GiShoulderArmor className="absolute text-8xl scale-150 left-0 top-0 opacity-20 text-white" />
+
           </div>
         ) : (
-          <div className="relative min-h-[150px] w-full p-5 bg-gradient-to-b from-gray-300 to-gray-500 rounded-2xl border border-gray-200 flex flex-col gap-4 transition-all hover:shadow-lg">
+          <div className="relative min-h-[150px] w-full p-5 bg-slate-300 dark:bg-black/20 dark:border-2 dark:border-gray-600/20  rounded-2xl border border-gray-200 flex flex-col gap-4 transition-all hover:shadow-lg">
             <div className="flex flex-row items-center justify-between">
               <h2 className="text-3xl text-white font-bold">أيام التمرين</h2>
             </div>
@@ -384,7 +427,7 @@ const ExercisePage: React.FC = () => {
             </h1>
             <button
               onClick={() => setShowSystemModal(true)}
-              className="flex items-center gap-2 bg-white p-3 shadow-2xl w-fit rounded-xl text-sky-500 font-bold active:scale-95 transition"
+              className="flex items-center gap-2 bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20  p-3 shadow-2xl w-fit rounded-xl text-sky-500 font-bold active:scale-95 transition"
             >
               اختر أيام التمرين <FaArrowRight />
             </button>
@@ -398,17 +441,17 @@ const ExercisePage: React.FC = () => {
           <h2 className="text-xl font-semibold text-gray-700 px-4 mb-3">
             جدول التمرين
           </h2>
-          <div className="flex overflow-auto snap-x snap-mandatory gap-4 p-4 scrollbar-thin scrollbar-thumb-gray-300">
+          <div className="flex overflow-auto  snap-x snap-mandatory gap-4 p-4 scrollbar-thin scrollbar-thumb-gray-300">
             {days.map((day, idx) => (
               <div
                 key={idx}
-                className={`snap-center flex justify-between flex-col shrink-0 w-full min-h-80 relative bg-white/70 backdrop-blur-lg border border-white/50 shadow-2xl rounded-xl p-5 space-y-4 transition-all hover:shadow-2xl ${
+                className={`snap-center flex dark:bg-black/20 dark:border-2 dark:border-gray-600/20  justify-between flex-col shrink-0 w-full min-h-80 relative bg-white/70 backdrop-blur-lg border border-white/50 shadow-2xl rounded-xl p-5 space-y-4 transition-all hover:shadow-2xl ${
                   idx === currentDayIndex ? "ring-2 ring-sky-400" : ""
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-lg font-bold text-gray-800">
+                    <h3 className="text-lg font-bold text-gray-800 dark:text-white">
                       {day.workout}
                     </h3>
                     <p className="text-sm text-gray-500">{day.weekday}</p>
@@ -675,10 +718,10 @@ const ModernAnalysisView: React.FC<{
                     {weight} كغ
                   </span>
                   <div
-                    className="w-full max-w-[30px] rounded-t-lg bg-gradient-to-b from-sky-400 to-blue-500 shadow-sm"
+                    className="w-full max-w-[30px] rounded-t-lg bg-gradient-to-b from-sky-400 to-blue-500  shadow-sm"
                     style={{
                       height: `${heightPercent}%`,
-                      animation: `slideUp 0.5s ease-in-out ${delay}s both`,
+                      animation: `slideUp 0.1s ease-in-out ${delay}s both`,
                     }}
                   />
                   <span className="text-xs text-gray-400 mt-1.5">
@@ -715,16 +758,16 @@ const ModernAnalysisView: React.FC<{
 // ---------- Settings ----------
 const Settings = () => {
   return (
-    <div className="fixed show-first top-0 left-0 z-50 w-screen h-lvh flex justify-center items-center bg-black/5 backdrop-blur-sm">
-      <div className="w-10/12 min-h-62 p-5 bg-white rounded-xl">
+    <div className="fixed  show-first top-0 left-0 z-50 w-screen min-h-lvh flex flex-col gap-4 min-h-lvh justify-center items-center bg-black/15 backdrop-blur-sm">
+      <div className="w-10/12 min-h-32 p-5 bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20  rounded-xl">
         <div className="w-full h-full flex flex-col gap-3 justify-around">
-          <div className="flex justify-between w-full p-3.5 rounded-lg text-md cursor-pointer activeAnim">
-            الاعدادات{" "}
+          <div className="flex justify-between w-full p-3.5 rounded-lg text-md cursor-pointer dark:text-white activeAnim">
+            الاعدادات
             <div
               onClick={() => window.location.reload()}
-              className="p-1.5 rounded-2xl bg-gray-50"
+              className="p-1.5 rounded-2xl"
             >
-              <FaXmark className="text-blue-600" />
+              <FaXmark className="text-rose-600" />
             </div>
           </div>
           <div
@@ -733,12 +776,13 @@ const Settings = () => {
               localStorage.removeItem("SelectedDays");
               window.location.reload();
             }}
-            className="flex justify-between w-full p-3.5 bg-gray-100 rounded-lg text-md active:bg-sky-100 active:text-sky-600 cursor-pointer activeAnim"
+            className="flex justify-between w-full p-3.5 bg-gray-100 dark:bg-black/20 dark:border-2 dark:border-gray-600/20  dark:text-white rounded-lg text-md active:bg-sky-100  active:text-sky-600 cursor-pointer activeAnim"
           >
             إعادة تعيين نظام التدريب <RiResetRightFill />
           </div>
         </div>
       </div>
+      <SelectDays />
     </div>
   );
 };

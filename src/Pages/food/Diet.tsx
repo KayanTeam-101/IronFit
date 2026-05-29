@@ -168,22 +168,22 @@ const Diet = () => {
   };
 
   return (
-    <div className="relative min-h-screen -20">
+    <div className="relative min-h-screen  ">
       {/* Header */}
       <div className="flex justify-between items-center p-4">
         <div className="text-2xl">
-          <FaBowlFood />
+          <FaBowlFood className="dark:text-white"/>
         </div>
         <div className="flex gap-2">
           <button
             onClick={() => setSettingsOpened(true)}
-            className="bg-gray-100 flex items-center gap-2 px-4 py-2 rounded-full"
+            className="bg-gray-100 flex dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-slate-300 items-center gap-2 px-4 py-2 rounded-full"
           >
             الاعدادات <VscSettings />
           </button>
           <button
             onClick={() => (window.location.href = "/me/history")}
-            className="bg-gray-100 flex items-center gap-2 px-4 py-2 rounded-full"
+            className="bg-gray-100 flex dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-slate-300 items-center gap-2 px-4 py-2 rounded-full"
           >
             التاريخ <BiCalendarAlt />
           </button>
@@ -198,12 +198,12 @@ const Diet = () => {
         />
         <div
           onClick={openAddModal}
-          className="bg-gradient-to-b from-white to-gray-50 rounded-2xl p-4 flex flex-col items-center justify-center cursor-pointer hover:shadow-lg transition border border-gray-200"
+          className="bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-4xl p-4 flex flex-col items-center justify-center cursor-pointer hover:shadow-lg transition"
         >
-          <span className="font-medium text-gray-600 mb-2">
+          <span className="font-medium text-slate-600 mb-2 text-center">
             اكلت طعام غير مجدول
           </span>
-          <GrAddCircle className="text-gray-500 text-2xl" />
+          <GrAddCircle className="text-slate-500 text-2xl" />
         </div>
       </div>
 

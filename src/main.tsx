@@ -9,7 +9,9 @@ import { registerSW } from 'virtual:pwa-register'
 
 registerSW()
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <BrowserRouter>
+<div className="w-screen min-h-screen bg-white dark:bg-gray-950">
+    <BrowserRouter>
     <App />
   </BrowserRouter>
+</div>
 );

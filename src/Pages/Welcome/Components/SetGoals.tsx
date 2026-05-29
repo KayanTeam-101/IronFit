@@ -36,20 +36,19 @@ const S_Goals: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center  bg-gradient-to-br from-sky-100 via-white to-purple-100 p-2">
-      <div className="w-full max-w-lg  backdrop-blur-xl border border-white/50 shadow-2xl rounded-4xl p-8 space-y-2 animate-fadeIn">
+    <div className="min-h-screen flex justify-center  p-2">
+      <div className="w-full max-w-lg  rounded-4xl p-8 space-y-2 ">
         {/* Header */}
         <div className="text-center ">
-          <h1 className='text-3xl relative top-5 text-sky-400 font-extrabold mb-4 text-center '>
+          <h1 className='text-3xl relative  text-sky-400 dark:text-white font-extrabold mb-4 text-center '>
             إيه اهدافك <span className="text-sky-500">؟</span>
           </h1>
-          <p className="text-gray-500 text-sm">اختر هدفك (يمكنك اختيار أكثر من هدف)</p>
         </div>
 
     
 
         {/* Goal selection buttons */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 mt-20">
           {GOALS_DATA.map((goal, idx) => {
             const isSelected = selectedGoal.includes(goal.name);
             const Icon = goal.icon;
@@ -57,10 +56,10 @@ const S_Goals: React.FC = () => {
               <button
                 key={idx}
                 onClick={() => handleToggle(goal.name)}
-                className={`group relative flex flex-col items-center justify-center p-5 rounded-3xl border-2 transition-all duration-300 active:scale-95 ${
+                className={`group relative flex flex-col items-center justify-center p-5 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-3xl border-2 transition-all duration-300 active:scale-95 ${
                   isSelected
-                    ? "bg-gradient-to-br from-sky-400 to-blue-500 border-transparent text-white shadow-xl scale-105"
-                    : "bg-white border-gray-200 text-gray-700 hover:border-sky-300 hover:shadow-lg"
+                    ? "bg-blue-500 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 border-transparent text-white  scale-105"
+                    : "bg-white dark:bg-black/20 dark:text-white dark:border-2 dark:border-gray-600/20 opacity-60 border-gray-200 text-gray-700 hover:border-sky-300 "
                 }`}
               >
                 <Icon
@@ -77,16 +76,7 @@ const S_Goals: React.FC = () => {
           })}
         </div>
 
-        {/* Reset button */}
-        <div className="flex justify-center">
-          <button
-            onClick={reset}
-            className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-gray-100 border border-gray-200 text-gray-600 font-medium hover:bg-red-50 hover:text-red-500 hover:border-red-200 transition-all"
-          >
-            <FaRegCircleDown />
-            إعادة تعيين
-          </button>
-        </div>
+ =
       </div>
     </div>
   );

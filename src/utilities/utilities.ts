@@ -11,7 +11,7 @@ function TranslateHeight(value: number): string {
 }
 
 const Eaten = (dish: string, meal: string) => {
-  if (confirm(`هل  أكلت ${dish} من وجبة ${meal}؟`)) {
+  if (confirm(`  تأكيد_${dish}_${meal}؟`)) {
 
   console.log("StartEaten");
 

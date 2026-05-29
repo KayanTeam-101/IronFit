@@ -181,24 +181,27 @@ const MakeADiet: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50 relative pb-24">
+    <div className="min-h-screen show-first bg-sky-50 dark:bg-slate-950 relative pb-24">
       {/* Header */}
-      <div className="w-full bg-gradient-to-r from-sky-400 to-blue-500 p-12 pt-10 rounded-b-full shadow-xl">
-        <div className="flex items-center gap-3">
-       
-          <h1 className="text-white text-2xl font-bold">اصنع نظامك الغذائي</h1>
-        </div>
-        {/* Quick stats */}
-        <div className="flex justify-between mt-5 text-white/90 text-sm">
+      <div className="w-full bg-gradient-to-b from-sky-400  to-blue-500 dark:from-black/20 dark:to-amber-400/20 dark:border-2 dark:border-gray-600/20 p-12 pt-10 rounded-b-full shadow-xl">
+          <div className="flex justify-between mt-5 text-white/90 text-sm">
           <span>الوزن: {currentWeight} كغ</span>
           <span>الهدف: {targetWeight} كغ</span>
           <span>المدة: {challengePeriod} شهر</span>
+<br />
+
         </div>
+        <div className="flex items-center gap-3">
+       
+          <h1 className="text-white  w-full text-2xl text-center">اصنع نظامك الغذائي</h1>
+        </div>
+        {/* Quick stats */}
+      
       </div>
 
       {/* Progress Ring + Nutrients */}
       <div className="flex flex-col items-center -mt-5 mb-6">
-        <div className="relative w-44 h-44">
+        <div className="relative w-53 h-53">
           <svg
             width="100%"
             height="100%"
@@ -210,7 +213,7 @@ const MakeADiet: React.FC = () => {
               cy="80"
               r={radius}
               fill="none"
-              stroke="rgba(255,255,255,0.6)"
+              stroke="rgba(255,255,255,0.3)"
               strokeWidth="13"
             />
             <circle
@@ -233,19 +236,19 @@ const MakeADiet: React.FC = () => {
             </defs>
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-800">
-            <span className="text-3xl font-extrabold"><span className="text-sm">%</span>{Math.round(progressPercent)}  </span>
+            <span className="text-3xl font-extrabold dark:text-white"><span className="text-sm">%</span>{Math.round(progressPercent)}  </span>
             <div className="flex items-center gap-1 text-sm font-medium mt-1">
-              <FaFire className="text-orange-500" />
-              <span>{dailyCaloriesGoal} / {eatenCalories.toFixed(0)} </span>
+              <FaFire className="text-orange-500 dark:text-white" />
+              <span className="text-[11px] dark:text-white"> أنت تحتاج {dailyCaloriesGoal} </span>
             </div>
             <span className="text-xs text-gray-500 mt-0.5">سعرة</span>
           </div>
         </div>
 
         {/* Protein chip */}
-        <div className="mt-3 flex items-center gap-2 bg-white/70 backdrop-blur-md border border-white/60 px-4 py-2 rounded-full shadow-md">
+        <div className="mt-3 flex items-center gap-2 bg-white/70 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-md border border-white/60 px-4 py-2 rounded-full shadow-md">
           <GiBiceps className="text-teal-500 text-lg" />
-          <span className="font-semibold text-gray-700">
+          <span className="font-semibold text-gray-700 dark:text-white">
             {eatenProtein.toFixed(1)} غرام بروتين
           </span>
         </div>
@@ -257,7 +260,7 @@ const MakeADiet: React.FC = () => {
           <div
             id={`meal-${meal}`}
             key={meal}
-            className="relative bg-white/70 backdrop-blur-lg border border-white/60 shadow-xl rounded-3xl overflow-hidden transition-all duration-500 ease-in-out"
+            className="relative bg-white/70 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-lg border border-white/60 shadow-xl rounded-3xl overflow-hidden transition-all duration-500 ease-in-out"
             style={{ height: "60px" }}
           >
             {/* Header – click to toggle */}
@@ -267,11 +270,11 @@ const MakeADiet: React.FC = () => {
             >
               <div className="flex items-center gap-3">
                 {MEAL_ICONS[meal]}
-                <h2 className="text-xl font-bold text-gray-800">
+                <h2 className="text-xl font-bold text-gray-800 dark:text-white">
                   {MEAL_NAMES_AR[meal]}
                 </h2>
                 {mealPlan[meal][0].length > 0 && (
-                  <span className="text-xs bg-sky-100 text-sky-700 px-2 py-0.5 rounded-full">
+                  <span className="text-xs bg-sky-100 text-sky-700 dark:bg-black/15 dark:text-white px-2 py-0.5 rounded-full">
                     {mealPlan[meal][0].length} أطباق
                   </span>
                 )}
@@ -287,7 +290,7 @@ const MakeADiet: React.FC = () => {
                   e.stopPropagation();
                   addDish(meal);
                 }}
-                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-sky-400 to-blue-500 text-white py-3 rounded-xl font-medium shadow-md hover:shadow-lg active:scale-95 transition"
+                className="w-full flex items-center justify-center gap-2 bg-blue-500 dark:bg-blue-600 text-white py-3 rounded-xl font-medium shadow-md hover:shadow-lg active:scale-95 transition"
               >
                 <BsPlus size={20} /> إضافة طبق
               </button>

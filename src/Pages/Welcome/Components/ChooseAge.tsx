@@ -11,10 +11,10 @@ const ChooseHight : React.FC = () => {
   }; 
 
   return (
-    <div className=' h-11/12 show-first flex items-center justify-between flex-col  ' >
-        <h2 className='text-3xl translate-y-10 text-sky-400 font-extrabold mb-4 text-center '>عندك كام سنة <span className='text-sky-500'>؟</span></h2>
-
-      <CounterY arr={numbers} size='lg' onChange={handleChange} />
+     <div className=' min-h-lvh show-first flex items-center justify-between flex-col  ' >
+       <h2 className='text-3xl translate-y-10 text-sky-400 font-extrabold mb-4 text-center '>عندك كام سنة <span className='text-sky-500'>؟</span></h2>
+      <CounterY arr={numbers} size={window.innerWidth <= 390 ? "md" : "lg"} onChange={handleChange} />
+      <div></div>
     </div>
   )
 }

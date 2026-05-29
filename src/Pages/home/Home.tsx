@@ -4,7 +4,8 @@ import { BiInfoCircle } from "react-icons/bi";
 import ExerciseDay from "./Components/ExcrsiceDay";
 import Table from "./Components/Table";
 import { useMemo } from "react";
-
+import Fire from '../../assets/animatedFire.gif'
+import InstallButton from "./Components/InstallButton";
 
 // ---------- Streak calculator ----------
 const calculateStreak = (): number => {
@@ -79,24 +80,30 @@ const Home = () => {
       <div className="absolute top-10 z-0 w-full h-[400px] opacity-35 blur-3xl bg-gradient-to-r from-sky-400 via-indigo-400 to-teal-300" />
 
       <div className="relative w-full min-h-14 flex flex-col">
-        <div className="text-2xl"><GoHomeFill /></div>
+      <div className="w-full flex flex-row justify-between">
+          <div className="text-2xl"><GoHomeFill className="dark:text-white"/></div>
+        <InstallButton /> 
+        
+      </div>
         <br />
 
         {IsThere_A_Diet ? (
           <>
             {/* Advice card */}
-            <div className="w-full rounded-3xl mb-2 p-5 shadow-sm bg-white flex flex-row gap-2">
-              <FaCookieBite className="text-2xl text-sky-500" />
-              <p className="font-light text-md show-third">{Advice}</p>
+            <div className="w-full rounded-3xl mb-2 p-5 shadow-sm dark:bg-black/20 dark:border-2 dark:border-gray-600/20  bg-white flex flex-row gap-2">
+              <FaCookieBite className="text-2xl text-sky-500 dark:text-amber-300" />
+              <p className="font-light text-md show-third dark:text-white">{Advice}</p>
             </div>
 
             {/* Active streak card */}
-            <div className="rounded-3xl bg-white text-white text-xl font-black tracking-tight flex flex-row justify-between items-center p-5 shadow-sm">
+            <div className="rounded-3xl bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 text-white text-xl font-black tracking-tight flex flex-row justify-between items-center p-5 shadow-sm">
               <p className="flex flex-row bg-gradient-to-r from-rose-300 via-orange-400 to-yellow-400 bg-clip-text text-transparent items-center gap-1">
                 الأيام النشطة 
               </p>
-              <div className="flex bg-gray-50 p-2 rounded-xl items-center gap-2.5">
-                <FaFire className={`text-2xl ${streak > 0 ? "text-amber-500 " : "text-gray-300"}`} />
+              <div className="flex bg-gray-50 dark:bg-transparent p-2 rounded-xl items-center gap-2.5">
+            {streak > 0 ?
+             <img src={Fire} alt="Fire" className="w-6 h-6 animate-pulse" />
+             : <FaFire className="text-gray-400" />}
                 <span className="text-amber-500 font-extrabold mt-1 ">{streak}</span>
               </div>
             </div>
@@ -104,9 +111,9 @@ const Home = () => {
         ) : (
           /* No diet yet – prompt to create one */
           <a href="/me/food">
-            <div className="w-full rounded-2xl mt-1.5 p-5 shadow-sm bg-white flex flex-row gap-2 outline-swealing">
-              <FaBowlFood className="text-2xl text-sky-500" />
-              <p className="font-light text-md show-first">دعنا نصنع أفضل نظام غذائي!</p>
+            <div className="w-full rounded-2xl mt-1.5 p-5 shadow-sm bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 flex flex-row gap-2 outline-swealing">
+              <FaBowlFood className="text-2xl text-amber-300" />
+              <p className="font-light text-md show-first dark:text-white">دعنا نصنع أفضل نظام غذائي!</p>
             </div>
           </a>
         )}

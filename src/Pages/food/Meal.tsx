@@ -92,13 +92,13 @@ const Meal = (props: any) => {
 
   return (
     <div
-      className={`relative bg-white/70 backdrop-blur-lg border border-white/50 shadow-xl rounded-3xl p-6 space-y-5 transition-all duration-500 hover:shadow-2xl ${
-        allEaten ? "ring-2 ring-green-300 shadow-green-100/50" : ""
+      className={`relative bg-white/70 backdrop-blur-lg border dark:bg-black/20 dark:border dark:border-gray-600/20 border-white/50 dark:shadow-none shadow-xl rounded-3xl p-6 space-y-5 transition-all duration-500 hover:shadow-2xl ${
+        allEaten ? "ring-2 ring-teal-500 shadow-green-100/50" : ""
       }`}
     >
       {/* Header with progress ring */}
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+        <h2 className="text-2xl dark:text-white text-gray-800 flex items-center gap-2">
           {mealNamesAr[mealName] || mealName}
           <span className="text-2xl">{mealIcons[mealName] || "🍽️"}</span>
         </h2>
@@ -135,8 +135,10 @@ const Meal = (props: any) => {
             <svg width="0" height="0">
               <defs>
                 <linearGradient id="mealGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#34d399" />
-                  <stop offset="100%" stopColor="#10b981" />
+                      <stop offset="0%" stopColor="#1fb8f6" /> {/* teal-500 */}
+            <stop offset="50%" stopColor="pink" /> {/* blue-600 */}
+            <stop offset="75%" stopColor="skyblue" /> {/* blue-600 */}
+            <stop offset="100%" stopColor="#3b82f6" /> {/* blue-600 */}
                 </linearGradient>
               </defs>
             </svg>
@@ -160,10 +162,10 @@ const Meal = (props: any) => {
               <button
                 key={mealName + "-" + idx}
                 onClick={() => handleToggle(dish)}
-                className={`group relative flex items-center justify-between p-4 rounded-2xl border-2 transition-all duration-300 hover:shadow-lg active:scale-[0.98] ${
+                className={`group relative flex items-center dark:bg-black/20 dark:border-2 dark:border-gray-600/20 justify-between p-4 rounded-2xl transition-all border-2 duration-300 hover:shadow-lg active:scale-[0.98] ${
                   isEaten
-                    ? "bg-green-50 border-green-400 text-green-700 font-bold"
-                    : "bg-gradient-to-r from-green-50 to-sky-50 border-sky-100 hover:border-sky-300"
+                    ? "bg-green-50  dark:text-teal-500 border-green-400 text-green-700 font-bold"
+                    : "bg-gradient-to-r from-green-50 to-sky-50 dark:from-black/30 dark:to-slate-600/20 dark:text-white border-sky-100 hover:border-sky-300"
                 }`}
               >
                 {/* Left side: dish name + weight */}
@@ -177,13 +179,11 @@ const Meal = (props: any) => {
                 {/* Right side: status icon */}
                 <div className="flex items-center gap-2">
                   {isEaten ? (
-                    <FaCheck className="text-xl text-green-500 drop-shadow-sm" />
+                    <FaCheck className="text-xl text-green-500 dark:text-teal-500 drop-shadow-sm" />
                   ) : (
                     <FaRegCircle className="text-xl text-gray-300 group-hover:text-sky-400 transition-colors" />
                   )}
-                  <div className="bg-white p-1.5 rounded-full shadow-sm group-hover:bg-sky-100 transition-colors">
-                    <IoInformationCircle className="text-xl text-gray-400 group-hover:text-sky-500" />
-                  </div>
+               
                 </div>
               </button>
             );
@@ -198,9 +198,9 @@ const Meal = (props: any) => {
       {/* Nutrition chips – dynamic based on actual consumption */}
       <div className="flex flex-wrap gap-2.5">
         <div
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium shadow-sm"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-transparent text-amber-600 rounded-full text-sm font-medium  dark:text-white dark:bg-black"
           style={{
-            background: "linear-gradient(135deg, #fff3c755, #fde68a55)",
+            // background: "linear-gradient(135deg, #fff3c755, #fde68a55)",
             color: "#92400e",
           }}
         >
@@ -208,9 +208,8 @@ const Meal = (props: any) => {
           السعرات: {consumedNutrition.calories.toFixed(1)} 
         </div>
         <div
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium shadow-sm"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-transparent text-amber-600 rounded-full text-sm font-medium  dark:text-white dark:bg-black"
           style={{
-            background: "linear-gradient(135deg, #ccfbf155, #99f6e455)",
             color: "#115e59",
           }}
         >
@@ -223,8 +222,8 @@ const Meal = (props: any) => {
 
       {/* All-eaten celebration */}
       {allEaten && (
-        <div className="absolute -top-2 -right-2 bg-green-400 text-white text-xs px-3 py-1 rounded-full shadow-lg animate-bounce">
-          ✓ مكتملة
+        <div className="absolute -top-0.5 -right-0.5 bg-green-400 text-white text-xs px-3 py-1 rounded-tr-2xl">
+           مكتملة
         </div>
       )}
 
