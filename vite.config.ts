@@ -9,16 +9,16 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
-        name: 'My React PWA',
-        short_name: 'ReactPWA',
-        description: 'My PWA React App',
-        theme_color: '#4f46e5',
+        name: 'Iron Fit',
+        short_name: 'Iron Fit',
+        description: '',
+        theme_color: '#07f',
         background_color: '#ffffff',
         display: 'standalone',
         start_url: '/',
         icons: [
           {
-            src: '/icon-192.png',
+            src: '/icon-512.png',
             sizes: '192x192',
             type: 'image/png'
           },
