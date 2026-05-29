@@ -35,7 +35,7 @@ const Welcome : React.FC= () => {
   }
 
   return (
-    <div className="w-screen h-screen overflow-hidden flex flex-col p-2 m-0 items-center bg-linear-to-b bg-sky-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20">
+    <div className="w-screen h-screen overflow-hidden flex flex-col p-2 m-0 items-center bg-linear-to-b bg-sky-50 dark:bg-black/20 dark:border-2 ">
       <div className="absolute top-10 z-0 w-full h-[400px] opacity-35 blur-3xl bg-gradient-to-r from-sky-400 via-indigo-400 to-teal-300" />
 
       {(() => {
