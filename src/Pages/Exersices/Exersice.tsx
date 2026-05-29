@@ -758,7 +758,7 @@ const ModernAnalysisView: React.FC<{
 // ---------- Settings ----------
 const Settings = () => {
   return (
-    <div className="fixed  show-first top-0 left-0 z-50 w-screen min-h-lvh flex flex-col gap-4 min-h-lvh justify-center items-center bg-black/15 backdrop-blur-sm">
+    <div className="fixed  show-first top-0 left-0 z-50 w-screen  flex flex-col gap-4  justify-center items-center bg-black/15 backdrop-blur-sm">
       <div className="w-10/12 min-h-32 p-5 bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20  rounded-xl">
         <div className="w-full h-full flex flex-col gap-3 justify-around">
           <div className="flex justify-between w-full p-3.5 rounded-lg text-md cursor-pointer dark:text-white activeAnim">
