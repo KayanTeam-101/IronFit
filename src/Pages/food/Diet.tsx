@@ -196,7 +196,6 @@ const Diet = () => {
           current={eatenCalories}
           size={140}
           strokeWidth={12}
-          label="سعرة حرارية"
           goal={Number(localStorage.getItem("dailyCalories") || "0")}
         />
 

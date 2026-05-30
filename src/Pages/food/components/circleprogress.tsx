@@ -1,34 +1,51 @@
-import React, { useMemo } from "react";
+ import React, { useEffect, useState } from "react";
 
 interface CircularProgressProps {
-  goal: number;       // target value (e.g. dailyCalories)
-  current: number;    // actual consumed value
-  size?: number;      // diameter in px (default 150)
+  goal: number;     // e.g. from localStorage 'dailyCalories'
+  current: number;  // e.g. eatenCalories
+  size?: number;    // diameter in px (default 120)
   strokeWidth?: number;
-  label?: string;     // optional label below the ring
 }
 
 const CircularProgress: React.FC<CircularProgressProps> = ({
   goal,
   current,
   size = 150,
-  strokeWidth = 14,
-  label,
+  strokeWidth = 15,
 }) => {
+const [GetSuccessfullDays, SetGetSuccessfullDays] = useState<string[]>(
+  JSON.parse(localStorage.getItem('GetSuccessfullDays') || '[]')
+);
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
-  const percent = useMemo(
-    () => (goal > 0 ? Math.min((current / goal) * 100, 100) : 0),
-    [goal, current]
-  );
+  const percent = goal > 0 ? Math.min((current / goal) * 100, 100) : 0;
   const offset = circumference - (percent / 100) * circumference;
 
+  useEffect(() => {
+    const checkifSuccessfull = () => {
+            if (goal <= current) {
+          const today = new Date();
+          const currentDate = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
+          if (GetSuccessfullDays.includes(currentDate)) {
+            return false
+          }else{
+            const UpdatedData =[...GetSuccessfullDays,currentDate]
+            localStorage.setItem('GetSuccessfullDays',JSON.stringify(UpdatedData))
+            alert('Congratulations! You have achieved your daily calorie goa!')
+          }
+        }
+    }
+    checkifSuccessfull();
+
+  },[])
   return (
-    <div className="relative flex flex-col items-center justify-center">
+    <div className="relative  flex flex-col items-center justify-center">
+      {/* Outer glow ring */}
       <svg
-        width={size}
-        height={size}
-        className="transform -rotate-90 drop-shadow-xl"
+        width={size }
+        height={size  }
+        
+        className="transform -rotate-90 bg-transparent  "
       >
         {/* Background circle */}
         <circle
@@ -36,55 +53,62 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
           cy={size / 2}
           r={radius}
           fill="transparent"
-          className="text-gray-200 dark:text-gray-700"
+          stroke="rgba(245,245,245,.3)"
           strokeWidth={strokeWidth}
-          stroke="currentColor"
         />
-
         {/* Progress circle */}
         <circle
           cx={size / 2}
           cy={size / 2}
           r={radius}
           fill="transparent"
-          stroke="url(#progressGradient)"
+          stroke="url(#gradient)"
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
-          className="transition-all duration-700 ease-out"
+          style={{ transition: "stroke-dashoffset 0.8s ease-in-out" }}
         />
-
-        {/* Gradient – adapts automatically */}
+         <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius - 15}
+          fill="transparent"
+          stroke="url(#gradient)"
+          strokeWidth={strokeWidth }
+          strokeLinecap="round"
+          strokeDasharray={circumference }
+          strokeDashoffset={offset}
+          className="blur-md"
+          style={{ transition: "stroke-dashoffset 0.8s ease-in-out"}}
+        />
+        {/* Gradient definition */}
         <defs>
-          <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#0ea5e9" />   {/* sky-500 */}
-            <stop offset="100%" stopColor="#3b82f6" /> {/* blue-500 */}
+          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#1fb8f6" /> {/* teal-500 */}
+            <stop offset="50%" stopColor="pink" /> {/* blue-600 */}
+            <stop offset="75%" stopColor="skyblue" /> {/* blue-600 */}
+            <stop offset="100%" stopColor="#3b82f6" /> {/* blue-600 */}
           </linearGradient>
         </defs>
       </svg>
 
       {/* Center content */}
       <div
-        className="absolute inset-0 flex flex-col items-center justify-center text-gray-900 dark:text-white"
+        className="absolute dark:text-white bottom-0 flex flex-col items-center justify-center text-black drop-shadow-lg"
         style={{ width: size, height: size }}
       >
-        <div className="flex items-baseline gap-1">
-          <span className="text-3xl font-extrabold tabular-nums">
-            {Math.round(percent)}
-          </span>
-          <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-            %
+        <div className="relative flex items-baseline  gap-1">
+          <span className="text-3xl font-black">{Math.round(percent)}</span>
+          <div className="text-sm  flex-row flex ">%
+
+          </div>
+        </div>
+        <div className="flex items-center gap-1 mt-1 text-xs font-medium text-black">
+          <span  className="dark:text-white text-slate-800">
+            {goal.toFixed(0)} / {current.toFixed(0)} 
           </span>
         </div>
-        <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mt-1">
-          {current.toFixed(0)} / {goal.toFixed(0)}
-        </div>
-        {label && (
-          <span className="text-xs mt-1 text-gray-400 dark:text-gray-500">
-            {label}
-          </span>
-        )}
       </div>
     </div>
   );
