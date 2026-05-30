@@ -388,10 +388,16 @@ useEffect(() => {
       <div className="px-4 mb-6">
                <div className="w-full rounded-3xl mb-2 p-5 shadow-sm dark:bg-black/20 dark:border-2 dark:border-gray-600/20  bg-white flex flex-row gap-2">
                        <FaCookieBite className="text-2xl text-sky-500 dark:text-amber-300" />
-                       <p className="font-light text-md show-third dark:text-white">Advice</p>
+                       <p className="font-light text-md show-third dark:text-white">ساعات الاكل بيبقا الاكل اهم من التمرين!</p>
                      </div>
         {todayWorkout ? (
           <>
+              <div className="relative top-50">
+                 <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-72 h-72 bg-sky-400 rounded-full opacity-20 blur-3xl animate-pulse" />
+      <div className="absolute top-0 left-0 w-48 h-48 bg-indigo-400 rounded-full opacity-20 blur-3xl animate-pulse delay-1000" />
+      <div className="absolute bottom-0 right-0 w-56 h-56 bg-teal-400 rounded-full opacity-20 blur-3xl animate-pulse delay-2000" />
+
+              </div>
             <div className="relative z-20 min-h-[250px] w-full p-5 bg-blue-500 dark:bg-black/20 dark:border-2 dark:border-gray-600/20  rounded-2xl border border-sky-50 flex flex-col gap-4 transition-all hover:shadow-lg">
               <div className="flex flex-row items-center justify-between">
                 <span className="text-white/80 text-sm">تمرين اليوم</span>
@@ -446,7 +452,7 @@ useEffect(() => {
               <div
                 key={idx}
                 className={`snap-center flex dark:bg-black/20 dark:border-2 dark:border-gray-600/20  justify-between flex-col shrink-0 w-full min-h-80 relative bg-white/70 backdrop-blur-lg border border-white/50 shadow-2xl rounded-xl p-5 space-y-4 transition-all hover:shadow-2xl ${
-                  idx === currentDayIndex ? "ring-2 ring-sky-400" : ""
+                  idx === currentDayIndex ? "ring-4 ring-sky-400/20" : ""
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -758,7 +764,7 @@ const ModernAnalysisView: React.FC<{
 // ---------- Settings ----------
 const Settings = () => {
   return (
-    <div className="fixed  show-first top-0 left-0 z-50 w-screen  flex flex-col gap-4  justify-center items-center bg-black/15 backdrop-blur-sm">
+    <div className="fixed min-h-screen  show-first top-0 transform-none left-0 z-50 w-screen  flex flex-col gap-4  justify-center items-center bg-black/15 backdrop-blur-sm">
       <div className="w-10/12 min-h-32 p-5 bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20  rounded-xl">
         <div className="w-full h-full flex flex-col gap-3 justify-around">
           <div className="flex justify-between w-full p-3.5 rounded-lg text-md cursor-pointer dark:text-white activeAnim">

@@ -24,17 +24,17 @@ const Navbar = () => {
           <p className='text-[12px] mt-2'>نظامي </p>
           
         </NavLink>
-        <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white " to="/exercises">
+        <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white " to="/me/exercises">
           <FaPersonRunning />
           <p className='text-[12px] mt-2'>التمارين</p>
 
         </NavLink>
-        <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white " to="/myStats">
+        <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white " to="/myStatus">
           <FaChartSimple />
           <p className='text-[12px] mt-2'>الاحصائيات</p>
 
         </NavLink>
-         <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white " to="/myStats">
+         <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white " to="/Settings">
           <LuSettings2 />
           <p className='text-[12px] mt-2'>الأعدادات</p>
         </NavLink>

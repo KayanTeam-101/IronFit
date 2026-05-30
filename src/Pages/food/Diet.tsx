@@ -194,8 +194,12 @@ const Diet = () => {
       <div className="grid grid-cols-2 p-2 mb-6">
         <CircularProgress
           current={eatenCalories}
+          size={140}
+          strokeWidth={12}
+          label="سعرة حرارية"
           goal={Number(localStorage.getItem("dailyCalories") || "0")}
         />
+
         <div
           onClick={openAddModal}
           className="bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-4xl p-4 flex flex-col items-center justify-center cursor-pointer hover:shadow-lg transition"
