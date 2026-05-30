@@ -12,15 +12,15 @@ export default defineConfig({
         name: 'Iron Fit',
         short_name: 'Iron Fit',
         description: '',
-        theme_color: '#07f',
+        theme_color: '#0077ff',
         background_color: '#ffffff',
         display: 'standalone',
         start_url: '/',
         icons: [
           {
-            src: '/icon-512.png',
+            src: '/logo_192.jpg',
             sizes: '192x192',
-            type: 'image/png'
+            type: 'image/jpeg'
           },
           {
             src: '/icon-512.png',
