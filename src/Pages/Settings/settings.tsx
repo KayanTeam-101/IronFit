@@ -157,6 +157,9 @@ const Settings = () => {
           </button>
         </div>
       </div>
+      <div className="relative top-10 w-screen h-fit flex flex-row text-gray-400 dark:text-white/50">
+            <p>الإصدار : <span>Beta v1.2</span></p>
+      </div>
     </div>
   );
 };

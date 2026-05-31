@@ -84,7 +84,7 @@ const Home = () => {
           <div className="text-2xl flex flex-row gap-1.5">
             <GoHomeFill className="dark:text-white"/>
             <div className="p-0.5 bg-linear-to-r bg-clip-text  from-indigo-600 via-blue-500  to-pink-500 felx justify-center align-center rounded-full text-sm text-transparent font-bold">
-  Beta نسخة أبتدائية - 
+  Beta نسخة إبتدائية - 
   <br />
 <a href="https://www.tiktok.com/@iron_fit_app" target="_blank" rel="noopener noreferrer" className="underline text-sky-500">
   شاركنا رأيك
