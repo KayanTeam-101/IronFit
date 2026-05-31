@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { BsBrowserChrome } from "react-icons/bs";
 import { MdInstallMobile } from "react-icons/md";
 
 function InstallButton() {
@@ -66,21 +67,30 @@ function InstallButton() {
     setShowButton(false);
   };
 
+  if (isTikTok) {
+    alert("تطبيقنا غير متاح للتثبيت داخل تيك توك. يرجى الضغط على زر \"الذهاب للمتصفح\" لفتح الموقع في المتصفح الخارجي حيث يمكنك تحميل التطبيق بسهولة.");
+  }
   // إذا لم يتحقق أي شرط (متصفح لا يدعم PWA أو لم يظهر الحدث بعد)، لا يتم عرض الزر
-  if (!showButton) return null;
+  if (!showButton) {
+    return null;
+  };
 
   return (
     <button
       onClick={handleAction}
       className={`${
         isTikTok 
-          ? "bg-red-500 hover:bg-red-600 animate-pulse outline-swealing" // شكل الزر داخل تيك توك
+          ? "bg-red-500 hover:bg-sky-600 dark:bg-rose-400 animate-pulse outline-swealing" // شكل الزر داخل تيك توك
           : "bg-blue-500 hover:bg-blue-600"            // شكل الزر في المتصفح العادي
       } dark:bg-black/20 dark:border-2 dark:border-gray-600/20 text-white px-4 py-2 rounded-xl flex items-center justify-center gap-2`}
     >
       {/* تغيير نص الزر ديناميكياً بناءً على مكان تصفح المستخدم */}
       {isTikTok ? "الذهاب للمتصفح" : "حمل التطبيق"}
-      <MdInstallMobile className="inline-block" />
+      {isTikTok ? (
+        <BsBrowserChrome className="text-lg" />
+      ) : (
+        <MdInstallMobile className="text-lg" />
+      )}
     </button>
   );
 }
