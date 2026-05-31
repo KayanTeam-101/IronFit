@@ -57,7 +57,7 @@ const SetNextDay = () => {
     <h1 className='text-3xl text-white font-bold mb-2'>لم تقم باختيار أيام التمرين بعد! <div><GiShoulderArmor className='absolute text-9xl scale-200 left-0 top-0 opacity-20'/></div></h1>
 <div className='absolute -left-1 -top-2 w-full h-full  '></div>
 </div>
-    <a href="/me/exercise">
+    <a href="/me/exercises">
     <button className='flex items-center gap-2 bg-white p-3 shadow-2xl w-fit rounded-xl text-sky-500 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-slate-300 font-bold'>
       اختر أيام التمرين <FaArrowRight />
     </button>
