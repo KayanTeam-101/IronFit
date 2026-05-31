@@ -74,6 +74,9 @@ const CounterY = ({ arr, size = "md", value, delValue, onChange }: CounterYProps
     const selectedValue = finalArr[snappedIndex];
     if (selectedValue !== undefined) {
       onChange?.(selectedValue);
+      if (navigator.vibrate) {
+        navigator.vibrate(30); 
+      }
     }
     lastOffset.current = snappedOffset;
     setOffset(snappedOffset);
