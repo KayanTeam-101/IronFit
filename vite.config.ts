@@ -11,7 +11,7 @@ export default defineConfig({
       manifest: {
         name: 'Iron Fit',
         short_name: 'Iron Fit',
-        description: '',
+        description: 'Fitness and diet tracking',
         theme_color: '#0077ff',
         background_color: '#ffffff',
         display: 'standalone',
@@ -24,9 +24,9 @@ export default defineConfig({
             purpose: 'any maskable'
           },
           {
-            src: '/icon-512.png',
+            src: '/logo_512.jpg',
             sizes: '512x512',
-            type: 'image/png',
+            type: 'image/jpeg',
             purpose: 'any maskable'
           }
         ]

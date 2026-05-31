@@ -3,6 +3,7 @@ import { FaArrowLeft, FaBowlFood } from 'react-icons/fa6';
 import Diet from './Diet';
 const FoodPage = () => {
   const IsThere_A_Diet : string | null = localStorage.getItem('Diet') || null;
+  const IsValid = IsThere_A_Diet ? (JSON.parse(IsThere_A_Diet) && IsThere_A_Diet.length > 130) : null;
   return (
     <div className='relative show-first min-h-screen max-w-screen p-5 flex flex-col gap-5  '>
       

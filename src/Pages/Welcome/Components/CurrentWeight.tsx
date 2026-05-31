@@ -12,10 +12,9 @@ const ChooseHight : React.FC = () => {
       }; 
 
   return (
-    <div className='  show-first flex items-center justify-between flex-col  ' >
+    <div className='  show-first flex items-center justify-around flex-col  ' >
         <h2 className='text-3xl translate-y-10 text-sky-400 font-extrabold mb-4 text-center '> ايه وزنك الحالي بالـ كجم <span className='text-sky-500'>؟</span></h2>
-      <CounterY arr={numbers} size={window.innerWidth <= 390 ? "md" : "lg"} onChange={handleChange} />
-      <div></div>
+       <CounterY arr={numbers} size={window.innerWidth <= 390 ? "md" : "lg"} onChange={handleChange} />
     </div>
   )
 }
