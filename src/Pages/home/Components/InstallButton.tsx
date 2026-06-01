@@ -66,7 +66,7 @@ function InstallButton() {
     <div className="flex flex-col items-center gap-3">
       {/* عرض التنبيه كنص في الواجهة بدلاً من نافذة مزعجة قد يتم حظرها */}
       {isTikTok && (
-        <p className="text-sm text-red-600 bg-red-100 p-3 rounded-lg text-center max-w-xs border border-red-200">
+        <p className="text-sm text-rose-600 bg-rose-100 p-3 rounded-lg text-center max-w-xs border border-rose-200 animate-pulse">
           تطبيقنا غير متاح للتثبيت المباشر هنا. يرجى الضغط على الزر أدناه لفتح الموقع في متصفحك الخارجي.
         </p>
       )}
@@ -75,13 +75,13 @@ function InstallButton() {
         onClick={handleAction}
         className={`${
           isTikTok 
-            ? "bg-red-500 hover:bg-red-600 animate-pulse" 
+            ? "bg-rose-500 hover:bg-rose-600 animate-pulse" 
             : "bg-blue-500 hover:bg-blue-600"            
         } dark:bg-black/20 dark:border-2 dark:border-gray-600/20 text-white px-4 py-2 rounded-xl flex items-center justify-center gap-2 transition-all w-full max-w-xs`}
       >
         {isTikTok ? "الذهاب للمتصفح" : "حمل التطبيق"}
         {isTikTok ? (
-          <BsBrowserChrome className="text-lg" />
+          ""
         ) : (
           <MdInstallMobile className="text-lg" />
         )}

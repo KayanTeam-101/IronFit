@@ -73,13 +73,13 @@ const CounterY = ({ arr, size = "md", value, delValue, onChange }: CounterYProps
     const snappedOffset = snappedIndex * ITEM_HEIGHT;
     const selectedValue = finalArr[snappedIndex];
     if (selectedValue !== undefined) {
-      onChange?.(selectedValue);
-      if (navigator.vibrate) {
-        navigator.vibrate(30); 
-      }
+      onChange?.(selectedValue); 
     }
     lastOffset.current = snappedOffset;
     setOffset(snappedOffset);
+    if (navigator.vibrate) {
+        navigator.vibrate(30); 
+      }
   }, [offset, ITEM_HEIGHT, finalArr, onChange]);
 
   return (
