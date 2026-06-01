@@ -3,7 +3,7 @@ import { FaBowlFood, FaCookieBite, FaFire } from "react-icons/fa6";
 import { BiInfoCircle } from "react-icons/bi";
 import ExerciseDay from "./Components/ExcrsiceDay";
 import Table from "./Components/Table";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import Fire from '../../assets/animatedFire.gif'
 import InstallButton from "./Components/InstallButton";
 import StatusPage from "../StatusPage/StatusPage";
@@ -70,6 +70,41 @@ const Home = () => {
   } else {
     localStorage.setItem("isFirstTime", "false");
   }
+    const currentWeight = Number(localStorage.getItem("currentWeight") || 0);
+    const targetWeight = Number(localStorage.getItem("targetWeight") || 0);
+    const height = Number(localStorage.getItem("height") || 0);
+    const age = Number(localStorage.getItem("age") || 0);
+    const challengePeriod = Number(localStorage.getItem("challengePeriod") || 0);
+    const gender = localStorage.getItem("SelectedGender") || "";
+  
+    // Calculate daily calorie goal once
+    const dailyCaloriesGoal = useMemo(() => {
+      if (!challengePeriod || challengePeriod <= 0) return 0;
+  
+      let bmr: number;
+      if (gender === "ذكر") {
+        bmr = 10 * currentWeight + 6.25 * height - 5 * age + 5;
+      } else {
+        bmr = 10 * currentWeight + 6.25 * height - 5 * age - 161;
+      }
+  
+      const tdee = bmr * 1.5; // activity factor
+      const weightDiff = targetWeight - currentWeight;
+      const totalCaloriesNeeded = weightDiff * 7700;
+      const days = challengePeriod * 30;
+  
+      if (days === 0) return Math.round(tdee);
+      const daily = tdee + totalCaloriesNeeded / days;
+      localStorage.setItem("dailyCalories", Math.round(daily).toString());
+      return Math.round(daily);
+    }, [currentWeight, targetWeight, height, age, challengePeriod, gender]);
+  
+    useEffect(() => {
+    if (dailyCaloriesGoal > 0) {
+      localStorage.setItem("dailyCalories", dailyCaloriesGoal.toString());
+    }
+  }, [dailyCaloriesGoal]);
+
 
   const IsThere_A_Diet = localStorage.getItem("Diet");
   const streak = useMemo(() => calculateStreak(), []);
