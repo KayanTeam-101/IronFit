@@ -232,15 +232,15 @@ useEffect(() => {
         weekday: item.weekday,
         workout: item.workout,
         exercises: getWorkoutExercises(item.workout),
-        completedToday:
-          completedDates.includes(todayDateStr) 
+     completedToday:
+  completedDates.includes(todayDateStr) && item.dayIndex === todayIndex,
       }));
       setDays(loadedDays);
       setShowSystemModal(false);
     } else {
       setDays([]);
     }
-  }, [schedule, todayDateStr]);
+  }, [schedule, todayDateStr,todayIndex]);
 
   // Handlers
   const handleSystemSelect = (chosen: SystemName) => {
@@ -481,7 +481,7 @@ useEffect(() => {
                           {ex.weight} كغ
                         </span>
                         <span
-                          className="font-medium cursor-pointer text-gray-700 truncate flex-1"
+                          className="font-medium cursor-pointer dark:text-white text-gray-700 truncate flex-1"
                           onClick={() => handleShowAnalysis(ex.name)}
                         >
                           {ex.name}

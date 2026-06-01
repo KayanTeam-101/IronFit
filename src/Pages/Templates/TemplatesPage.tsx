@@ -669,6 +669,8 @@ const TemplatesPage: React.FC = () => {
   const openDietPreview = (template: DietTemplate) => setSelectedDiet(template);
   const openExercisePreview = (template: ExerciseTemplate) => setSelectedExercise(template);
 
+  
+
   const applyDietTemplate = (template: DietTemplate) => {
     const dietObj: any = {};
     (Object.keys(template.meals) as Array<keyof typeof template.meals>).forEach(mealKey => {
@@ -696,21 +698,62 @@ const TemplatesPage: React.FC = () => {
     setSuccessMessage("تم تطبيق القالب الغذائي بنجاح!");
     setTimeout(() => setSuccessMessage(""), 3000);
   };
+// At the top of TemplatesPage, add this constant for default weekdays
+const DEFAULT_WEEKDAYS = [
+  "السبت",
+  "الأحد",
+  "الإثنين",
+  "الثلاثاء",
+  "الأربعاء",
+  "الخميس",
+  "الجمعة",
+];
 
-  const applyExerciseTemplate = (template: ExerciseTemplate) => {
-    const dayNames = template.days.map(d => d.dayName);
-    localStorage.setItem("SelectedDays", JSON.stringify(dayNames));
-    localStorage.setItem("SystemOfExercise", "بروسبلت"); // generic
-    localStorage.setItem("SystemStartDate", new Date().toISOString().slice(0, 10));
-    template.days.forEach(day => {
-      const key = `exercises_workout_${day.dayName}`;
-      const exercises = day.exercises.map(ex => ({ name: ex.name, weight: ex.weight }));
-      localStorage.setItem(key, JSON.stringify(exercises));
-    });
-    setSuccessMessage("تم تطبيق قالب التمارين بنجاح!");
-    setTimeout(() => setSuccessMessage(""), 3000);
-  };
+// Inside the component, replace the old applyExerciseTemplate with:
+const applyExerciseTemplate = (template: ExerciseTemplate) => {
+  // 1. Determine which weekdays to assign
+  let existingSelectedDays: string[] = [];
+  try {
+    const raw = localStorage.getItem("SelectedDays");
+    existingSelectedDays = raw ? JSON.parse(raw) : [];
+  } catch {
+    existingSelectedDays = [];
+  }
 
+  const neededDays = template.days.length;
+  let chosenDays: string[];
+
+  // If the user already has enough weekdays selected, reuse the first N
+  if (existingSelectedDays.length >= neededDays) {
+    chosenDays = existingSelectedDays.slice(0, neededDays);
+  } else {
+    // Otherwise use the default weekdays (Saturday → Friday) – enough days
+    chosenDays = DEFAULT_WEEKDAYS.slice(0, neededDays);
+  }
+
+  // 2. Save the chosen weekdays as "SelectedDays"
+  localStorage.setItem("SelectedDays", JSON.stringify(chosenDays));
+
+  // 3. Set a generic system (it’s not used for workout names because we store per workout, but the page expects a system)
+  localStorage.setItem("SystemOfExercise", "بروسبلت");
+  localStorage.setItem(
+    "SystemStartDate",
+    new Date().toISOString().slice(0, 10)
+  );
+
+  // 4. Save exercises per workout name (template day name, e.g., "Push")
+  template.days.forEach((day) => {
+    const key = `exercises_workout_${day.dayName}`; // matches LS_KEYS in exercise page
+    const exercises = day.exercises.map((ex) => ({
+      name: ex.name,
+      weight: ex.weight,
+    }));
+    localStorage.setItem(key, JSON.stringify(exercises));
+  });
+
+  setSuccessMessage("تم تطبيق قالب التمارين بنجاح!");
+  setTimeout(() => setSuccessMessage(""), 3000);
+};
   const dietNutrition = useMemo(() => {
     if (!selectedDiet) return null;
     return calcTotalNutrition(selectedDiet.meals);
