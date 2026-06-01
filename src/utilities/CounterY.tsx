@@ -49,6 +49,9 @@ const CounterY = ({ arr, size = "md", value, delValue, onChange }: CounterYProps
     const newOffset = indexFromValue(value) * ITEM_HEIGHT;
     setOffset(newOffset);
     lastOffset.current = newOffset;
+    if (navigator.vibrate) {
+        navigator.vibrate(30); 
+      }
   }, [value, indexFromValue]);
 
   // Optimized touch handlers - use useCallback
