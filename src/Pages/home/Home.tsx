@@ -6,6 +6,7 @@ import Table from "./Components/Table";
 import { useMemo } from "react";
 import Fire from '../../assets/animatedFire.gif'
 import InstallButton from "./Components/InstallButton";
+import StatusPage from "../StatusPage/StatusPage";
 
 // ---------- Streak calculator ----------
 const calculateStreak = (): number => {
@@ -130,6 +131,7 @@ const Home = () => {
 
       <ExerciseDay />
       <Table />
+      <StatusPage />
       <div className="h-14" />
     </div>
   );

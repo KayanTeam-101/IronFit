@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import ExercisePage from "./Pages/Exersices/Exersice";
 import StatusPage from "./Pages/StatusPage/StatusPage";
 import Settings from "./Pages/Settings/settings";
+import TemplatesPage from "./Pages/Templates/TemplatesPage";
 
 function App() {
   const isFirstTime: boolean = localStorage.getItem("isFirstTime") === null;
@@ -102,7 +103,7 @@ function App() {
         <Route path="/me/food" element={<FoodPage />} />
         <Route path="/mkAdiet" element={<MakeADiet />} />
         <Route path="/me/exercises" element={<ExercisePage />} />
-        <Route path="/myStatus" element={<StatusPage />} />
+        <Route path="/Templates" element={<TemplatesPage />} />
         <Route path="/Settings" element={<Settings />} />
         <Route
           path="*"

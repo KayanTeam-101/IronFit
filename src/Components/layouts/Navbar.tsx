@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { GoHomeFill } from 'react-icons/go'
+import { GoHomeFill, GoRepoTemplate } from 'react-icons/go'
 import { FaChartSimple } from "react-icons/fa6";
 import { FaPersonRunning } from "react-icons/fa6";
 import { FaBowlFood } from "react-icons/fa6";
@@ -29,9 +29,9 @@ const Navbar = () => {
           <p className='text-[12px] mt-2'>التمارين</p>
 
         </NavLink>
-        <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white " to="/myStatus">
-          <FaChartSimple />
-          <p className='text-[12px] mt-2'>الاحصائيات</p>
+        <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white " to="/Templates">
+          <GoRepoTemplate />
+          <p className='text-[12px] mt-2'>قوالب</p>
 
         </NavLink>
          <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white " to="/Settings">

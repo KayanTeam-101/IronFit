@@ -236,9 +236,8 @@ const StatusPage: React.FC = () => {
     "bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 shadow-sm rounded-3xl p-4 backdrop-blur-md hover:shadow-xl transition-all";
 
   return (
-    <div className="min-h-screen show-first z-0 bg-blue-50 to-indigo-50 dark:bg-gray-950  p-3 sm:p-5 font-arabic relative overflow-hidden">
+    <div className="min-h-screen show-first z-0 bg-blue-50 to-indigo-50 dark:bg-gray-950   sm:p-5 font-arabic relative overflow-hidden">
       {/* Decorative blur */}
-      <div className="absolute top-10 z-0 w-full h-[400px] opacity-35 blur-3xl bg-gradient-to-r from-sky-400 via-indigo-400 to-teal-300 dark:from-sky-600 dark:via-indigo-600 dark:to-teal-600" />
 
         
       <div className="relative z-10">
@@ -293,25 +292,14 @@ const StatusPage: React.FC = () => {
         </div>
         {/* Circular Progress Rings Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
-          {/* Weight Ring */}
-          <div className={`${cardStyle} flex justify-center`}>
-            <CircularProgress
-              value={userData.currentWeight}
-              max={userData.targetWeight}
-              label="الوزن الحالي"
-              unit="كجم"
-              color="#0ea5e9"
-              icon={<FaWeight className="text-sky-500" />}
-              subText={`المستهدف ${userData.targetWeight} كجم`}
-            />
-          </div>
+     
 
           {/* Daily Calories Ring */}
           <div className={`${cardStyle} flex justify-center`}>
             <CircularProgress
               value={userData.dailyCalories}
               max={localStorage.getItem("dailyCalories") ? Number(localStorage.getItem("dailyCalories")) : 0}
-              label="السعرات اليومية"
+              label="س.ع المستهدفة"
               unit="سعرة"
               color="#f97316"
               icon={<FaFire className="text-orange-400" />}
@@ -331,18 +319,7 @@ const StatusPage: React.FC = () => {
             />
           </div>
 
-          {/* Exercise Streak Ring */}
-          <div className={`${cardStyle} flex justify-center`}>
-            <CircularProgress
-              value={streak}
-              max={7}
-              label="الأيام النشطة"
-              unit="يوم"
-              color="#10b981"
-              icon={<FaRunning className="text-green-500" />}
-              subText={streak > 0 ? "مستمر!" : "ابدأ اليوم"}
-            />
-          </div>
+       
 
           {/* BMR Ring (derived) */}
           <div className={`${cardStyle} flex justify-center`}>
@@ -370,18 +347,7 @@ const StatusPage: React.FC = () => {
             />
           </div>
 
-          {/* Height Ring (static) */}
-          <div className={`${cardStyle} flex justify-center`}>
-            <CircularProgress
-              value={userData.height}
-              max={200}
-              label="الطول"
-              unit="سم"
-              color="#ec4899"
-              icon={<FaRulerVertical className="text-pink-500" />}
-              subText={`المثالي بين ${idealRange[0]}-${idealRange[1]} كجم`}
-            />
-          </div>
+          
 
           {/* Water Intake Ring (place holder - if you store water) */}
           <div className={`${cardStyle} flex justify-center`}>
@@ -396,8 +362,6 @@ const StatusPage: React.FC = () => {
             />
           </div>
         </div>
-
-
 
         {/* Bottom spacer for mobile nav */}
         <div className="h-16" />
