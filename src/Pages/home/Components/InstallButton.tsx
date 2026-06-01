@@ -32,7 +32,13 @@ function InstallButton() {
       window.removeEventListener("beforeinstallprompt", handler);
     };
   }, []);
-
+  useEffect(() => {
+  // إذا لم يكن تيك توك، أظهر الزر بعد ثانية احتياطاً
+  if (!isTikTok) {
+    const timer = setTimeout(() => setShowButton(true), 1000);
+    return () => clearTimeout(timer);
+  }
+}, [isTikTok]);
   const handleAction = async () => {
     if (isTikTok) {
       const currentUrl = window.location.href;
