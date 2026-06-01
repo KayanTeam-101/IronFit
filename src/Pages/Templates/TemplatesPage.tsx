@@ -300,8 +300,8 @@ const DIET_TEMPLATES: DietTemplate[] = [
   },
   {
     id: "d8",
-    name: "مصري تقليدي 2800 سعرة",
-    description: "نظام غذائي مصري متكامل ومتوازن",
+    name: " تقليدي 2800 سعرة",
+    description: "نظام غذائي  متكامل ومتوازن",
     type: "maintenance",
     meals: {
       Breakfast: [
