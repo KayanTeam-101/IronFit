@@ -724,7 +724,14 @@ const TemplatesPage: React.FC = () => {
   const openDietPreview = (template: DietTemplate) => setSelectedDiet(template);
   const openExercisePreview = (template: ExerciseTemplate) => setSelectedExercise(template);
 
-  
+  // ---------- Systems (same as ExercisePage) ----------
+type SystemName = "ارنو سبلت" | "بروسبلت" | "بوش بون ليج";
+
+const SYSTEMS: Record<SystemName, string[]> = {
+  "ارنو سبلت": ["صدر وظهر", "أكتاف وذراعين", "أرجل"],
+  "بروسبلت": ["صدر", "ظهر", "أكتاف", "ذراعين", "أرجل"],
+  "بوش بون ليج": ["بوش", "بول", "ليجز"],
+};
 
   const applyDietTemplate = (template: DietTemplate) => {
     const Confirm = window.confirm("هل أنت متأكد أنك تريد تطبيق هذا القالب الغذائي؟ سيحل محل نظامك الحالي.");
@@ -766,14 +773,38 @@ const DEFAULT_WEEKDAYS = [
   "الجمعة",
 ];
 
-// Inside the component, replace the old applyExerciseTemplate with:
+
+
+
+
+
+
+
+
+
 const applyExerciseTemplate = (template: ExerciseTemplate) => {
-  const Confirm = window.confirm("هل أنت متأكد أنك تريد تطبيق هذا القالب التمريني؟ سيحل محل نظامك الحالي.");
+  const Confirm = window.confirm(
+    "هل أنت متأكد أنك تريد تطبيق هذا القالب التمريني؟ سيحل محل نظامك الحالي."
+  );
   if (!Confirm) return;
 
-  // 1. Determine which weekdays to assign
-   localStorage.removeItem("SystemOfExercise");
-              localStorage.removeItem("SelectedDays");
+  // 1. نظام التمرين اللي هنستخدمه (بروسبلت لأنه بيحتوي على ٥ تمارين)
+  const systemName: SystemName = "بروسبلت";
+  const systemWorkouts = SYSTEMS[systemName]; // ["صدر", "ظهر", "أكتاف", "ذراعين", "أرجل"]
+
+  // 2. عدد أيام القالب
+  const neededDays = template.days.length;
+
+  // 3. اختيار أيام الأسبوع العربية (بترتيبها الطبيعي)
+  const DEFAULT_WEEKDAYS = [
+    "السبت",
+    "الأحد",
+    "الإثنين",
+    "الثلاثاء",
+    "الأربعاء",
+    "الخميس",
+    "الجمعة",
+  ];
   let existingSelectedDays: string[] = [];
   try {
     const raw = localStorage.getItem("SelectedDays");
@@ -782,31 +813,29 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
     existingSelectedDays = [];
   }
 
-  const neededDays = template.days.length;
-  let chosenDays: string[];
-
-  // If the user already has enough weekdays selected, reuse the first N
+  let chosenWeekdays: string[];
   if (existingSelectedDays.length >= neededDays) {
-    chosenDays = existingSelectedDays.slice(0, neededDays);
+    chosenWeekdays = existingSelectedDays.slice(0, neededDays);
   } else {
-    // Otherwise use the default weekdays (Saturday → Friday) – enough days
-    chosenDays = DEFAULT_WEEKDAYS.slice(0, neededDays);
+    chosenWeekdays = DEFAULT_WEEKDAYS.slice(0, neededDays);
   }
 
-  // 2. Save the chosen weekdays as "SelectedDays"
-  localStorage.setItem("SelectedDays", JSON.stringify(chosenDays));
+  // 4. أسماء التمارين من النظام (نفس عدد أيام القالب)
+  const chosenWorkouts = systemWorkouts.slice(0, neededDays); // مثلاً: ["صدر", "ظهر", "أكتاف"]
 
-  // 3. Set a generic system (it’s not used for workout names because we store per workout, but the page expects a system)
-  localStorage.setItem("SystemOfExercise", "بروسبلت");
+  // 5. حفظ البيانات في localStorage
+  localStorage.setItem("SystemOfExercise", systemName);
+  localStorage.setItem("SelectedDays", JSON.stringify(chosenWeekdays));
   localStorage.setItem(
     "SystemStartDate",
     new Date().toISOString().slice(0, 10)
   );
 
-  // 4. Save exercises per workout name (template day name, e.g., "Push")
-  template.days.forEach((day) => {
-    const key = `exercises_workout_${day.dayName}`; // matches LS_KEYS in exercise page
-    const exercises = day.exercises.map((ex) => ({
+  // 6. تخزين تمارين القالب تحت اسم التمرين العربي الصحيح
+  template.days.forEach((templateDay, index) => {
+    const workoutName = chosenWorkouts[index]; // "صدر" أو "ظهر" أو "أكتاف" إلخ
+    const key = `exercises_workout_${workoutName}`; // نفس مفتاح LS_KEYS في ExercisePage
+    const exercises = templateDay.exercises.map((ex) => ({
       name: ex.name,
       weight: ex.weight,
     }));
@@ -816,6 +845,19 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
   setSuccessMessage("تم تطبيق قالب التمارين بنجاح!");
   setTimeout(() => setSuccessMessage(""), 3000);
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
   const dietNutrition = useMemo(() => {
     if (!selectedDiet) return null;
     return calcTotalNutrition(selectedDiet.meals);
