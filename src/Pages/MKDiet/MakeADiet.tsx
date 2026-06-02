@@ -252,8 +252,13 @@ const MakeADiet: React.FC = () => {
             {eatenProtein.toFixed(1)} غرام بروتين
           </span>
         </div>
+      
       </div>
-
+    <div className="p-4 flex items-center justify-center w-screen ">
+        <div className="bg-amber-300/20 border border-amber-400/50 rounded-xl w-11/12 p-2 text-white  min-h-10 ">
+ مكسل تعمل دايت؟! تقدر تجرب القوالب الغذائية الجاهزة من <span onClick={() => window.location.href = "/templates"} className="text-amber-400 cursor-pointer underline">هنا</span>
+    </div>
+    </div>
       {/* Meal Cards */}
       <div className="px-4 space-y-4">
         {(Object.keys(mealPlan) as MealKey[]).map((meal) => (

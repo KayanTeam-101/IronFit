@@ -1,10 +1,7 @@
-import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { GoHomeFill, GoRepoTemplate } from 'react-icons/go'
-import { FaChartSimple } from "react-icons/fa6";
 import { FaPersonRunning } from "react-icons/fa6";
-import { FaBowlFood } from "react-icons/fa6";
-import { LuSettings2 } from 'react-icons/lu';
+import { LuLayoutTemplate, LuSettings2 } from 'react-icons/lu';
 import { FaAppleAlt } from 'react-icons/fa';
 
 const Navbar = () => {
@@ -30,7 +27,7 @@ const Navbar = () => {
 
         </NavLink>
         <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white " to="/Templates">
-          <GoRepoTemplate />
+          <LuLayoutTemplate />
           <p className='text-[12px] mt-2'>قوالب</p>
 
         </NavLink>

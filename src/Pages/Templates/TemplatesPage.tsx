@@ -326,6 +326,61 @@ const DIET_TEMPLATES: DietTemplate[] = [
       ],
     },
   },
+  {
+  id: "d9",
+  name: "الطيبات 1 - 2800 سعرة",
+  description: "نظام مستوحى من مسموحات الطيبات",
+  type: "maintenance",
+  meals: {
+    Breakfast: [
+      { foodName: "أرز أبيض مطبوخ", grams: 250 },
+      { foodName: "لحم بقري مشوي", grams: 150 },
+      { foodName: "خيار", grams: 100 },
+    ],
+    Lunch: [
+      { foodName: "أرز أبيض مطبوخ", grams: 350 },
+      { foodName: "سمك مشوي", grams: 250 },
+      { foodName: "كوسة مطهية", grams: 200 },
+      { foodName: "زيت زيتون", grams: 15 },
+    ],
+    Snacks: [
+      { foodName: "تمر", grams: 100 },
+      { foodName: "كمثرى", grams: 200 },
+    ],
+    Dinner: [
+      { foodName: "بطاطس مسلوقة", grams: 400 },
+      { foodName: "لحم بقري مشوي", grams: 200 },
+      { foodName: "خيار", grams: 150 },
+    ],
+  },
+},{
+  id: "d10",
+  name: "الطيبات 2 - 2800 سعرة",
+  description: "نظام متنوع من أطعمة الطيبات",
+  type: "maintenance",
+  meals: {
+    Breakfast: [
+      { foodName: "بطاطس مسلوقة", grams: 300 },
+      { foodName: "سمك مشوي", grams: 150 },
+      { foodName: "خيار", grams: 100 },
+    ],
+    Lunch: [
+      { foodName: "أرز أبيض مطبوخ", grams: 400 },
+      { foodName: "لحم ضأن مشوي", grams: 220 },
+      { foodName: "بامية مطهية", grams: 200 },
+    ],
+    Snacks: [
+      { foodName: "تمر", grams: 80 },
+      { foodName: "تفاح", grams: 250 },
+    ],
+    Dinner: [
+      { foodName: "بطاطس مشوية", grams: 350 },
+      { foodName: "سمك مشوي", grams: 250 },
+      { foodName: "خس", grams: 150 },
+      { foodName: "زيت زيتون", grams: 10 },
+    ],
+  },
+}
 ];
 
 // ---------- Enhanced Exercise Templates (8) ----------
@@ -672,6 +727,8 @@ const TemplatesPage: React.FC = () => {
   
 
   const applyDietTemplate = (template: DietTemplate) => {
+    const Confirm = window.confirm("هل أنت متأكد أنك تريد تطبيق هذا القالب الغذائي؟ سيحل محل نظامك الحالي.");
+    if (!Confirm) return;
     const dietObj: any = {};
     (Object.keys(template.meals) as Array<keyof typeof template.meals>).forEach(mealKey => {
       const entries = template.meals[mealKey];
@@ -711,7 +768,12 @@ const DEFAULT_WEEKDAYS = [
 
 // Inside the component, replace the old applyExerciseTemplate with:
 const applyExerciseTemplate = (template: ExerciseTemplate) => {
+  const Confirm = window.confirm("هل أنت متأكد أنك تريد تطبيق هذا القالب التمريني؟ سيحل محل نظامك الحالي.");
+  if (!Confirm) return;
+
   // 1. Determine which weekdays to assign
+   localStorage.removeItem("SystemOfExercise");
+              localStorage.removeItem("SelectedDays");
   let existingSelectedDays: string[] = [];
   try {
     const raw = localStorage.getItem("SelectedDays");
@@ -777,7 +839,7 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
   };
 
   return (
-    <div className="min-h-screen dark:text-white text-black p-4 pb-20 show-first">
+    <div className="min-h-screen  dark:text-white text-black p-4 pb-20 show-first">
       <style>{`
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(10px); }
@@ -796,12 +858,12 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
       </div>
 
       {/* Tabs */}
-      <div className="flex justify-center gap-3 mb-8">
+      <div className="flex z-20 justify-center gap-3 mb-8">
         <button
           onClick={() => setActiveTab("diet")}
-          className={`px-6 py-2.5 rounded-full font-bold flex items-center gap-2 transition-all ${
+          className={`px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 transition-all ${
             activeTab === "diet"
-              ? "bg-sky-500 text-white shadow-lg shadow-sky-500/30"
+              ? "bg-amber-500 text-white "
               : "bg-gray-800 text-gray-300 hover:bg-gray-700"
           }`}
         >
@@ -809,13 +871,14 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
         </button>
         <button
           onClick={() => setActiveTab("exercise")}
-          className={`px-6 py-2.5 rounded-full font-bold flex items-center gap-2 transition-all ${
+          className={`px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 transition-all ${
             activeTab === "exercise"
-              ? "bg-sky-500 text-white shadow-lg shadow-sky-500/30"
+              ? "bg-blue-500 text-white "
               : "bg-gray-800 text-gray-300 hover:bg-gray-700"
           }`}
         >
           <FaDumbbell /> تمارين
+
         </button>
       </div>
 
@@ -827,16 +890,15 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
       )}
 
       {/* Template cards */}
-      <div className="absolute top-10 -z-20 w-full h-[400px] opacity-35 blur-3xl bg-gradient-to-r from-sky-400 via-indigo-400 to-teal-300 dark:from-sky-600 dark:via-indigo-600 dark:to-teal-600" />
-      <div className="grid gap-4 max-w-lg mx-auto">
+      <div className="grid gap-4  max-w-lg mx-auto">
 
         {activeTab === "diet" &&
           DIET_TEMPLATES.map(template => {
             const nut = calcTotalNutrition(template.meals);
             return (
               <div
-                key={template.id}
-                className="bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-sm border border-gray-700/50 shadow-xl rounded-3xl p-5 hover:shadow-2xl transition-all hover:scale-[1.02] group"
+              key={template.id}
+              className="bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-sm border border-gray-700/50 shadow-xl rounded-3xl p-5 hover:shadow-2xl transition-all hover:scale-[1.02] group"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -857,18 +919,12 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
                   <div className="flex gap-2 ml-4">
                     <button
                       onClick={() => openDietPreview(template)}
-                      className="p-2.5 bg-gray-700 rounded-full hover:bg-gray-600 transition"
+                      className="p-2.5 px-5 bg-gray-700 rounded-full hover:bg-gray-600 transition"
                       title="معاينة"
                     >
                       <FaEye className="text-gray-300" />
                     </button>
-                    <button
-                      onClick={() => applyDietTemplate(template)}
-                      className="p-2.5 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full hover:brightness-110 transition shadow-lg"
-                      title="تطبيق"
-                    >
-                      <FaCheckCircle className="text-white" />
-                    </button>
+                 
                   </div>
                 </div>
               </div>
@@ -899,18 +955,12 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
                 <div className="flex gap-2 ml-4">
                   <button
                     onClick={() => openExercisePreview(template)}
-                    className="p-2.5 bg-gray-700 rounded-full hover:bg-gray-600 transition"
+                    className="p-2.5 px-5 flex flex-row gap-2 items-center  bg-gray-700 rounded-full hover:bg-gray-600 transition"
                     title="معاينة"
                   >
-                    <FaEye className="text-gray-300" />
+                    <FaEye className="text-gray-300" /> 
                   </button>
-                  <button
-                    onClick={() => applyExerciseTemplate(template)}
-                    className="p-2.5 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full hover:brightness-110 transition shadow-lg"
-                    title="تطبيق"
-                  >
-                    <FaCheckCircle className=" text-white" />
-                  </button>
+                
                 </div>
               </div>
             </div>
@@ -946,7 +996,7 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
                   <h4 className="text-sm font-semibold dark:text-gray-300 text-black mb-1">{mealKey}</h4>
                   <ul className="space-y-1">
                     {entries.map((entry, idx) => (
-                      <li key={idx} className="flex justify-between text-sm dark:text-gray-300 text-black dark:bg-gray-700/50 rounded-lg px-3 py-1">
+                      <li key={idx} className="flex justify-between text-md dark:text-gray-300 text-black dark:bg-gray-700/50 rounded-lg px-3 py-1">
                         <span>{entry.foodName}</span>
                         <span className="dark:text-gray-400 text-black">{entry.grams}غ</span>
                       </li>
@@ -990,7 +1040,7 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
                 <h4 className="text-sm font-semibold text-sky-400 mb-1">{day.dayName}</h4>
                 <ul className="space-y-1">
                   {day.exercises.map((ex, i) => (
-                    <li key={i} className="flex justify-between text-sm dark:text-gray-300 text-black dark:bg-gray-700/50 rounded-lg px-3 py-1">
+                    <li key={i} className="flex justify-between text-md dark:text-gray-300 text-black dark:bg-gray-700/50 rounded-lg px-3 py-1">
                       <span>{ex.name}</span>
                       <span className="dark:text-gray-400 text-black">{ex.weight > 0 ? `${ex.weight} كغ` : "وزن الجسم"}</span>
                     </li>

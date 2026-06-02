@@ -19,6 +19,7 @@ import { RiResetRightFill } from "react-icons/ri";
 import { VscSettings } from "react-icons/vsc";
 import {GiShoulderArmor} from 'react-icons/gi'
 import SelectDays from "../Welcome/Components/SelectDays";
+import { useNavigate } from "react-router-dom";
 
 // ---------- Types ----------
 interface UserData {
@@ -172,7 +173,8 @@ const ExercisePage: React.FC = () => {
   const [currentDayIndex, setCurrentDayIndex] = useState<number>(-1); // -1 if today is not a training day
   const todayDateStr = useMemo(() => new Date().toISOString().slice(0, 10), []);
   const todayIndex = new Date().getDay();  // 0=Sun, 1=Mon, …
-
+  const navigate = useNavigate();
+  
   // Modals
   const [addExerciseModal, setAddExerciseModal] = useState<{
     open: boolean;
@@ -305,9 +307,13 @@ useEffect(() => {
     return (
       <div className="min-h-screen bg-white dark:bg-slate-950 flex items-center justify-center pb-16">
         <div className="relative bg-white/70 backdrop-blur-lg border dark:bg-transparent border-white/50 dark:border-none shadow-xl rounded-xl p-8 w-11/12 max-w-md space-y-6">
+
           <h2 className="text-2xl font-bold text-gray-800 dark:text-white text-center">
             اختر نظام التمرين
           </h2>
+          
+
+
           <div className="space-y-4">
             {(Object.keys(SYSTEMS) as SystemName[]).map((sys) => (
               <button
@@ -334,6 +340,11 @@ useEffect(() => {
               </button>
             ))}
           </div>
+
+        <div className="bg-amber-300/20 border border-amber-400/50 rounded-xl w-11/12 p-2 text-white  min-h-10 ">
+ مكسل تجدول تمارينك؟! <br /> تقدر تجرب القوالب الغذائية الجاهزة من <span onClick={() => window.location.href = "/templates"} className="text-amber-400 cursor-pointer underline">هنا</span>
+    </div>
+
         </div>
       </div>
     );
@@ -432,7 +443,7 @@ useEffect(() => {
               لم تقم باختيار أيام التمرين بعد!
             </h1>
             <button
-              onClick={() => setShowSystemModal(true)}
+              onClick={() => {setShowSystemModal(true); setIsDisabled(true);}}
               className="flex items-center gap-2 bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20  p-3 shadow-2xl w-fit rounded-xl text-sky-500 font-bold active:scale-95 transition"
             >
               اختر أيام التمرين <FaArrowRight />
