@@ -11,15 +11,18 @@ import FinalSection from "./Components/FinalSection";
 import ChPreiod from "./Components/ChPreiod";
 import S_Goals from "./Components/SetGoals";
 import { FaArrowLeft } from "react-icons/fa6";
+import Second from "./Components/SecondPage";
   
 const Welcome : React.FC= () => {
   const [turn, setTurn] = useState(1);
   const [IsDisabled, setIsDisabled] = useState(false);
  
   let handleClick = () => {
-    if (turn === 10) {
+    if (turn === 12) {
       setIsDisabled(true);
-      window.location.href = "/me/home";
+
+        window.location.href = "/me/home";
+
       return;
     }
     
@@ -27,7 +30,7 @@ const Welcome : React.FC= () => {
     setTurn(turn + 1)
     setTimeout(() => {
       setIsDisabled(false);
-    }, 5000);
+    }, 30);
   };
 
   onload = () => {
@@ -43,43 +46,48 @@ const Welcome : React.FC= () => {
           case 1:
             return <Firstturn />;
           case 2:
-            return <CurrentWeight />;
+            return <Second />;
           case 3:
-            return <TargetWeight />;
+            return <CurrentWeight />;
           case 4:
-            return <ChooseHight />;
+            return <TargetWeight />;
           case 5:
-            return <ChooseAge />;
+            return <ChooseHight />;
             case 6:
-            return <ChPreiod />;
+            return <ChooseAge />;
             case 7:
-            return <SelectDays />;
+            return <ChPreiod />;
             case 8:
-            return <S_Goals />;
+            return <SelectDays />;
                  case 9:
-            return <SelectGender />;
+            return <S_Goals />;
                case 10:
-            return <SatisfactionRate />;
+            return <SelectGender />;
              case 11:
-            return <FinalSection />;
+            return <SatisfactionRate />
+            case 12:
+            return <FinalSection />
+          default:
+            return null;
         }
       })()}
       <div className="absolute bottom-24 duration-1000 flex items-center justify-around flex-row gap-1 p-1 text-center min-w-5 rounded-2xl dark:bg-black/20 dark:border-2   h-5 bg-gray-50 ">
-        <div className={turn === 1 ? "w-10 h-3 bg-sky-500  dark:bg-slate-800  rounded-3xl drop-shadow-xl  delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 bg-gray-500/20 rounded-sm  "}></div>
-        <div className={turn === 2 ? "w-10 h-3 bg-sky-500  dark:bg-slate-800  rounded-3xl drop-shadow-xl  delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 bg-gray-500/20 rounded-sm"}></div>
-        <div className={turn === 3 ? "w-10 h-3 bg-sky-500  dark:bg-slate-800  rounded-3xl drop-shadow-xl  delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 bg-gray-500/20 rounded-sm"}></div>
-        <div className={turn === 4 ? "w-10 h-3 bg-sky-500  dark:bg-slate-800  rounded-3xl drop-shadow-xl  delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 bg-gray-500/20 rounded-sm"}></div>
-        <div className={turn === 5 ? "w-10 h-3 bg-sky-500  dark:bg-slate-800  rounded-3xl drop-shadow-xl  delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 bg-gray-500/20 rounded-sm"}></div>
-        <div className={turn === 6 ? "w-10 h-3 bg-sky-500  dark:bg-slate-800  rounded-3xl drop-shadow-xl  delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 bg-gray-500/20 rounded-sm"}></div>
-        <div className={turn === 7 ? "w-10 h-3 bg-sky-500  dark:bg-slate-800  rounded-3xl drop-shadow-xl  delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 bg-gray-500/20 rounded-sm"}></div>
-        <div className={turn === 8 ? "w-10 h-3 bg-sky-500  dark:bg-slate-800  rounded-3xl drop-shadow-xl  delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 bg-gray-500/20 rounded-sm"}></div>
-        <div className={turn === 9 ? "w-10 h-3 bg-sky-500  dark:bg-slate-800  rounded-3xl drop-shadow-xl  delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 bg-gray-500/20 rounded-sm"}></div>
-        <div className={turn === 10 ? "w-10 h-3 bg-sky-500 dark:bg-slate-800   rounded-3xl drop-shadow-xl delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 bg-gray-500/20 rounded-sm"}></div>
-        <div className={turn === 11 ? "w-10 h-3 bg-sky-500 dark:bg-slate-800   rounded-3xl drop-shadow-xl delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 bg-gray-500/20 rounded-sm"}></div>
+        <div className={turn === 1 ? "w-10 h-3 bg-sky-500  dark:bg-blue-600  rounded-3xl drop-shadow-xl  delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 dark:bg-gray-500/20 rounded-sm  "}></div>
+        <div className={turn === 2 ? "w-10 h-3 bg-sky-500  dark:bg-blue-600  rounded-3xl drop-shadow-xl  delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 dark:bg-gray-500/20 rounded-sm"}></div>
+        <div className={turn === 3 ? "w-10 h-3 bg-sky-500  dark:bg-blue-600  rounded-3xl drop-shadow-xl  delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 dark:bg-gray-500/20 rounded-sm"}></div>
+        <div className={turn === 4 ? "w-10 h-3 bg-sky-500  dark:bg-blue-600  rounded-3xl drop-shadow-xl  delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 dark:bg-gray-500/20 rounded-sm"}></div>
+        <div className={turn === 5 ? "w-10 h-3 bg-sky-500  dark:bg-blue-600  rounded-3xl drop-shadow-xl  delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 dark:bg-gray-500/20 rounded-sm"}></div>
+        <div className={turn === 6 ? "w-10 h-3 bg-sky-500  dark:bg-blue-600  rounded-3xl drop-shadow-xl  delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 dark:bg-gray-500/20 rounded-sm"}></div>
+        <div className={turn === 7 ? "w-10 h-3 bg-sky-500  dark:bg-blue-600  rounded-3xl drop-shadow-xl  delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 dark:bg-gray-500/20 rounded-sm"}></div>
+        <div className={turn === 8 ? "w-10 h-3 bg-sky-500  dark:bg-blue-600  rounded-3xl drop-shadow-xl  delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 dark:bg-gray-500/20 rounded-sm"}></div>
+        <div className={turn === 9 ? "w-10 h-3 bg-sky-500  dark:bg-blue-600  rounded-3xl drop-shadow-xl  delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 dark:bg-gray-500/20 rounded-sm"}></div>
+        <div className={turn === 10 ? "w-10 h-3 bg-sky-500 dark:bg-blue-600   rounded-3xl drop-shadow-xl delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 dark:bg-gray-500/20 rounded-sm"}></div>
+        <div className={turn === 11 ? "w-10 h-3 bg-sky-500 dark:bg-blue-600   rounded-3xl drop-shadow-xl delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 dark:bg-gray-500/20 rounded-sm"}></div>
+        <div className={turn === 12 ? "w-10 h-3 bg-sky-500 dark:bg-blue-600   rounded-3xl drop-shadow-xl delay-1000 transition-all" : "w-2 h-2.5 bg-gray-200 dark:bg-gray-500/20 rounded-sm"}></div>
       </div>
       <button 
       disabled={IsDisabled} 
-      className={`absolute w-11/12 h-16 bottom-4    ${IsDisabled ? "text-gray-400 border-gray-200" : "bg-blue-400 dark:bg-black/20 dark:border-gray-600/10 text-white  border-sky-300 shadow-2xs "} border-2 rounded-4xl font-extrabold `} 
+      className={`absolute w-11/12 h-16 bottom-4 transition-all delay-1000   ${IsDisabled ? "text-gray-400 border-gray-200 bg-gray-100 dark:opacity-20 " : "bg-blue-400 dark:bg-black/20 dark:border-gray-600/10 text-white  border-sky-300 shadow-2xs "} border-2 rounded-4xl font-extrabold `} 
       onClick={handleClick}
       >
         <div className="w-full h-full flex gap-5 items-center justify-center">

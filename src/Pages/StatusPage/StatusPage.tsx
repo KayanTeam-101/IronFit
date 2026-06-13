@@ -236,7 +236,7 @@ const StatusPage: React.FC = () => {
     "bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 shadow-sm rounded-3xl p-4 backdrop-blur-md hover:shadow-xl transition-all";
 
   return (
-    <div className="min-h-screen show-first z-0 bg-blue-50 to-indigo-50 dark:bg-gray-950   sm:p-5 font-arabic relative overflow-hidden">
+    <div className="min-h-screen show-first z-0     sm:p-5 font-arabic relative overflow-hidden">
       {/* Decorative blur */}
 
         

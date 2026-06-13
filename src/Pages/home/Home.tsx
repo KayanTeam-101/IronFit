@@ -111,11 +111,10 @@ const Home = () => {
   const Advice = "قليلُ مستمر خيرُ من كثيرٍ منقطع";
 
   return (
-    <div className="relative min-h-screen w-screen overflow-hidden p-5 flex flex-col gap-1.5 show-first">
+    <div className="relative min-h-screen w-screen overflow-hidden p-4 flex flex-col gap-0.5 show-first">
       {/* Decorative blur */}
-      <div className="absolute top-10 z-0 w-full h-[400px] opacity-35 blur-3xl bg-gradient-to-r from-sky-400 via-indigo-400 to-teal-300" />
 
-      <div className="relative w-full min-h-14 flex flex-col">
+      <div className="relative w-full min-h-14 flex  flex-col">
       <div className="w-full flex flex-row justify-between">
           <div className="text-2xl flex flex-row gap-1.5">
             <GoHomeFill className="dark:text-white"/>

@@ -5,7 +5,7 @@ import Page from "./Pages/food/History/page";
 import Home from "./Pages/home/Home";
 import MakeADiet from "./Pages/MKDiet/MakeADiet";
 import Welcome from "./Pages/Welcome/Welcome";
-
+import SocialPage from "./Pages/SocialPage/Page";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ExercisePage from "./Pages/Exersices/Exersice";
@@ -16,8 +16,8 @@ import TemplatesPage from "./Pages/Templates/TemplatesPage";
 function App() {
   const isFirstTime: boolean = localStorage.getItem("isFirstTime") === null;
 
-  const [isLoading, setIsLoading] = useState(true);
   const [isDesktop, setIsDesktop] = useState(false); // 1. حالة جديدة لاكتشاف الحاسوب
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // التحقق من التحميل
@@ -61,7 +61,7 @@ function App() {
   // 3. شاشة التحميل
   if (isLoading) {
     return (
-      <div className="w-screen h-screen flex items-center justify-center bg-gradient-to-b from-sky-50 via-white to-white">
+      <div className="w-screen h-screen flex items-center justify-center bg-white dark:bg-black">
         <p className="text-2xl font-bold text-gray-800">Loading...</p>
       </div>
     );
@@ -72,7 +72,6 @@ function App() {
     return (
       <div className="w-screen h-screen flex flex-col items-center justify-center bg-gray-50 p-5 text-center">
         <div className="bg-white p-8 rounded-2xl shadow-lg max-w-md border border-gray-100">
-          <div className="text-6xl mb-4">📱</div>
           <h1 className="text-2xl font-bold text-gray-800 mb-3">
             هذا الموقع مخصص للهواتف فقط
           </h1>
@@ -82,6 +81,11 @@ function App() {
         </div>
       </div>
     );
+  }
+
+  if (localStorage.length < 7 && window.location.pathname !== "/") {
+    localStorage.clear();
+    window.location.pathname = "/";
   }
 
   // 5. إذا كان من الهاتف، يتم عرض التطبيق بشكل طبيعي
@@ -104,6 +108,7 @@ function App() {
         <Route path="/mkAdiet" element={<MakeADiet />} />
         <Route path="/me/exercises" element={<ExercisePage />} />
         <Route path="/Templates" element={<TemplatesPage />} />
+        <Route path="/Chat" element={<SocialPage />} />
         <Route path="/Settings" element={<Settings />} />
         <Route
           path="*"

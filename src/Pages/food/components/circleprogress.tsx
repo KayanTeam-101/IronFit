@@ -39,13 +39,13 @@ const [GetSuccessfullDays, SetGetSuccessfullDays] = useState<string[]>(
 
   },[])
   return (
-    <div className="relative  flex flex-col items-center justify-center">
+    <div className="relative w-fit h-fit   flex flex-col items-center justify-center ">
       {/* Outer glow ring */}
       <svg
         width={size }
         height={size  }
         
-        className="transform -rotate-90 bg-transparent  "
+        className="transform -rotate-90 bg-transparent overflow-visible "
       >
         {/* Background circle */}
         <circle
@@ -67,26 +67,27 @@ const [GetSuccessfullDays, SetGetSuccessfullDays] = useState<string[]>(
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
-          style={{ transition: "stroke-dashoffset 0.8s ease-in-out" }}
+          style={{ transition: "stroke-dashoffset 1.8s ease-in-out" }}
         />
          <circle
           cx={size / 2}
           cy={size / 2}
-          r={radius - 15}
+          r={radius - 5}
           fill="transparent"
           stroke="url(#gradient)"
           strokeWidth={strokeWidth }
           strokeLinecap="round"
           strokeDasharray={circumference }
           strokeDashoffset={offset}
-          className="blur-md"
-          style={{ transition: "stroke-dashoffset 0.8s ease-in-out"}}
+          className="blur-sm"
+          style={{ transition: "stroke-dashoffset 1.8s ease-in-out"}}
         />
         {/* Gradient definition */}
         <defs>
           <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#1fb8f6" /> {/* teal-500 */}
             <stop offset="50%" stopColor="pink" /> {/* blue-600 */}
+            <stop offset="60%" stopColor="#FFC0CB" /> {/* blue-600 */}
             <stop offset="75%" stopColor="skyblue" /> {/* blue-600 */}
             <stop offset="100%" stopColor="#3b82f6" /> {/* blue-600 */}
           </linearGradient>

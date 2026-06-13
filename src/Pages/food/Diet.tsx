@@ -57,6 +57,15 @@ const Diet = () => {
   const [showUnitModal, setShowUnitModal] = useState(false);
   const [customGrams, setCustomGrams] = useState("");
 
+    // User data
+  const currentWeight = Number(localStorage.getItem("currentWeight") || 0);
+  const targetWeight = Number(localStorage.getItem("targetWeight") || 0);
+  const height = Number(localStorage.getItem("height") || 0);
+  const age = Number(localStorage.getItem("age") || 0);
+  const challengePeriod = Number(localStorage.getItem("challengePeriod") || 0);
+  const gender = localStorage.getItem("SelectedGender") || "";
+
+
   // Read planned diet
   const getDiet = localStorage.getItem("Diet");
   const convertToObj: MealPlan | null = getDiet
@@ -80,16 +89,46 @@ const Diet = () => {
         }
       });
     });
+    console.log("total:" ,total);
+    
     setEatenCalories(total);
   };
-
-  useEffect(() => {
-    recalcCalories();
-  }, [history]);
+  
+    const dailyCaloriesGoal = useMemo(() => {
+      if (!challengePeriod || challengePeriod <= 0) return 0;
+  
+      let bmr: number;
+      if (gender === "ذكر") {
+        bmr = 10 * currentWeight + 6.25 * height - 5 * age + 5;
+      } else {
+        bmr = 10 * currentWeight + 6.25 * height - 5 * age - 161;
+      }
+  
+      const tdee = bmr * 1.5; // activity factor
+      const weightDiff = targetWeight - currentWeight;
+      const totalCaloriesNeeded = weightDiff * 7700;
+      const days = challengePeriod * 30;
+  
+      if (days === 0) return Math.round(tdee);
+      const daily = tdee + totalCaloriesNeeded / days;
+      localStorage.setItem("dailyCalories", Math.round(daily).toString());
+      return Math.round(daily);
+    }, []);
+  
+    useEffect(() => {
+    if (dailyCaloriesGoal > 0) {
+      localStorage.setItem("dailyCalories", dailyCaloriesGoal.toString());
+    }
+    if (dailyCaloriesGoal === 0) {
+      localStorage.removeItem("dailyCalories");
+    }
+  }, [dailyCaloriesGoal]);
+  
 
   // Sync history to localStorage on change
   useEffect(() => {
     localStorage.setItem("History", JSON.stringify(history));
+    recalcCalories();
   }, [history]);
 
   // --- Filtered search results ---
@@ -203,7 +242,7 @@ const Diet = () => {
           onClick={openAddModal}
           className="bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-4xl p-4 flex flex-col items-center justify-center cursor-pointer hover:shadow-lg transition"
         >
-          <span className="font-medium text-slate-600 mb-2 text-center">
+          <span className="font-medium text-slate-600 dark:text-gray-100 mb-2 text-center">
             اكلت طعام غير مجدول
           </span>
           <GrAddCircle className="text-slate-500 text-2xl" />
@@ -223,9 +262,9 @@ const Diet = () => {
       {/* ---------- Add Food Modal ---------- */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-4 animate-fadeIn">
-          <div className="bg-white/90 backdrop-blur-md border border-white/50 shadow-2xl rounded-3xl p-6 w-full max-w-md animate-scaleIn">
+          <div className="bg-white/90 dark:bg-black/20 backdrop-blur-md border border-white/50 dark:border-black/70 shadow-2xl rounded-3xl p-6 w-full max-w-md animate-scaleIn">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-bold text-gray-800">أضف طعام</h3>
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">أضف طعام</h3>
               <button
                 onClick={() => setShowAddModal(false)}
                 className="text-gray-400 hover:text-gray-600"
@@ -240,7 +279,7 @@ const Diet = () => {
               placeholder="ابحث عن طعام..."
               value={text}
               onChange={(e) => setText(e.target.value)}
-              className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-sky-400 mb-4"
+              className="w-full bg-gray-50 border border-gray-200 dark:bg-slate-900/20 dark:border-gray-600/20 dark:text-white rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-sky-400 mb-4"
               autoFocus
             />
 
@@ -249,13 +288,13 @@ const Diet = () => {
                 filteredFoods.map((food, idx) => (
                   <div
                     key={idx}
-                    className="flex justify-between items-center p-3 bg-gray-50 hover:bg-sky-50 rounded-xl cursor-pointer transition"
+                    className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-600/20  hover:bg-sky-50 rounded-xl cursor-pointer transition"
                     onClick={() => {
                       setSelectedFood(food);
                       setShowUnitModal(true);
                     }}
                   >
-                    <span className="font-medium text-gray-700">{food}</span>
+                    <span className="font-medium text-gray-700 dark:text-white">{food}</span>
                     <BiInfoCircle className="text-gray-400" />
                   </div>
                 ))
@@ -272,9 +311,9 @@ const Diet = () => {
       {/* ---------- Unit Selector Modal ---------- */}
       {showUnitModal && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/30 backdrop-blur-sm p-4 animate-fadeIn">
-          <div className="bg-white/90 backdrop-blur-md border border-white/50 shadow-2xl rounded-3xl p-6 w-full max-w-sm animate-scaleIn">
+          <div className="bg-white/90 dark:bg-black/20 backdrop-blur-md border dark:border-black/70 border-white/50   shadow-2xl rounded-3xl p-6 w-full max-w-sm animate-scaleIn">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-bold text-gray-800">
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">
                 اختر كمية {selectedFood}
               </h3>
               <button
@@ -290,9 +329,9 @@ const Diet = () => {
                 <button
                   key={idx}
                   onClick={() => handleUnitSelect(unit)}
-                  className="w-full flex justify-between items-center bg-gradient-to-r from-sky-50 to-blue-50 border border-sky-100 p-3 rounded-xl hover:shadow-md active:scale-[0.98] transition"
+                  className="w-full flex justify-between items-center bg-blue-50 border border-sky-100 dark:bg-gray-600/15 dark:border-black   p-3 rounded-xl hover:shadow-md active:scale-[0.98] transition"
                 >
-                  <span className="font-medium text-gray-700">{unit.label}</span>
+                  <span className="font-medium text-gray-700 dark:text-white text-shadow-xs">{unit.label}</span>
                   <span className="text-sm text-sky-600">{unit.grams}غ</span>
                 </button>
               ))}
@@ -301,10 +340,10 @@ const Diet = () => {
               <div className="pt-2 flex gap-2">
                 <input
                   type="number"
-                  placeholder="أدخل الغرام"
+                  placeholder="أدخل كمية معينة (غرام)"
                   value={customGrams}
                   onChange={(e) => setCustomGrams(e.target.value)}
-                  className="flex-1 bg-gray-50 border border-gray-200 rounded-xl p-3 outline-none focus:ring-2 focus:ring-sky-400"
+                  className="flex-1 bg-gray-50 border border-gray-200 dark:bg-black/20 dark:border-black dark:text-white rounded-xl p-3 outline-none focus:ring-2 focus:ring-sky-400"
                   onKeyDown={(e) => e.key === "Enter" && handleCustomGramsSubmit()}
                 />
                 <button

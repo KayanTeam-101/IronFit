@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { FaFire, FaCheck, FaRegCircle } from "react-icons/fa6";
 import { IoInformationCircle } from "react-icons/io5";
-import { GiBiceps } from "react-icons/gi";
+import { GiBiceps, GiMeal } from "react-icons/gi";
 import { Eaten } from "../../utilities/utilities";
+import { MdFreeBreakfast, type MdBreakfastDining } from "react-icons/md";
+import { LiaCookieBiteSolid } from "react-icons/lia";
+import { PiCheckDuotone } from "react-icons/pi";
 
 const Meal = (props: any) => {
   const mealName = props.MealName as string;
@@ -72,16 +75,16 @@ const Meal = (props: any) => {
   const handleToggle = (dish: string) => {
     // The Eaten utility already handles toggling and updates History
     Eaten(dish, mealName);
-    // After that, we need to force a refresh because Eaten modifies localStorage directly
     forceUpdate();
+    window.location.reload(); 
   };
 
   // Icons & names
-  const mealIcons: Record<string, string> = {
-    Breakfast: "🍳",
-    Lunch: "🍽️",
-    Snacks: "🍪",
-    Dinner: "🌙",
+  const mealIcons: Record<string, React.ReactNode> = {
+    Breakfast: <MdFreeBreakfast />,
+    Lunch: <GiMeal />,
+    Snacks: <LiaCookieBiteSolid />,
+    Dinner: <PiCheckDuotone />,
   };
   const mealNamesAr: Record<string, string> = {
     Breakfast: "الفطور",
@@ -100,7 +103,7 @@ const Meal = (props: any) => {
       <div className="flex items-center justify-between">
         <h2 className="text-2xl dark:text-white text-gray-800 flex items-center gap-2">
           {mealNamesAr[mealName] || mealName}
-          <span className="text-2xl">{mealIcons[mealName] || "🍽️"}</span>
+          <span className="text-2xl">{mealIcons[mealName]}</span>
         </h2>
         {/* Mini progress ring */}
         {totalPlanned > 0 && (
@@ -129,7 +132,7 @@ const Meal = (props: any) => {
                 strokeDashoffset="25"
               />
             </svg>
-            <div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-gray-700">
+            <div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-gray-100">
               {eatenCount}/{totalPlanned}
             </div>
             <svg width="0" height="0">
@@ -162,10 +165,10 @@ const Meal = (props: any) => {
               <button
                 key={mealName + "-" + idx}
                 onClick={() => handleToggle(dish)}
-                className={`group relative flex items-center dark:bg-black/20 dark:border-2 dark:border-gray-600/20 justify-between p-4 rounded-2xl transition-all border-2 duration-300 hover:shadow-lg active:scale-[0.98] ${
+                className={`group relative flex items-center dark:bg-black/20 border-2 border-gray-600/10 justify-between p-4 rounded-2xl transition-all duration-300 hover:shadow-lg active:scale-[0.98] ${
                   isEaten
-                    ? "bg-green-50  dark:text-teal-500 border-green-400 text-green-700 font-bold"
-                    : "bg-gradient-to-r from-green-50 to-sky-50 dark:from-black/30 dark:to-slate-600/20 dark:text-white border-sky-100 hover:border-sky-300"
+                    ? "bg-green-50  dark:text-teal-500 border-teal-400 border-2 text-green-700  hover:opacity-50"
+                    : "bg-sky-50 dark:bg-slate-600/20 dark:text-white border-sky-100/30 hover:border-sky-300"
                 }`}
               >
                 {/* Left side: dish name + weight */}

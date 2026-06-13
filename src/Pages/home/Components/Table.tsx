@@ -33,7 +33,7 @@ const Table = () => {
     // If this is today's challenge day
     
     else if (day === daysSinceStart) {
-      return "bg-linear-to-t from-sky-300 to-blue-400 shadow-md text-white dark:from-slate-800/40 dark:to-black/40 dark:border-2 dark:border-gray-600/20 "; // Current day
+      return "bg-linear-to-t from-sky-300 to-blue-400 shadow-md text-white dark:from-slate-700/40 dark:to-black/40 dark:border-2 dark:border-gray-600/20 animate-pulse "; // Current day
     }else{
       return " text-gray-500"; // Future days
     }

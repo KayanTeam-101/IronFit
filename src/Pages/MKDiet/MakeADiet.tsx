@@ -255,7 +255,7 @@ const MakeADiet: React.FC = () => {
       
       </div>
     <div className="p-4 flex items-center justify-center w-screen ">
-        <div className="bg-amber-300/20 border border-amber-400/50 rounded-xl w-11/12 p-2 text-white  min-h-10 ">
+        <div className="dark:bg-amber-300/20 dark:border border-amber-400/50  rounded-xl w-11/12 p-2 dark:text-white  min-h-10 ">
  مكسل تعمل دايت؟! تقدر تجرب القوالب الغذائية الجاهزة من <span onClick={() => window.location.href = "/templates"} className="text-amber-400 cursor-pointer underline">هنا</span>
     </div>
     </div>

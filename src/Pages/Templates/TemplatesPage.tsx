@@ -14,6 +14,7 @@ import {
 import { GiBiceps, GiMuscleUp, GiWeightLiftingUp } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
 import foods from "../../assets/FoodsList.json"; // adjust the import path as needed
+import { HiTemplate } from "react-icons/hi";
 
 // ---------- Types ----------
 interface FoodItem {
@@ -781,21 +782,15 @@ const DEFAULT_WEEKDAYS = [
 
 
 
-
 const applyExerciseTemplate = (template: ExerciseTemplate) => {
   const Confirm = window.confirm(
     "هل أنت متأكد أنك تريد تطبيق هذا القالب التمريني؟ سيحل محل نظامك الحالي."
   );
   if (!Confirm) return;
 
-  // 1. نظام التمرين اللي هنستخدمه (بروسبلت لأنه بيحتوي على ٥ تمارين)
-  const systemName: SystemName = "بروسبلت";
-  const systemWorkouts = SYSTEMS[systemName]; // ["صدر", "ظهر", "أكتاف", "ذراعين", "أرجل"]
-
-  // 2. عدد أيام القالب
   const neededDays = template.days.length;
 
-  // 3. اختيار أيام الأسبوع العربية (بترتيبها الطبيعي)
+  // 1. Choose weekdays (default: Saturday → Friday)
   const DEFAULT_WEEKDAYS = [
     "السبت",
     "الأحد",
@@ -820,22 +815,22 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
     chosenWeekdays = DEFAULT_WEEKDAYS.slice(0, neededDays);
   }
 
-  // 4. أسماء التمارين من النظام (نفس عدد أيام القالب)
-  const chosenWorkouts = systemWorkouts.slice(0, neededDays); // مثلاً: ["صدر", "ظهر", "أكتاف"]
+  // 2. Extract workout names from the template
+  const templateWorkoutNames = template.days.map(day => day.dayName); // e.g., ["Push","Pull","Legs"]
 
-  // 5. حفظ البيانات في localStorage
-  localStorage.setItem("SystemOfExercise", systemName);
+  // 3. Save to localStorage
   localStorage.setItem("SelectedDays", JSON.stringify(chosenWeekdays));
+  localStorage.setItem("WorkoutNames", JSON.stringify(templateWorkoutNames)); // new key
+  localStorage.setItem("SystemOfExercise", ""); // clear system, not needed
   localStorage.setItem(
     "SystemStartDate",
     new Date().toISOString().slice(0, 10)
   );
 
-  // 6. تخزين تمارين القالب تحت اسم التمرين العربي الصحيح
-  template.days.forEach((templateDay, index) => {
-    const workoutName = chosenWorkouts[index]; // "صدر" أو "ظهر" أو "أكتاف" إلخ
-    const key = `exercises_workout_${workoutName}`; // نفس مفتاح LS_KEYS في ExercisePage
-    const exercises = templateDay.exercises.map((ex) => ({
+  // 4. Save exercises under the original workout names
+  template.days.forEach((day) => {
+    const key = `exercises_workout_${day.dayName}`; // e.g., exercises_workout_Push
+    const exercises = day.exercises.map((ex) => ({
       name: ex.name,
       weight: ex.weight,
     }));
@@ -845,7 +840,6 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
   setSuccessMessage("تم تطبيق قالب التمارين بنجاح!");
   setTimeout(() => setSuccessMessage(""), 3000);
 };
-
 
 
 
@@ -892,10 +886,16 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
 
       {/* Header */}
       <div className="text-center mb-6 pt-4">
-
-        <h1 className="text-3xl font-extrabold bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
-          قوالب جاهزة
-        </h1>
+ <div className="text-2xl flex flex-row gap-1.5">
+            <HiTemplate className="dark:text-white"/>
+            <div className="p-0.5 felx justify-center align-center rounded-full text-sm text-transparent font-bold">
+  
+<a href="https://www.tiktok.com/@iron_fit_app" target="_blank" rel="noopener noreferrer" className="underline text-sky-500">
+  شاركنا رأيك
+</a>
+            </div>
+          </div>
+       
         <p className="text-gray-400 mt-1">ابدأ بسرعة مع قوالب مصممة لأهدافك</p>
       </div>
 
@@ -961,10 +961,10 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
                   <div className="flex gap-2 ml-4">
                     <button
                       onClick={() => openDietPreview(template)}
-                      className="p-2.5 px-5 bg-gray-700 rounded-full hover:bg-gray-600 transition"
+                      className="p-2.5 px-5 dark:bg-gray-700 bg-slate-100 rounded-full hover:bg-gray-600 transition"
                       title="معاينة"
                     >
-                      <FaEye className="text-gray-300" />
+                      <FaEye className="dark:text-gray-300 text-slate-600" />
                     </button>
                  
                   </div>
@@ -997,10 +997,10 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
                 <div className="flex gap-2 ml-4">
                   <button
                     onClick={() => openExercisePreview(template)}
-                    className="p-2.5 px-5 flex flex-row gap-2 items-center  bg-gray-700 rounded-full hover:bg-gray-600 transition"
+                    className="p-2.5 px-5 flex flex-row gap-2 items-center  dark:bg-gray-700 bg-slate-100 rounded-full hover:bg-gray-600 transition"
                     title="معاينة"
                   >
-                    <FaEye className="text-gray-300" /> 
+                    <FaEye className="dark:text-gray-300 text-slate-600" /> 
                   </button>
                 
                 </div>
@@ -1022,10 +1022,10 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
             <p className="dark:text-gray-400 text-black mb-4">{selectedDiet.description}</p>
             {dietNutrition && (
               <div className="flex gap-3 mb-4">
-                <span className="bg-orange-900/20 text-orange-400 px-3 py-1 rounded-full text-sm font-medium">
+                <span className="bg-none text-orange-400 px-3 py-1 rounded-full text-sm font-medium">
                   {Math.round(dietNutrition.calories)} سعرة
                 </span>
-                <span className="bg-teal-900/20 text-teal-400 px-3 py-1 rounded-full text-sm font-medium">
+                <span className="bg-none text-teal-400 px-3 py-1 rounded-full text-sm font-medium">
                   {Math.round(dietNutrition.protein)}غ بروتين
                 </span>
               </div>

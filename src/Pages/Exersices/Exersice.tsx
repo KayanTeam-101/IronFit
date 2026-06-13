@@ -2,9 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { BiTrendingUp } from "react-icons/bi";
 import {
   FaPlus,
-  FaEdit,
   FaCheck,
-  FaChartLine,
   FaTimes,
   FaDumbbell,
   FaWeightHanging,
@@ -14,14 +12,21 @@ import {
   FaCookieBite,
 } from "react-icons/fa";
 import { FaPersonRunning, FaXmark } from "react-icons/fa6";
-import { GiBiceps } from "react-icons/gi";
 import { RiResetRightFill } from "react-icons/ri";
 import { VscSettings } from "react-icons/vsc";
 import {GiShoulderArmor} from 'react-icons/gi'
 import SelectDays from "../Welcome/Components/SelectDays";
 import { useNavigate } from "react-router-dom";
+import { sendPost } from "../../firebase/post";
 
 // ---------- Types ----------
+type SystemName = "ارنو سبلت" | "بروسبلت" | "بوش بون ليج";
+
+const SYSTEMS: Record<SystemName, string[]> = {
+  "ارنو سبلت": ["صدر وظهر", "أكتاف وذراعين", "أرجل"],
+  "بروسبلت": ["صدر", "ظهر", "أكتاف", "ذراعين", "أرجل"],
+  "بوش بون ليج": ["بوش", "بول", "ليجز"],
+};
 interface UserData {
   challengePeriod: number;
   currentWeight: number;
@@ -30,7 +35,6 @@ interface UserData {
   targetWeight: number;
 }
 
-type SystemName = "ارنو سبلت" | "بروسبلت" | "بوش بون ليج";
 
 interface Exercise {
   name: string;
@@ -45,11 +49,7 @@ interface DayData {
 }
 
 // ---------- Systems ----------
-const SYSTEMS: Record<SystemName, string[]> = {
-  "ارنو سبلت": ["صدر وظهر", "أكتاف وذراعين", "أرجل"],
-  "بروسبلت": ["صدر", "ظهر", "أكتاف", "ذراعين", "أرجل"],
-  "بوش بون ليج": ["بوش", "بول", "ليجز"],
-};
+
 
 // ---------- localStorage Helpers ----------
 const LS_KEYS = {
@@ -204,14 +204,41 @@ const ExercisePage: React.FC = () => {
   }, []);
 
   // Build workout schedule: map selected days to system workouts in order
-  const schedule = useMemo(() => {
-  if (!system || selectedDays.length === 0) return [];
+const schedule = useMemo(() => {
+  if (selectedDays.length === 0) return [];
+
+  // Check if we have explicit workout names (from a template)
+  const storedWorkoutNames = localStorage.getItem("WorkoutNames");
+  let workoutNames: string[] = [];
+  if (storedWorkoutNames) {
+    try {
+      const arr = JSON.parse(storedWorkoutNames);
+      if (Array.isArray(arr) && arr.length === selectedDays.length) {
+        workoutNames = arr;
+      }
+    } catch {}
+  }
+
+  if (workoutNames.length === selectedDays.length) {
+    // Use the stored workout names directly
+    return selectedDays.map((weekday, idx) => {
+      const dayIndex = getWeekdayIndex(weekday);
+      return {
+        weekday,
+        dayIndex,
+        workout: workoutNames[idx],
+      };
+    });
+  }
+
+  // Fallback: use the traditional system
+  if (!system) return [];
   const systemWorkouts = SYSTEMS[system];
   return selectedDays.slice(0, systemWorkouts.length).map((weekday, idx) => {
     const dayIndex = getWeekdayIndex(weekday);
     return {
-      weekday,          // keep for display
-      dayIndex,         // numeric index
+      weekday,
+      dayIndex,
       workout: systemWorkouts[idx] || "",
     };
   });
@@ -418,7 +445,7 @@ useEffect(() => {
                 <h1 className="text-4xl sm:text-5xl text-white font-bold mb-2 drop-shadow-lg">
                   {todayWorkout}
                 </h1>
-                <GiShoulderArmor className="absolute text-8xl scale-150 left-0 top-0 opacity-20 text-white" />
+                <GiShoulderArmor className="absolute text-9xl scale-150 left-0 top-0 opacity-20 text-black " />
               </div>
             </div>
             <div className="relative z-10 -top-4 w-full min-h-1 scale-97 bg-sky-400/20 py-6 dark:text-white dark:bg-transparent p-2 flex items-end rounded-2xl">
@@ -426,11 +453,11 @@ useEffect(() => {
             </div>
           </>
         ) : schedule.length > 0 ? (
-          <div className="relative min-h-[250px] w-full p-5 bg-slate-300 dark:bg-black/20 dark:border-2 dark:border-gray-600/20  rounded-2xl border border-gray-200 flex flex-col gap-4 transition-all hover:shadow-lg">
+          <div className="relative min-h-[250px] w-full p-5 bg-slate-300 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 overflow-hidden rounded-2xl border border-gray-200 flex flex-col gap-4 transition-all hover:shadow-lg">
             <div className="flex flex-row items-center justify-between">
               <h1 className="text-4xl text-white font-bold m-3"> إستراحة محارب !</h1>
             </div>
-            {/* <h1 className="text-xl text-white">استرح يا بطل!</h1> */}
+            <h1 className="text-xl text-white">استرح يا بطل!</h1>
                 <GiShoulderArmor className="absolute text-8xl scale-150 left-0 top-0 opacity-20 text-white" />
 
           </div>
@@ -486,13 +513,13 @@ useEffect(() => {
                     {day.exercises.map((ex, exIdx) => (
                       <li
                         key={exIdx}
-                        className="flex items-center justify-between bg-gradient-to-r from-blue-900/5 to-sky-900/5 p-3 py-6 rounded-lg shadow-xl transition-all hover:shadow-md"
+                        className="relative flex items-center justify-between bg-gradient-to-r from-blue-900/5 to-sky-900/5 p-3 py-6 rounded-lg shadow-xl transition-all hover:shadow-md"
                       >
-                        <span className="text-sm text-gray-500 pl-2">
+                        <div className="absolute top-13 text-sm text-gray-500 dark:text-white/70 pl-2">
                           {ex.weight} كغ
-                        </span>
+                        </div>
                         <span
-                          className="font-medium cursor-pointer dark:text-white text-gray-700 truncate flex-1"
+                          className="font-medium cursor-pointer dark:text-white underline text-gray-700 truncate flex-1"
                           onClick={() => handleShowAnalysis(ex.name)}
                         >
                           {ex.name}
@@ -507,9 +534,9 @@ useEffect(() => {
                                 currentWeight: ex.weight,
                               })
                             }
-                            className="p-1 text-teal-300 hover:text-sky-700 transition"
+                            className="p-1 text-teal-300 hover:text-sky-700 transition flex justify-center items-center rounded-full gap-1 "
                           >
-                            <FaExchangeAlt />
+                            <FaExchangeAlt />تغير الوزن
                           </button>
                         </div>
                       </li>
@@ -592,13 +619,13 @@ const Modal: React.FC<{ children: React.ReactNode; onClose: () => void }> = ({
   children,
   onClose,
 }) => (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-4 animate-fadeIn">
-    <div className="relative bg-white backdrop-blur-md border border-white/50 shadow-2xl rounded-xl p-6 w-full max-w-sm show-first">
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-4  animate-fadeIn">
+    <div className="relative bg-white dark:bg-black/5  backdrop-blur-md border border-white/50 dark:border-none shadow-2xl rounded-xl p-6 w-full max-w-sm show-first">
       <button
         onClick={onClose}
-        className="absolute top-1 right-3 text-gray-400 hover:text-gray-600 transition"
+        className="absolute -top-9 right-3  hover:text-gray-600 transition"
       >
-        <FaTimes size={20} />
+        <FaXmark size={20} className="text-rose-400" />
       </button>
       {children}
     </div>
@@ -621,13 +648,14 @@ const AddExerciseForm: React.FC<{
       }}
       className="space-y-5"
     >
-      <h3 className="text-xl font-bold text-gray-800 pr-5">تمرين جديد</h3>
+      <h3 className="text-xl font-bold text-gray-800 dark:text-white pr-5">تمرين جديد</h3>
       <input
         type="text"
         placeholder="اسم التمرين"
+        autoFocus
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="w-full bg-gray-50 border border-gray-200 rounded-b-2xl rounded-xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-blue-400 transition"
+        className="w-full bg-gray-50 border border-gray-200 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white rounded-b-2xl rounded-xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-blue-400 transition"
         required
       />
       <input
@@ -635,7 +663,7 @@ const AddExerciseForm: React.FC<{
         placeholder="الوزن (كغ)"
         value={weight}
         onChange={(e) => setWeight(e.target.value)}
-        className="w-full bg-gray-50 border border-gray-200 rounded-b-2xl rounded-xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-blue-400 transition"
+        className="w-full bg-gray-50 border border-gray-200 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white rounded-b-2xl rounded-xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-blue-400 transition"
         required
         step="0.5"
       />
@@ -664,14 +692,15 @@ const EditWeightForm: React.FC<{
       }}
       className="space-y-5"
     >
-      <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+      <h3 className="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
         تعديل الوزن
       </h3>
       <input
         type="number"
         value={weight}
-        onChange={(e) => setWeight(e.target.value)}
-        className="w-full bg-gray-50 border border-gray-200 rounded-b-2xl rounded-xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-blue-400 transition"
+        onChange={(e) => {setWeight(e.target.value);}}
+        autoFocus
+        className="w-full bg-gray-50 border border-gray-200 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white rounded-b-2xl rounded-xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-blue-400 transition"
         step="0.5"
       />
       <button
@@ -702,7 +731,7 @@ const ModernAnalysisView: React.FC<{
   return (
     <div className="space-y-3 show-first">
       <div className="flex items-center justify-between">
-        <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+        <h3 className="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
           تحليل {exerciseName}
         </h3>
         {weightsHistory.length > 0 && (
@@ -720,7 +749,7 @@ const ModernAnalysisView: React.FC<{
           </span>
         )}
       </div>
-      <div className="bg-gradient-to-br from-gray-50 to-sky-50 rounded-lg p-4 border border-white/80 shadow-inner">
+      <div className="bg-gray-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-lg p-4 border border-white/80 shadow-inner">
         {weightsHistory.length > 0 ? (
           <div className="flex items-end justify-between gap-1 h-40">
             {weightsHistory.map((weight, i) => {
@@ -731,17 +760,17 @@ const ModernAnalysisView: React.FC<{
                   key={i}
                   className="flex-1 flex flex-col items-center justify-end h-full"
                 >
-                  <span className="text-xs font-medium text-gray-600 mb-1">
+                  <span className="text-xs font-medium text-gray-600 mb-1 dark:text-gray-100 ">
                     {weight} كغ
                   </span>
                   <div
-                    className="w-full max-w-[30px] rounded-t-lg bg-gradient-to-b from-sky-400 to-blue-500  shadow-sm"
+                    className="w-full max-w-[30px] rounded-lg bg-gradient-to-b from-sky-400 to-blue-500  shadow-sm"
                     style={{
                       height: `${heightPercent}%`,
                       animation: `slideUp 0.1s ease-in-out ${delay}s both`,
                     }}
                   />
-                  <span className="text-xs text-gray-400 mt-1.5">
+                  <span className="text-xs text-gray-400 mt-1.5 dark:text-gray-100">
                     {i + 1}
                   </span>
                 </div>
@@ -756,13 +785,15 @@ const ModernAnalysisView: React.FC<{
       </div>
       {weightsHistory.length > 0 && (
         <div className="grid grid-cols-2 gap-3">
-          <div className="bg-gray-100 backdrop-blur-sm rounded-xl p-6 border border-gray-100 transition-all hover:shadow-md">
+          <div className="bg-gray-100 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white backdrop-blur-sm rounded-xl p-6 border border-gray-100 transition-all hover:shadow-md">
             <span className="text-xs text-gray-500">أعلى وزن</span>
-            <p className="text-lg font-bold text-gray-800">{maxWeight} كغ</p>
+            <p className="text-lg font-bold text-gray-800 dark:text-white">
+              {maxWeight} كغ
+            </p>
           </div>
-          <div className="bg-gray-100 backdrop-blur-sm rounded-xl p-3 border border-gray-100/80 transition-all hover:shadow-md">
+          <div className="bg-gray-100 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white dark: backdrop-blur-sm rounded-xl p-3 border border-gray-100/80 transition-all hover:shadow-md">
             <span className="text-xs text-gray-500">عدد الجلسات</span>
-            <p className="text-lg font-bold text-gray-800">
+            <p className="text-lg font-bold text-gray-800 dark:text-white">
               {weightsHistory.length}
             </p>
           </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { period } from "../../../utilities/utilities";
 import CounterY from "../../../utilities/CounterY";
+import { BiRightArrowAlt } from "react-icons/bi";
 
 const ChanlangePreiod: React.FC = () => {
   const getCurrentWeight = parseFloat(
@@ -34,9 +35,15 @@ const ChanlangePreiod: React.FC = () => {
           عايز توصل لهدفك بعد كام شهر <span className="text-sky-500">؟</span>
         </h2>
         {MinMonth(weightDiff) != 0 && (
+        <>
           <p className="relative top-5 text-center text-gray-400   ">
             أقل فترة بالنسبة لفرق الوزن هي {MinMonth(weightDiff)} شهر
           </p>
+          <p className="relative top-5 text-center text-gray-400/70 flex flex-row">
+            {getCurrentWeight} <BiRightArrowAlt /> {getTargetWeight}
+          
+          </p>
+          </>
         )}
         <p className="relative top-5 text-center text-amber-700 text-sm p-4  ">
           رَسولَ اللهِ صلَّى اللهُ عليه وسلَّم سُئِلَ: أيُّ العَمَلِ أحَبُّ إلى

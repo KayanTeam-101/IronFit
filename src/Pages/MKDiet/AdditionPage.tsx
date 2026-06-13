@@ -221,6 +221,7 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
               type="text"
               value={text}
               onChange={(e) => setText(e.target.value)}
+              autoFocus
               placeholder="ابحث عن طعام..."
             className='w-full bg-gray-50 border-2 border-gray-200 outline-2 outline-sky-200 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white text-black rounded-b-4xl rounded-xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-blue-400 transition"'
             />
