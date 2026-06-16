@@ -1,4 +1,6 @@
 import React, { useMemo, useEffect, useState } from "react";
+import CircularProgress from "../../Components/UI/CircleProgress";
+import { useCountUp } from "../../Hooks/Increasing";
 import {
   FaWeight,
   FaFire,
@@ -21,85 +23,7 @@ interface UserData {
 }
 
 // ---------- Circular Progress Ring (Samsung‑style) ----------
-interface CircularProgressProps {
-  value: number;
-  max: number;
-  label: string;
-  unit?: string;
-  color: string;
-  size?: number;
-  strokeWidth?: number;
-  textSize?: string;
-  subText?: string;
-  icon?: React.ReactNode;
-}
 
-const CircularProgress: React.FC<CircularProgressProps> = ({
-  value,
-  max,
-  label,
-  unit = "",
-  color,
-  size = 120,
-  strokeWidth = 8,
-  textSize = "text-2xl",
-  subText,
-  icon,
-}) => {
-  const radius = (size - strokeWidth) / 2;
-  const circumference = 2 * Math.PI * radius;
-  const progress = Math.min(value / max, 1);
-  const offset = circumference - progress * circumference;
-
-  return (
-    <div className="flex flex-col items-center gap-1">
-      {/* Ring container */}
-      <div className="relative" style={{ width: size, height: size }}>
-        <svg width={size} height={size} className="transform -rotate-90">
-          <circle
-            cx={size / 2}
-            cy={size / 2}
-            r={radius}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={strokeWidth}
-            className="text-gray-200 dark:text-gray-700"
-          />
-          <circle
-            cx={size / 2}
-            cy={size / 2}
-            r={radius}
-            fill="none"
-            stroke={color}
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={offset}
-            strokeLinecap="round"
-            className="transition-all duration-1000 ease-out"
-          />
-        </svg>
-        {/* Center content */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          {icon && <span className="text-lg mb-0.5">{icon}</span>}
-          <span className={`font-extrabold ${textSize} text-gray-800 dark:text-white`}>
-            {Math.round(value)}
-          </span>
-          {unit && (
-            <span className="text-xs text-gray-500 dark:text-gray-400">{unit}</span>
-          )}
-          {subText && (
-            <span className="text-[10px] text-gray-400 dark:text-gray-500 mt-0.5">
-              {subText}
-            </span>
-          )}
-        </div>
-      </div>
-      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-        {label}
-      </span>
-    </div>
-  );
-};
 
 // ---------- Helpers ----------
 const calcBMI = (weightKg: number, heightCm: number) => {
@@ -148,7 +72,6 @@ const StatusPage: React.FC = () => {
     };
   }, []);
 
-  const bmi = calcBMI(userData.currentWeight, userData.height);
   const bmr = calcBMR(
     userData.currentWeight,
     userData.height,
@@ -157,8 +80,13 @@ const StatusPage: React.FC = () => {
   );
   const idealRange = getIdealWeightRange(userData.height);
   const weightDiff = userData.targetWeight - userData.currentWeight;
-
-  // Progress percentages for rings
+  const animatedWeight = useCountUp(userData.currentWeight);
+const animatedTargetWeight = useCountUp(userData.targetWeight);
+const animatedHeight = useCountUp(userData.height);
+const animatedAge = useCountUp(userData.age);
+const animatedBMR = useCountUp(Math.round(bmr));
+const bmi = calcBMI(animatedWeight, animatedHeight);
+// Progress percentages for rings
   const weightProgressPercent = Math.min(
     (userData.currentWeight / userData.targetWeight) * 100,
     100
@@ -208,29 +136,6 @@ const StatusPage: React.FC = () => {
     }
   }, []);
 
-  // All localStorage keys (excluding some internal ones)
-  const allKeys = useMemo(() => {
-    const exclude = [
-      "HistoryOfExercises",
-      "ExercisePlan",
-      "isFirstTime",
-      "StartedAT",
-      "EatenCalories",
-      "CompletedDates",
-    ]; // keep these out of the raw list
-    const keys = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key && !exclude.includes(key)) {
-        keys.push({
-          key,
-          value: localStorage.getItem(key) || "",
-        });
-      }
-    }
-    return keys;
-  }, []);
-
   // Card style identical to Home component
   const cardStyle =
     "bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 shadow-sm rounded-3xl p-4 backdrop-blur-md hover:shadow-xl transition-all";
@@ -248,43 +153,38 @@ const StatusPage: React.FC = () => {
           {/* Quick stats */}
           <div className={`${cardStyle} space-y-2`}>
             <h3 className="text-lg font-bold text-sky-800 dark:text-white flex items-center gap-2">
-              <FaHeartbeat className="text-rose-500" /> ملخص سريع
+              <FaHeartbeat className="text-rose-500" />  نظرة عامة
             </h3>
             <div className="grid grid-cols-2 gap-2 text-sm">
               <div className="bg-sky-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">الوزن الحالي</span>
                 <p className="font-bold text-sky-700 dark:text-white">
-                  {userData.currentWeight} كجم
+                  {animatedWeight} كجم
                 </p>
               </div>
               <div className="bg-sky-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">المستهدف</span>
                 <p className="font-bold text-sky-700 dark:text-white">
-                  {userData.targetWeight} كجم
+                  {animatedTargetWeight} كجم
                 </p>
               </div>
               <div className="bg-sky-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">الطول</span>
                 <p className="font-bold text-sky-700 dark:text-white">
-                  {userData.height} سم
+                  {animatedHeight} سم
                 </p>
               </div>
               <div className="bg-sky-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">العمر</span>
                 <p className="font-bold text-sky-700 dark:text-white">
-                  {userData.age} سنة
+                  {animatedAge} سنة
                 </p>
               </div>
-              <div className="bg-sky-50 dark:bg-white/5 rounded-xl p-2">
-                <span className="text-gray-500 dark:text-gray-400">الجنس</span>
-                <p className="font-bold text-sky-700 dark:text-white">
-                  {userData.gender}
-                </p>
-              </div>
+         
               <div className="bg-sky-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">معدل الأيض</span>
                 <p className="font-bold text-sky-700 dark:text-white">
-                  {Math.round(bmr)} سعرة
+                  {Math.round(animatedBMR)} سعرة
                 </p>
               </div>
             </div>
@@ -349,18 +249,7 @@ const StatusPage: React.FC = () => {
 
           
 
-          {/* Water Intake Ring (place holder - if you store water) */}
-          <div className={`${cardStyle} flex justify-center`}>
-            <CircularProgress
-              value={0}
-              max={8}
-              label="الماء (أكواب)"
-              unit="كوب"
-              color="#06b6d4"
-              icon={<FaTint className="text-cyan-500" />}
-              subText="لم يتم التسجيل بعد"
-            />
-          </div>
+        
         </div>
 
         {/* Bottom spacer for mobile nav */}

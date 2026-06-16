@@ -219,13 +219,12 @@ const Meal = (props: any) => {
           <GiBiceps className="text-base text-teal-500" />
           البروتين: {consumedNutrition.protein.toFixed(1)} غ 
         </div>
-        {/* Optional: show total planned for comparison */}
      
       </div>
 
       {/* All-eaten celebration */}
       {allEaten && (
-        <div className="absolute -top-0.5 -right-0.5 bg-green-400 text-white text-xs px-3 py-1 rounded-tr-2xl">
+        <div className="absolute -top-2.5 right-0 bg-teal-500 text-white text-xs px-3 py-1 rounded-2xl rounded-br-none">
            مكتملة
         </div>
       )}

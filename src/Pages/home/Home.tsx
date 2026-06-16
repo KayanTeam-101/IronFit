@@ -111,15 +111,15 @@ const Home = () => {
   const Advice = "قليلُ مستمر خيرُ من كثيرٍ منقطع";
 
   return (
-    <div className="relative min-h-screen w-screen overflow-hidden p-4 flex flex-col gap-0.5 show-first">
+    <div className="relative min-h-screen w-screen  overflow-hidden p-4 flex flex-col gap-0.5 show-first">
       {/* Decorative blur */}
 
       <div className="relative w-full min-h-14 flex  flex-col">
       <div className="w-full flex flex-row justify-between">
           <div className="text-2xl flex flex-row gap-1.5">
             <GoHomeFill className="dark:text-white"/>
-            <div className="p-0.5 bg-linear-to-r bg-clip-text  from-indigo-600 via-blue-500  to-pink-500 felx justify-center align-center rounded-full text-sm text-transparent font-bold">
-  Beta نسخة إبتدائية - 
+            <div className="p-1.5 bg-linear-to-r bg-clip-text  from-indigo-600 via-blue-500  to-pink-500 felx justify-center align-center rounded-full text-sm text-transparent font-bold">
+  V1.0.0 - 
   <br />
 <a href="https://www.tiktok.com/@iron_fit_app" target="_blank" rel="noopener noreferrer" className="underline text-sky-500">
   شاركنا رأيك

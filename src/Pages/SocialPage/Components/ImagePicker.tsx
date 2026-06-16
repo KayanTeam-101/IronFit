@@ -1,24 +1,26 @@
 import React, { useRef, useState, useEffect } from "react";
 
-interface AutoImagePickerProps {
+interface ImagePickerProps {
   onImageSelect: (imageDataUrl: string) => void;
 }
 
-const ImagePicker: React.FC<AutoImagePickerProps> = ({ onImageSelect }) => {
+
+
+const ImagePicker: React.FC<ImagePickerProps> = ({ onImageSelect }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [showRetry, setShowRetry] = useState(false);
   const hasOpenedOnce = useRef(false);
-
+  
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const dataUrl = reader.result as string;
-        setPreview(dataUrl);
-        onImageSelect(dataUrl); // Lift the image up
-      };
+  const dataUrl = reader.result as string;
+  setPreview(dataUrl);
+  onImageSelect(dataUrl); // ← pass it to the parent
+};
       reader.readAsDataURL(file);
     }
   };
@@ -34,6 +36,7 @@ const ImagePicker: React.FC<AutoImagePickerProps> = ({ onImageSelect }) => {
   // Detect when the dialog closes without a file (user cancelled)
   useEffect(() => {
     const handleFocus = () => {
+      // If no preview and the picker was already opened, show retry
       if (!preview && hasOpenedOnce.current && fileInputRef.current?.files?.length === 0) {
         setShowRetry(true);
       }
@@ -48,7 +51,7 @@ const ImagePicker: React.FC<AutoImagePickerProps> = ({ onImageSelect }) => {
   };
 
   return (
-    <div>
+    <div >
       <input
         type="file"
         accept="image/*"
@@ -58,15 +61,16 @@ const ImagePicker: React.FC<AutoImagePickerProps> = ({ onImageSelect }) => {
       />
 
       {preview ? (
-        <div className="w-full flex justify-center">
+        <div className="w-full flex justify-center ">
           <img
             src={preview}
             alt="Selected"
-            className="max-w-sm max-h-96 rounded-xl"
+            className="max-w-sm  max-h-96 rounded-xl "
           />
+         
         </div>
       ) : showRetry ? (
-        <div className="text-center space-y-4">
+        <div  className="text-center space-y-4">
           <p className="text-gray-700 dark:text-gray-300 font-medium">
             جرب إضافة صور
           </p>

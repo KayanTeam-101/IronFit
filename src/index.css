@@ -11,8 +11,7 @@
   direction: rtl;
   transition: .1s cubic-bezier(0.175, 0.885, 0.32);
 }
-body{
-}
+::-webkit-scrollbar{display: none;}
 #root{
     position: relative;
     min-height: 100vh;
@@ -78,6 +77,18 @@ h1, h2, h3, h4, h5, h6{
     border-radius: 50%;
     background-color: rgb(255, 255, 255);
     animation: activeAnim 0.5s ease-in-out ;
+}
+.scaleForAMomment{
+    animation: scaleForAMomment 2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+@keyframes scaleForAMomment {
+    0%,100%{
+        scale: 1;
+    }
+    50%{
+        scale: 1.01;
+    }
 }
 @keyframes activeAnim {
     0%{

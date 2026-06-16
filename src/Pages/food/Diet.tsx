@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import Meal from "./Meal";
-import { FaBowlFood  } from "react-icons/fa6";
+import { FaBowlFood } from "react-icons/fa6";
 import foods from "../../assets/FoodsList.json";
 import { VscSettings } from "react-icons/vsc";
 import Settings from "./Settings";
@@ -20,7 +20,7 @@ type MealPlan = {
 type HistoryType = {
   [date: string]: {
     meals: {
-      [mealName: string]: string[];   // only food names (grams are in FoodInfo_s)
+      [mealName: string]: string[]; // only food names (grams are in FoodInfo_s)
     };
   };
 };
@@ -41,11 +41,21 @@ const UNIT_OPTIONS: UnitOption[] = [
   { label: "غرام (أدخل الكمية)", grams: null },
 ];
 
+// Precomputed once at module load — avoids filtering this tiny array on every render
+const GRAM_UNIT_OPTIONS = UNIT_OPTIONS.filter((u) => u.grams !== null);
+
+// Precomputed once at module load — avoids mapping/lowercasing the whole
+// food list on every keystroke in the search box
+const FOOD_NAME_ENTRIES = foods.map((f) => ({
+  name: f.FoodName,
+  lower: f.FoodName.toLowerCase(),
+}));
+
 // ---------- Component ----------
 const Diet = () => {
   // --- Local state ---
   const [history, setHistory] = useState<HistoryType>(
-    JSON.parse(localStorage.getItem("History") || "{}")
+    () => JSON.parse(localStorage.getItem("History") || "{}")
   );
   const [eatenCalories, setEatenCalories] = useState<number>(0);
   const [settingsOpened, setSettingsOpened] = useState(false);
@@ -57,86 +67,88 @@ const Diet = () => {
   const [showUnitModal, setShowUnitModal] = useState(false);
   const [customGrams, setCustomGrams] = useState("");
 
-    // User data
-  const currentWeight = Number(localStorage.getItem("currentWeight") || 0);
-  const targetWeight = Number(localStorage.getItem("targetWeight") || 0);
-  const height = Number(localStorage.getItem("height") || 0);
-  const age = Number(localStorage.getItem("age") || 0);
-  const challengePeriod = Number(localStorage.getItem("challengePeriod") || 0);
-  const gender = localStorage.getItem("SelectedGender") || "";
+  // --- Daily calorie goal (computed once on mount from saved profile data) ---
+  const dailyCaloriesGoal = useMemo(() => {
+    const currentWeight = Number(localStorage.getItem("currentWeight") || 0);
+    const targetWeight = Number(localStorage.getItem("targetWeight") || 0);
+    const height = Number(localStorage.getItem("height") || 0);
+    const age = Number(localStorage.getItem("age") || 0);
+    const challengePeriod = Number(localStorage.getItem("challengePeriod") || 0);
+    const gender = localStorage.getItem("SelectedGender") || "";
 
+    if (!challengePeriod || challengePeriod <= 0) return 0;
 
-  // Read planned diet
-  const getDiet = localStorage.getItem("Diet");
-  const convertToObj: MealPlan | null = getDiet
-    ? (JSON.parse(getDiet) as MealPlan)
-    : null;
+    let bmr: number;
+    if (gender === "ذكر") {
+      bmr = 10 * currentWeight + 6.25 * height - 5 * age + 5;
+    } else {
+      bmr = 10 * currentWeight + 6.25 * height - 5 * age - 161;
+    }
 
-  // --- Recalculate eaten calories ---
-  const recalcCalories = () => {
-    const currentDate = `${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate()}`;
-    const todayMeals = history[currentDate]?.meals || {};
-    const foodInfoList = JSON.parse(localStorage.getItem("FoodInfo_s") || "[]");
+    const tdee = bmr * 1.5; // activity factor
+    const weightDiff = targetWeight - currentWeight;
+    const totalCaloriesNeeded = weightDiff * 7700;
+    const days = challengePeriod * 30;
 
-    let total = 0;
-    Object.entries(todayMeals).forEach(([meal, foodNames]) => {
-      foodNames.forEach((foodName) => {
-        const foodEntry = foodInfoList.find(
-          (entry: any) => entry[1] === foodName && entry[0] === meal
-        );
-        if (foodEntry) {
-          total += foodEntry[3];   // calories already calculated when added
-        }
-      });
-    });
-    console.log("total:" ,total);
-    
-    setEatenCalories(total);
-  };
-  
-    const dailyCaloriesGoal = useMemo(() => {
-      if (!challengePeriod || challengePeriod <= 0) return 0;
-  
-      let bmr: number;
-      if (gender === "ذكر") {
-        bmr = 10 * currentWeight + 6.25 * height - 5 * age + 5;
-      } else {
-        bmr = 10 * currentWeight + 6.25 * height - 5 * age - 161;
-      }
-  
-      const tdee = bmr * 1.5; // activity factor
-      const weightDiff = targetWeight - currentWeight;
-      const totalCaloriesNeeded = weightDiff * 7700;
-      const days = challengePeriod * 30;
-  
-      if (days === 0) return Math.round(tdee);
-      const daily = tdee + totalCaloriesNeeded / days;
-      localStorage.setItem("dailyCalories", Math.round(daily).toString());
-      return Math.round(daily);
-    }, []);
-  
-    useEffect(() => {
+    if (days === 0) return Math.round(tdee);
+    const daily = tdee + totalCaloriesNeeded / days;
+    return Math.round(daily);
+  }, []);
+
+  useEffect(() => {
     if (dailyCaloriesGoal > 0) {
       localStorage.setItem("dailyCalories", dailyCaloriesGoal.toString());
-    }
-    if (dailyCaloriesGoal === 0) {
+    } else {
       localStorage.removeItem("dailyCalories");
     }
   }, [dailyCaloriesGoal]);
-  
+
+  // Read planned diet — re-parsed only on mount and whenever Settings closes,
+  // since that's the only place the saved plan can change
+  const convertToObj: MealPlan | null = useMemo(() => {
+    const getDiet = localStorage.getItem("Diet");
+    return getDiet ? (JSON.parse(getDiet) as MealPlan) : null;
+  }, [settingsOpened]);
+
+  // --- Recalculate eaten calories ---
+  const recalcCalories = useCallback(() => {
+    const today = new Date();
+    const currentDate = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
+    const todayMeals = history[currentDate]?.meals || {};
+    const foodInfoList: any[] = JSON.parse(localStorage.getItem("FoodInfo_s") || "[]");
+
+    // Build a (meal, food) -> calories lookup once — O(n) — instead of
+    // scanning the whole FoodInfo_s list for every food item — O(n*m)
+    const calorieMap = new Map<string, number>();
+    for (const entry of foodInfoList) {
+      const key = JSON.stringify([entry[0], entry[1]]);
+      if (!calorieMap.has(key)) {
+        calorieMap.set(key, entry[3]);
+      }
+    }
+
+    let total = 0;
+    for (const [meal, foodNames] of Object.entries(todayMeals)) {
+      for (const foodName of foodNames) {
+        const cal = calorieMap.get(JSON.stringify([meal, foodName]));
+        if (cal !== undefined) total += cal;
+      }
+    }
+
+    setEatenCalories(total);
+  }, [history]);
 
   // Sync history to localStorage on change
   useEffect(() => {
     localStorage.setItem("History", JSON.stringify(history));
     recalcCalories();
-  }, [history]);
+  }, [history, recalcCalories]);
 
   // --- Filtered search results ---
   const filteredFoods = useMemo(() => {
-    if (!text.trim()) return [];
-    return foods
-      .map((f) => f.FoodName)
-      .filter((name) => name.toLowerCase().includes(text.toLowerCase()));
+    const query = text.trim().toLowerCase();
+    if (!query) return [];
+    return FOOD_NAME_ENTRIES.filter((f) => f.lower.includes(query)).map((f) => f.name);
   }, [text]);
 
   // --- Food addition logic ---
@@ -173,8 +185,8 @@ const Diet = () => {
     foodInfoList.push([mealKey, foodName, grams, cal, prot]);
     localStorage.setItem("FoodInfo_s", JSON.stringify(foodInfoList));
 
-    // Immediately recalc
-    recalcCalories();
+    // Updating `history` above triggers the effect that recalculates
+    // eatenCalories with up-to-date data — no need to call it again here.
 
     // Close modals
     setShowUnitModal(false);
@@ -235,7 +247,7 @@ const Diet = () => {
           current={eatenCalories}
           size={140}
           strokeWidth={12}
-          goal={Number(localStorage.getItem("dailyCalories") || "0")}
+          goal={dailyCaloriesGoal}
         />
 
         <div
@@ -325,7 +337,7 @@ const Diet = () => {
             </div>
 
             <div className="space-y-2">
-              {UNIT_OPTIONS.filter((u) => u.grams !== null).map((unit, idx) => (
+              {GRAM_UNIT_OPTIONS.map((unit, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleUnitSelect(unit)}

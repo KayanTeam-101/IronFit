@@ -1,6 +1,10 @@
 [
   {
-    "origin": ["http://localhost:5173"],
+    "origin": [
+      "http://localhost:5173",
+      "https://iron-fit-blush.vercel.app",
+      "https://ironfit.app"
+    ],
     "method": ["GET", "POST", "PUT", "DELETE", "HEAD"],
     "responseHeader": ["Content-Type", "Content-Disposition"],
     "maxAgeSeconds": 3600

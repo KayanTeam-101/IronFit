@@ -12,6 +12,7 @@ import ExercisePage from "./Pages/Exersices/Exersice";
 import StatusPage from "./Pages/StatusPage/StatusPage";
 import Settings from "./Pages/Settings/settings";
 import TemplatesPage from "./Pages/Templates/TemplatesPage";
+import Loading from "./Components/layouts/Loading";
 
 function App() {
   const isFirstTime: boolean = localStorage.getItem("isFirstTime") === null;
@@ -21,12 +22,24 @@ function App() {
 
   useEffect(() => {
     // التحقق من التحميل
+      (function () {
+        if (localStorage.length < 8 && window.location.pathname !== '/') {
+
+          localStorage.clear();
+          window.location.href = '/';
+
+        }else{return null;}
+       })();
     const handleLoad = () => {
+setTimeout(() => {
       setIsLoading(false);
+}, 1000);     
     };
 
     if (document.readyState === "complete") {
+setTimeout(() => {
       setIsLoading(false);
+}, 1000);
     } else {
       window.addEventListener("load", handleLoad);
     }
@@ -40,7 +53,7 @@ function App() {
   useEffect(() => {
     const checkDeviceType = () => {
       // إذا كان عرض الشاشة أكبر من 768 بكسل (أجهزة التابلت والكمبيوتر)
-      if (window.innerWidth > 768) {
+      if (window.innerWidth > 868) {
         setIsDesktop(true);
       } else {
         setIsDesktop(false);
@@ -62,7 +75,9 @@ function App() {
   if (isLoading) {
     return (
       <div className="w-screen h-screen flex items-center justify-center bg-white dark:bg-black">
-        <p className="text-2xl font-bold text-gray-800">Loading...</p>
+        <div className="w-1/4">
+        <Loading />
+        </div>
       </div>
     );
   }
@@ -83,10 +98,7 @@ function App() {
     );
   }
 
-  if (localStorage.length < 7 && window.location.pathname !== "/") {
-    localStorage.clear();
-    window.location.pathname = "/";
-  }
+ 
 
   // 5. إذا كان من الهاتف، يتم عرض التطبيق بشكل طبيعي
   return (
@@ -112,7 +124,7 @@ function App() {
         <Route path="/Settings" element={<Settings />} />
         <Route
           path="*"
-          element={<h1 className="p-5">Coming SOOOOOOOOON إن شاء الله</h1>}
+          element={<h1 className="p-5">404</h1>}
         />
 
         <Route
@@ -127,7 +139,7 @@ function App() {
         />
       </Routes>
 
-      {!isFirstTime && window.location.pathname !== "/MkADiet" && <Navbar />}
+      {localStorage.length > 8 && window.location.pathname !== "/MkADiet" && <Navbar />}
     </>
   );
 }

@@ -39,28 +39,34 @@ const CounterY = ({ arr, size = "md", value, delValue, onChange }: CounterYProps
   const startY = useRef(0);
   const lastOffset = useRef(indexFromValue(value) * ITEM_HEIGHT);
   const isDragging = useRef(false);
-  
-  // NEW: Keep track of the index we last vibrated on to prevent continuous buzzing
   const lastVibratedIndex = useRef(indexFromValue(value));
 
   const maxOffset = (finalArr.length - 1) * ITEM_HEIGHT;
+
+  // Auto-select first item on mount if no value provided
+  const hasAutoSelected = useRef(false);
+  useEffect(() => {
+    if (value === undefined && finalArr.length > 0 && !hasAutoSelected.current) {
+      hasAutoSelected.current = true;
+      // The first item is already visually centered (offset = 0)
+      onChange?.(finalArr[0]);
+    }
+  }, [value, finalArr, onChange]);
 
   // Sync external value
   useEffect(() => {
     if (value == null) return;
     const newIndex = indexFromValue(value);
     const newOffset = newIndex * ITEM_HEIGHT;
-    
     setOffset(newOffset);
     lastOffset.current = newOffset;
-    lastVibratedIndex.current = newIndex; // Keep synced
-    
+    lastVibratedIndex.current = newIndex;
     if (navigator.vibrate) {
-        navigator.vibrate(50); // Optional: buzz when value changes externally
+      navigator.vibrate(50);
     }
   }, [value, indexFromValue, ITEM_HEIGHT]);
 
-  // Optimized touch handlers
+  // Touch handlers (unchanged logic, cleanly bound)
   const onTouchStart = useCallback((e: React.TouchEvent) => {
     isDragging.current = true;
     startY.current = e.touches[0].clientY;
@@ -70,21 +76,15 @@ const CounterY = ({ arr, size = "md", value, delValue, onChange }: CounterYProps
     (e: React.TouchEvent) => {
       if (!isDragging.current) return;
       const delta = startY.current - e.touches[0].clientY;
-      
-      // Calculate new offset and clamp it
       const rawOffset = lastOffset.current + delta;
       const newOffset = Math.max(0, Math.min(rawOffset, maxOffset));
-      
       setOffset(newOffset);
 
-      // NEW: Calculate which index is currently centered
       const activeIndex = Math.round(newOffset / ITEM_HEIGHT);
-      
-      // NEW: If the centered index changes, trigger a short haptic tick
       if (activeIndex !== lastVibratedIndex.current) {
         lastVibratedIndex.current = activeIndex;
         if (navigator.vibrate) {
-          navigator.vibrate(30); // 30ms gives a nice "tick" feeling
+          navigator.vibrate(30);
         }
       }
     },
@@ -94,21 +94,19 @@ const CounterY = ({ arr, size = "md", value, delValue, onChange }: CounterYProps
   const onTouchEnd = useCallback(() => {
     if (!isDragging.current) return;
     isDragging.current = false;
-    
     const snappedIndex = Math.round(offset / ITEM_HEIGHT);
     const snappedOffset = snappedIndex * ITEM_HEIGHT;
     const selectedValue = finalArr[snappedIndex];
-    
     if (selectedValue !== undefined) {
-      onChange?.(selectedValue); 
+      onChange?.(selectedValue);
+      console.log(selectedValue);
+      
     }
-    
     lastOffset.current = snappedOffset;
     setOffset(snappedOffset);
-    lastVibratedIndex.current = snappedIndex; // Sync the ref
-
+    lastVibratedIndex.current = snappedIndex;
     if (navigator.vibrate) {
-        navigator.vibrate(30); // Confirmation buzz on snap
+      navigator.vibrate(30);
     }
   }, [offset, ITEM_HEIGHT, finalArr, onChange]);
 
@@ -135,7 +133,7 @@ const CounterY = ({ arr, size = "md", value, delValue, onChange }: CounterYProps
           return (
             <div
               key={num}
-              className={`relative flex items-center justify-center font-black ${cfg.font}`}
+              className={`relative flex items-center justify-center font-black ${cfg.font} ${opacity === 1 ? "animate-pulse ": ""}`}
               style={{
                 height: ITEM_HEIGHT,
                 opacity,

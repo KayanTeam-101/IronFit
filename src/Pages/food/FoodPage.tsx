@@ -8,7 +8,7 @@ const FoodPage = () => {
     <div className='relative show-first min-h-screen max-w-screen p-5 flex flex-col gap-5  '>
       
       {IsValid ? (
-<div className='relative min-h-screen w-full flex flex-col gap-5 show-first'>
+<div className='relative min-h-screen w-full flex flex-col gap-5 '>
       <div className="absolute top-10 z-0 w-full h-[400px] opacity-20 blur-3xl bg-gradient-to-r from-sky-400 via-indigo-400 to-teal-300" />
 
         <Diet />

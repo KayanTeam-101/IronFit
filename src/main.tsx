@@ -10,7 +10,7 @@ import { Analytics } from "@vercel/analytics/react";
 
 registerSW()
 ReactDOM.createRoot(document.getElementById("root")!).render(
-<div className="w-screen min-h-screen bg-white dark:bg-black">
+<div className="w-screen min-h-screen bg-gray-100 dark:bg-[#111111]">
     <BrowserRouter>
     <App />
   </BrowserRouter>
