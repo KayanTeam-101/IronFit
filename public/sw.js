@@ -69,8 +69,8 @@ async function checkAndNotify() {
   const settings = await readFromDB('settings') || { selectedDays: [], dailyCalories: 0, targetWeight: 0, workoutCompletedDate: '' };
   const record = await readFromDB('notification') || { lastNotificationTime: 0, lastMotivationIndex: -1 };
 
-  const MIN_INTERVAL = 1.5 * 60 * 60 * 1000; // 1.5 hours
-  if (now - record.lastNotificationTime < MIN_INTERVAL) return;
+  const MIN_INTERVAL = 30 * 1000; // 1.5 hours
+  // if (now - record.lastNotificationTime < MIN_INTERVAL) return;
 
   let sent = false;
   const todayDay = getTodayArabicDay();
