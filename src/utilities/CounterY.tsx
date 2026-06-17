@@ -112,7 +112,7 @@ const CounterY = ({ arr, size = "md", value, delValue, onChange }: CounterYProps
 
   return (
     <div
-      className="relative min-h-56 w-screen rounded-2xl overflow-hidden select-none touch-none"
+      className="relative min-h-56 w-screen rounded-2xl overflow-hidden select-none touch-none "
       style={{ height: CONTAINER_HEIGHT }}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
@@ -133,11 +133,11 @@ const CounterY = ({ arr, size = "md", value, delValue, onChange }: CounterYProps
           return (
             <div
               key={num}
-              className={`relative flex items-center justify-center font-black ${cfg.font} ${opacity === 1 ? "animate-pulse ": ""}`}
+              className={`relative flex items-center justify-center font-black transition-colors delay-100 ${cfg.font} ${opacity === 1 ? "animate-pulse ": ""}`}
               style={{
                 height: ITEM_HEIGHT,
                 opacity,
-                color: opacity > 0.5 ? "#07f" : "#94a3b8",
+                color: opacity > 0.5 ? "orange" : "#94a3b8",
               }}
             >
               {num}

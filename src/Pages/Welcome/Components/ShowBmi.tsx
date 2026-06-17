@@ -157,31 +157,31 @@ const ShowBmi = () => {
   
           {/* Quick stats */}
           <div className={`${cardStyle} space-y-2`}>
-            <h3 className="text-lg font-bold text-sky-800 dark:text-white flex items-center gap-2">
+            <h3 className="text-lg font-bold text-amber-800 dark:text-white flex items-center gap-2">
               <FaHeartbeat className="text-rose-500" />  نظرة عامة
             </h3>
             <div className="grid grid-cols-2 gap-2 text-sm">
-              <div className="bg-sky-50 dark:bg-white/5 rounded-xl p-2">
+              <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">الوزن الحالي</span>
-                <p className="font-bold text-sky-700 dark:text-white">
+                <p className="font-bold text-amber-700 dark:text-white">
                   {animatedWeight} كجم
                 </p>
               </div>
-              <div className="bg-sky-50 dark:bg-white/5 rounded-xl p-2">
+              <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">المستهدف</span>
-                <p className="font-bold text-sky-700 dark:text-white">
+                <p className="font-bold text-amber-700 dark:text-white">
                   {animatedTargetWeight} كجم
                 </p>
               </div>
-              <div className="bg-sky-50 dark:bg-white/5 rounded-xl p-2">
+              <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">الطول</span>
-                <p className="font-bold text-sky-700 dark:text-white">
+                <p className="font-bold text-amber-700 dark:text-white">
                   {animatedHeight} سم
                 </p>
               </div>
-              <div className="bg-sky-50 dark:bg-white/5 rounded-xl p-2">
+              <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">معدل الأيض</span>
-                <p className="font-bold text-sky-700 dark:text-white">
+                <p className="font-bold text-amber-700 dark:text-white">
                   {Math.round(animatedBMR)} سعرة
                 </p>
               </div>
@@ -195,7 +195,7 @@ const ShowBmi = () => {
           {/* Daily Calories Ring */}
           <div className={`${cardStyle} flex justify-center`}>
             <CircularProgress
-              value={userData.dailyCalories}
+              value={useCountUp(userData.dailyCalories)}
               max={localStorage.getItem("dailyCalories") ? Number(localStorage.getItem("dailyCalories")) : 0}
               label="س.ع المستهدفة"
               unit="سعرة"
@@ -212,7 +212,7 @@ const ShowBmi = () => {
               label="مؤشر كتلة الجسم"
               unit="BMI"
               color="#3b82f6"
-              icon={<FaRulerVertical className="text-blue-500" />}
+              icon={<FaRulerVertical className="text-orange-500" />}
               subText={bmi < 18.5 ? "نقص" : bmi < 25 ? "طبيعي" : bmi < 30 ? "زيادة" : "سمنة"}
             />
           </div>

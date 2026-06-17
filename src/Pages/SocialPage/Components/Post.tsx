@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
+import CommentSection from "./CommentSection";
 import { likeThePost } from "../../../firebase/post";
 import { FaDownload, FaFire } from "react-icons/fa6";
 import { IoBookmarkOutline } from "react-icons/io5";
@@ -20,7 +21,7 @@ const letterColorClasses: Record<string, string> = {
   C: "bg-purple-500/20 text-purple-500",
   D: "bg-violet-500/20 text-violet-500",
   E: "bg-indigo-500/20 text-indigo-500",
-  F: "bg-blue-500/20 text-blue-500",
+  F: "bg-orange-500/20 text-orange-500",
   G: "bg-cyan-500/20 text-cyan-500",
   H: "bg-teal-500/20 text-teal-500",
   I: "bg-emerald-500/20 text-emerald-500",
@@ -31,19 +32,19 @@ const letterColorClasses: Record<string, string> = {
   N: "bg-orange-500/20 text-orange-500",
   O: "bg-red-500/20 text-red-500",
   P: "bg-fuchsia-500/20 text-fuchsia-500",
-  Q: "bg-sky-500/20 text-sky-500",
+  Q: "bg-amber-500/20 text-amber-500",
   R: "bg-rose-500/20 text-rose-500",
   S: "bg-pink-500/20 text-pink-500",
   T: "bg-violet-500/20 text-violet-500",
   U: "bg-indigo-500/20 text-indigo-500",
-  V: "bg-blue-500/20 text-blue-500",
+  V: "bg-orange-500/20 text-orange-500",
   W: "bg-cyan-500/20 text-cyan-500",
   X: "bg-teal-500/20 text-teal-500",
   Y: "bg-emerald-500/20 text-emerald-500",
   Z: "bg-green-500/20 text-green-500",
     ح: "bg-fuchsia-500/20 text-fuchsia-500",
-  ع: "bg-sky-500/20 text-sky-500",
-    ك: "bg-blue-500/20 text-blue-500",
+  ع: "bg-amber-500/20 text-amber-500",
+    ك: "bg-orange-500/20 text-orange-500",
   ف: "bg-cyan-500/20 text-cyan-500",
   س: "bg-teal-500/20 text-teal-500",
 };
@@ -62,14 +63,13 @@ const Post: React.FC<PostProps> = ({
   UserName,
   image,
   amountOfLikes,
-  Comments,
 }) => {
   const [Liked, setLiked] = useState<boolean>(false);
   const [animateHeart, setAnimateHeart] = useState(false);
   const [showLikeAnimation, setShowLikeAnimation] = useState(false);
   const [likeAnimationKey, setLikeAnimationKey] = useState(0);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
-
+  const [showComments, setShowComments] = useState(false);
   const colorClasses = getAvatarColorClasses(UserName);
   const initial = UserName.charAt(0).toUpperCase();
   const UserClasses = getAvatarColorClasses(localStorage.getItem("UserName") || "");
@@ -113,8 +113,9 @@ const Post: React.FC<PostProps> = ({
   }, [handleLike, image]);
 
   return (
+    <>
     <div 
-    className={`w-full min-h-6  dark:bg-gray-900/50 overflow-hidden z-10 bg-white/50 backdrop-blur-xl  ${image ? "" : "mt-7 mb-7"} outline-none  flex flex-col shadow-xl transition-all r duration-500 hover:shadow-2xl show-second overflow-hidden`}>
+    className={`w-full min-h-6 rounded-3xl  dark:bg-gray-900/50 overflow-hidden z-10 bg-white/50 backdrop-blur-xl  ${image ? "" : "mt-7 mb-7"} outline-none  flex flex-col shadow-xl transition-all  duration-500 hover:shadow-2xl show-first overflow-hidden`}>
       <style>{`
         @keyframes heartSpin {
           0% {
@@ -214,14 +215,14 @@ const Post: React.FC<PostProps> = ({
           <div className="flex flex-col justify-center items-start">
             <p className="text-lg text-gray-700 dark:text-white">
               {UserName}
-              <span className="text-blue-600">@</span>
+              <span className="text-orange-600">@</span>
             </p>
-<div className="flex flex-row gap-2.5">
+{/* <div className="flex flex-row gap-2.5">
             <p className="text-xs text-gray-500 -m-1">2h ago</p>
             <div className="w-1 h-1 bg-gray-500 rounded-xl"></div>
             <p className="text-[13px] text-gray-500 -m-1.5 flex flex-row gap-1">4 <span className="text-amber-600 text-[10px] mt-1"><FaFire /></span></p>
 
-</div>
+</div> */}
           </div>
         </div>
 
@@ -253,29 +254,33 @@ const Post: React.FC<PostProps> = ({
             </span>
           </button>
 
-          <button className="w-14 h-9 mt-1 flex flex-row gap-1 items-center text-gray-500 hover:text-blue-600">
-            <BsChatDots /> <span >{Comments.length}</span>
-          </button>
+         <button
+  onClick={() => setShowComments((prev) => !prev)}
+  className="w-14 h-9 mt-1 flex flex-row gap-1 items-center text-gray-500 hover:text-orange-600"
+>
+  <BsChatDots /> <span>{}</span>
+</button>
+
            {image && 
            (
-             <button className="w-14 h-9 mt-1 flex flex-row gap-1 items-center text-gray-500 hover:text-blue-600">
-            <FaDownload /> <span >{Comments.length}</span>
+             <button className="w-14 h-9 mt-1 flex flex-row gap-1 items-center text-gray-500 hover:text-orange-600">
+            <FaDownload />
           </button>
            )}
         </div>
       </div>
-      <div className="w-full h-12 bg-white dark:bg-gray-500/20 rounded-b-2xl flex flex-row items-center justify-around">
-      <div className="w-10/12 h-fit dark:bg-gray-200/20 bg-gray-100  rounded-xl">
-        <p className="p-1 text-gray-400">أترك تعليق..</p>
-      </div>
-        <div
-            className={`w-3 h-3 p-4 flex items-center justify-center rounded-xl ${UserClasses}`}
-          >
-            <span className="font-bold mt-1">{UserInitial}</span>
-          </div>
-      </div>
+  
+    
+      {true && (
+    <CommentSection
+      postId={id}
+      currentUserName={localStorage.getItem("UserName") || ""}
+    />
+  )}
     </div>
+    </>
   );
 };
 
 export default Post;
+

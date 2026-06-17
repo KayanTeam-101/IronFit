@@ -197,7 +197,7 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
   return (
     <div className="fixed show-first top-0 left-0 w-screen h-screen flex flex-col bg-slate-100 dark:bg-slate-950 z-50 overflow-y-scroll">
       {/* Header */}
-      <div className="relative w-full bg-gradient-to-b from-blue-400 to-blue-500 dark:from-black/20 dark:to-amber-400/20 p-5 pt-15 rounded-b-full shadow-xl">
+      <div className="relative w-full bg-gradient-to-b from-orange-400 to-orange-500 dark:from-black/20 dark:to-amber-400/20 p-5 pt-15 rounded-b-full shadow-xl">
         <div className="flex items-center justify-between">
           <button
             onClick={() => window.location.reload()}
@@ -223,7 +223,7 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
               onChange={(e) => setText(e.target.value)}
               autoFocus
               placeholder="ابحث عن طعام..."
-            className='w-full bg-gray-50 border-2 border-gray-200 outline-2 outline-sky-200 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white text-black rounded-b-4xl rounded-xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-blue-400 transition"'
+            className='w-full bg-gray-50 border-2 border-gray-200 outline-2 outline-amber-200 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white text-black rounded-b-4xl rounded-xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-orange-400 transition"'
             />
           </div>
 
@@ -234,19 +234,19 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
                 filteredFoods.map((food, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center justify-between p-3 bg-gray-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20   hover:bg-blue-50 rounded-xl transition cursor-pointer group"
+                    className="flex items-center justify-between p-3 bg-gray-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20   hover:bg-orange-50 rounded-xl transition cursor-pointer group"
                   >
                     <span
-                      className="flex-1 font-medium text-gray-700 dark:text-white group-hover:text-blue-700"
+                      className="flex-1 font-medium text-gray-700 dark:text-white group-hover:text-orange-700"
                       onClick={() => handleAddClick(food)}
                     >
                       {food}
                     </span>
                     <button
                       onClick={() => handleGetInfo(food)}
-                      className="p-1.5 bg-white rounded-full dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white text-black shadow-sm hover:bg-blue-100 transition"
+                      className="p-1.5 bg-white rounded-full dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white text-black shadow-sm hover:bg-orange-100 transition"
                     >
-                      <BiInfoCircle className="text-gray-500  group-hover:text-blue-600" />
+                      <BiInfoCircle className="text-gray-500  group-hover:text-orange-600" />
                     </button>
                   </div>
                 ))
@@ -262,7 +262,7 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
       <div className="px-4 mt-5">
         <div className="bg-white/70 backdrop-blur-lg border border-white/60 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 shadow-xl rounded-2xl p-4">
           <h2 className="text-lg font-bold text-gray-700 dark:text-white mb-3 flex items-center gap-2">
-            <GiFruitBowl className="text-blue-500" />
+            <GiFruitBowl className="text-orange-500" />
             الطعام المُضاف
           </h2>
 
@@ -275,7 +275,7 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
               {FoodArray.map((food, idx) => (
                 <div
                   key={idx}
-                  className="group relative flex items-center gap-2 bg-white/70 dark:bg-black/20 dark:border-2 dark:border-gray-600/20  border border-blue-100 rounded-xl px-3 py-2 shadow-sm hover:shadow-md transition"
+                  className="group relative flex items-center gap-2 bg-white/70 dark:bg-black/20 dark:border-2 dark:border-gray-600/20  border border-orange-100 rounded-xl px-3 py-2 shadow-sm hover:shadow-md transition"
                 >
                   <span className="text-sm font-medium text-gray-700 dark:text-white">
                     {food}
@@ -297,7 +297,7 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
       <div className="px-4 mt-5">
         <div className="bg-white/70 backdrop-blur-lg border border-white/60 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 shadow-xl rounded-2xl p-4">
           <h2 className="text-lg font-bold dark:text-white text-gray-700 mb-3 flex items-center gap-2">
-            <IoInformation className="text-blue-500" />
+            <IoInformation className="text-orange-500" />
             المعلومات الغذائية
           </h2>
 
@@ -338,7 +338,7 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
       <div className="px-4 mt-8 pb-8">
         <button
           onClick={handleSave}
-          className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-4 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl active:scale-95 transition flex items-center justify-center gap-2"
+          className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-4 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl active:scale-95 transition flex items-center justify-center gap-2"
         >
           <BsSave size={20} />
           حفظ وإضافة للوجبة
@@ -366,10 +366,10 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
                 <button
                   key={idx}
                   onClick={() => handleSelectUnit(unit)}
-                  className="w-full flex items-center justify-between bg-blue-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 border border-blue-100 p-3 rounded-xl hover:shadow-md active:scale-[0.98] transition"
+                  className="w-full flex items-center justify-between bg-orange-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 border border-orange-100 p-3 rounded-xl hover:shadow-md active:scale-[0.98] transition"
                 >
                   <span className="font-medium text-gray-700  dark:text-white">{unit.label}</span>
-                  <span className="text-sm text-blue-600">{unit.grams}غ</span>
+                  <span className="text-sm text-orange-600">{unit.grams}غ</span>
                 </button>
               ))}
 
@@ -381,12 +381,12 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
                     placeholder="الكمية بالغرام"
                     value={customGrams}
                     onChange={(e) => setCustomGrams(e.target.value)}
-                    className="flex-1 bg-gray-50 border border-gray-200 rounded-xl p-3 outline-none focus:ring-2 focus:ring-blue-400"
+                    className="flex-1 bg-gray-50 border border-gray-200 rounded-xl p-3 outline-none focus:ring-2 focus:ring-orange-400"
                     onKeyDown={(e) => e.key === "Enter" && handleCustomGramsSubmit()}
                   />
                   <button
                     onClick={handleCustomGramsSubmit}
-                    className="bg-blue-500 text-white p-3 rounded-xl hover:bg-blue-600 transition"
+                    className="bg-orange-500 text-white p-3 rounded-xl hover:bg-orange-600 transition"
                   >
                     تم
                   </button>

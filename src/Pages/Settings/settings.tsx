@@ -59,9 +59,9 @@ const Settings = () => {
     // "w-full bg-gray-50 dark:bg-white/10 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-3 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-5 font-arabic">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-5 font-arabic">
       {/* Decorative blur */}
-      <div className="absolute top-10 left-0 w-full h-[400px] opacity-35 blur-3xl bg-gradient-to-r from-sky-400 via-indigo-400 to-teal-300 dark:from-sky-600 dark:via-indigo-600 dark:to-teal-600 pointer-events-none" />
+      <div className="absolute top-10 left-0 w-full h-[400px] opacity-35 blur-3xl bg-gradient-to-r from-amber-400 via-indigo-400 to-teal-300 dark:from-amber-600 dark:via-indigo-600 dark:to-teal-600 pointer-events-none" />
 
       <div className="relative max-w-2xl mx-auto">
         {/* Header */}
@@ -72,7 +72,7 @@ const Settings = () => {
             {/* Current Weight */}
             <div>
               <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                <FaWeight className="text-sky-500" /> الوزن الحالي (كجم)
+                <FaWeight className="text-amber-500" /> الوزن الحالي (كجم)
               </label>
               <input
                 type="number"
@@ -143,7 +143,7 @@ const Settings = () => {
 
         {/* Download Card */}
         <div className={`${cardStyle} text-center`}>
-          <h2 className="text-lg font-bold text-sky-800 dark:text-white mb-3 flex items-center justify-center gap-2">
+          <h2 className="text-lg font-bold text-amber-800 dark:text-white mb-3 flex items-center justify-center gap-2">
             <FaDownload className="text-indigo-500" /> تصدير البيانات
           </h2>
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
@@ -151,7 +151,7 @@ const Settings = () => {
           </p>
           <button
             onClick={downloadAllData}
-            className="w-full sm:w-auto px-8 py-3 bg-sky-500 hover:bg-sky-600 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-xl active:scale-95 flex items-center justify-center gap-2 mx-auto"
+            className="w-full sm:w-auto px-8 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-xl active:scale-95 flex items-center justify-center gap-2 mx-auto"
           >
             <FaDownload /> تحميل JSON File 
           </button>

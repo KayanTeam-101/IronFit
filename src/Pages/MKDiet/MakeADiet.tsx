@@ -181,9 +181,9 @@ const MakeADiet: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen show-first bg-sky-50 dark:bg-slate-950 relative pb-24">
+    <div className="min-h-screen show-first bg-amber-50 dark:bg-slate-950 relative pb-24">
       {/* Header */}
-      <div className="w-full bg-gradient-to-b from-sky-400  to-blue-500 dark:from-black/20 dark:to-amber-400/20 dark:border-2 dark:border-gray-600/20 p-12 pt-10 rounded-b-full shadow-xl">
+      <div className="w-full bg-gradient-to-b from-amber-400  to-orange-500 dark:from-black/20 dark:to-amber-400/20 dark:border-2 dark:border-gray-600/20 p-12 pt-10 rounded-b-full shadow-xl">
           <div className="flex justify-between mt-5 text-white/90 text-sm">
           <span>الوزن: {currentWeight} كغ</span>
           <span>الهدف: {targetWeight} كغ</span>
@@ -255,7 +255,7 @@ const MakeADiet: React.FC = () => {
       
       </div>
     <div className="p-4 flex items-center justify-center w-screen ">
-        <div className="dark:bg-amber-300/20 dark:border border-amber-400/50  rounded-xl w-11/12 p-2 dark:text-white  min-h-10 ">
+          <div className="bg-amber-300/60 dark:bg-amber-300/20 border border-amber-400/50 rounded-xl w-11/12 p-2 dark:text-white text-gray-300 min-h-10">
  مكسل تعمل دايت؟! تقدر تجرب القوالب الغذائية الجاهزة من <span onClick={() => window.location.href = "/templates"} className="text-amber-400 cursor-pointer underline">هنا</span>
     </div>
     </div>
@@ -279,7 +279,7 @@ const MakeADiet: React.FC = () => {
                   {MEAL_NAMES_AR[meal]}
                 </h2>
                 {mealPlan[meal][0].length > 0 && (
-                  <span className="text-xs bg-sky-100 text-sky-700 dark:bg-black/15 dark:text-white px-2 py-0.5 rounded-full">
+                  <span className="text-xs bg-amber-100 text-amber-700 dark:bg-black/15 dark:text-white px-2 py-0.5 rounded-full">
                     {mealPlan[meal][0].length} أطباق
                   </span>
                 )}
@@ -295,7 +295,7 @@ const MakeADiet: React.FC = () => {
                   e.stopPropagation();
                   addDish(meal);
                 }}
-                className="w-full flex items-center justify-center gap-2 bg-blue-500 dark:bg-blue-600 text-white py-3 rounded-xl font-medium shadow-md hover:shadow-lg active:scale-95 transition"
+                className="w-full flex items-center justify-center gap-2 bg-orange-500 dark:bg-orange-600 text-white py-3 rounded-xl font-medium shadow-md hover:shadow-lg active:scale-95 transition"
               >
                 <BsPlus size={20} /> إضافة طبق
               </button>
@@ -306,7 +306,7 @@ const MakeADiet: React.FC = () => {
                   {mealPlan[meal][0].map((dish, idx) => (
                     <div
                       key={`${meal}-${idx}`}
-                      className="flex items-center justify-between bg-gradient-to-r from-green-50 to-sky-50 p-3 rounded-xl border border-sky-100"
+                      className="flex items-center justify-between bg-gradient-to-r from-green-50 to-amber-50 p-3 rounded-xl border border-amber-100"
                     >
                       <span className="font-medium text-gray-700">{dish}</span>
                     </div>
@@ -365,7 +365,7 @@ const MakeADiet: React.FC = () => {
       <div className="relative p-5 left-0 right-0 flex justify-center z-50">
         <button
           onClick={saveDiet}
-          className="flex items-center justify-center w-full gap-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-4 rounded-full text-lg font-bold shadow-2xl active:scale-95 transition hover:shadow-3xl"
+          className="flex items-center justify-center w-full gap-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-full text-lg font-bold shadow-2xl active:scale-95 transition hover:shadow-3xl"
         >
           <BsSave2Fill size={22} />
           حفظ النظام

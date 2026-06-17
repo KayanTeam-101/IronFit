@@ -890,7 +890,7 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
             <HiTemplate className="dark:text-white"/>
             <div className="p-0.5 felx justify-center align-center rounded-full text-sm text-transparent font-bold">
   
-<a href="https://www.tiktok.com/@iron_fit_app" target="_blank" rel="noopener noreferrer" className="underline text-sky-500">
+<a href="https://www.tiktok.com/@iron_fit_app" target="_blank" rel="noopener noreferrer" className="underline text-amber-500">
   شاركنا رأيك
 </a>
             </div>
@@ -915,7 +915,7 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
           onClick={() => setActiveTab("exercise")}
           className={`px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 transition-all ${
             activeTab === "exercise"
-              ? "bg-blue-500 text-white "
+              ? "bg-orange-500 text-white "
               : "bg-gray-800 text-gray-300 hover:bg-gray-700"
           }`}
         >
@@ -982,7 +982,7 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <h3 className="text-lg font-bold flex items-center gap-2 text-black dark:text-white">
-                    <FaDumbbell className="text-sky-400" /> {template.name}
+                    <FaDumbbell className="text-amber-400" /> {template.name}
                   </h3>
                   <p className="text-sm text-gray-400 mt-1">{template.description}</p>
                   <div className="flex gap-4 mt-3 text-sm">
@@ -1052,7 +1052,7 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
                 applyDietTemplate(selectedDiet);
                 setSelectedDiet(null);
               }}
-              className="w-full mt-4 bg-gradient-to-r from-sky-500 to-blue-600 text-white py-3 rounded-xl font-bold transition hover:brightness-110"
+              className="w-full mt-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white py-3 rounded-xl font-bold transition hover:brightness-110"
             >
               تطبيق القالب
             </button>
@@ -1079,7 +1079,7 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
             </div>
             {selectedExercise.days.map((day, idx) => (
               <div key={idx} className="mb-3">
-                <h4 className="text-sm font-semibold text-sky-400 mb-1">{day.dayName}</h4>
+                <h4 className="text-sm font-semibold text-amber-400 mb-1">{day.dayName}</h4>
                 <ul className="space-y-1">
                   {day.exercises.map((ex, i) => (
                     <li key={i} className="flex justify-between text-md dark:text-gray-300 text-black dark:bg-gray-700/50 rounded-lg px-3 py-1">
@@ -1095,7 +1095,7 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
                 applyExerciseTemplate(selectedExercise);
                 setSelectedExercise(null);
               }}
-              className="w-full mt-4 bg-gradient-to-r from-sky-500 to-blue-600 text-white py-3 rounded-xl font-bold transition hover:brightness-110"
+              className="w-full mt-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white py-3 rounded-xl font-bold transition hover:brightness-110"
             >
               تطبيق القالب
             </button>

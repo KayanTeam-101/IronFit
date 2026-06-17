@@ -28,20 +28,20 @@ const Table = () => {
           
     // If this day is in the past of the challenge
     if (day < daysSinceStart) {
-      return "bg-linear-to-t from-blue-200 scale-90 opacity-60   dark:from-slate-800/40 dark:to-black/40 dark:border-2 dark:border-gray-600/20  text-white"; // Completed days
+      return "bg-linear-to-t from-orange-200 scale-90 opacity-60   dark:from-slate-800/40 dark:to-black/40 dark:border-2 dark:border-gray-600/20  text-white"; // Completed days
     } 
     // If this is today's challenge day
     
     else if (day === daysSinceStart) {
-      return "bg-linear-to-t from-sky-300 to-blue-400 shadow-md text-white dark:from-slate-700/40 dark:to-black/40 dark:border-2 dark:border-gray-600/20 animate-pulse "; // Current day
+      return "bg-linear-to-t from-amber-300 to-orange-400 shadow-md text-white dark:from-slate-700/40 dark:to-black/40 dark:border-2 dark:border-gray-600/20 animate-pulse "; // Current day
     }else{
       return " text-gray-500"; // Future days
     }
   }
 
   return (
-    <div className='relative flex items-center flex-col w-full min-h-14 p-2 bg-white  dark:bg-black/40 dark:border-2 dark:border-gray-600/20 rounded-2xl border-sky-50 '>
-      <div className='w-full h-10 flex items-center justify-between border-b-2 border-sky-100 dark:border-b-gray-400/20 mb-2'>
+    <div className='relative flex items-center flex-col w-full min-h-14 p-2 bg-white  dark:bg-black/40 dark:border-2 dark:border-gray-600/20 rounded-2xl border-amber-50 '>
+      <div className='w-full h-10 flex items-center justify-between border-b-2 border-amber-100 dark:border-b-gray-400/20 mb-2'>
         <div className='flex items-center'>
           <span className='dark:text-white'>تقدمي</span>
         </div>

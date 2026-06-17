@@ -4,7 +4,7 @@ const FinalSection: React.FC = () => {
   return (
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-lg">
       {/* Glowing background blobs */}
-      <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-72 h-72 bg-sky-400 rounded-full opacity-20 blur-3xl animate-pulse" />
+      <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-72 h-72 bg-amber-400 rounded-full opacity-20 blur-3xl animate-pulse" />
       <div className="absolute top-0 left-0 w-48 h-48 bg-indigo-400 rounded-full opacity-20 blur-3xl animate-pulse delay-1000" />
       <div className="absolute bottom-0 right-0 w-56 h-56 bg-teal-400 rounded-full opacity-20 blur-3xl animate-pulse delay-2000" />
 
@@ -14,7 +14,7 @@ const FinalSection: React.FC = () => {
         <div className="flex justify-center">
           <div className="relative">
 
-            <div className="absolute inset-0 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full blur-xl opacity-40" />
+            <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-600 rounded-full blur-xl opacity-40" />
          
           </div>
         </div>
@@ -29,7 +29,7 @@ const FinalSection: React.FC = () => {
         </p>
 
         {/* Subtle divider */}
-        <div className="w-2/3 mx-auto h-0.5 animate-pulse delay-1000 bg-gradient-to-r from-transparent via-blue-400 to-transparent rounded-full" />
+        <div className="w-2/3 mx-auto h-0.5 animate-pulse delay-1000 bg-gradient-to-r from-transparent via-orange-400 to-transparent rounded-full" />
       </div>
     </div>
   );

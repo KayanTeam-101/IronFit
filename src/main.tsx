@@ -1,19 +1,24 @@
+// src/main.tsx
 import "./index.css";
-
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
-import { registerSW } from 'virtual:pwa-register'
 import { Analytics } from "@vercel/analytics/react";
 
- 
+// Register our hand-written service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/sw.js')   // this file is in public/
+      .catch(err => console.error('SW registration failed:', err));
+  });
+}
 
-registerSW()
 ReactDOM.createRoot(document.getElementById("root")!).render(
-<div className="w-screen min-h-screen bg-gray-100 dark:bg-[#111111]">
+  <div className="w-screen min-h-screen bg-gray-100 dark:bg-[#111111]">
     <BrowserRouter>
-    <App />
-  </BrowserRouter>
-  <Analytics />
-</div>
+      <App />
+    </BrowserRouter>
+    <Analytics />
+  </div>
 );

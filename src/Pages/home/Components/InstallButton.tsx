@@ -82,7 +82,7 @@ function InstallButton() {
         className={`${
           isTikTok 
             ? "bg-rose-500 hover:bg-rose-600 animate-pulse" 
-            : "bg-blue-500 hover:bg-blue-600"            
+            : "bg-orange-500 hover:bg-orange-600"            
         } dark:bg-black/20 dark:border-2 dark:border-gray-600/20 text-white px-4 py-2 rounded-xl flex items-center justify-center gap-2 transition-all w-full max-w-xs`}
       >
         {isTikTok ? "الذهاب للمتصفح" : "حمل التطبيق"}

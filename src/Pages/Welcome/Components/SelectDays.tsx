@@ -45,7 +45,7 @@ const SelectDays: React.FC = () => {
     <div className="h-full w-full flex  justify-center">
       <div className="relative w-11/12 max-w-lg mt-5 ">
         {/* Decorative blobs */}
-        <div className="absolute -top-10 -right-10 w-32 h-32 bg-sky-400 rounded-full opacity-20 blur-3xl" />
+        <div className="absolute -top-10 -right-10 w-32 h-32 bg-amber-400 rounded-full opacity-20 blur-3xl" />
         <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-indigo-400 rounded-full opacity-20 blur-3xl" />
 
         {/* Header */}
@@ -54,7 +54,7 @@ const SelectDays: React.FC = () => {
           
           </div>
           <h2 className="text-2xl font-extrabold text-gray-800 dark:text-white">
-            إيه أيام التمرين <span className="text-sky-500">؟</span>
+            إيه أيام التمرين <span className="text-amber-500">؟</span>
           </h2>
   
         </div>
@@ -68,7 +68,7 @@ const SelectDays: React.FC = () => {
             {selectedDays.map((day, i) => (
               <span
                 key={i}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 dark:text-white bg-white/80 dark:border-black/30 dark:bg-black/20 dark:border border border-sky-200  rounded-full text-sm font-medium text-sky-700"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 dark:text-white bg-white/80 dark:border-black/30 dark:bg-black/20 dark:border border border-amber-200  rounded-full text-sm font-medium text-amber-700"
               >
                 {day}
                 <button
@@ -76,7 +76,7 @@ const SelectDays: React.FC = () => {
                     e.stopPropagation();
                     toggleDay(day);
                   }}
-                  className="text-sky-400 dark:text-white hover:text-red-500 transition"
+                  className="text-amber-400 dark:text-white hover:text-red-500 transition"
                 >
                   <FaTimes size={12} />
                 </button>
@@ -97,8 +97,8 @@ const SelectDays: React.FC = () => {
                 onClick={() => toggleDay(day.ar)}
                 className={`relative flex items-center justify-center gap-2 p-4 rounded-3xl border-2 font-semibold text-lg transition-all duration-300 active:scale-95 ${
                   isSelected
-                    ? "bg-blue-500 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 border-transparent text-white  scale-105"
-                    : "bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 opacity-60 border-gray-200 text-gray-700 hover:border-sky-300 "
+                    ? "bg-orange-500 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 border-transparent text-white  scale-105"
+                    : "bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 opacity-60 border-gray-200 text-gray-700 hover:border-amber-300 "
                 }`}
               >
                 <span

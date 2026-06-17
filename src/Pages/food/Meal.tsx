@@ -139,9 +139,9 @@ const Meal = (props: any) => {
               <defs>
                 <linearGradient id="mealGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                       <stop offset="0%" stopColor="#1fb8f6" /> {/* teal-500 */}
-            <stop offset="50%" stopColor="pink" /> {/* blue-600 */}
-            <stop offset="75%" stopColor="skyblue" /> {/* blue-600 */}
-            <stop offset="100%" stopColor="#3b82f6" /> {/* blue-600 */}
+            <stop offset="50%" stopColor="pink" /> {/* orange-600 */}
+            <stop offset="75%" stopColor="skyorange" /> {/* orange-600 */}
+            <stop offset="100%" stopColor="#3b82f6" /> {/* orange-600 */}
                 </linearGradient>
               </defs>
             </svg>
@@ -168,7 +168,7 @@ const Meal = (props: any) => {
                 className={`group relative flex items-center dark:bg-black/20 border-2 border-gray-600/10 justify-between p-4 rounded-2xl transition-all duration-300 hover:shadow-lg active:scale-[0.98] ${
                   isEaten
                     ? "bg-green-50  dark:text-teal-500 border-teal-400 border-2 text-green-700  hover:opacity-50"
-                    : "bg-sky-50 dark:bg-slate-600/20 dark:text-white border-sky-100/30 hover:border-sky-300"
+                    : "bg-amber-50 dark:bg-slate-600/20 dark:text-white border-amber-100/30 hover:border-amber-300"
                 }`}
               >
                 {/* Left side: dish name + weight */}
@@ -184,7 +184,7 @@ const Meal = (props: any) => {
                   {isEaten ? (
                     <FaCheck className="text-xl text-green-500 dark:text-teal-500 drop-shadow-sm" />
                   ) : (
-                    <FaRegCircle className="text-xl text-gray-300 group-hover:text-sky-400 transition-colors" />
+                    <FaRegCircle className="text-xl text-gray-300 group-hover:text-amber-400 transition-colors" />
                   )}
                
                 </div>

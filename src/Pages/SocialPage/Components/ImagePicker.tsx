@@ -76,7 +76,7 @@ const ImagePicker: React.FC<ImagePickerProps> = ({ onImageSelect }) => {
           </p>
           <button
             onClick={handleRetry}
-            className="px-6 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
+            className="px-6 py-2 bg-orange-600 text-white rounded-xl hover:bg-orange-700 transition-colors"
           >
             تحميل صورة
           </button>

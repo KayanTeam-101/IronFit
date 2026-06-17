@@ -86,10 +86,10 @@ const [GetSuccessfullDays, SetGetSuccessfullDays] = useState<string[]>(
         <defs>
           <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#1fb8f6" /> {/* teal-500 */}
-            <stop offset="50%" stopColor="pink" /> {/* blue-600 */}
-            <stop offset="60%" stopColor="#FFC0CB" /> {/* blue-600 */}
-            <stop offset="75%" stopColor="skyblue" /> {/* blue-600 */}
-            <stop offset="100%" stopColor="#3b82f6" /> {/* blue-600 */}
+            <stop offset="50%" stopColor="pink" /> {/* orange-600 */}
+            <stop offset="60%" stopColor="#FFC0CB" /> {/* orange-600 */}
+            <stop offset="75%" stopColor="skyorange" /> {/* orange-600 */}
+            <stop offset="100%" stopColor="#3b82f6" /> {/* orange-600 */}
           </linearGradient>
         </defs>
       </svg>

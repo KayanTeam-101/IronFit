@@ -40,8 +40,8 @@ const S_Goals: React.FC = () => {
       <div className="w-full max-w-lg  rounded-4xl p-8 space-y-2 ">
         {/* Header */}
         <div className="text-center ">
-          <h1 className='text-3xl relative  text-sky-400 dark:text-white font-extrabold mb-4 text-center '>
-            إيه اهدافك <span className="text-sky-500">؟</span>
+          <h1 className='text-3xl relative  text-amber-400 dark:text-white font-extrabold mb-4 text-center '>
+            إيه اهدافك <span className="text-amber-500">؟</span>
           </h1>
         </div>
 
@@ -58,8 +58,8 @@ const S_Goals: React.FC = () => {
                 onClick={() => handleToggle(goal.name)}
                 className={`group relative flex flex-col items-center justify-center p-5 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-3xl border-2 transition-all duration-300 active:scale-95 ${
                   isSelected
-                    ? "bg-blue-500 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 border-transparent text-white  scale-105"
-                    : "bg-white dark:bg-black/20 dark:text-white dark:border-2 dark:border-gray-600/20 opacity-60 border-gray-200 text-gray-700 hover:border-sky-300 "
+                    ? "bg-orange-500 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 border-transparent text-white  scale-105"
+                    : "bg-white dark:bg-black/20 dark:text-white dark:border-2 dark:border-gray-600/20 opacity-60 border-gray-200 text-gray-700 hover:border-amber-300 "
                 }`}
               >
                 <Icon

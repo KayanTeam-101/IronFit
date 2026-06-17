@@ -31,8 +31,8 @@ const ChanlangePreiod: React.FC = () => {
   return (
        <div className='  show-first h-3/4 flex items-center justify-between flex-col  ' >
       <div className="px-3">
-        <h2 className="text-3xl translate-y-10 text-sky-400 font-extrabold mb-4 text-center ">
-          عايز توصل لهدفك بعد كام شهر <span className="text-sky-500">؟</span>
+        <h2 className="text-3xl translate-y-10 text-amber-400 font-extrabold mb-4 text-center ">
+          عايز توصل لهدفك بعد كام شهر <span className="text-amber-500">؟</span>
         </h2>
         {MinMonth(weightDiff) != 0 && (
         <>

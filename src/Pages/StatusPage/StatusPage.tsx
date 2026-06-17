@@ -138,7 +138,7 @@ const bmi = calcBMI(animatedWeight, animatedHeight);
 
   // Card style identical to Home component
   const cardStyle =
-    "bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 shadow-sm rounded-3xl p-4 backdrop-blur-md hover:shadow-xl transition-all";
+    "bg-white dark:bg-black/40 dark:border-2 dark:border-gray-600/20 shadow-sm rounded-3xl p-4 backdrop-blur-md hover:shadow-xl transition-all";
 
   return (
     <div className="min-h-screen show-first z-0     sm:p-5 font-arabic relative overflow-hidden">
@@ -152,38 +152,38 @@ const bmi = calcBMI(animatedWeight, animatedHeight);
   
           {/* Quick stats */}
           <div className={`${cardStyle} space-y-2`}>
-            <h3 className="text-lg font-bold text-sky-800 dark:text-white flex items-center gap-2">
+            <h3 className="text-lg font-bold text-amber-800 dark:text-white flex items-center gap-2">
               <FaHeartbeat className="text-rose-500" />  نظرة عامة
             </h3>
             <div className="grid grid-cols-2 gap-2 text-sm">
-              <div className="bg-sky-50 dark:bg-white/5 rounded-xl p-2">
+              <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">الوزن الحالي</span>
-                <p className="font-bold text-sky-700 dark:text-white">
+                <p className="font-bold text-amber-700 dark:text-white">
                   {animatedWeight} كجم
                 </p>
               </div>
-              <div className="bg-sky-50 dark:bg-white/5 rounded-xl p-2">
+              <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">المستهدف</span>
-                <p className="font-bold text-sky-700 dark:text-white">
+                <p className="font-bold text-amber-700 dark:text-white">
                   {animatedTargetWeight} كجم
                 </p>
               </div>
-              <div className="bg-sky-50 dark:bg-white/5 rounded-xl p-2">
+              <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">الطول</span>
-                <p className="font-bold text-sky-700 dark:text-white">
+                <p className="font-bold text-amber-700 dark:text-white">
                   {animatedHeight} سم
                 </p>
               </div>
-              <div className="bg-sky-50 dark:bg-white/5 rounded-xl p-2">
+              <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">العمر</span>
-                <p className="font-bold text-sky-700 dark:text-white">
+                <p className="font-bold text-amber-700 dark:text-white">
                   {animatedAge} سنة
                 </p>
               </div>
          
-              <div className="bg-sky-50 dark:bg-white/5 rounded-xl p-2">
+              <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">معدل الأيض</span>
-                <p className="font-bold text-sky-700 dark:text-white">
+                <p className="font-bold text-amber-700 dark:text-white">
                   {Math.round(animatedBMR)} سعرة
                 </p>
               </div>
@@ -214,7 +214,7 @@ const bmi = calcBMI(animatedWeight, animatedHeight);
               label="مؤشر كتلة الجسم"
               unit="BMI"
               color="#3b82f6"
-              icon={<FaRulerVertical className="text-blue-500" />}
+              icon={<FaRulerVertical className="text-orange-500" />}
               subText={bmi < 18.5 ? "نقص" : bmi < 25 ? "طبيعي" : bmi < 30 ? "زيادة" : "سمنة"}
             />
           </div>

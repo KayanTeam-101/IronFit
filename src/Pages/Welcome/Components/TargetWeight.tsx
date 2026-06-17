@@ -15,8 +15,8 @@ const ChooseHight: React.FC = () => {
 
   return (
        <div className='  show-first h-3/4 flex items-center justify-between flex-col  ' >
-      <h2 className='text-4xl translate-y-10 text-sky-400 font-extrabold mb-4 text-center'>
-        ايه الوزن ال نفسك توصلو<span className='text-sky-500'>؟</span>
+      <h2 className='text-4xl translate-y-10 text-amber-400 font-extrabold mb-4 text-center'>
+        ايه الوزن ال نفسك توصلو<span className='text-amber-500'>؟</span>
       </h2>
 
       <CounterY

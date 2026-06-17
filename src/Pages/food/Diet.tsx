@@ -291,7 +291,7 @@ const Diet = () => {
               placeholder="ابحث عن طعام..."
               value={text}
               onChange={(e) => setText(e.target.value)}
-              className="w-full bg-gray-50 border border-gray-200 dark:bg-slate-900/20 dark:border-gray-600/20 dark:text-white rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-sky-400 mb-4"
+              className="w-full bg-gray-50 border border-gray-200 dark:bg-slate-900/20 dark:border-gray-600/20 dark:text-white rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-amber-400 mb-4"
               autoFocus
             />
 
@@ -300,7 +300,7 @@ const Diet = () => {
                 filteredFoods.map((food, idx) => (
                   <div
                     key={idx}
-                    className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-600/20  hover:bg-sky-50 rounded-xl cursor-pointer transition"
+                    className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-600/20  hover:bg-amber-50 rounded-xl cursor-pointer transition"
                     onClick={() => {
                       setSelectedFood(food);
                       setShowUnitModal(true);
@@ -341,10 +341,10 @@ const Diet = () => {
                 <button
                   key={idx}
                   onClick={() => handleUnitSelect(unit)}
-                  className="w-full flex justify-between items-center bg-blue-50 border border-sky-100 dark:bg-gray-600/15 dark:border-black   p-3 rounded-xl hover:shadow-md active:scale-[0.98] transition"
+                  className="w-full flex justify-between items-center bg-orange-50 border border-amber-100 dark:bg-gray-600/15 dark:border-black   p-3 rounded-xl hover:shadow-md active:scale-[0.98] transition"
                 >
                   <span className="font-medium text-gray-700 dark:text-white text-shadow-xs">{unit.label}</span>
-                  <span className="text-sm text-sky-600">{unit.grams}غ</span>
+                  <span className="text-sm text-amber-600">{unit.grams}غ</span>
                 </button>
               ))}
 
@@ -355,12 +355,12 @@ const Diet = () => {
                   placeholder="أدخل كمية معينة (غرام)"
                   value={customGrams}
                   onChange={(e) => setCustomGrams(e.target.value)}
-                  className="flex-1 bg-gray-50 border border-gray-200 dark:bg-black/20 dark:border-black dark:text-white rounded-xl p-3 outline-none focus:ring-2 focus:ring-sky-400"
+                  className="flex-1 bg-gray-50 border border-gray-200 dark:bg-black/20 dark:border-black dark:text-white rounded-xl p-3 outline-none focus:ring-2 focus:ring-amber-400"
                   onKeyDown={(e) => e.key === "Enter" && handleCustomGramsSubmit()}
                 />
                 <button
                   onClick={handleCustomGramsSubmit}
-                  className="bg-sky-500 text-white px-4 rounded-xl hover:bg-sky-600 transition"
+                  className="bg-amber-500 text-white px-4 rounded-xl hover:bg-amber-600 transition"
                 >
                   تم
                 </button>

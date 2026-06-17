@@ -22,11 +22,11 @@ const Settings = () => {
           <div className="flex justify-between  w-full p-3.5 text-white rounded-lg  text-md cursor-pointer activeAnim">
             الاعدادات <div onClick={() => window.location.reload()} className="p-1.5 rounded-2xl "><FaXmark className="text-rose-600" /></div>
           </div>
-          <div className="flex justify-between dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white  w-full p-3.5 bg-gray-100 rounded-lg  text-md active:bg-sky-100 active:text-sky-600 cursor-pointer activeAnim">
+          <div className="flex justify-between dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white  w-full p-3.5 bg-gray-100 rounded-lg  text-md active:bg-amber-100 active:text-amber-600 cursor-pointer activeAnim">
             التاريخ <BsClockFill />
           </div>
 
-          <div onClick={SuringToResetADiet} className="flex justify-between dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white w-full p-3.5 bg-gray-100 rounded-lg  text-md active:bg-sky-100 active:text-sky-600 cursor-pointer activeAnim">
+          <div onClick={SuringToResetADiet} className="flex justify-between dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white w-full p-3.5 bg-gray-100 rounded-lg  text-md active:bg-amber-100 active:text-amber-600 cursor-pointer activeAnim">
             
             إعادة تعيين النظام الغذائي <RiResetRightFill />
            

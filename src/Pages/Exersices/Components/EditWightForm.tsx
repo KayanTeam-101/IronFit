@@ -28,13 +28,13 @@ const EditWeightForm: React.FC<Props> = ({ currentWeight, onSave }) => {
         value={weight}
         onChange={(e) => setWeight(e.target.value)}
         autoFocus
-        className="w-full bg-gray-50 border border-gray-200 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white rounded-b-2xl rounded-xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-blue-400 transition"
+        className="w-full bg-gray-50 border border-gray-200 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white rounded-b-2xl rounded-xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-orange-400 transition"
         step="0.5"
         min="0.5"
       />
       <button
         type="submit"
-        className="w-full bg-gradient-to-r from-sky-400 to-blue-500 text-white py-3 rounded-xl font-bold shadow-md hover:shadow-lg active:scale-[0.98] transition"
+        className="w-full bg-gradient-to-r from-amber-400 to-orange-500 text-white py-3 rounded-xl font-bold shadow-md hover:shadow-lg active:scale-[0.98] transition"
       >
         حفظ الوزن
       </button>

@@ -15,7 +15,7 @@ const SelectGender: React.FC = () => {
 
   return (
     <div className='h-11/12 flex flex-col items-center'>
-        <h2 className='text-3xl translate-y-10 text-sky-400 font-extrabold mb-4 text-center '> ذكر أم انثي<span className='text-sky-500'>؟</span></h2>
+        <h2 className='text-3xl translate-y-10 text-amber-400 font-extrabold mb-4 text-center '> ذكر أم انثي<span className='text-amber-500'>؟</span></h2>
 
       <div className='relative top-15 grid grid-cols-2 gap-2'>
         {genders.map((g, i) => {
@@ -27,8 +27,8 @@ const SelectGender: React.FC = () => {
               onClick={() => handleSelect(g)}
               className={`p-3 px-5 text-2xl rounded-xl flex flex-row items-center gap-2
                 ${isSelected
-                  ? 'bg-sky-500 text-white'
-                  : 'bg-white border-4 border-sky-500 text-sky-600 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white'}`}
+                  ? 'bg-amber-500 text-white'
+                  : 'bg-white border-4 border-amber-500 text-amber-600 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white'}`}
             >
               {g} {g === 'ذكر' ? <BiMale /> : <BiFemale />}
             </button>

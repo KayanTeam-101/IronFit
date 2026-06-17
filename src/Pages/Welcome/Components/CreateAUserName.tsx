@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import { collection, query, where, getDocs, limit } from "firebase/firestore";
 import { db } from "../../../firebase/main";
 import { SetUser } from "../../../firebase/user";
-import { BiSave } from "react-icons/bi";
 
 const USERNAME_MIN_LENGTH = 6;
 const USERNAME_MAX_LENGTH = 14;
@@ -15,21 +14,20 @@ const getValidationError = (username: string): string | null => {
     return `اسم المستخدم يجب أن يكون مكون من ${USERNAME_MIN_LENGTH} أحرف علي الأقل`;
   }
   if (trimmed.length > USERNAME_MAX_LENGTH) {
-    return `اسم المستخدم يجب أن يكون أقل من  ${USERNAME_MAX_LENGTH} أحرف`;
+    return `اسم المستخدم يجب أن يكون أقل من ${USERNAME_MAX_LENGTH} أحرف`;
   }
   if (!/\d/.test(trimmed)) {
-    return `يجب إضافة أرقام إلى اسم المستخدم مثال  Ahmed-777 `;
+    return `يجب إضافة أرقام إلى اسم المستخدم مثال Ahmed-777`;
   }
   return null;
 };
 
-const CreateAUserName = () => {
+// ✅ Accept a setter function, not a string
+const CreateAUserName = ({ setUsername }: { setUsername: (name: string) => void }) => {
   const [text, setText] = useState(localStorage.getItem('UserName') || "");
   const [isChecking, setIsChecking] = useState(false);
   const [isAvailable, setIsAvailable] = useState<boolean | null>(null);
-  const [saveState, setSaveState] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle"); // NEW: tracks save lifecycle
+  const [saveState, setSaveState] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   const validationError = getValidationError(text);
   const isValidFormat = text.trim().length > 0 && validationError === null;
@@ -56,6 +54,9 @@ const CreateAUserName = () => {
     } finally {
       setIsChecking(false);
     }
+      setUsername(text);
+
+
   }, []);
 
   useEffect(() => {
@@ -66,22 +67,21 @@ const CreateAUserName = () => {
   }, [text, checkUsername]);
 
   const handleSave = async () => {
-    // Prevent clicking if conditions aren't met or already saving/done
     if (!isAvailable || !isValidFormat || saveState !== "idle") return;
 
-    setSaveState("loading"); // disable button immediately
+    setSaveState("loading");
     try {
-      await SetUser(text.trim(), "null", "null");
-      setSaveState("success"); // green button on success
-      localStorage.setItem('UserName',text.trim());
+      const trimmed = text.trim();
+      await SetUser(trimmed, "null", "null");
+      localStorage.setItem('UserName', trimmed);
+      // ✅ Call the parent setter to update the parent state
+      setSaveState("success");
     } catch (error) {
       console.error("Failed to save user:", error);
-      setSaveState("error"); // stays disabled, but not green
-
+      setSaveState("error");
     }
   };
 
-  // Button is clickable only when idle AND all other conditions are met
   const canSave = isAvailable && isValidFormat && !isChecking && saveState === "idle";
 
   return (
@@ -94,7 +94,9 @@ const CreateAUserName = () => {
           maxLength={USERNAME_MAX_LENGTH}
           autoFocus
           placeholder="أكتب اسم المستخدم, مثال: Ahmed-Fit1"
-          className={`border-2 border-gray-600/40 outline-none p-4 px-5 rounded-2xl w-full text-md dark:text-white ${saveState === "success" ? "border-teal-900/40 bg-green-700/15 text-green-600" : ''}`}
+          className={`border-2 border-gray-600/40 outline-none p-4 px-5 rounded-2xl w-full text-md dark:text-white ${
+            saveState === "success" ? "border-teal-900/40 bg-green-700/15 text-green-600" : ""
+          }`}
         />
 
         {validationError && (
@@ -105,18 +107,13 @@ const CreateAUserName = () => {
           <p className="text-gray-500 mt-2">Checking...</p>
         )}
         {!validationError && !isChecking && isAvailable !== null && (
-          <p
-            className={`mt-2 ${
-              isAvailable ? "text-green-600" : "text-rose-500"
-            }`}
-          >
+          <p className={`mt-2 ${isAvailable ? "text-green-600" : "text-rose-500"}`}>
             {isAvailable
               ? "اسم المستخدم متاح"
               : "تم إستخدام هذا الاسم من قبل شخص اخر"}
           </p>
         )}
 
-        {/* Optional: show error if save failed */}
         {saveState === "error" && (
           <p className="text-rose-500 mt-2">حدث خطأ أثناء الحفظ. حاول مجددًا.</p>
         )}
@@ -125,13 +122,12 @@ const CreateAUserName = () => {
       <button
         onClick={handleSave}
         disabled={!canSave}
-        className={`relative h-16 top-10 border-2 border-gray-600/40 outline-none p-4 px-5 rounded-2xl w-full text-md dark:text-white flex items-center justify-center gap-2 transition-colors
-          ${!canSave ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-100 dark:hover:bg-gray-800"}
-          ${saveState === "success" ? "bg-green-600 text-white border-green-600" : ""}
+        className={`absolute bottom-4 right-0 z-40  h-16  bg-white dark:bg-gray-950 outline-none p-4 px-5  w-full text-md dark:text-white flex items-center justify-center gap-2 transition-colors
+          ${!canSave ? " cursor-not-allowed" : "hover:bg-gray-100 dark:hover:bg-gray-800"}
+          ${saveState === "success" ? "bg-green-600 text-white border-green-600 hidden" : ""}
         `}
       >
-        {saveState === "success" ? <div>تم الحفظ :{localStorage.getItem('UserName')}</div> : "Save"}
-        {/* <BiSave className="mb-2" /> */}
+        {saveState === "success" ? `تم الحفظ: ${localStorage.getItem('UserName')}` : "Save"}
       </button>
     </div>
   );

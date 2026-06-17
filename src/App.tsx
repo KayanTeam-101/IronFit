@@ -139,7 +139,7 @@ setTimeout(() => {
         />
       </Routes>
 
-      {localStorage.length > 8 && window.location.pathname !== "/MkADiet" && <Navbar />}
+      {localStorage.length >= 9 && window.location.pathname !== "/MkADiet" && <Navbar />}
     </>
   );
 }

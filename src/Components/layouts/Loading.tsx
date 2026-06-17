@@ -1,7 +1,7 @@
 import * as React from "react";
 const Loading = () => (
   <svg
-    fill="hsl(228, 97%, 42%)"
+    fill="orange"
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
   >

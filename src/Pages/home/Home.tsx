@@ -7,6 +7,9 @@ import { useEffect, useMemo } from "react";
 import Fire from '../../assets/animatedFire.gif'
 import InstallButton from "./Components/InstallButton";
 import StatusPage from "../StatusPage/StatusPage";
+import { useReminders } from '../../Hooks/useReminders';
+import { NotificationPermission } from '../../Hooks/components/NotificationPermission';
+import TestReminders from '../../Hooks/components/TestReminders';
 
 // ---------- Streak calculator ----------
 const calculateStreak = (): number => {
@@ -109,19 +112,25 @@ const Home = () => {
   const IsThere_A_Diet = localStorage.getItem("Diet");
   const streak = useMemo(() => calculateStreak(), []);
   const Advice = "قليلُ مستمر خيرُ من كثيرٍ منقطع";
+    const { syncSettings } = useReminders();
 
   return (
     <div className="relative min-h-screen w-screen  overflow-hidden p-4 flex flex-col gap-0.5 show-first">
       {/* Decorative blur */}
-
       <div className="relative w-full min-h-14 flex  flex-col">
       <div className="w-full flex flex-row justify-between">
+    <div>
+      <NotificationPermission />
+      <TestReminders />
+      <button onClick={syncSettings} className="dark:text-white">🔄 Sync Settings</button>
+      {/* rest of your app */}
+    </div>
           <div className="text-2xl flex flex-row gap-1.5">
             <GoHomeFill className="dark:text-white"/>
-            <div className="p-1.5 bg-linear-to-r bg-clip-text  from-indigo-600 via-blue-500  to-pink-500 felx justify-center align-center rounded-full text-sm text-transparent font-bold">
+            <div className="p-1.5 bg-linear-to-r bg-clip-text  from-indigo-600 via-orange-500  to-pink-500 felx justify-center align-center rounded-full text-sm text-transparent font-bold">
   V1.0.0 - 
   <br />
-<a href="https://www.tiktok.com/@iron_fit_app" target="_blank" rel="noopener noreferrer" className="underline text-sky-500">
+<a href="https://www.tiktok.com/@iron_fit_app" target="_blank" rel="noopener noreferrer" className="underline text-amber-500">
   شاركنا رأيك
 </a>
             </div>
@@ -135,7 +144,7 @@ const Home = () => {
           <>
             {/* Advice card */}
             <div className="w-full rounded-3xl mb-2 p-5 shadow-sm dark:bg-black/20 dark:border-2 dark:border-gray-600/20  bg-white flex flex-row gap-2">
-              <FaCookieBite className="text-2xl text-sky-500 dark:text-amber-300" />
+              <FaCookieBite className="text-2xl text-amber-500 dark:text-amber-300" />
               <p className="font-light text-md show-third dark:text-white">{Advice}</p>
             </div>
 
