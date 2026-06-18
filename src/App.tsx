@@ -32,10 +32,8 @@ function App() {
     // التحقق من التحميل
       (function () {
         if ((localStorage.length < 8 && window.location.pathname !== '/' ) || (window.location.pathname !== '/'  && !localStorage.getItem("UserName"))) {
-
           localStorage.clear();
           window.location.href = '/';
-
         }
         else{return null;}
        })();

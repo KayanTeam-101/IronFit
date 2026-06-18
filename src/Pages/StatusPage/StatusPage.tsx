@@ -199,7 +199,7 @@ const bmi = calcBMI(animatedWeight, animatedHeight);
             <CircularProgress
               value={userData.dailyCalories}
               max={localStorage.getItem("dailyCalories") ? Number(localStorage.getItem("dailyCalories")) : 0}
-              label="س.ع المستهدفة"
+              label="الهدف"
               unit="سعرة"
               color="#f97316"
               icon={<FaFire className="text-orange-400" />}
@@ -214,7 +214,7 @@ const bmi = calcBMI(animatedWeight, animatedHeight);
               label="مؤشر كتلة الجسم"
               unit="BMI"
               color="#3b82f6"
-              icon={<FaRulerVertical className="text-orange-500" />}
+              icon={<FaRulerVertical className="text-blue-500" />}
               subText={bmi < 18.5 ? "نقص" : bmi < 25 ? "طبيعي" : bmi < 30 ? "زيادة" : "سمنة"}
             />
           </div>
