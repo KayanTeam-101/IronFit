@@ -73,7 +73,7 @@ export class NotificationManager {
     const record = await NotificationManager.getNotificationRecord();
 
     // Prevent spam: only proceed if at least 1.5 hours have passed since last notification
-    const MIN_INTERVAL = 0; // 1.5 hours
+    const MIN_INTERVAL = 1 * 60 * 60 * 1000; // 1.5 hours
     if (now - record.lastNotificationTime < MIN_INTERVAL) {
       return; // too soon
     }

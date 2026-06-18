@@ -65,7 +65,7 @@ export const useReminders = () => {
           alert('⏰ تذكير: تنفيذ checkAndNotifyInApp');
 
       NotificationManager.checkAndNotifyInApp();
-    }, 30 * 1000); // every 2 hours
+    }, 2 * 60 * 60 * 1000); // every 2 hours
 
     // Also check immediately on mount (useful for testing)
     NotificationManager.checkAndNotifyInApp();

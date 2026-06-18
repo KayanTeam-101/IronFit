@@ -1013,12 +1013,14 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
       {selectedDiet && (
         <div className="fixed inset-0 z-50 flex items-center justify-center dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-sm p-4 animate-fadeIn">
           <div className="dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:shadow-2xl rounded-3xl p-6 w-full max-w-md max-h-[80vh] overflow-y-auto">
+          
             <div className="flex justify-between items-start mb-4">
               <h3 className="text-xl font-bold dark:text-white text-black">{selectedDiet.name}</h3>
               <button onClick={() => setSelectedDiet(null)} className="text-gray-400 hover:text-white">
                 <FaTimes size={20} />
               </button>
             </div>
+
             <p className="dark:text-gray-400 text-black mb-4">{selectedDiet.description}</p>
             {dietNutrition && (
               <div className="flex gap-3 mb-4">
@@ -1030,6 +1032,15 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
                 </span>
               </div>
             )}
+               <button
+              onClick={() => {
+                applyDietTemplate(selectedDiet);
+                setSelectedDiet(null);
+              }}
+              className="w-full mt-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white py-3 rounded-xl font-bold transition hover:brightness-110"
+            >
+              تطبيق القالب
+            </button>
             {(Object.keys(selectedDiet.meals) as Array<keyof typeof selectedDiet.meals>).map(mealKey => {
               const entries = selectedDiet.meals[mealKey];
               if (entries.length === 0) return null;
@@ -1047,15 +1058,7 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
                 </div>
               );
             })}
-            <button
-              onClick={() => {
-                applyDietTemplate(selectedDiet);
-                setSelectedDiet(null);
-              }}
-              className="w-full mt-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white py-3 rounded-xl font-bold transition hover:brightness-110"
-            >
-              تطبيق القالب
-            </button>
+         
           </div>
         </div>
       )}
@@ -1064,6 +1067,7 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
       {selectedExercise && (
         <div className="fixed inset-0 z-50 flex items-center justify-center dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-sm p-4 animate-fadeIn">
           <div className="dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:shadow-2xl rounded-3xl p-6 w-full max-w-md max-h-[80vh] overflow-y-auto">
+          
             <div className="flex justify-between items-start mb-4">
               <h3 className="text-xl font-bold dark:text-white text-black">{selectedExercise.name}</h3>
               <button onClick={() => setSelectedExercise(null)} className="text-gray-400 hover:text-white">
@@ -1077,6 +1081,15 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
                 {selectedExercise.difficulty === "beginner" ? "مبتدئ" : selectedExercise.difficulty === "intermediate" ? "متوسط" : "متقدم"}
               </span>
             </div>
+             <button
+              onClick={() => {
+                applyExerciseTemplate(selectedExercise);
+                setSelectedExercise(null);
+              }}
+              className="w-full mt-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white py-3 rounded-xl font-bold transition hover:brightness-110"
+            >
+              تطبيق القالب
+            </button>
             {selectedExercise.days.map((day, idx) => (
               <div key={idx} className="mb-3">
                 <h4 className="text-sm font-semibold text-amber-400 mb-1">{day.dayName}</h4>
@@ -1090,15 +1103,7 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
                 </ul>
               </div>
             ))}
-            <button
-              onClick={() => {
-                applyExerciseTemplate(selectedExercise);
-                setSelectedExercise(null);
-              }}
-              className="w-full mt-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white py-3 rounded-xl font-bold transition hover:brightness-110"
-            >
-              تطبيق القالب
-            </button>
+           
           </div>
         </div>
       )}

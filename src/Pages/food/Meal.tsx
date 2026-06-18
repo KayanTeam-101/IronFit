@@ -49,6 +49,10 @@ const Meal = (props: any) => {
     [getData, mealName]
   );
 
+    const GetVitamines: string[] = useMemo(
+    () => (getData?.[mealName]?.[1][2] || []),
+    [getData, mealName]
+  );
   // Progress info
   const totalPlanned = plannedDishes.length;
   const eatenCount = plannedDishes.filter((d) => eatenDishes.includes(d)).length;
@@ -140,7 +144,7 @@ const Meal = (props: any) => {
                 <linearGradient id="mealGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                       <stop offset="0%" stopColor="#1fb8f6" /> {/* teal-500 */}
             <stop offset="50%" stopColor="pink" /> {/* orange-600 */}
-            <stop offset="75%" stopColor="skyorange" /> {/* orange-600 */}
+            <stop offset="75%" stopColor="skyblue" /> {/* orange-600 */}
             <stop offset="100%" stopColor="#3b82f6" /> {/* orange-600 */}
                 </linearGradient>
               </defs>
@@ -219,7 +223,9 @@ const Meal = (props: any) => {
           <GiBiceps className="text-base text-teal-500" />
           البروتين: {consumedNutrition.protein.toFixed(1)} غ 
         </div>
-     
+          <div className="flex gap-1 flex-wrap w-11/12 ">
+            {GetVitamines.map(e => <span className="p-1 text-indigo-600 bg-indigo-50 rounded-xl dark:text-gray-100 border border-gray-200/30 dark:bg-black">{e}</span>)}
+          </div>
       </div>
 
       {/* All-eaten celebration */}

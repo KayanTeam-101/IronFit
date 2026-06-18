@@ -8,8 +8,8 @@ import Fire from '../../assets/animatedFire.gif'
 import InstallButton from "./Components/InstallButton";
 import StatusPage from "../StatusPage/StatusPage";
 import { useReminders } from '../../Hooks/useReminders';
-import { NotificationPermission } from '../../Hooks/components/NotificationPermission';
-import TestReminders from '../../Hooks/components/TestReminders';
+// import { NotificationPermission } from '../../Hooks/components/NotificationPermission';
+// import TestReminders from '../../Hooks/components/TestReminders';
 
 // ---------- Streak calculator ----------
 const calculateStreak = (): number => {
@@ -119,12 +119,7 @@ const Home = () => {
       {/* Decorative blur */}
       <div className="relative w-full min-h-14 flex  flex-col">
       <div className="w-full flex flex-row justify-between">
-    <div>
-      <NotificationPermission />
-      <TestReminders />
-      <button onClick={syncSettings} className="dark:text-white">🔄 Sync Settings</button>
-      {/* rest of your app */}
-    </div>
+
           <div className="text-2xl flex flex-row gap-1.5">
             <GoHomeFill className="dark:text-white"/>
             <div className="p-1.5 bg-linear-to-r bg-clip-text  from-indigo-600 via-orange-500  to-pink-500 felx justify-center align-center rounded-full text-sm text-transparent font-bold">
