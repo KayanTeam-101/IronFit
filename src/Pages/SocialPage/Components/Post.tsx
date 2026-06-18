@@ -264,7 +264,10 @@ const Post: React.FC<PostProps> = ({
            {image && 
            (
              <button className="w-14 h-9 mt-1 flex flex-row gap-1 items-center text-gray-500 hover:text-orange-600">
+<a href={image} download>
             <FaDownload />
+
+</a>
           </button>
            )}
         </div>
