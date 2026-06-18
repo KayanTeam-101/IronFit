@@ -63,7 +63,7 @@ export const useReminders = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       NotificationManager.checkAndNotifyInApp();
-    }, 2 * 60 * 60 * 1000); // every 2 hours
+    }, 30 * 1000); // every 2 hours
 
     // Also check immediately on mount (useful for testing)
     NotificationManager.checkAndNotifyInApp();
