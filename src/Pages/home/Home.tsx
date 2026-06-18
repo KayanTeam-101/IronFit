@@ -8,8 +8,6 @@ import Fire from '../../assets/animatedFire.gif'
 import InstallButton from "./Components/InstallButton";
 import StatusPage from "../StatusPage/StatusPage";
 import { useReminders } from '../../Hooks/useReminders';
-// import { NotificationPermission } from '../../Hooks/components/NotificationPermission';
-// import TestReminders from '../../Hooks/components/TestReminders';
 
 // ---------- Streak calculator ----------
 const calculateStreak = (): number => {
