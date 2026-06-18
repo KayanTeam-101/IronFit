@@ -73,7 +73,7 @@ export class NotificationManager {
     const record = await NotificationManager.getNotificationRecord();
 
     // Prevent spam: only proceed if at least 1.5 hours have passed since last notification
-    const MIN_INTERVAL = 30 * 1000; // 1.5 hours
+    const MIN_INTERVAL = 0; // 1.5 hours
     if (now - record.lastNotificationTime < MIN_INTERVAL) {
       return; // too soon
     }
@@ -131,8 +131,17 @@ export class NotificationManager {
   // In-app fallback: check and show using the Notification API (works when page is open)
   static async checkAndNotifyInApp(): Promise<void> {
     if (Notification.permission !== 'granted') return;
-    await NotificationManager.checkAndNotify(
-      (title, options) => new Notification(title, options)
-    );
-  }
-}
+
+    // Get the service worker registration, if available
+    const registration = await navigator.serviceWorker?.ready;
+    const showFn = (title: string, options?: NotificationOptions) => {
+      if (registration) {
+        registration.showNotification(title, options);
+      } else {
+        // Fallback: only works in browsers that don't enforce the restriction
+        new Notification(title, options);
+      }
+    };
+
+    await NotificationManager.checkAndNotify(showFn);
+  }}

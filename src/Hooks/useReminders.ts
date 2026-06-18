@@ -62,6 +62,8 @@ export const useReminders = () => {
   // Fallback: in-page interval for browsers without PBS
   useEffect(() => {
     const interval = setInterval(() => {
+          alert('⏰ تذكير: تنفيذ checkAndNotifyInApp');
+
       NotificationManager.checkAndNotifyInApp();
     }, 30 * 1000); // every 2 hours
 

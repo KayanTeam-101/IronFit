@@ -5,29 +5,29 @@ import { NotificationManager } from '../../services/notification/notificationMan
 const DebugReminders: React.FC = () => {
   const { syncSettings } = useReminders();
 
-const testDirectNotification = () => {
-  alert('Button works!'); // Step 1: confirm tap
 
-  if (!('Notification' in window)) {
-    alert('❌ This device does not support Notification API');
-    return;
-  }
-
+const testDirectNotification = async () => {
   if (Notification.permission !== 'granted') {
-    alert('❌ Permission denied. Current state: ' + Notification.permission);
+    alert('الإذن غير ممنوح');
     return;
   }
 
   try {
-    const notif = new Notification('✅ إشعار مباشر يعمل', {
-      body: 'هذا اختبار لإذن الإشعارات',
-      icon: '/logo_512.jpg',
-    });
-    notif.onshow = () => console.log('Notification shown');
-    notif.onerror = (e) => alert('Notification error: ' + e);
+    const registration = await navigator.serviceWorker?.ready;
+    if (registration) {
+      await registration.showNotification('✅ إشعار مباشر يعمل', {
+        body: 'هذا اختبار لإذن الإشعارات',
+        icon: '/logo_512.jpg',
+      });
+    } else {
+      // Fallback (unlikely on mobile, but kept for desktop without SW)
+      new Notification('✅ إشعار مباشر يعمل', {
+        body: 'هذا اختبار لإذن الإشعارات',
+        icon: '/logo_512.jpg',
+      });
+    }
   } catch (e: any) {
-    alert('❌ Exception: ' + e.message);
-    console.error(e);
+    alert('Error: ' + e.message);
   }
 };
 
