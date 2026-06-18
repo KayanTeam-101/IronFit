@@ -61,7 +61,10 @@ const testDirectNotification = () => {
 
   return (
     <div style={{ padding: '1rem', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-      <button onClick={testDirectNotification}>🔔 اختبار إشعار بسيط</button>
+      <button 
+      onClick={testDirectNotification}
+        style={{ touchAction: 'manipulation', zIndex: 9999, position: 'relative' }}
+>🔔 اختبار إشعار بسيط</button>
       <button onClick={showStoredData}>📋 عرض البيانات</button>
       <button onClick={syncSettings}>🔄 مزامنة الإعدادات مع SW</button>
       <button onClick={runFullReminderCheck}>⚡ تشغيل دورة التذكير الكاملة</button>
