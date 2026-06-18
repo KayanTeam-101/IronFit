@@ -31,7 +31,7 @@ function App() {
   useEffect(() => {
     // التحقق من التحميل
       (function () {
-        if ((localStorage.length < 8 && window.location.pathname !== '/' ) || (window.location.pathname !== '/'  && localStorage.getItem("UserName"))) {
+        if ((localStorage.length < 8 && window.location.pathname !== '/' ) || (window.location.pathname !== '/'  && !localStorage.getItem("UserName"))) {
 
           localStorage.clear();
           window.location.href = '/';
