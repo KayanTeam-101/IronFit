@@ -13,7 +13,7 @@ export default defineConfig({
         name: 'Iron Fit',
         short_name: 'Iron Fit',
         description: 'Fitness and diet tracking',
-        theme_color: '#0077ff',
+        theme_color: 'orange',
         background_color: '#ffffff',
         display: 'standalone',
         start_url: '/',

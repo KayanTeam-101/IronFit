@@ -8,6 +8,7 @@ import Fire from '../../assets/animatedFire.gif'
 import InstallButton from "./Components/InstallButton";
 import StatusPage from "../StatusPage/StatusPage";
 import { useReminders } from '../../Hooks/useReminders';
+import { useCountUp } from "../../Hooks/Increasing";
 
 // ---------- Streak calculator ----------
 const calculateStreak = (): number => {
@@ -110,7 +111,6 @@ const Home = () => {
   const IsThere_A_Diet = localStorage.getItem("Diet");
   const streak = useMemo(() => calculateStreak(), []);
   const Advice = "قليلُ مستمر خيرُ من كثيرٍ منقطع";
-    const { syncSettings } = useReminders();
 
   return (
     <div className="relative min-h-screen w-screen  overflow-hidden p-4 flex flex-col gap-0.5 show-first">
@@ -150,7 +150,7 @@ const Home = () => {
             {streak > 0 ?
              <img src={Fire} alt="Fire" className="w-6 h-6 animate-pulse" />
              : <FaFire className="text-gray-400" />}
-                <span className="text-amber-500 font-extrabold mt-1 ">{streak}</span>
+                <span className="text-amber-500 font-extrabold mt-1 ">{useCountUp(streak)}</span>
               </div>
             </div>
           </>
