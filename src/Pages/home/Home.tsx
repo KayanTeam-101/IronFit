@@ -108,7 +108,7 @@ const Home = () => {
 
 
   const IsThere_A_Diet = localStorage.getItem("Diet");
-  const streak = 6;
+  const streak = useMemo(() => calculateStreak(),[]);
   const Advice = "قليلُ مستمر خيرُ من كثيرٍ منقطع";
 
   return (
