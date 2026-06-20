@@ -7,7 +7,6 @@ import { useEffect, useMemo } from "react";
 import Fire from '../../assets/animatedFire.gif'
 import InstallButton from "./Components/InstallButton";
 import StatusPage from "../StatusPage/StatusPage";
-import { useReminders } from '../../Hooks/useReminders';
 import { useCountUp } from "../../Hooks/Increasing";
 
 // ---------- Streak calculator ----------
@@ -109,7 +108,7 @@ const Home = () => {
 
 
   const IsThere_A_Diet = localStorage.getItem("Diet");
-  const streak = useMemo(() => calculateStreak(), []);
+  const streak = 6;
   const Advice = "قليلُ مستمر خيرُ من كثيرٍ منقطع";
 
   return (

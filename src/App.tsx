@@ -13,19 +13,12 @@ import StatusPage from "./Pages/StatusPage/StatusPage";
 import Settings from "./Pages/Settings/settings";
 import TemplatesPage from "./Pages/Templates/TemplatesPage";
 import Loading from "./Components/layouts/Loading";
-import { useReminders } from './Hooks/useReminders';
 
 function App() {
   const isFirstTime: boolean = localStorage.getItem("isFirstTime") === null;
-    const { syncSettings } = useReminders();
 
   const [isDesktop, setIsDesktop] = useState(false); // 1. حالة جديدة لاكتشاف الحاسوب
   const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-    // مزامنة إعدادات localStorage إلى IndexedDB بمجرد فتح التطبيق
-    syncSettings();
-  }, [syncSettings]);
 
   
   useEffect(() => {
