@@ -119,8 +119,9 @@ const Home = () => {
 
           <div className="text-2xl flex flex-row gap-1.5">
             <GoHomeFill className="dark:text-white"/>
-            <div className="p-1.5 bg-linear-to-r bg-clip-text  from-indigo-600 via-orange-500  to-pink-500 felx justify-center align-center rounded-full text-sm text-transparent font-bold">
-  V1.0.0 - 
+            <div className="p-1.5 bg-linear-to-r bg-clip-text  from-yellow-500 via-orange-500  to-pink-500 felx justify-center align-center rounded-full text-sm text-transparent font-bold">
+            
+  V1.0.0 - أنت الان في نسخة مجانية
   <br />
 <a href="https://www.tiktok.com/@iron_fit_app" target="_blank" rel="noopener noreferrer" className="underline text-amber-500">
   شاركنا رأيك
