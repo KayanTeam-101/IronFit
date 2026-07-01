@@ -82,7 +82,7 @@ h1, h2, h3, h4, h5, h6{
     box-shadow: 0 0 15px -12px rgba(0, 0, 0),inset 0 0 15px -10px rgb(90, 90, 90);
 }
 .navbar a.active{
-    color: #ffb619;
+    color: #ff6219;
     overflow: hidden;
     scale: 1.05;    
 }
@@ -187,3 +187,11 @@ h1, h2, h3, h4, h5, h6{
   }
   .animate-fadeIn { animation: fadeIn 0.3s ease-out; }
   .animate-scaleIn { animation: scaleIn 0.25s ease-out; }
+
+@keyframes godown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+.godown{
+    animation: godown 1s ease-out;
+}

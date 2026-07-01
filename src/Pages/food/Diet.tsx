@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import Meal from "./Meal";
 import { FaBowlFood } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 import foods from "../../assets/FoodsList.json";
 import { VscSettings } from "react-icons/vsc";
 import Settings from "./Settings";
@@ -66,7 +67,7 @@ const Diet = () => {
   const [selectedFood, setSelectedFood] = useState("");
   const [showUnitModal, setShowUnitModal] = useState(false);
   const [customGrams, setCustomGrams] = useState("");
-
+  const navigate = useNavigate();
   // --- Daily calorie goal (computed once on mount from saved profile data) ---
   const dailyCaloriesGoal = useMemo(() => {
     const currentWeight = Number(localStorage.getItem("currentWeight") || 0);
@@ -233,7 +234,7 @@ const Diet = () => {
             الاعدادات <VscSettings />
           </button>
           <button
-            onClick={() => (window.location.href = "/me/history")}
+            onClick={() => navigate("/me/history")}
             className="bg-gray-100 flex dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-slate-300 items-center gap-2 px-4 py-2 rounded-full"
           >
             التاريخ <BiCalendarAlt />

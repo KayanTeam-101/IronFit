@@ -365,18 +365,18 @@ const ExercisePage: React.FC = () => {
         {todayWorkout ? (
           <>
             <div className="relative top-50">
-              <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-72 h-72 bg-amber-400 rounded-full opacity-20 blur-3xl animate-pulse" />
+              <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-72 h-72 bg-amber-400 rounded-full opacity-20 blur-3xl animate-pulse overflow-hidden" />
               <div className="absolute top-0 left-0 w-48 h-48 bg-indigo-400 rounded-full opacity-20 blur-3xl animate-pulse delay-1000" />
               <div className="absolute bottom-0 right-0 w-56 h-56 bg-teal-400 rounded-full opacity-20 blur-3xl animate-pulse delay-2000" />
             </div>
-            <div className="relative z-20 min-h-[250px] w-full p-5 bg-orange-500 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-2xl border border-amber-50 flex flex-col gap-4 transition-all hover:shadow-lg">
+            <div className="relative z-20 min-h-[250px] overflow-hidden w-full p-5 bg-orange-500 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-2xl border border-amber-50 flex flex-col gap-4 transition-all hover:shadow-lg">
               <div className="flex flex-row items-center justify-between">
                 <span className="text-white/80 text-sm">تمرين اليوم</span>
                 <span className="text-white/80 text-sm">{getTodayWeekday()}</span>
               </div>
-              <div className="relative w-full h-full">
+              <div className="relative w-full h-full ">
                 <h1 className="text-4xl sm:text-5xl text-white font-bold mb-2 drop-shadow-lg">{todayWorkout}</h1>
-                <GiShoulderArmor className="absolute text-9xl scale-150 left-0 top-0 opacity-20 text-black" />
+            <GiShoulderArmor className="absolute text-[150px] scale-150 left-0 top-0 opacity-10 text-white" />
               </div>
             </div>
             <div className="relative z-10 -top-4 w-full min-h-1 scale-97 bg-amber-400/20 py-6 dark:text-white dark:bg-transparent p-2 flex items-end rounded-2xl">
@@ -384,12 +384,12 @@ const ExercisePage: React.FC = () => {
             </div>
           </>
         ) : schedule.length > 0 ? (
-          <div className="relative min-h-[250px] w-full p-5 bg-slate-300 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 overflow-hidden rounded-2xl border border-gray-200 flex flex-col gap-4 transition-all hover:shadow-lg">
+          <div className="relative min-h-[250px] w-full p-5 bg-slate-300 dark:bg-slate-800/20 dark:border-2 dark:border-gray-600/20 overflow-hidden rounded-2xl border border-gray-200 flex flex-col gap-4 transition-all hover:shadow-lg">
             <div className="flex flex-row items-center justify-between">
               <h1 className="text-4xl text-white font-bold m-3"> إستراحة محارب !</h1>
             </div>
             <h1 className="text-xl text-white">استرح يا بطل!</h1>
-            <GiShoulderArmor className="absolute text-8xl scale-150 left-0 top-0 opacity-20 text-white" />
+            <GiShoulderArmor className="absolute text-[150px] scale-150 left-0 top-10 opacity-10 text-white" />
           </div>
         ) : (
           <div className="relative min-h-[150px] w-full p-5 bg-slate-300 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-2xl border border-gray-200 flex flex-col gap-4 transition-all hover:shadow-lg">
@@ -413,7 +413,7 @@ const ExercisePage: React.FC = () => {
           <h2 className="text-xl font-semibold text-gray-700 px-4 mb-3">جدول التمرين</h2>
           <div className="flex overflow-auto snap-x snap-mandatory gap-4 p-4 scrollbar-thin scrollbar-thumb-gray-300">
             {days.map((day, idx) => (
-              <div key={idx} className={`snap-center flex dark:bg-black/20 dark:border-2 dark:border-gray-600/20 justify-between flex-col shrink-0 w-full min-h-80 relative bg-white/70 backdrop-blur-lg border border-white/50 shadow-2xl rounded-xl p-5 space-y-4 transition-all hover:shadow-2xl ${idx === currentDayIndex ? "ring-4 ring-amber-400/20" : ""}`}>
+              <div key={idx} className={`snap-center flex dark:bg-black/70 dark:border-2 dark:border-gray-600/20 justify-between flex-col shrink-0 w-full min-h-80 relative bg-white/70 backdrop-blur-lg border border-white/50 shadow-2xl rounded-xl p-5 space-y-4 transition-all hover:shadow-2xl ${idx === currentDayIndex ? "ring-4 ring-amber-400/20" : ""}`}>
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-lg font-bold text-gray-800 dark:text-white">{day.workout}</h3>
@@ -427,7 +427,7 @@ const ExercisePage: React.FC = () => {
                 {day.exercises.length > 0 ? (
                   <ul className="space-y-2">
                     {day.exercises.map((ex, exIdx) => (
-                      <li key={exIdx} className="relative flex items-center justify-between bg-gradient-to-r from-orange-900/5 to-amber-900/5 p-3 py-6 rounded-lg shadow-xl transition-all hover:shadow-md">
+                      <li key={exIdx} className="relative flex items-center justify-between bg-white dark:bg-black/20 border-2 border-gray-600/20 p-3 py-6 rounded-lg shadow-xl transition-all hover:shadow-md">
                         <div className="absolute top-13 text-sm text-gray-500 dark:text-white/70 pl-2">{ex.weight} كغ</div>
                         <span
                           className="font-medium cursor-pointer dark:text-white underline text-gray-700 truncate flex-1"
@@ -445,9 +445,9 @@ const ExercisePage: React.FC = () => {
                                 currentWeight: ex.weight,
                               })
                             }
-                            className="p-1 text-teal-300 hover:text-amber-700 transition flex justify-center items-center rounded-full gap-1"
+                            className="p-1 text-amber-500 hover:text-amber-700 transition flex justify-center items-center rounded-full gap-1"
                           >
-                            <FaExchangeAlt />تغير الوزن
+                            <FaExchangeAlt />تطوير الوزن
                           </button>
                         </div>
                       </li>
@@ -565,7 +565,7 @@ const ModernAnalysisView: React.FC<{ exerciseName: string; weightsHistory: numbe
           </span>
         )}
       </div>
-      <div className="bg-gray-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-lg p-4 border border-white/80 shadow-inner">
+      <div className="bg-gray-50 dark:bg-black/20 dark:border-2  rounded-lg p-4 shadow-inner overflow-x-scroll">
         {weightsHistory.length > 0 ? (
           <div className="flex items-end justify-between gap-1 h-40">
             {weightsHistory.map((weight, i) => {
@@ -574,7 +574,7 @@ const ModernAnalysisView: React.FC<{ exerciseName: string; weightsHistory: numbe
               return (
                 <div key={i} className="flex-1 flex flex-col items-center justify-end h-full">
                   <span className="text-xs font-medium text-gray-600 mb-1 dark:text-gray-100">{weight} كغ</span>
-                  <div className="w-full max-w-[30px] rounded-lg bg-gradient-to-b from-amber-400 to-orange-500 shadow-sm"
+                  <div className="w-full  max-w-[10px] rounded-full bg-gradient-to-b from-amber-400 to-orange-500 shadow-sm"
                     style={{ height: `${heightPercent}%`, animation: `slideUp 0.1s ease-in-out ${delay}s both` }} />
                   <span className="text-xs text-gray-400 mt-1.5 dark:text-gray-100">{i + 1}</span>
                 </div>

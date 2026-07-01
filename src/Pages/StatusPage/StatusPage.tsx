@@ -11,7 +11,7 @@ import {
   FaRunning,
   FaDatabase,
 } from "react-icons/fa";
-import { IoDiamond, IoDiamondOutline } from "react-icons/io5";
+import { IoAnalytics, IoDiamond, IoDiamondOutline } from "react-icons/io5";
 
 // ---------- Types ----------
 interface UserData {
@@ -47,18 +47,24 @@ const getIdealWeightRange = (heightCm: number) => {
 
 // ---------- Main Component ----------
 const StatusPage: React.FC = () => {
-  const [isDark, setIsDark] = useState(false);
+  const [IsActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    const checkDark = () =>
-      setIsDark(document.documentElement.classList.contains("dark"));
-    checkDark();
-    const observer = new MutationObserver(checkDark);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-    return () => observer.disconnect();
+   
+  
+   const encoded = localStorage.getItem("foods____");
+    if (encoded) {
+      try {
+        const decoded = JSON.parse(atob(encoded));
+        const period = decoded.SubscriptionPeriod;
+        if (period && period > Date.now()) {
+          setIsActive(true);
+          return;
+        }
+      } catch (e) {
+        console.error("Invalid subscription data");
+      }
+    }
   }, []);
 
   // Fetch all data from localStorage
@@ -142,7 +148,7 @@ const bmi = calcBMI(animatedWeight, animatedHeight);
     "bg-white dark:bg-black/40 dark:border-2 dark:border-gray-600/20 shadow-sm rounded-3xl p-4 backdrop-blur-md hover:shadow-xl transition-all";
 
   return (
-   false ? (
+   IsActive ? (
      <div className="min-h-fit show-first z-0 sm:p-5 font-arabic relative overflow-hidden">
       {/* Decorative blur */}
         
@@ -257,7 +263,16 @@ const bmi = calcBMI(animatedWeight, animatedHeight);
       </div>
     </div>
    ) : (
-     <div className="min-h-fit show-first z-0 sm:p-5 font-arabic relative overflow-hidden ">
+     <div>
+      <div>
+<div className="w-full h-1 mb-5 bg-gray-300/50 flex justify-center items-center">
+<div className="flex items-center gap-2 text-gray-500 dark:text-gray-300 text-sm mb-4">
+  تحليل البيانات <IoAnalytics className="text-amber-400 text-lg" />
+
+</div>
+</div>
+      </div>
+      <div className="min-h-fit show-first z-0 sm:p-5 font-arabic relative overflow-hidden ">
       {/* Decorative blur */}
         <div className="absolute w-full h-full  dark:bg-black/10 backdrop-blur-sm z-40 rounded-3xl flex justify-center items-center ">
       <div className="z-40 flex items-center justify-center flex-col gap-2">
@@ -372,6 +387,7 @@ const bmi = calcBMI(animatedWeight, animatedHeight);
         </div>
       </div>
     </div>
+     </div>
    )
   );
 };

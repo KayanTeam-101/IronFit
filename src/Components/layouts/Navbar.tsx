@@ -28,7 +28,7 @@ const Navbar = () => {
   return (
 <>
 
-   {window.location.pathname !== '/Chat' ? (
+   {!isChatPage ? (
      <div
      className="navbar overflow-hidden fixed bottom-2.5  grid grid-cols-5 items-center w-11/12 h-16 backdrop-blur-[15px]   dark:bg-black/60 border-t  border-gray-200 rounded-4xl text-xl text-amber-950 dark:from-slate-800/40 dark:to-black/40 dark:border-2 dark:border-gray-600/15"
     >
@@ -43,27 +43,12 @@ const Navbar = () => {
         </NavLink>
 
 
-    {
-      !isChatPage ? (
             <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white " to="/Chat">
           <RiMessage3Fill />
           <p className='text-[12px] mt-2'>تواصل</p>
 
         </NavLink>
 
-      ) :(
-        <div className='w-full flex justify-center items-center'>
-             <div className="flex flex-col w-fit items-center gap-1 text-center dark:text-white  " onClick={() => setIsOpened(true)}>
-            <div className='bg-orange-600 text-white p-3  rounded-xl  show-first'>
-          <GoPlus />
-
-            </div>
-<div className='w-3 h-0.5 rounded-2xl bg-orange-600 show-third'></div>
-        </div>
-        </div>
-        
-      )
-    }
 
         <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white " to="/me/exercises">
           <FaPersonRunning />

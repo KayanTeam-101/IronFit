@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import foods from "../../assets/FoodsList.json";
 import {
   FaArrowLeft,
@@ -8,6 +8,7 @@ import {
 import {
   IoInformation,
   IoClose,
+  IoDiamond,
 } from "react-icons/io5";
 import {
   BsSave,
@@ -47,6 +48,27 @@ const AdditionPage = (props: any) => {
   const [FoodInfo, setFoodInfo] = useState<any[]>(
     JSON.parse(localStorage.getItem("FoodInfo_s") || "[]")
   );
+
+    const [IsActive, setIsActive] = useState(false);
+  
+    useEffect(() => {
+     
+    
+     const encoded = localStorage.getItem("foods____");
+      if (encoded) {
+        try {
+          const decoded = JSON.parse(atob(encoded));
+          const period = decoded.SubscriptionPeriod;
+          if (period && period > Date.now()) {
+            setIsActive(true);
+            return;
+          }
+        } catch (e) {
+          console.error("Invalid subscription data");
+        }
+      }
+    }, []);
+
 
   // ---- Unit modal ----
   const [showUnitModal, setShowUnitModal] = useState(false);
@@ -195,9 +217,9 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
   };
 
   return (
-    <div className="fixed show-first top-0 left-0 w-screen h-screen flex flex-col bg-slate-100 dark:bg-slate-950 z-50 overflow-y-scroll">
+    <div className="fixed show-first top-0 left-0 w-screen h-screen flex flex-col bg-slate-100 dark:bg-[#111111] z-50 overflow-y-scroll">
       {/* Header */}
-      <div className="relative w-full bg-gradient-to-b from-orange-400 to-orange-500 dark:from-black/20 dark:to-amber-400/20 p-5 pt-15 rounded-b-full shadow-xl">
+      <div className="relative w-full bg-gradient-to-b from-orange-400 to-orange-500 dark:from-black/20 dark:to-amber-400/20 p-5 pt-15 rounded-b-full shadow-xl godown">
         <div className="flex items-center justify-between">
           <button
             onClick={() => window.location.reload()}
@@ -222,7 +244,7 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
               value={text}
               onChange={(e) => setText(e.target.value)}
               autoFocus
-              placeholder="ابحث عن طعام..."
+              placeholder="ابحث عن طبق مثلا: فول سوداني..."
             className='w-full bg-gray-50 border-2 border-gray-200 outline-2 outline-amber-200 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white text-black rounded-b-4xl rounded-xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-orange-400 transition"'
             />
           </div>
@@ -320,14 +342,24 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
             <div className="mt-3 bg-indigo-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-xl p-3 border border-purple-200">
               <div className="text-xs text-purple-600 mb-1">الفيتامينات</div>
               <div className="flex flex-wrap gap-1">
-                {totals.vitamins.map((vit, i) => (
+                { IsActive ? (
+                  totals.vitamins.map((vit, i) => (
                   <span
                     key={i}
                     className="px-2 py-0.5 bg-white rounded-full text-xs font-medium text-purple-700"
                   >
                     {vit}
                   </span>
-                ))}
+                ))) : (
+                  totals.vitamins.map((i) => (
+                  <span
+                    key={i}
+                    className="px-2 py-0.5 bg-white rounded-full text-xs font-medium text-purple-700"
+                  >
+                    VIP <IoDiamond />
+                  </span>
+                ))
+                )}
               </div>
             </div>
           )}

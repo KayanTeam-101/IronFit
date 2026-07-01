@@ -10,6 +10,8 @@ import {
 import { IoDiamond, IoDiamondOutline } from "react-icons/io5";
 import { useCountUp } from "../../Hooks/Increasing";
 import { getUsers, updateUserSubscription } from "../../firebase/user";
+import Subscribe from "../Settings/Subsribed";
+import SubscriptionActivationOverlay from "./Activated";
 
 // ---------- Plans data ----------
 const FIXED_PLANS = [
@@ -116,7 +118,7 @@ const Subscription: React.FC = () => {
 
       // add encryption to localStorage
       localStorage.setItem("foods____", btoa(JSON.stringify({ SubscriptionPeriod: CreateASubscriptionPeriod })));
-
+setSubscribeSuccess(true);
     }
 
     if (Number(friendId) === Number(getUser?.UserId_)) {
@@ -134,11 +136,7 @@ const Subscription: React.FC = () => {
 
 
   };
-  // Subscribe handlers
-  const handleSubscribe = () => {
-    setSubscribeSuccess(true);
-    setTimeout(() => setSubscribeSuccess(false), 2500);
-  };
+
   // Custom plan price
   const customPrice = Math.round(customDays * 10 - (customDays**2)/customDays);
 
@@ -311,7 +309,7 @@ const Subscription: React.FC = () => {
                   </div>
 
                   <button
-                    onClick={(e) => { createRipple(e); handleSubscribe(); }}
+                    onClick={(e) => { createRipple(e); handleActivate(); }}
                     className="relative overflow-hidden w-full bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-white font-bold py-3  transition shadow-md"
                   >
                     {subscribeSuccess ? <AnimatedCheck /> : "اشترك الآن"}
@@ -360,7 +358,7 @@ const Subscription: React.FC = () => {
                     </ul>
                     {selectedFixedPlan === plan.days && (
                       <button
-                        onClick={(e) => { e.stopPropagation(); createRipple(e); handleSubscribe(); }}
+                        onClick={(e) => { e.stopPropagation(); createRipple(e); handleActivate(); }}
                         className="mt-4 relative overflow-hidden w-full bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-white font-bold py-3  transition shadow-md"
                       >
                         {subscribeSuccess ? <AnimatedCheck /> : `اشترك بـ ${plan.price} ج.م`}
@@ -398,7 +396,9 @@ const Subscription: React.FC = () => {
         }
       `}</style>
     </div>
-    ): "<Subscription/>"}
+    ): (<Subscribe/>)}
+      <SubscriptionActivationOverlay show={subscribeSuccess} />
+    
     </>
   );
 };

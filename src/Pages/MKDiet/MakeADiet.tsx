@@ -86,6 +86,7 @@ const MakeADiet: React.FC = () => {
       bmr = 10 * currentWeight + 6.25 * height - 5 * age - 161;
     }
 
+ 
     const tdee = bmr * 1.5; // activity factor
     const weightDiff = targetWeight - currentWeight;
     const totalCaloriesNeeded = weightDiff * 7700;
@@ -180,10 +181,32 @@ const MakeADiet: React.FC = () => {
     setIsClicked(false);
   };
 
+ const [IsActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+   
+  
+   const encoded = localStorage.getItem("foods____");
+    if (encoded) {
+      try {
+        const decoded = JSON.parse(atob(encoded));
+        const period = decoded.SubscriptionPeriod;
+        if (period && period > Date.now()) {
+          setIsActive(true);
+          return;
+        }
+      } catch (e) {
+        console.error("Invalid subscription data");
+      }
+    }
+  }, []);
+
+
+
   return (
-    <div className="min-h-screen show-first bg-amber-50 dark:bg-slate-950 relative pb-24">
+    <div className="min-h-screen show-first bg-amber-50 dark:bg-black/20 relative pb-24">
       {/* Header */}
-      <div className="w-full bg-gradient-to-b from-amber-400  to-orange-500 dark:from-black/20 dark:to-amber-400/20 dark:border-2 dark:border-gray-600/20 p-12 pt-10 rounded-b-full shadow-xl">
+      <div className="w-full bg-gradient-to-b from-amber-400  to-orange-500 dark:from-black/20 dark:to-amber-400/20 dark:border-2 dark:border-gray-600/20 p-12 pt-10 rounded-b-full shadow-xl godown">
           <div className="flex justify-between mt-5 text-white/90 text-sm">
           <span>الوزن: {currentWeight} كغ</span>
           <span>الهدف: {targetWeight} كغ</span>
@@ -193,7 +216,7 @@ const MakeADiet: React.FC = () => {
         </div>
         <div className="flex items-center gap-3">
        
-          <h1 className="text-white  w-full text-2xl text-center">اصنع نظامك الغذائي</h1>
+          <h1 className="text-white  w-full text-2xl text-center mt-2">اصنع نظامك الغذائي</h1>
         </div>
         {/* Quick stats */}
       
@@ -343,7 +366,7 @@ const MakeADiet: React.FC = () => {
                       </div>
                     );
                   }
-                  if (idx === 2) {
+                  if (idx === 2 && IsActive) {
                     return (
                       <div
                         key={`${meal}-info-2`}

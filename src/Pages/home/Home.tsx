@@ -79,6 +79,25 @@ const Home = () => {
     const challengePeriod = Number(localStorage.getItem("challengePeriod") || 0);
     const gender = localStorage.getItem("SelectedGender") || "";
       const [showSubscribe, setShowSubscribe] = useState(true); // or false
+  const [IsActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+   
+  
+   const encoded = localStorage.getItem("foods____");
+    if (encoded) {
+      try {
+        const decoded = JSON.parse(atob(encoded));
+        const period = decoded.SubscriptionPeriod;
+        if (period && period > Date.now()) {
+          setIsActive(true);
+          return;
+        }
+      } catch (e) {
+        console.error("Invalid subscription data");
+      }
+    }
+  }, []);
 
   
     // Calculate daily calorie goal once
@@ -115,7 +134,7 @@ const Home = () => {
   const Advice = "قليلُ مستمر خيرُ من كثيرٍ منقطع";
   return (
     <div className="relative min-h-screen w-screen  overflow-hidden p-4 flex flex-col gap-2.5 show-first">
-          {showSubscribe && (
+          {showSubscribe  && !IsActive && (
         <Subscribe onClose={() => setShowSubscribe(false)} />
       )}
       {/* Decorative blur */}
@@ -126,7 +145,7 @@ const Home = () => {
             <GoHomeFill className="dark:text-white"/>
             <div className="p-1.5 bg-linear-to-r bg-clip-text  from-yellow-500 via-orange-500  to-pink-500 felx justify-center align-center rounded-full text-sm text-transparent font-bold">
             
-  V1.0.0 - أنت الان في نسخة مجانية
+  V1.2.0
   <br />
 <a href="https://www.tiktok.com/@iron_fit_app" target="_blank" rel="noopener noreferrer" className="underline text-amber-500">
   شاركنا رأيك

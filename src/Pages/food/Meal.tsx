@@ -6,10 +6,29 @@ import { Eaten } from "../../utilities/utilities";
 import { MdFreeBreakfast, type MdBreakfastDining } from "react-icons/md";
 import { LiaCookieBiteSolid } from "react-icons/lia";
 import { PiCheckDuotone } from "react-icons/pi";
+import { BiMoon } from "react-icons/bi";
 
 const Meal = (props: any) => {
   const mealName = props.MealName as string;
+  const [IsActive, setIsActive] = useState(false);
 
+  useEffect(() => {
+   
+  
+   const encoded = localStorage.getItem("foods____");
+    if (encoded) {
+      try {
+        const decoded = JSON.parse(atob(encoded));
+        const period = decoded.SubscriptionPeriod;
+        if (period && period > Date.now()) {
+          setIsActive(true);
+          return;
+        }
+      } catch (e) {
+        console.error("Invalid subscription data");
+      }
+    }
+  }, []);
   // Reactive state – we refresh when history changes
   const [tick, setTick] = useState(0);
   const forceUpdate = () => setTick((t) => t + 1);
@@ -88,7 +107,7 @@ const Meal = (props: any) => {
     Breakfast: <MdFreeBreakfast />,
     Lunch: <GiMeal />,
     Snacks: <LiaCookieBiteSolid />,
-    Dinner: <PiCheckDuotone />,
+    Dinner: <BiMoon />,
   };
   const mealNamesAr: Record<string, string> = {
     Breakfast: "الفطور",
@@ -205,7 +224,7 @@ const Meal = (props: any) => {
       {/* Nutrition chips – dynamic based on actual consumption */}
       <div className="flex flex-wrap gap-2.5">
         <div
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-transparent text-amber-600 rounded-full text-sm font-medium  dark:text-white dark:bg-black"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-transparent text-amber-600 rounded-full text-sm font-medium "
           style={{
             // background: "linear-gradient(135deg, #fff3c755, #fde68a55)",
             color: "#92400e",
@@ -215,7 +234,7 @@ const Meal = (props: any) => {
           السعرات: {consumedNutrition.calories.toFixed(1)} 
         </div>
         <div
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-transparent text-amber-600 rounded-full text-sm font-medium  dark:text-white dark:bg-black"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-transparent text-amber-600 rounded-full text-sm font-medium "
           style={{
             color: "#115e59",
           }}
@@ -224,9 +243,9 @@ const Meal = (props: any) => {
           البروتين: {consumedNutrition.protein.toFixed(1)} غ 
         </div>
         <div>
-          <div className="flex flex-row gap-2 p-3 dark:text-white">العناصر الغذائية </div>
+          <div className="flex flex-row gap-2 p-3 dark:text-white">العناصر الغذائية(الفيتامينات) </div>
           <div className="flex gap-1 flex-wrap w-11/12 ">
-          {false ? (
+          {IsActive ? (
             GetVitamines.map(e => <span className="p-1 text-indigo-600 bg-indigo-50 rounded-xl dark:text-gray-100 border border-gray-200/30 dark:bg-black">{e}</span>)
 
           ) :(
