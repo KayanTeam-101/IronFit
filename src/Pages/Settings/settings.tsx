@@ -398,7 +398,7 @@ const Subscription: React.FC = () => {
         }
       `}</style>
     </div>
-    ): <Subscription/>}
+    ): "<Subscription/>"}
     </>
   );
 };
