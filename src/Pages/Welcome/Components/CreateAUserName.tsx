@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { collection, query, where, getDocs, limit } from "firebase/firestore";
 import { db } from "../../../firebase/main";
 import { SetUser } from "../../../firebase/user";
+import imageCompression from 'browser-image-compression'; // ✅ import
 
 const USERNAME_MIN_LENGTH = 6;
 const USERNAME_MAX_LENGTH = 14;
@@ -22,12 +23,20 @@ const getValidationError = (username: string): string | null => {
   return null;
 };
 
-// ✅ Accept a setter function, not a string
-const CreateAUserName = ({ setUsername }: { setUsername: (name: string) => void }) => {
-  const [text, setText] = useState(localStorage.getItem('UserName') || "");
+const CreateAUserName = ({
+  setUsername,
+}: {
+  setUsername: (name: string) => void;
+}) => {
+  const [text, setText] = useState(localStorage.getItem("UserName") || "");
+  const [email, setEmail] = useState(localStorage.getItem("Email") || "");
+  const [photoUrl, setPhotoUrl] = useState(localStorage.getItem("PhotoUrl") || "");
   const [isChecking, setIsChecking] = useState(false);
   const [isAvailable, setIsAvailable] = useState<boolean | null>(null);
-  const [saveState, setSaveState] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [saveState, setSaveState] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [isCompressing, setIsCompressing] = useState(false); // ✅ new
 
   const validationError = getValidationError(text);
   const isValidFormat = text.trim().length > 0 && validationError === null;
@@ -44,7 +53,7 @@ const CreateAUserName = ({ setUsername }: { setUsername: (name: string) => void 
       const q = query(
         collection(db, "users"),
         where("UserNameLower", "==", trimmed.toLowerCase()),
-        limit(1)
+        limit(1),
       );
       const snapshot = await getDocs(q);
       setIsAvailable(snapshot.empty);
@@ -54,9 +63,7 @@ const CreateAUserName = ({ setUsername }: { setUsername: (name: string) => void 
     } finally {
       setIsChecking(false);
     }
-      setUsername(text);
-
-
+    setUsername(text);
   }, []);
 
   useEffect(() => {
@@ -66,68 +73,187 @@ const CreateAUserName = ({ setUsername }: { setUsername: (name: string) => void 
     return () => clearTimeout(timer);
   }, [text, checkUsername]);
 
-  const handleSave = async () => {
-    if (!isAvailable || !isValidFormat || saveState !== "idle") return;
+ // Helper: get existing userId or generate a new one from the username
+const getOrCreateUserId = (username: string): number => {
+  const stored = localStorage.getItem("userId_");
+  if (stored) return Number(stored);
 
-    setSaveState("loading");
+  // djb2 hash – deterministic, max 15 digits
+  let hash = 5381;
+  for (let i = 0; i < username.length; i++) {
+    hash = (hash * 33) ^ username.charCodeAt(i);
+  }
+  const userId = Math.abs(hash) % 1_000_000_000_000_000; // 10^15
+  localStorage.setItem("userId_", String(userId));
+  return userId;
+};
+
+const handleSave = async () => {
+  // Early exit if not ready
+  if (!isAvailable || !isValidFormat || saveState !== "idle" || isCompressing) {
+    return;
+  }
+
+  setSaveState("loading");
+
+  try {
+    const trimmed = text.trim();
+
+    // Persist user data locally
+    localStorage.setItem("UserName", trimmed);
+    localStorage.setItem("Email", email);
+    localStorage.setItem("PhotoUrl", photoUrl);
+
+    // Obtain a numeric user ID (reuse existing or create new)
+    const userId = getOrCreateUserId(trimmed);
+
+    // Save to Firestore (or your backend)
+    await SetUser(trimmed, email, photoUrl, userId);
+
+    setSaveState("success");
+  } catch (error) {
+    console.error("Failed to save user:", error);
+    setSaveState("error");
+  }
+};
+  
+ const canSave =
+  isAvailable && isValidFormat && !isChecking && saveState === "idle" && !isCompressing;
+
+  // ✅ Compress image before setting state
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsCompressing(true);
     try {
-      const trimmed = text.trim();
-      await SetUser(trimmed, "null", "null");
-      localStorage.setItem('UserName', trimmed);
-      // ✅ Call the parent setter to update the parent state
-      setSaveState("success");
+      // Compress to < 0.5 MB
+      const compressedFile = await imageCompression(file, {
+        maxSizeMB: 0.5,
+        useWebWorker: true, // improves performance
+      });
+
+      // Convert compressed file to data URL
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotoUrl(reader.result as string);
+        setIsCompressing(false);
+      };
+      reader.readAsDataURL(compressedFile);
     } catch (error) {
-      console.error("Failed to save user:", error);
-      setSaveState("error");
+      console.error("Compression failed:", error);
+      // Fallback: use original file if compression fails
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotoUrl(reader.result as string);
+        setIsCompressing(false);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
-  const canSave = isAvailable && isValidFormat && !isChecking && saveState === "idle";
-
   return (
     <div className="w-11/12 h-screen flex justify-center flex-col">
-      <div className="relative w-full h-26 top-10">
-        <input
-          type="text"
-          onChange={(e) => setText(e.target.value)}
-          value={text}
-          maxLength={USERNAME_MAX_LENGTH}
-          autoFocus
-          placeholder="أكتب اسم المستخدم, مثال: Ahmed-Fit1"
-          className={`border-2 border-gray-600/40 outline-none p-4 px-5 rounded-2xl w-full text-md dark:text-white ${
-            saveState === "success" ? "border-teal-900/40 bg-green-700/15 text-green-600" : ""
-          }`}
-        />
+      {/* Main container for all fields */}
+      <div className="relative w-full space-y-4 -top-40">
+        {/* Username input */}
+        <div>
+          <div className="relative m-5 h-50">
+          <label className="block mb-2 text-sm text-gray-600 dark:text-gray-300">
+            {isCompressing && "⏳ جاري الضغط..."}
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            disabled={isCompressing}
 
-        {validationError && (
-          <p className="text-rose-500 mt-2">{validationError}</p>
-        )}
+            className="absolute h-full opacity-0 w-full text-sm z-50 text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 dark:file:bg-gray-700 dark:file:text-gray-200 disabled:opacity-50"
+          />
+            {!photoUrl && (
+            <div className="relative  h-full mt-2 w-full flex justify-center items-center">
+              <img
+                src={"https://cdn.vectorstock.com/i/500p/22/45/user-profile-icon-line-style-vector-50642245.jpg"}
+                alt="Preview"
+                className="w-50 h-50 rounded-full object-cover border-2 border-gray-300/20 animate-pulse"
+              />
+            </div>
+          )}
+          {photoUrl && (
+            <div className="mt-2 w-full flex justify-center items-center">
+              <img
+                src={photoUrl}
+                alt="Preview"
+                className="w-50 h-50 rounded-full object-cover border-2 border-gray-300/20 "
+              />
+            </div>
+          )}
+        </div>
 
-        {!validationError && isChecking && (
-          <p className="text-gray-500 mt-2">Checking...</p>
-        )}
-        {!validationError && !isChecking && isAvailable !== null && (
-          <p className={`mt-2 ${isAvailable ? "text-green-600" : "text-rose-500"}`}>
-            {isAvailable
-              ? "اسم المستخدم متاح"
-              : "تم إستخدام هذا الاسم من قبل شخص اخر"}
-          </p>
-        )}
+          <input
+            type="text"
+            onChange={(e) => setText(e.target.value)}
+            value={text}
+            maxLength={USERNAME_MAX_LENGTH}
+            autoFocus
+            placeholder="أكتب اسم المستخدم, مثال: Ahmed-Fit1"
+            className={`border-b-2 border-gray-600/40 outline-none p-4 px-5  w-full text-md dark:text-white ${
+              saveState === "success"
+                ? "border-teal-900/40 bg-green-700/15 text-green-600"
+                : ""
+            }`}
+          />
+          {validationError && (
+            <p className="text-rose-500 mt-2">{validationError}</p>
+          )}
+          {!validationError && isChecking && (
+            <p className="text-gray-500 mt-2">Checking...</p>
+          )}
+          {!validationError && !isChecking && isAvailable !== null && (
+            <p
+              className={`mt-2 ${
+                isAvailable ? "text-green-600" : "text-rose-500"
+              }`}
+            >
+              {isAvailable
+                ? "اسم المستخدم متاح"
+                : "تم إستخدام هذا الاسم من قبل شخص اخر"}
+            </p>
+          )}
+        </div>
 
+        {/* Email input */}
+        <div>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="البريد الإلكتروني (اختياري)"
+            className="border-b-2 border-gray-600/40 outline-none p-4 px-5 rounded-2xl w-full text-md dark:text-white"
+          />
+        </div>
+
+        {/* Photo (image) input with compression */}
+        
         {saveState === "error" && (
-          <p className="text-rose-500 mt-2">حدث خطأ أثناء الحفظ. حاول مجددًا.</p>
+          <p className="text-rose-500 mt-2">
+{saveState}
+          </p>
         )}
       </div>
 
+      {/* Save button – styles untouched */}
       <button
         onClick={handleSave}
         disabled={!canSave}
-        className={`absolute bottom-4 right-0 z-40  h-16  bg-white dark:bg-gray-950 outline-none p-4 px-5  w-full text-md dark:text-white flex items-center justify-center gap-2 transition-colors
+        className={`absolute bottom-4 right-0 z-50  h-16  bg-white dark:bg-gray-950 outline-none p-4 px-5  w-full text-md dark:text-white flex items-center justify-center gap-2 transition-colors
           ${!canSave ? " cursor-not-allowed" : "hover:bg-gray-100 dark:hover:bg-gray-800"}
           ${saveState === "success" ? "bg-green-600 text-white border-green-600 hidden" : ""}
         `}
       >
-        {saveState === "success" ? `تم الحفظ: ${localStorage.getItem('UserName')}` : "Save"}
+        {saveState === "success"
+          ? `تم الحفظ: ${localStorage.getItem("UserName")}`
+          : "Save"}
       </button>
     </div>
   );

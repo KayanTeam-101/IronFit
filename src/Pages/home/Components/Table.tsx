@@ -40,7 +40,7 @@ const Table = () => {
   }
 
   return (
-    <div className='relative flex items-center flex-col w-full min-h-14 p-2 bg-white  dark:bg-black/40 dark:border-2 dark:border-gray-600/20 rounded-2xl border-amber-50 '>
+    <div className='relative flex items-center flex-col w-full min-h-14  p-2 bg-white  dark:bg-black/40 dark:border-2 dark:border-gray-600/20 rounded-2xl border-amber-50 '>
       <div className='w-full h-10 flex items-center justify-between border-b-2 border-amber-100 dark:border-b-gray-400/20 mb-2'>
         <div className='flex items-center'>
           <span className='dark:text-white'>تقدمي</span>
@@ -50,7 +50,7 @@ const Table = () => {
         </div>
       </div>
       {/* End Header */}
-      <div className='w-full min-h-2.5 max-h-60 p-2 grid grid-cols-7 gap-1.5 overflow-y-scroll'>
+      <div className='w-full min-h-2.5 max-h-35 p-2 grid grid-cols-7 gap-1.5 overflow-y-scroll'>
         {calculateDays().map((item,idx) => (
           <div 
             key={item} 

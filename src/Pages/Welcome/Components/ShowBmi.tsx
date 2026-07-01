@@ -212,7 +212,7 @@ const ShowBmi = () => {
               label="مؤشر كتلة الجسم"
               unit="BMI"
               color="#3b82f6"
-              icon={<FaRulerVertical className="text-orange-500" />}
+              icon={<FaRulerVertical className="text-blue-500" />}
               subText={bmi < 18.5 ? "نقص" : bmi < 25 ? "طبيعي" : bmi < 30 ? "زيادة" : "سمنة"}
             />
           </div>

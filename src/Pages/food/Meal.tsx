@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { FaFire, FaCheck, FaRegCircle } from "react-icons/fa6";
-import { IoInformationCircle } from "react-icons/io5";
+import { IoDiamond, IoDiamondOutline, IoInformationCircle } from "react-icons/io5";
 import { GiBiceps, GiMeal } from "react-icons/gi";
 import { Eaten } from "../../utilities/utilities";
 import { MdFreeBreakfast, type MdBreakfastDining } from "react-icons/md";
@@ -223,9 +223,18 @@ const Meal = (props: any) => {
           <GiBiceps className="text-base text-teal-500" />
           البروتين: {consumedNutrition.protein.toFixed(1)} غ 
         </div>
+        <div>
+          <div className="flex flex-row gap-2 p-3 dark:text-white">العناصر الغذائية </div>
           <div className="flex gap-1 flex-wrap w-11/12 ">
-            {GetVitamines.map(e => <span className="p-1 text-indigo-600 bg-indigo-50 rounded-xl dark:text-gray-100 border border-gray-200/30 dark:bg-black">{e}</span>)}
+          {false ? (
+            GetVitamines.map(e => <span className="p-1 text-indigo-600 bg-indigo-50 rounded-xl dark:text-gray-100 border border-gray-200/30 dark:bg-black">{e}</span>)
+
+          ) :(
+            GetVitamines.map(() => <div className="p-2 text-indigo-600 bg-indigo-50 rounded-xl dark:text-gray-100 border border-gray-200/30 dark:bg-black flex flex-row gap-1 justify-center items-center"><IoDiamondOutline className="mb-1 text-sm text-amber-400/60"/> VIP </div>)
+
+          )}
           </div>
+        </div>
       </div>
 
       {/* All-eaten celebration */}
@@ -235,7 +244,6 @@ const Meal = (props: any) => {
         </div>
       )}
 
-      <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
     </div>
   );
 };

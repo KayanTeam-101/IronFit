@@ -38,6 +38,11 @@ h1, h2, h3, h4, h5, h6{
 }
 .showInTwoSecond{
     animation: showAnim 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+
+}
+.showAnim2{
+    animation: showAnim2 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+
 }
 @keyframes showAnim {
     0%{
@@ -52,6 +57,16 @@ h1, h2, h3, h4, h5, h6{
         transform: scale(1);
 
     }
+}
+@keyframes showAnim2 {
+  0%{
+        opacity: 0;
+    }
+ 
+    100%{
+        opacity: 1;
+
+    }   
 }
 .navbar a{
     position: relative;

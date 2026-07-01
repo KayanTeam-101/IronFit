@@ -11,6 +11,7 @@ import {
   FaRunning,
   FaDatabase,
 } from "react-icons/fa";
+import { IoDiamond, IoDiamondOutline } from "react-icons/io5";
 
 // ---------- Types ----------
 interface UserData {
@@ -141,9 +142,9 @@ const bmi = calcBMI(animatedWeight, animatedHeight);
     "bg-white dark:bg-black/40 dark:border-2 dark:border-gray-600/20 shadow-sm rounded-3xl p-4 backdrop-blur-md hover:shadow-xl transition-all";
 
   return (
-    <div className="min-h-screen show-first z-0     sm:p-5 font-arabic relative overflow-hidden">
+   false ? (
+     <div className="min-h-fit show-first z-0 sm:p-5 font-arabic relative overflow-hidden">
       {/* Decorative blur */}
-
         
       <div className="relative z-10">
         {/* Header */}
@@ -253,9 +254,125 @@ const bmi = calcBMI(animatedWeight, animatedHeight);
         </div>
 
         {/* Bottom spacer for mobile nav */}
-        <div className="h-16" />
       </div>
     </div>
+   ) : (
+     <div className="min-h-fit show-first z-0 sm:p-5 font-arabic relative overflow-hidden ">
+      {/* Decorative blur */}
+        <div className="absolute w-full h-full  dark:bg-black/10 backdrop-blur-sm z-40 rounded-3xl flex justify-center items-center ">
+      <div className="z-40 flex items-center justify-center flex-col gap-2">
+          <IoDiamondOutline className="text-amber-400 z-50 text-3xl" />
+        <p className="text-amber-400 text-xl ">اشترك في VIP</p>
+      </div>
+        </div>
+      <div className="relative z-10">
+        {/* Header */}
+        {/* Extra Data Cards (non‑ring) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+  
+          {/* Quick stats */}
+          <div className={`${cardStyle} space-y-2`}>
+            <h3 className="text-lg font-bold text-amber-800 dark:text-white flex items-center gap-2">
+              <FaHeartbeat className="text-rose-500" />  نظرة عامة
+            </h3>
+            <div className="grid grid-cols-2 gap-2 text-sm">
+              <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
+                <span className="text-gray-500 dark:text-gray-400">الوزن الحالي</span>
+                <p className="font-bold text-amber-700 dark:text-white">
+                  {0} كجم
+                </p>
+              </div>
+              <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
+                <span className="text-gray-500 dark:text-gray-400">المستهدف</span>
+                <p className="font-bold text-amber-700 dark:text-white">
+                  {0} كجم
+                </p>
+              </div>
+              <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
+                <span className="text-gray-500 dark:text-gray-400">الطول</span>
+                <p className="font-bold text-amber-700 dark:text-white">
+                  {0} سم
+                </p>
+              </div>
+              <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
+                <span className="text-gray-500 dark:text-gray-400">العمر</span>
+                <p className="font-bold text-amber-700 dark:text-white">
+                  {0} سنة
+                </p>
+              </div>
+         
+              <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
+                <span className="text-gray-500 dark:text-gray-400">معدل الأيض</span>
+                <p className="font-bold text-amber-700 dark:text-white">
+                  {Math.round(0)} سعرة
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Circular Progress Rings Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
+     
+
+     
+          {/* BMI Ring */}
+          <div className={`${cardStyle} flex justify-center`}>
+            <CircularProgress
+              value={0}
+              max={40}
+              label="اشترك في VIP"
+              unit="BMI"
+              color="#3b82f6"
+              icon={<FaRulerVertical className="text-blue-500" />}
+              subText={"مؤشر كتلة الجسم"}
+            />
+          </div>
+
+       
+
+          {/* BMR Ring (derived) */}
+          <div className={`${cardStyle} flex justify-center`}>
+            <CircularProgress
+              value={0}
+              max={2500}
+              label="اشترك في VIP"
+              unit="سعرة"
+              color="#8b5cf6"
+              icon={<FaHeartbeat className="text-purple-500" />}
+              subText="معدل الأيض"
+            />
+          </div>  
+
+             {/* Weight Difference Ring */}
+          <div className={`${cardStyle} flex justify-center`}>
+            <CircularProgress
+              value={Math.abs(0)}
+              max={20}
+              label="الفرق عن المستهدف"
+              unit="كجم"
+              color={0 > 0 ? "#f59e0b" : "#22c55e"}
+              icon={<FaBullseye className="text-yellow-500" />}
+              subText={0 > 0 ? "تحتاج زيادة" : "فوق المستهدف"}
+            />
+          </div>
+
+   {/* Weight Difference Ring */}
+          <div className={`${cardStyle} flex justify-center`}>
+            <CircularProgress
+              value={Math.abs(0)}
+              max={20}
+              label="الفرق عن المستهدف"
+              unit="كجم"
+              color={0 > 0 ? "#f59e0b" : "#22c55e"}
+              icon={<FaBullseye className="text-yellow-500" />}
+              subText={0 > 0 ? "تحتاج زيادة" : "فوق المستهدف"}
+            />
+          </div>
+
+        </div>
+      </div>
+    </div>
+   )
   );
 };
 

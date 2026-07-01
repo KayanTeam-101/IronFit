@@ -1,10 +1,11 @@
 import { useState,useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { GoHomeFill, GoPlus } from 'react-icons/go'
-import { FaFaceMehBlank, FaPersonRunning } from "react-icons/fa6";
+import { FaPersonRunning } from "react-icons/fa6";
 import { FaAppleAlt } from 'react-icons/fa';
 import { RiMessage3Fill } from 'react-icons/ri';
 import InputsContainer from '../../Pages/SocialPage/Components/InputsContainer';
+import { IoDiamond } from 'react-icons/io5';
 
 const Navbar = () => {
 
@@ -71,14 +72,14 @@ const Navbar = () => {
         </NavLink>
      
          <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white " to="/Settings">
-          <FaFaceMehBlank />
+          <IoDiamond />
           <p className='text-[12px] mt-2'>أنا</p>
         </NavLink>
         
     </div>
    ) : (
      <div
-     className="navbar overflow-hidden z-20 fixed bottom-0 rounded-t-4xl grid grid-cols-5 items-center w-full h-12 backdrop-blur-[15px]   dark:bg-black/60 border-t  border-gray-200  text-lg text-amber-950 dark:from-slate-800/40 dark:to-black/40 dark:border-2 dark:border-gray-600/15"
+     className="navbar overflow-hidden z-20 fixed bottom-0 rounded-t-4xl grid grid-cols-5 items-center w-full h-12 backdrop-blur-[15px]   dark:bg-black/60 border-t  border-gray-200  text-lg text-amber-950 dark:from-slate-800/40 dark:to-black/40 dark:border-2 dark:border-gray-600/15  showAnim2"
     >
         <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white "  to="me/home">
           <GoHomeFill />
@@ -93,11 +94,11 @@ const Navbar = () => {
     
         <div className='w-full flex justify-center items-center'>
              <div className="flex flex-col w-fit items-center gap-1 text-center dark:text-white  " onClick={() => setIsOpened(true)}>
-            <div className='bg-orange-600 text-white p-2  rounded-xl  show-first'>
+            <div className='bg-orange-600 text-white p-2  rounded-xl '>
           <GoPlus />
 
             </div>
-<div className='w-3 h-0.5 rounded-2xl bg-orange-600 show-third'></div>
+<div className='w-3 h-0.5 rounded-2xl bg-orange-600'></div>
         </div>
         </div>
         
@@ -110,7 +111,7 @@ const Navbar = () => {
         </NavLink>
      
          <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white " to="/Settings">
-          <FaFaceMehBlank />
+          <IoDiamond />
         </NavLink>
         
     </div>

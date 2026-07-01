@@ -3,11 +3,12 @@ import { FaBowlFood, FaCookieBite, FaFire } from "react-icons/fa6";
 import { BiInfoCircle } from "react-icons/bi";
 import ExerciseDay from "./Components/ExcrsiceDay";
 import Table from "./Components/Table";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Fire from '../../assets/animatedFire.gif'
 import InstallButton from "./Components/InstallButton";
 import StatusPage from "../StatusPage/StatusPage";
 import { useCountUp } from "../../Hooks/Increasing";
+import Subscribe from "./Components/Subscribe";
 
 // ---------- Streak calculator ----------
 const calculateStreak = (): number => {
@@ -24,7 +25,7 @@ const calculateStreak = (): number => {
   // Convert to Date objects and sort newest first
   const sorted = dates
     .map((dateStr) => {
-      const [y, m, day] = dateStr.split("-").map(Number);   // ✅ 'day' instead of 'd'
+      const [y, m, day] = dateStr.split("-").map(Number);
       return new Date(y, m - 1, day);
     })
     .sort((a, b) => b.getTime() - a.getTime());
@@ -77,6 +78,8 @@ const Home = () => {
     const age = Number(localStorage.getItem("age") || 0);
     const challengePeriod = Number(localStorage.getItem("challengePeriod") || 0);
     const gender = localStorage.getItem("SelectedGender") || "";
+      const [showSubscribe, setShowSubscribe] = useState(true); // or false
+
   
     // Calculate daily calorie goal once
     const dailyCaloriesGoal = useMemo(() => {
@@ -110,9 +113,11 @@ const Home = () => {
   const IsThere_A_Diet = localStorage.getItem("Diet");
   const streak = useMemo(() => calculateStreak(),[]);
   const Advice = "قليلُ مستمر خيرُ من كثيرٍ منقطع";
-
   return (
-    <div className="relative min-h-screen w-screen  overflow-hidden p-4 flex flex-col gap-0.5 show-first">
+    <div className="relative min-h-screen w-screen  overflow-hidden p-4 flex flex-col gap-2.5 show-first">
+          {showSubscribe && (
+        <Subscribe onClose={() => setShowSubscribe(false)} />
+      )}
       {/* Decorative blur */}
       <div className="relative w-full min-h-14 flex  flex-col">
       <div className="w-full flex flex-row justify-between">
@@ -143,7 +148,7 @@ const Home = () => {
 
             {/* Active streak card */}
             <div className="rounded-3xl bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 text-white text-xl font-black tracking-tight flex flex-row justify-between items-center p-5 shadow-sm">
-              <p className="flex flex-row bg-gradient-to-r from-rose-300 via-orange-400 to-yellow-400 bg-clip-text text-transparent items-center gap-1">
+              <p className="flex flex-row bg-linear-to-r from-rose-300 via-orange-400 to-yellow-400 bg-clip-text text-transparent items-center gap-1">
                 الأيام النشطة 
               </p>
               <div className="flex bg-gray-50 dark:bg-transparent p-2 rounded-xl items-center gap-2.5">
@@ -157,7 +162,7 @@ const Home = () => {
         ) : (
           /* No diet yet – prompt to create one */
           <a href="/me/food">
-            <div className="w-full rounded-2xl mt-1.5 p-5 shadow-sm bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 flex flex-row gap-2 outline-swealing">
+            <div className="w-full rounded-2xl mt-1.5 p-5 shadow-sm bg-white dark:bg-black/20  dark:border-gray-600/20 flex flex-row gap-2 outline-swealing">
               <FaBowlFood className="text-2xl text-amber-300" />
               <p className="font-light text-md show-first dark:text-white">دعنا نصنع أفضل نظام غذائي!</p>
             </div>

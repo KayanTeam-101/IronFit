@@ -165,9 +165,7 @@ const Subscription: React.FC = () => {
   };
 
   return (
-    <>
-    {Number(localStorage.getItem("SubscriptionPeriod")) < new Date().getTime() ? (
-      <div className="min-h-screen bg-white dark:bg-black/20 relative overflow-hidden showAnim2 ">
+    <div className="min-h-screen bg-white dark:bg-black/20 relative overflow-hidden showAnim2 ">
       {/* Decorative blobs */}
       <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-72 h-72 bg-amber-400 rounded-full opacity-10 blur-3xl animate-pulse" />
       <div className="absolute top-70 right-0 w-64 h-64 bg-amber-300 rounded-full opacity-10 blur-3xl animate-pulse delay-1000" />
@@ -398,8 +396,6 @@ const Subscription: React.FC = () => {
         }
       `}</style>
     </div>
-    ): <Subscription/>}
-    </>
   );
 };
 
