@@ -30,7 +30,7 @@ const Navbar = () => {
 
    {!isChatPage ? (
      <div
-     className="navbar overflow-hidden fixed bottom-2.5  grid grid-cols-5 items-center w-11/12 h-16 backdrop-blur-[15px]   dark:bg-black/60 border-t  border-gray-200 rounded-4xl text-xl text-amber-950 dark:from-slate-800/40 dark:to-black/40 dark:border-2 dark:border-gray-600/15"
+     className="navbar overflow-hidden fixed bottom-2.5  grid grid-cols-5 items-center w-11/12 h-16 backdrop-blur-[3px]   dark:bg-black/60 border-t  border-gray-200 rounded-4xl text-xl text-amber-950 dark:from-slate-800/40 dark:to-black/40 dark:border-2 dark:border-gray-600/15"
     >
         <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-white "  to="me/home">
           <GoHomeFill />

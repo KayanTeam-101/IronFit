@@ -1,21 +1,29 @@
-// قاعدة بيانات الطعام (ضع المصفوفة كاملة هنا)
-import FOOD_DB  from "../assets/FoodsList.json";
-// ========== أدوات التاريخ ==========
-const getToday = () => {
+import FOOD_DB from "../assets/FoodsList.json";
+
+// ========== تعريفات الأنواع ==========
+interface FoodItem {
+  FoodName: string;
+  ProtineForOneKilo: string;
+  MostVitamens: string[];
+  calForOneKilo: string;
+}
+
+// ========== أدوات التاريخ (مرة واحدة) ==========
+const getDailySeed = (): number => {
+  const d = new Date();
+  const s = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+  return Math.sin(s) * 10000 - Math.floor(Math.sin(s) * 10000);
+};
+
+const getRandomBySeed = <T>(arr: T[]): T =>
+  arr[Math.floor(getDailySeed() * arr.length)];
+
+const getToday = (): string => {
   const d = new Date();
   return `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`;
 };
 
-const getDailySeed = () => {
-  const d = new Date();
-  const s = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
-  const x = Math.sin(s) * 10000;
-  return x - Math.floor(x);
-};
-
-const getRandomBySeed = <T>(arr: T[]): T => arr[Math.floor(getDailySeed() * arr.length)];
-
-// ========== نصائح مختصرة ==========
+// ========== نصائح اليوم ==========
 const DAILY_TIPS = [
   "امضغ طعامك ببطء",
   "لوّن طبقك بالخضار",
@@ -33,16 +41,23 @@ const DAILY_TIPS = [
   "قلّل ملح، أكثر من الأعشاب",
 ];
 
-// ========== الدالة الرئيسية ==========
+// ========== الدالة الصحية المُحسَّنة ==========
 export function giveHealthAdvice(): string {
-   const today = getToday();
+  const today = getToday();
 
-  // جلب البيانات
+  // --- البيانات الأساسية ---
   const historyRaw = localStorage.getItem("History");
   const foodInfoRaw = localStorage.getItem("FoodInfo_s");
   const dailyCal = parseFloat(localStorage.getItem("dailyCalories") || "0");
 
-  // الأطعمة الفعلية المأكولة اليوم
+  // البيانات الشخصية الجديدة
+  const age = parseInt(localStorage.getItem("age") || "0", 10);
+  const currentWeight = parseFloat(localStorage.getItem("currentWeight") || "0");
+  const height = parseFloat(localStorage.getItem("height") || "0");
+  const gender = localStorage.getItem("SelectedGender"); // "ذكر" or "أنثى"
+  const goal = localStorage.getItem("SelectedGoal") || "";
+
+  // --- الأطعمة الفعلية ---
   const history = historyRaw ? JSON.parse(historyRaw) : {};
   const todayMeals = history[today]?.meals || {};
   const allFoods = Object.values(todayMeals).flat() as string[];
@@ -51,51 +66,119 @@ export function giveHealthAdvice(): string {
     return "لم تُسجل أي وجبات اليوم. أضف طعامك لتحصل على نصيحة.";
   }
 
-  // البروتين الفعلي من FoodInfo_s
+  // البروتين الفعلي
   let totalProtein = 0;
   const foodSet = new Set(allFoods);
   if (foodInfoRaw) {
-    const foodInfo: [string, string, number, number, number][] =
-      JSON.parse(foodInfoRaw);
+    const foodInfo: [string, string, number, number, number][] = JSON.parse(foodInfoRaw);
     for (const [, name, , , protein] of foodInfo) {
       if (foodSet.has(name)) totalProtein += protein;
     }
   }
 
-  // الفيتامينات المستهلكة فعلياً من قاعدة البيانات
+  // الفيتامينات
   const vitamins = new Set<string>();
   for (const name of allFoods) {
-    const entry = FOOD_DB.find((f) => f.FoodName === name);
-    entry?.MostVitamens.forEach((v : string) => vitamins.add(v));
+    const entry = (FOOD_DB as FoodItem[]).find((f) => f.FoodName === name);
+    entry?.MostVitamens.forEach((v) => vitamins.add(v));
   }
 
-  // الفيتامينات الأساسية ونواقصها
-  const essential = [
-    "فيتامين أ",
-    "فيتامين ج",
-    "فيتامين د",
-    "فيتامين ب12",
-    "حديد",
-    "كالسيوم",
-  ];
+  const essential = ["فيتامين أ", "فيتامين ج", "فيتامين د", "فيتامين ب12", "حديد", "كالسيوم"];
   const missing = essential.filter((v) => !vitamins.has(v));
 
-  // ========== ترتيب الأولويات ==========
-  // 1. السعرات
-  if (dailyCal > 3000)
-    return "سعراتك اليوم مرتفعة جداً، قلل النشويات والحلويات.";
-  if (dailyCal > 2500)
-    return "سعراتك أعلى من الطبيعي، خفف الكميات في الوجبة التالية.";
-  if (dailyCal < 1500)
-    return "سعراتك قليلة، أضف وجبة خفيفة كالمكسرات أو التمر.";
+  // ========== النصيحة الطبية الدقيقة ==========
+  // إذا توفرت جميع البيانات الشخصية
+  if (age && currentWeight && height && gender && goal) {
+    // حساب BMR (Mifflin-St Jeor)
+    let bmr: number;
+    if (gender === "ذكر") {
+      bmr = 10 * currentWeight + 6.25 * height - 5 * age + 5;
+    } else {
+      bmr = 10 * currentWeight + 6.25 * height - 5 * age - 161;
+    }
 
-  // 2. البروتين
-  if (totalProtein < 30)
-    return "تحتاج بروتيناً أكثر، تناول بيضاً أو لحماً أو زبادي.";
-  if (totalProtein > 150)
-    return "بروتينك عالٍ اليوم، وازنه بالخضروات والسلطة.";
+    // TDEE (نفترض نشاط خفيف 1.2)
+    const tdee = bmr * 1.2;
 
-  // 3. نقص الفيتامينات (نختار أهم نقصين)
+    // تحديد السعرات المستهدفة حسب الهدف
+    let targetCal: number;
+    let goalText: string;
+    if (goal.includes("فقدان") || goal.includes("خسارة")) {
+      targetCal = tdee - 500;
+      goalText = "خسارة الوزن";
+    } else if (goal.includes("بناء عضلات") || goal.includes("عضلي")) {
+      targetCal = tdee + 300;
+      goalText = "بناء العضلات";
+    } else if (goal.includes("زيادة عرض")) { // زيادة عرض الأكتاف
+      targetCal = tdee + 300;
+      goalText = "تضخيم عضلي";
+    } else {
+      targetCal = tdee;
+      goalText = "المحافظة على الوزن";
+    }
+
+    // البروتين الموصى به (غرام/كغم)
+    let proteinPerKg: number;
+    if (goal.includes("بناء") || goal.includes("عضلي") || goal.includes("زيادة عرض")) {
+      proteinPerKg = 1.8;
+    } else if (goal.includes("فقدان") || goal.includes("خسارة")) {
+      proteinPerKg = 1.6;
+    } else {
+      proteinPerKg = 1.2;
+    }
+    const proteinTarget = proteinPerKg * currentWeight;
+
+    // بناء النصيحة
+    const parts: string[] = [];
+
+    // 1. مقارنة السعرات
+    const calDiff = dailyCal - targetCal;
+    if (calDiff > 300) {
+      parts.push(`لتحقيق ${goalText} تحتاج ~${Math.round(targetCal)} سعرة، تناولت ${dailyCal} (أعلى بـ ${Math.round(calDiff)})، قلل الكميات`);
+    } else if (calDiff < -300) {
+      parts.push(`لتحقيق ${goalText} تحتاج ~${Math.round(targetCal)} سعرة، تناولت ${dailyCal} (أقل بـ ${Math.abs(Math.round(calDiff))})، زد طعاماً صحياً`);
+    } else {
+      parts.push(`سعراتك (${dailyCal}) مناسبة لهدف ${goalText}`);
+    }
+
+    // 2. البروتين
+    if (totalProtein < proteinTarget - 10) {
+      parts.push(`بروتينك ${totalProtein}غم، تحتاج ~${Math.round(proteinTarget)}غم، أضف مصدراً بروتينياً`);
+    } else if (totalProtein > proteinTarget + 30) {
+      parts.push(`بروتينك ${totalProtein}غم أعلى من اللازم، ركّز على الكارب المعقد والخضار`);
+    } else {
+      parts.push("والبروتين كافٍ");
+    }
+
+    // 3. الفيتامينات
+    if (missing.length > 0) {
+      const suggestions: Record<string, string> = {
+        "فيتامين أ": "جزر/كبدة",
+        "فيتامين ج": "برتقال/فلفل",
+        "فيتامين د": "سمك/بيض",
+        "فيتامين ب12": "لحم/ألبان",
+        حديد: "كبدة/عدس",
+        كالسيوم: "زبادي/جبن",
+      };
+      const topMissing = missing.slice(0, 2);
+      const fix = topMissing.map((v) => suggestions[v] || v).join(" و");
+      parts.push(`عوّض نقص ${topMissing.join(" و")} بـ ${fix}`);
+    }
+
+    // 4. نصيحة اليوم
+    const tip = getRandomBySeed(DAILY_TIPS);
+    parts.push(tip);
+
+    return parts.join(". ") + ".";
+  }
+
+  // ========== المنطق السابق (عند عدم توفر بيانات شخصية) ==========
+  if (dailyCal > 3000) return "سعراتك اليوم مرتفعة جداً، قلل النشويات والحلويات.";
+  if (dailyCal > 2500) return "سعراتك أعلى من الطبيعي، خفف الكميات في الوجبة التالية.";
+  if (dailyCal < 1500) return "سعراتك قليلة، أضف وجبة خفيفة كالمكسرات أو التمر.";
+  if (totalProtein < 30) return "تحتاج بروتيناً أكثر، تناول بيضاً أو لحماً أو زبادي.";
+  if (totalProtein > 150) return "بروتينك عالٍ اليوم، وازنه بالخضروات والسلطة.";
+
   if (missing.length > 0) {
     const suggestions: Record<string, string> = {
       "فيتامين أ": "جزر أو كبدة",
@@ -110,22 +193,11 @@ export function giveHealthAdvice(): string {
     return `لديك نقص في ${topMissing.join(" و")}، عوّضه بـ ${fix}.`;
   }
 
-  // 4. كل شيء ممتاز
   const tip = getRandomBySeed(DAILY_TIPS);
   return `تغذيتك اليوم متوازنة، ${tip}.`;
 }
 
-
-const getDailySeed_ = (): number => {
-  const d = new Date();
-  const s = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
-  return Math.sin(s) * 10000 - Math.floor(Math.sin(s) * 10000);
-};
-
-const getRandomBySeed_ = <T>(arr: T[]): T =>
-  arr[Math.floor(getDailySeed_() * arr.length)];
-
-// ========== مكتبة النصائح الرياضية ==========
+// ========== نصيحة التمارين (تستخدم نفس دوال التاريخ) ==========
 const EXERCISE_TIPS = [
   "ابدأ يومك بتمارين الإطالة 5 دقائق لتنشيط الدورة الدموية.",
   "المشي السريع 30 دقيقة يومياً يحرق الدهون ويحسن المزاج.",
@@ -149,10 +221,6 @@ const EXERCISE_TIPS = [
   "تمارين البطن وحدها لا تزيل الكرش، ادمجها مع الكارديو والتغذية.",
 ];
 
-/**
- * يعيد نصيحة رياضية واحدة مختصرة تتغير يومياً
- * @returns جملة نصيحة رياضية
- */
 export function giveExerciseAdvice(): string {
-  return getRandomBySeed_(EXERCISE_TIPS);
+  return getRandomBySeed(EXERCISE_TIPS);
 }
