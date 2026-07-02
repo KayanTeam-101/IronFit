@@ -118,12 +118,7 @@ const SubscribedOnlyPage: React.FC = () => {
     );
   }
 
-  const exclusiveFeatures = [
-    { icon: <FaAppleAlt />, label: "قوالب غذائية", desc: "خطط وجبات مخصصة" },
-    { icon: <FaDumbbell />, label: "تمارين", desc: "جداول تمارين ذكية" },
-    { icon: <FaHeartbeat />, label: "الحالة", desc: "متابعة صحتك اليومية" },
-    { icon: <FaUserShield />, label: "نصائح AI", desc: "مساعدك الذكي" },
-  ];
+
 
   return (
     <div className="min-h-screen bg-white dark:bg-black/20 relative overflow-hidden showAnim2">
@@ -141,7 +136,9 @@ const SubscribedOnlyPage: React.FC = () => {
           <p className="text-gray-500 dark:text-gray-400 showInTwoSecond">اشتراكك نشط – استمتع بكل الميزات</p>
           <div className="my-4 w-full h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent showInTwoSecond" />
         </div>
-
+<div className="bg-white/50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-xl border border-white/50 shadow-xl p-5 text-center">
+          <p className="text-gray-600 dark:text-gray-300 font-medium"> {localStorage.getItem("UserName") + " -  " + localStorage.getItem("userId_")}</p>
+        </div>
         <div className="bg-white/50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-xl border border-white/50 shadow-xl p-5 transition-all hover:shadow-2xl">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold text-gray-800 dark:text-white flex items-center gap-2">
@@ -152,20 +149,7 @@ const SubscribedOnlyPage: React.FC = () => {
           <CountdownTimer targetTimestamp={subscriptionEnd} />
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
-          {exclusiveFeatures.map((item, idx) => (
-            <div
-              key={idx}
-              className="bg-white/50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-xl border border-white/50 shadow-lg p-4  flex flex-col items-center text-center gap-2 transition-all hover:shadow-xl hover:-translate-y-1"
-            >
-              <div className="p-3 bg-amber-100 dark:bg-amber-900/40 rounded-full text-amber-600 dark:text-amber-400 text-2xl">
-                {item.icon}
-              </div>
-              <h3 className="font-bold text-gray-800 dark:text-white text-sm">{item.label}</h3>
-              <p className="text-xs text-gray-500 dark:text-gray-400">{item.desc}</p>
-            </div>
-          ))}
-        </div>
+    
 
         <div className="bg-white/50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-xl border border-white/50 shadow-xl p-5 text-center">
           <p className="text-gray-600 dark:text-gray-300 font-medium"> أنت من الـ 1% المميزين – استمر في التطور!</p>

@@ -6,12 +6,18 @@ import {
   FaCheckCircle,
   FaStar,
   FaCrown,
+  FaAppleAlt,
+  FaHeartbeat,
 } from "react-icons/fa";
 import { IoDiamond, IoDiamondOutline } from "react-icons/io5";
 import { useCountUp } from "../../Hooks/Increasing";
 import { getUsers, updateUserSubscription } from "../../firebase/user";
 import Subscribe from "../Settings/Subsribed";
 import SubscriptionActivationOverlay from "./Activated";
+import { FaCookieBite, FaDumbbell, FaUserShield } from "react-icons/fa6";
+import { LiaCookieSolid } from "react-icons/lia";
+import { TbCircleLetterD, TbCircleLetterDFilled } from "react-icons/tb";
+import { SiGoogleanalytics } from "react-icons/si";
 
 // ---------- Plans data ----------
 const FIXED_PLANS = [
@@ -27,6 +33,13 @@ const FEATURES = [
   "صفحة الحالة",
   "فيتامينات الوجبات",
 ];
+
+  const exclusiveFeatures = [
+    { icon: <TbCircleLetterDFilled />, label: "الفيتامينات", desc: "أظهر الفايتامينات لكل وجبة" },
+    { icon: <SiGoogleanalytics />, label: "تحليل البيانات", desc: "جدول تطور الاوزان " },
+    { icon: <FaHeartbeat />, label: "الحالة", desc: "متابعة صحتك اليومية" },
+    { icon: <FaCookieBite />, label: "نصائح AI", desc: "دكتور تغذية خاص بك, وللنصائح الرياضية" },
+  ];
 
 // ---------- Animated checkmark SVG (used for success feedback) ----------
 const AnimatedCheck = () => (
@@ -329,11 +342,7 @@ setSubscribeSuccess(true);
                     }`}
                     onClick={() => setSelectedFixedPlan(plan.days)}
                   >
-                    {selectedFixedPlan === plan.days && (
-                      <div className="absolute top-3 right-3">
-                        <FaCheckCircle className="text-amber-500 text-xl" />
-                      </div>
-                    )}
+                  
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <span className="text-2xl font-extrabold text-gray-800 dark:text-white">{plan.days} يوم</span>
@@ -348,27 +357,32 @@ setSubscribeSuccess(true);
                         <span className="text-sm text-gray-500 dark:text-gray-400"> ج.م</span>
                       </div>
                     </div>
-                    <ul className="mt-3 space-y-1">
-                      {FEATURES.map((feat, idx) => (
-                        <li key={idx} className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                          <BiCheckCircle className="text-amber-300 text-lg flex-shrink-0" />
-                          {feat}
-                        </li>
-                      ))}
-                    </ul>
-                    {selectedFixedPlan === plan.days && (
+                 
                       <button
                         onClick={(e) => { e.stopPropagation(); createRipple(e); handleActivate(); }}
                         className="mt-4 relative overflow-hidden w-full bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-white font-bold py-3  transition shadow-md"
                       >
                         {subscribeSuccess ? <AnimatedCheck /> : `اشترك بـ ${plan.price} ج.م`}
                       </button>
-                    )}
                   </div>
                 ))}
               </div>
             )}
           </div>
+    <div className="grid grid-cols-2 gap-3 mt-2">
+          {exclusiveFeatures.map((item, idx) => (
+            <div
+              key={idx}
+              className="bg-white/50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-xl border border-white/50 shadow-lg p-4  flex flex-col items-center text-center gap-2 transition-all hover:shadow-xl hover:-translate-y-1"
+            >
+              <div className="p-3 bg-amber-100 dark:bg-amber-900/40 rounded-full text-amber-600 dark:text-amber-400 text-2xl">
+                {item.icon}
+              </div>
+              <h3 className="font-bold text-gray-800 dark:text-white text-sm">{item.label}</h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400">{item.desc}</p>
+            </div>
+          ))}
+        </div>
         </div>
 
         {/* Toast for subscription success */}

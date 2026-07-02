@@ -9,6 +9,7 @@ import InstallButton from "./Components/InstallButton";
 import StatusPage from "../StatusPage/StatusPage";
 import { useCountUp } from "../../Hooks/Increasing";
 import Subscribe from "./Components/Subscribe";
+import { giveHealthAdvice } from "../../utilities/GiveAdvice";
 
 // ---------- Streak calculator ----------
 const calculateStreak = (): number => {
@@ -131,7 +132,7 @@ const Home = () => {
 
   const IsThere_A_Diet = localStorage.getItem("Diet");
   const streak = useMemo(() => calculateStreak(),[]);
-  const Advice = "قليلُ مستمر خيرُ من كثيرٍ منقطع";
+  const Advice = giveHealthAdvice();
   return (
     <div className="relative min-h-screen w-screen  overflow-hidden p-4 flex flex-col gap-2.5 show-first">
           {showSubscribe  && !IsActive && (

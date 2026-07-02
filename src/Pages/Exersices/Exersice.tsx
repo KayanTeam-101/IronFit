@@ -17,6 +17,7 @@ import { VscSettings } from "react-icons/vsc";
 import { GiShoulderArmor } from "react-icons/gi";
 import SelectDays from "../Welcome/Components/SelectDays";
 import EditWeightForm from "./Components/EditWightForm";  // adjust path
+import { giveExerciseAdvice } from "../../utilities/GiveAdvice";
 
 // ---------- Types ----------
 type SystemName = "ارنو سبلت" | "بروسبلت" | "بوش بون ليج";
@@ -359,7 +360,7 @@ const ExercisePage: React.FC = () => {
       <div className="px-4 mb-6">
         <div className="w-full rounded-3xl mb-2 p-5 shadow-sm dark:bg-black/20 dark:border-2 dark:border-gray-600/20 bg-white flex flex-row gap-2">
           <FaCookieBite className="text-2xl text-amber-500 dark:text-amber-300" />
-          <p className="font-light text-md show-third dark:text-white">ساعات الاكل بيبقا الاكل اهم من التمرين!</p>
+          <p className="font-light text-md show-third dark:text-white">{giveExerciseAdvice()}</p>
         </div>
 
         {todayWorkout ? (
