@@ -3,6 +3,7 @@ import { collection, query, where, getDocs, limit } from "firebase/firestore";
 import { db } from "../../../firebase/main";
 import { SetUser } from "../../../firebase/user";
 import imageCompression from 'browser-image-compression'; // ✅ import
+import { PiPlusBold } from "react-icons/pi";
 
 const USERNAME_MIN_LENGTH = 6;
 const USERNAME_MAX_LENGTH = 14;
@@ -155,10 +156,10 @@ const handleSave = async () => {
   return (
     <div className="w-11/12 h-screen flex justify-center flex-col">
       {/* Main container for all fields */}
-      <div className="relative w-full space-y-4 -top-40">
+      <div className="relative w-full  space-y-4 -top-40">
         {/* Username input */}
         <div>
-          <div className="relative m-5 h-50">
+          <div className="relative w-50 m-5 h-50">
           <label className="block mb-2 text-sm text-gray-600 dark:text-gray-300">
             {isCompressing && "⏳ جاري الضغط..."}
           </label>
@@ -171,12 +172,15 @@ const handleSave = async () => {
             className="absolute h-full opacity-0 w-full text-sm z-50 text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 dark:file:bg-gray-700 dark:file:text-gray-200 disabled:opacity-50"
           />
             {!photoUrl && (
-            <div className="relative  h-full mt-2 w-full flex justify-center items-center">
-              <img
-                src={"https://cdn.vectorstock.com/i/500p/22/45/user-profile-icon-line-style-vector-50642245.jpg"}
-                alt="Preview"
-                className="w-50 h-50 rounded-full object-cover border-2 border-gray-300/20 animate-pulse"
-              />
+            <div className="relative h-full mt-2 w-full flex justify-center items-center">
+              <div
+              className="absolute z-10 w-full h-full gap-2 flex-col animate-pulse text-gray-600 dark:text-gray-300   bg-gray-100/50 border-2 border-gray-200/60 rounded-full text-2xl flex items-center justify-center">
+                <PiPlusBold /> 
+<p className=" text-sm mt-2">
+                صورة شخصية
+
+</p>
+              </div>
             </div>
           )}
           {photoUrl && (
@@ -184,7 +188,7 @@ const handleSave = async () => {
               <img
                 src={photoUrl}
                 alt="Preview"
-                className="w-50 h-50 rounded-full object-cover border-2 border-gray-300/20 "
+                className="w-50 h-50 rounded-full object-cover border-4 shadow-xl border-gray-300/20 "
               />
             </div>
           )}
@@ -197,10 +201,10 @@ const handleSave = async () => {
             maxLength={USERNAME_MAX_LENGTH}
             autoFocus
             placeholder="أكتب اسم المستخدم, مثال: Ahmed-Fit1"
-            className={`border-b-2 border-gray-600/40 outline-none p-4 px-5  w-full text-md dark:text-white ${
+            className={`border-b-2 border-gray-600/40 bg-gray-400/50 outline-none p-4 px-5  w-full text-md dark:text-white ${
               saveState === "success"
-                ? "border-teal-900/40 bg-green-700/15 text-green-600"
-                : ""
+                ? "border-teal-500/40 bg-green-700/15 text-green-600"
+                : "border-slate-500/40 bg-gray-700/15 text-gray-600"
             }`}
           />
           {validationError && (
@@ -229,7 +233,7 @@ const handleSave = async () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="البريد الإلكتروني (اختياري)"
-            className="border-b-2 border-gray-600/40 outline-none p-4 px-5 rounded-2xl w-full text-md dark:text-white"
+            className="border-b-2 border-slate-500/40 bg-gray-700/15 text-gray-600 outline-none p-4 px-5 w-full text-md dark:text-white"
           />
         </div>
 
