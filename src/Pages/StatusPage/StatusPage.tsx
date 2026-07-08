@@ -263,11 +263,11 @@ const bmi = calcBMI(animatedWeight, animatedHeight);
       </div>
     </div>
    ) : (
-     <div>
+     <div className="mt-5">
       <div>
-<div className="w-full h-1 mb-5 bg-gray-300/50 flex justify-center items-center">
-<div className="flex items-center gap-2 text-gray-500 dark:text-gray-300 text-sm mb-4">
-  تحليل البيانات <IoAnalytics className="text-amber-400 text-lg" />
+<div className="w-full h-1 mb-5 bg-gray-300/10 flex justify-center items-center m">
+<div className="relative top-2.5 bg-white dark:bg-[#111] flex items-center gap-2 text-gray-500 dark:text-gray-300 text-sm mb-4">
+  تحليل البيانات <IoAnalytics className="text-amber-400 text-[20px]" />
 
 </div>
 </div>
@@ -280,7 +280,7 @@ const bmi = calcBMI(animatedWeight, animatedHeight);
         <p className="text-amber-400 text-xl ">اشترك في VIP</p>
       </div>
         </div>
-      <div className="relative z-10">
+      <div className="relative z-10 animate-pulse">
         {/* Header */}
         {/* Extra Data Cards (non‑ring) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">

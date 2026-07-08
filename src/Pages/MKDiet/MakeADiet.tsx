@@ -161,6 +161,7 @@ const MakeADiet: React.FC = () => {
       return;
     }
     localStorage.setItem("Diet", JSON.stringify(mealPlan));
+    localStorage.setItem("SetDietManually", "true");
     navigate("/me/home");
   };
 

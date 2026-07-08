@@ -2,8 +2,6 @@ import React, { useEffect, useState, useCallback, useRef } from "react";
 import CommentSection from "./CommentSection";
 import { likeThePost } from "../../../firebase/post";
 import { FaDownload, FaFire } from "react-icons/fa6";
-import { IoBookmarkOutline } from "react-icons/io5";
-import { HiDotsVertical } from "react-icons/hi";
 import { BsChatDots } from "react-icons/bs";
 
 interface PostProps {
@@ -72,8 +70,6 @@ const Post: React.FC<PostProps> = ({
   const [showComments, setShowComments] = useState(false);
   const colorClasses = getAvatarColorClasses(UserName);
   const initial = UserName.charAt(0).toUpperCase();
-  const UserClasses = getAvatarColorClasses(localStorage.getItem("UserName") || "");
-  const UserInitial = (localStorage.getItem("UserName") || "").charAt(0).toUpperCase();
 
   useEffect(() => {
     const raw = localStorage.getItem("LikedPosts");
@@ -92,6 +88,16 @@ const Post: React.FC<PostProps> = ({
     FxSound.src =''
     likedPosts.push(id);
     localStorage.setItem("LikedPosts", JSON.stringify(likedPosts));
+
+    const today = new Date().toISOString().split("T")[0];
+    const GetLikedDays = localStorage.getItem("LikedDays") || "[]";
+    const LikedDays = JSON.parse(GetLikedDays);
+    if (!LikedDays.includes(today)) {
+      LikedDays.push(today);
+      localStorage.setItem("LikedDays", JSON.stringify(LikedDays));
+    } else {
+      return; // Already liked today, exit early
+    }
 
     likeThePost(id);
     setLiked(true);

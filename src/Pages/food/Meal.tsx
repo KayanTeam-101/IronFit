@@ -14,7 +14,6 @@ const Meal = (props: any) => {
 
   useEffect(() => {
    
-  
    const encoded = localStorage.getItem("foods____");
     if (encoded) {
       try {

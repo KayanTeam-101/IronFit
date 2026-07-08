@@ -44,7 +44,7 @@ const SetNextDay = () => {
 </div>
     <button 
     onClick={() => navigate('/me/exercises')}
-    className='flex cursor-pointer items-center gap-2 bg-white p-3 shadow-2xl dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-slate-300 overflow-hidden w-fit rounded-xl text-amber-500 font-bold'>
+    className='flex cursor-pointer items-center gap-2 bg-white p-3 shadow-2xl dark:bg-gray-400/10 dark:border-2 dark:border-gray-600/20 dark:text-slate-300 overflow-hidden w-fit rounded-xl text-amber-500 font-bold'>
       الذهاب لصفحة التمارين <FaArrowLeft />
     </button>
     </div>

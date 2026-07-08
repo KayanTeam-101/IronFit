@@ -27,7 +27,12 @@ const PostsContainer = () => {
 
   if (initialLoad) {
     return (
-      <div className="w-screen h-screen flex items-center justify-center bg-white dark:bg-black">
+      <div className="w-screen h-screen flex items-center justify-center ">
+          <div className="relative">
+        <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-72 h-72 bg-amber-400 rounded-full opacity-50 blur-3xl animate-pulse" />
+        <div className="absolute top-10 left-5 w-48 h-48 bg-indigo-400 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 right-5 w-56 h-56 bg-teal-400 rounded-full blur-3xl animate-pulse" />
+      </div>
 <div className="w-1/4">
           <Loading />
 </div>

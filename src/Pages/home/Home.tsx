@@ -143,7 +143,7 @@ const Home = () => {
       <div className="w-full flex flex-row justify-between">
 
           <div className="text-2xl flex flex-row gap-1.5">
-            <GoHomeFill className="dark:text-white"/>
+            <GoHomeFill className="dark:text-white mt-2.5"/>
             <div className="p-1.5 bg-linear-to-r bg-clip-text  from-yellow-500 via-orange-500  to-pink-500 felx justify-center align-center rounded-full text-sm text-transparent font-bold">
             
   V1.2.0

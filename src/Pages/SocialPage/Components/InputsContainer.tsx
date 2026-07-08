@@ -72,7 +72,15 @@ const InputsContainer = () => {
         finalImage = await fileToDataURL(compressedFile);
       }
       await sendPost(inputs,(localStorage.getItem('UserName') || ""),(finalImage ?? undefined));
-
+const today = new Date().toISOString().split("T")[0];
+    const GetPostedDays = localStorage.getItem("PostedDays") || "[]";
+    const LikedDays = JSON.parse(GetPostedDays);
+    if (!LikedDays.includes(today)) {
+      LikedDays.push(today);
+      localStorage.setItem("PostedDays", JSON.stringify(LikedDays));
+    } else {
+      return; // Already liked today, exit early
+    }      
       // Success
       if (intervalRef.current) clearInterval(intervalRef.current);
       setProgress(100);

@@ -36,6 +36,15 @@ const CommentSection: React.FC<CommentSectionProps> = ({
     if (!trimmed || !currentUserName) return;
     try {
       await addComment(postId, trimmed, currentUserName);
+      const today = new Date().toISOString().split("T")[0];
+    const GetCommentDays = localStorage.getItem("CommentDays") || "[]";
+    const LikedDays = JSON.parse(GetCommentDays);
+    if (!LikedDays.includes(today)) {
+      LikedDays.push(today);
+      localStorage.setItem("CommentDays", JSON.stringify(LikedDays));
+    } else {
+      return; // Already liked today, exit early
+    }
       setNewComment("");
     } catch (err) {
       console.error("Failed to add comment:", err);

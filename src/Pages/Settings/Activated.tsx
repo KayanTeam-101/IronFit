@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IoDiamond, IoDiamondOutline } from "react-icons/io5";
+import { IoDiamond } from "react-icons/io5";
 
 interface Props {
   show: boolean;

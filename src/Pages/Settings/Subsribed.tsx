@@ -1,18 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { BiCheckCircle } from "react-icons/bi";
 import {
-  FaCrown,
-  FaAppleAlt,
-  FaDumbbell,
-  FaHeartbeat,
-  FaUserShield,
   FaCalendarAlt,
   FaClock,
   FaHourglassHalf,
   FaStopwatch,
 } from "react-icons/fa";
 import { IoDiamond, IoDiamondOutline } from "react-icons/io5";
-import SubscriptionActivationOverlay from "./Activated";
 
 // -------- دالة توجيه بسيطة --------
 const navigate = (path: string) => {
@@ -104,8 +98,6 @@ const SubscribedOnlyPage: React.FC = () => {
         console.error("Invalid subscription data");
       }
     }
-    // إعادة توجيه لغير المشتركين
-    navigate("/subscription");
   }, []); // بدون navigate في مصفوفة التبعيات لأنه ثابت
 
   if (!isValid) {

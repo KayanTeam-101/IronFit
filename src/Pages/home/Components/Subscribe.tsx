@@ -20,11 +20,12 @@ const Subscribe: React.FC<SubscribeProps> = ({
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+  if (localStorage.getItem("SubscriptionPeriod")) return null; // Don't show if user already has a subscription
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center  backdrop-blur-sm p-4 showAnim2">
+    <div className="fixed inset-0 z-50 flex items-center justify-center  backdrop-blur-[1px] p-4 showAnim2">
       {/* Main card */}
-      <div className="relative w-full max-w-sm backdrop-blur-xl border dark:bg-black/50 dark:border-2 dark:border-gray-600/20 bg-white/60 shadow-2xl  p-6 text-center show-third">
+      <div className="relative w-full max-w-sm  border dark:bg-black/95  dark:border-2 dark:border-gray-600/20 border-amber-300 bg-white/95 shadow-2xl  p-6 text-center show-third">
         {/* Close button */}
         <button
           onClick={onClose}

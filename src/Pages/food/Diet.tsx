@@ -144,7 +144,23 @@ const Diet = () => {
     localStorage.setItem("History", JSON.stringify(history));
     recalcCalories();
   }, [history, recalcCalories]);
+  useEffect(() =>{
+    function CheckAllMealsHasEatn(){
+    if (localStorage.getItem("dailyCalories") === localStorage.getItem("eatenCalories")) {
+       const today = new Date().toISOString().split("T")[0];
+    const DoneDays = localStorage.getItem("DoneDays") || "[]";
+    const LikedDays = JSON.parse(DoneDays);
+    if (!LikedDays.includes(today)) {
+      LikedDays.push(today);
+      localStorage.setItem("DoneDays", JSON.stringify(LikedDays));
+    } else {
+      return; // Already liked today, exit early
+    }
 
+    }
+   }
+   CheckAllMealsHasEatn()
+  },[])
   // --- Filtered search results ---
   const filteredFoods = useMemo(() => {
     const query = text.trim().toLowerCase();
