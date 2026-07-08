@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { MdInstallMobile } from "react-icons/md";
 import Xp from "./Xp";
 
@@ -7,10 +7,23 @@ function InstallButton() {
   const [showButton, setShowButton] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
   const [isTikTok, setIsTikTok] = useState(false);
-  const [isFallback, setIsFallback] = useState(false); // true when we show manual guide
+  const [isFallback, setIsFallback] = useState(false);
+  const [errorLogged, setErrorLogged] = useState(false);
+
+  // Helper to hide the button and log once
+  const hideAndLog = useCallback(
+    (reason: string) => {
+      setShowButton(false);
+      if (!errorLogged) {
+        console.error(`[InstallButton] ${reason}`);
+        setErrorLogged(true);
+      }
+    },
+    [errorLogged]
+  );
 
   useEffect(() => {
-    // 1. Check if already installed (standalone mode)
+    // Already installed as PWA → nothing to do
     const standaloneMedia = window.matchMedia("(display-mode: standalone)");
     const isStandalone =
       standaloneMedia.matches || (window.navigator as any).standalone === true;
@@ -19,7 +32,7 @@ function InstallButton() {
       return;
     }
 
-    // 2. Detect TikTok in-app browser
+    // Detect TikTok
     const userAgent = navigator.userAgent || (window as any).opera;
     const tikTokRegex = /TikTok|Bytedance|musical_ly|trill|snssdk|wv/i;
     if (tikTokRegex.test(userAgent)) {
@@ -28,7 +41,7 @@ function InstallButton() {
       return;
     }
 
-    // 3. Listen for the native beforeinstallprompt (Chromium browsers)
+    // Listen for native install prompt (Chromium)
     const promptHandler = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e);
@@ -36,7 +49,6 @@ function InstallButton() {
     };
     window.addEventListener("beforeinstallprompt", promptHandler);
 
-    // 4. Handle successful install
     const installedHandler = () => {
       setIsInstalled(true);
       setShowButton(false);
@@ -44,76 +56,83 @@ function InstallButton() {
     };
     window.addEventListener("appinstalled", installedHandler);
 
-    // 5. Fallback for browsers that do NOT fire beforeinstallprompt (iOS, Firefox, etc.)
+    // Fallback for iOS / non‑Chromium Android
     const isIOS = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
     const isMobile = /mobi|android/i.test(navigator.userAgent.toLowerCase());
 
-    // For iOS we can immediately show the manual install guide
+    let fallbackTimer: ReturnType<typeof setTimeout> | null = null;
+
     if (isIOS) {
       setIsFallback(true);
       setShowButton(true);
     } else if (isMobile) {
-      // For Android non-Chromium browsers, we wait a short time to see if
-      // beforeinstallprompt fires. If not, show the manual fallback.
-      const timeout = setTimeout(() => {
+      // Wait a moment – if the prompt never appears, show manual guide
+      fallbackTimer = setTimeout(() => {
         if (!deferredPrompt && !isInstalled) {
           setIsFallback(true);
           setShowButton(true);
         }
       }, 1000);
-      return () => {
-        clearTimeout(timeout);
-        window.removeEventListener("beforeinstallprompt", promptHandler);
-        window.removeEventListener("appinstalled", installedHandler);
-      };
     }
 
-    // Cleanup
+    // If none of the above conditions activated, we'll hide and log an error
+    const finalTimer = setTimeout(() => {
+      if (!showButton && !isInstalled && !deferredPrompt && !isTikTok && !isIOS && !isMobile) {
+        // This is a desktop or unsupported browser where install isn't possible
+        hideAndLog("Installation is not available in this browser.");
+      }
+    }, 1200);
+
     return () => {
       window.removeEventListener("beforeinstallprompt", promptHandler);
       window.removeEventListener("appinstalled", installedHandler);
+      if (fallbackTimer) clearTimeout(fallbackTimer);
+      clearTimeout(finalTimer);
     };
-  }, []);
+  }, [deferredPrompt, isInstalled, showButton, hideAndLog]);
 
+  // Action handler
   const handleAction = async () => {
-    // TikTok or generic fallback (including iOS) – guide user to external browser
+    // ----- TikTok / Fallback path -----
     if (isTikTok || isFallback) {
       const currentUrl = window.location.href;
       const isIOS = /iphone|ipad|ipod/.test(navigator.userAgent);
 
-      if (/android/i.test(navigator.userAgent)) {
-        // Android: try to open with Chrome intent
-        const intentUrl = `intent://${currentUrl.replace(
-          /^https?:\/\//,
-          ""
-        )}#Intent;scheme=https;package=com.android.chrome;end`;
-        const a = document.createElement("a");
-        a.href = intentUrl;
-        a.style.display = "none";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      } else if (isIOS) {
-        // iOS: copy link and instruct user to open in Safari
-        try {
+      try {
+        if (/android/i.test(navigator.userAgent)) {
+          // Open in Chrome via intent (Android)
+          const intentUrl = `intent://${currentUrl.replace(/^https?:\/\//, "")}#Intent;scheme=https;package=com.android.chrome;end`;
+          const a = document.createElement("a");
+          a.href = intentUrl;
+          a.style.display = "none";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        } else if (isIOS) {
           await navigator.clipboard.writeText(currentUrl);
           alert(
             "تم نسخ الرابط. الرجاء الضغط على زر المشاركة (السهم المربع) واختيار 'إضافة إلى الشاشة الرئيسية'."
           );
-        } catch {
+        } else {
           alert(
-            "الرجاء فتح هذه الصفحة في Safari ثم الضغط على زر المشاركة (السهم المربع) واختيار 'إضافة إلى الشاشة الرئيسية'."
+            "Please open this page in a supported browser (Chrome, Edge, or Safari) to install the app."
           );
         }
-      } else {
-        // Other fallback (e.g., macOS or unknown)
-        alert("Please open this page in a supported browser (Chrome, Edge, or Safari) to install the app.");
+      } catch (err) {
+        // Something went wrong with the fallback → hide button and log
+        hideAndLog("Fallback install action failed.");
       }
       return;
     }
 
-    // Standard PWA install (Chromium browsers)
-    if (deferredPrompt) {
+    // ----- Native PWA install path -----
+    if (!deferredPrompt) {
+      // Should not happen, but if it does: hide and log
+      hideAndLog("Native install prompt was not available.");
+      return;
+    }
+
+    try {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
       setDeferredPrompt(null);
@@ -121,22 +140,24 @@ function InstallButton() {
         setIsInstalled(true);
         setShowButton(false);
       }
+    } catch (err) {
+      hideAndLog("Native install prompt failed.");
     }
   };
 
-  // Hide completely if already installed
+  // Already installed → show XP badge instead of button
   if (isInstalled) return <Xp />;
 
-  // Show nothing only if we haven't determined to show the button yet
+  // If we decided to hide the button entirely, render nothing
   if (!showButton) return null;
 
-  // Construct the message and button label based on the scenario
-  const isFallbackMode = isTikTok || isFallback;
-  const message = isFallbackMode
+  // Only TikTok gets the pink warning message
+  const message = isTikTok
     ? "تطبيقنا غير متاح للتثبيت المباشر هنا. يرجى الضغط على الزر أدناه لفتح الموقع في متصفحك الخارجي أو إضافته للشاشة الرئيسية."
     : null;
 
-  const buttonLabel = isFallbackMode ? "تثبيت التطبيق" : "حمل التطبيق";
+  const buttonLabel =
+    isTikTok || isFallback ? "تثبيت التطبيق" : "حمل التطبيق";
 
   return (
     <div className="flex flex-col items-center gap-3">
@@ -145,17 +166,16 @@ function InstallButton() {
           {message}
         </p>
       )}
-
       <button
         onClick={handleAction}
         className={`${
-          isFallbackMode
+          isTikTok || isFallback
             ? "bg-rose-500 hover:bg-rose-600 animate-pulse"
             : "bg-orange-500 hover:bg-orange-600"
         } dark:bg-black/20 dark:border-2 dark:border-gray-600/20 text-white px-4 py-2 rounded-xl flex items-center justify-center gap-2 transition-all w-full max-w-xs outline-swealing`}
       >
         {buttonLabel}
-        {!isFallbackMode && <MdInstallMobile className="text-lg" />}
+        {!(isTikTok || isFallback) && <MdInstallMobile className="text-lg" />}
       </button>
     </div>
   );
