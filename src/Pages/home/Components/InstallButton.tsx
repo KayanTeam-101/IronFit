@@ -89,7 +89,7 @@ function InstallButton() {
       if (fallbackTimer) clearTimeout(fallbackTimer);
       clearTimeout(finalTimer);
     };
-  }, [deferredPrompt, isInstalled, showButton, hideAndLog]);
+  }, []);
 
   // Action handler
   const handleAction = async () => {
@@ -167,6 +167,7 @@ function InstallButton() {
         </p>
       )}
       <button
+      type="button"
         onClick={handleAction}
         className={`${
           isTikTok || isFallback
