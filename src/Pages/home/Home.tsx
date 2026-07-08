@@ -146,7 +146,7 @@ const Home = () => {
             <GoHomeFill className="dark:text-white mt-2.5"/>
             <div className="p-1.5 bg-linear-to-r bg-clip-text  from-yellow-500 via-orange-500  to-pink-500 felx justify-center align-center rounded-full text-sm text-transparent font-bold">
             
-  V1.2.0
+  V1.2.5
   <br />
 <a href="https://www.tiktok.com/@iron_fit_app" target="_blank" rel="noopener noreferrer" className="underline text-amber-500">
   شاركنا رأيك
