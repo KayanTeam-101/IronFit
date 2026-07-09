@@ -327,6 +327,45 @@ export const DIET_TEMPLATES: DietTemplate[] = [
 
 // ---------- Enhanced Exercise Templates (8) ----------
 export const EXERCISE_TEMPLATES: ExerciseTemplate[] = [
+    {
+    id: "e8",
+    name: "تمارين منزلية بدون أدوات",
+    description: "تمارين وزن الجسم للمبتدئين في المنزل",
+    daysPerWeek: 3,
+    difficulty: "beginner",
+    days: [
+      {
+        dayName: "جسم كامل ١",
+        exercises: [
+          { name: "سكوات هواء", weight: 0 },
+          { name: "ضغط", weight: 0 },
+          { name: "عقلة (مقبض)", weight: 0 },
+          { name: "بلانك", weight: 0 },
+          { name: "لانج", weight: 0 },
+        ],
+      },
+      {
+        dayName: "جسم كامل ٢",
+        exercises: [
+          { name: "سكوات قفز", weight: 0 },
+          { name: "ضغط مائل", weight: 0 },
+          { name: "سحب بالأرض", weight: 0 },
+          { name: "رفرفة كتف", weight: 0 },
+          { name: "بطن", weight: 0 },
+        ],
+      },
+      {
+        dayName: "جسم كامل ٣",
+        exercises: [
+          { name: "سكوات ساق واحدة", weight: 0 },
+          { name: "ضغط الماس", weight: 0 },
+          { name: "عقلة سلبية", weight: 0 },
+          { name: "متسلق جبال", weight: 0 },
+          { name: "جسر أرضي", weight: 0 },
+        ],
+      },
+    ],
+  },
   {
     id: "e1",
     name: "Push/Pull/Legs",
@@ -614,43 +653,5 @@ export const EXERCISE_TEMPLATES: ExerciseTemplate[] = [
       },
     ],
   },
-  {
-    id: "e8",
-    name: "تمارين منزلية بدون أدوات",
-    description: "تمارين وزن الجسم للمبتدئين في المنزل",
-    daysPerWeek: 3,
-    difficulty: "beginner",
-    days: [
-      {
-        dayName: "جسم كامل ١",
-        exercises: [
-          { name: "سكوات هواء", weight: 0 },
-          { name: "ضغط", weight: 0 },
-          { name: "عقلة (مقبض)", weight: 0 },
-          { name: "بلانك", weight: 0 },
-          { name: "لانج", weight: 0 },
-        ],
-      },
-      {
-        dayName: "جسم كامل ٢",
-        exercises: [
-          { name: "سكوات قفز", weight: 0 },
-          { name: "ضغط مائل", weight: 0 },
-          { name: "سحب بالأرض", weight: 0 },
-          { name: "رفرفة كتف", weight: 0 },
-          { name: "بطن", weight: 0 },
-        ],
-      },
-      {
-        dayName: "جسم كامل ٣",
-        exercises: [
-          { name: "سكوات ساق واحدة", weight: 0 },
-          { name: "ضغط الماس", weight: 0 },
-          { name: "عقلة سلبية", weight: 0 },
-          { name: "متسلق جبال", weight: 0 },
-          { name: "جسر أرضي", weight: 0 },
-        ],
-      },
-    ],
-  },
+
 ];

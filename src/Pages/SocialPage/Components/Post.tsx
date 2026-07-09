@@ -121,7 +121,7 @@ const Post: React.FC<PostProps> = ({
   return (
     <>
     <div 
-    className={`w-full min-h-6 rounded-3xl  dark:bg-gray-900/50 overflow-hidden z-10 bg-white/50 backdrop-blur-xl  ${image ? "" : "mt-7 mb-7"} outline-none  flex flex-col shadow-xl transition-all  duration-500 hover:shadow-2xl show-first overflow-hidden`}>
+    className={`w-full min-h-6 rounded-3xl  dark:bg-[#11111170] overflow-hidden z-10 bg-white/50 backdrop-blur-xl  ${image ? "" : "mt-7 mb-7"} outline-none  flex flex-col shadow-xl transition-all  duration-500 hover:shadow-2xl show-first overflow-hidden`}>
       <style>{`
         @keyframes heartSpin {
           0% {

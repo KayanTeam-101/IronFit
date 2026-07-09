@@ -34,6 +34,7 @@ const CreateAUserName = ({
   const [photoUrl, setPhotoUrl] = useState(localStorage.getItem("PhotoUrl") || "");
   const [isChecking, setIsChecking] = useState(false);
   const [isAvailable, setIsAvailable] = useState<boolean | null>(null);
+  const [Image, setImage] = useState<File | null>(null); 
   const [saveState, setSaveState] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -104,7 +105,6 @@ const handleSave = async () => {
     localStorage.setItem("UserName", trimmed);
     localStorage.setItem("Email", email);
     localStorage.setItem("PhotoUrl", photoUrl);
-
     // Obtain a numeric user ID (reuse existing or create new)
     const userId = getOrCreateUserId(trimmed);
 
@@ -119,7 +119,7 @@ const handleSave = async () => {
 };
   
  const canSave =
-  isAvailable && isValidFormat && !isChecking && saveState === "idle" && !isCompressing;
+  isAvailable && photoUrl  && isValidFormat && !isChecking && saveState === "idle" && !isCompressing;
 
   // ✅ Compress image before setting state
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -188,7 +188,12 @@ const handleSave = async () => {
               <img
                 src={photoUrl}
                 alt="Preview"
-                className="w-50 h-50 rounded-full object-cover border-4 shadow-xl border-gray-300/20 "
+                className=" rounded-full border-4 shadow-xl border-teal-50/90 outline-2 outline-teal-200 shadow-teal-400/50 mr-25"
+                style={{
+      width: "200px",
+      height: "200px",
+      objectFit: "cover",
+    }}
               />
             </div>
           )}

@@ -325,7 +325,7 @@ const ExercisePage: React.FC = () => {
             ))}
           </div>
           <div className="bg-amber-300/60 dark:bg-amber-300/20 border border-amber-400/50 rounded-xl w-11/12 p-2 dark:text-white text-black min-h-10 animate-pulse">
-            مكسل تجدول تمارينك؟! <br /> تقدر تجرب القوالب الغذائية الجاهزة من{" "}
+            مكسل تجدول تمارينك؟! <br /> تقدر تجرب القوالب الجاهزة من{" "}
             <span onClick={() => window.location.href = "/templates"} className="text-amber-400 cursor-pointer underline">هنا</span>
           </div>
         </div>

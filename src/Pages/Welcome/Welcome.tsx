@@ -34,7 +34,7 @@ const Welcome: React.FC = () => {
     setTurn(turn + 1);
     setTimeout(() => {
       setIsDisabled(false);
-    }, 5000);
+    }, 50);
   };
 
 

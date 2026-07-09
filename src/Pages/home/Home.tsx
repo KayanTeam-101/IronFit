@@ -10,6 +10,7 @@ import StatusPage from "../StatusPage/StatusPage";
 import { useCountUp } from "../../Hooks/Increasing";
 import Subscribe from "./Components/Subscribe";
 import { giveHealthAdvice } from "../../utilities/GiveAdvice";
+import { NavLink } from "react-router-dom";
 
 // ---------- Streak calculator ----------
 const calculateStreak = (): number => {
@@ -181,12 +182,12 @@ const Home = () => {
           </>
         ) : (
           /* No diet yet – prompt to create one */
-          <a href="/me/food">
-            <div className="w-full rounded-2xl mt-1.5 p-5 shadow-sm bg-white dark:bg-black/20  dark:border-gray-600/20 flex flex-row gap-2 outline-swealing">
+          <NavLink to="/me/food">
+            <div className="w-full rounded-2xl mt-1.5 p-5 shadow-sm bg-white dark:bg-gray-400/15  dark:border-gray-600/20 flex flex-row gap-2 border-4 animate-pulse delay-1000">
               <FaBowlFood className="text-2xl text-amber-300" />
               <p className="font-light text-md show-first dark:text-white">دعنا نصنع أفضل نظام غذائي!</p>
             </div>
-          </a>
+          </NavLink>
         )}
       </div>
 

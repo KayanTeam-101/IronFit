@@ -46,7 +46,7 @@ const hasPostedToday      = isTodayInArray("PostedDays");
 const hasLikedPostToday   = isTodayInArray("LikedDays");
 const hasCommentedToday   = isTodayInArray("CommentDays");
 const hasEatenAllMeals    = isTodayInArray("DoneDays");
-const hasUsedTemplateToday = isTodayInArray("hasUsedTemplateToday");
+const hasUsedTemplateToday = isTodayInArray("SystemStartDate");
 const hasCreatedDietPlanToday = isTodayInArray("SetDietManually");
 
 // One‑time flags
@@ -127,7 +127,7 @@ const calculateAllTimeXP = (): number => {
     { key: "LikedDays",            xp: 10 },
     { key: "CommentDays",          xp: 12 },
     { key: "DoneDays",             xp: 30 },
-    { key: "hasUsedTemplateToday", xp: 13 },
+    { key: "SystemStartDate",      xp: 13 },
     { key: "SetDietManually",      xp: 22 },
   ];
 
@@ -234,13 +234,13 @@ const TasksPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [activeTab, setActiveTab] = React.useState<"tasks" | "badges">("tasks");
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[1px] p-4 showAnim2">
+    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[1px] p-4 show-first">
       <div className="relative w-full max-w-sm min-h-3/4 bg-white/90 dark:bg-black/80 backdrop-blur-xl border border-amber-300/60 dark:border-gray-600/50 shadow-2xl rounded-3xl p-6 text-center show-third">
         <button
           onClick={onClose}
           className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700/50 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
         >
-          <FaTimes className="text-gray-500 dark:text-gray-300" />
+          <FaTimes className="text-gray-a500 dark:text-gray-300" />
         </button>
 
         <div className="flex items-center justify-center gap-2 mb-1">
@@ -360,13 +360,13 @@ const Xp: React.FC = () => {
     <>
       <div
         onClick={() => setShowTasks(true)}
-        className="relative min-w-[4rem] p-2 h-14 overflow-hidden border-2 flex flex-row items-center justify-center text-center shadow-sm dark:bg-gray-400/10 dark:border-2 dark:border-gray-600/20 border-gray-100 rounded-2xl cursor-pointer hover:shadow-md transition-all active:scale-95"
+        className="relative min-w-[4rem] p-2 h-14 overflow-hidden border-2 flex flex-row items-center justify-center text-center shadow-sm dark:bg-amber-400/10 dark:border-2 dark:border-amber-600/20 border-gray-100 rounded-2xl cursor-pointer hover:shadow-md transition-all active:scale-95"
       >
         <div className="text-[13px] dark:text-white text-gray-400 flex flex-row gap-0.5 mt-1">
           <RiCopperCoinLine className="text-[16px]" /> XP
         </div>
         <div className="text-lg font-bold dark:text-amber-100 animate-pulse ml-1">
-          {useCountUp(allTimeXP, 1000)}
+          {useCountUp(allTimeXP, 600)}
         </div>
         <div className="absolute bottom-0 right-0 w-[40%] h-0.5 bg-amber-500" />
       </div>
