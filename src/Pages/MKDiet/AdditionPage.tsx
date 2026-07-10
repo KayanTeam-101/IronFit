@@ -45,9 +45,8 @@ const UNIT_OPTIONS: UnitOption[] = [
 const AdditionPage = (props: any) => {
   const [text, setText] = useState("");
   const [FoodArray, setFoodArray] = useState<string[]>([]);
-  const [FoodInfo, setFoodInfo] = useState<any[]>(
-    JSON.parse(localStorage.getItem("FoodInfo_s") || "[]")
-  );
+  const [FoodInfo, setFoodInfo] = useState<any[]>([]);
+
 
     const [IsActive, setIsActive] = useState(false);
   
@@ -153,6 +152,12 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
 
   // Open unit modal
   const handleAddClick = (food: string) => {
+      const getData = JSON.parse(localStorage.getItem("Diet") || "{}");
+  const mealData = getData[props.Meal] || [[], []];
+  if (FoodArray.includes(food) || mealData[0].includes(food)) {
+    alert(`${food} مضاف بالفعل`);
+    return;
+  }
     if (FoodArray.includes(food)) {
       alert(`${food} مضاف بالفعل`);
       return;
@@ -217,7 +222,7 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
   };
 
   return (
-    <div className="fixed show-first top-0 left-0 w-screen h-screen flex flex-col bg-slate-100 dark:bg-[#111111] z-50 overflow-y-scroll">
+    <div className="fixed show-first top-0 left-0 w-screen h-screen flex flex-col bg-gray-100 dark:bg-[#111111] z-50 overflow-y-scroll">
       {/* Header */}
       <div className="relative w-full bg-gradient-to-b from-orange-400 to-orange-500 dark:from-black/20 dark:to-amber-400/20 p-5 pt-15 rounded-b-full shadow-xl godown">
         <div className="flex items-center justify-between">

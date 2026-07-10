@@ -205,7 +205,7 @@ const MakeADiet: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen show-first bg-amber-50 dark:bg-black/20 relative pb-24">
+    <div className="min-h-screen show-first bg-gray-100 dark:bg-black/20 relative pb-24">
       {/* Header */}
       <div className="w-full bg-gradient-to-b from-amber-400  to-orange-500 dark:from-black/20 dark:to-amber-400/20 dark:border-2 dark:border-gray-600/20 p-12 pt-10 rounded-b-full shadow-xl godown">
           <div className="flex justify-between mt-5 text-white/90 text-sm">

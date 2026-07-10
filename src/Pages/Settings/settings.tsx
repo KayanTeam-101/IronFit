@@ -16,6 +16,7 @@ import SubscriptionActivationOverlay from "./Activated";
 import { FaCookieBite, FaDumbbell, FaUserShield } from "react-icons/fa6";
 import { TbCircleLetterD, TbCircleLetterDFilled } from "react-icons/tb";
 import { SiGoogleanalytics } from "react-icons/si";
+import { BsWhatsapp } from "react-icons/bs";
 
 // ---------- Plans data ----------
 const FIXED_PLANS = [
@@ -217,10 +218,26 @@ const Subscription: React.FC = () => {
 
   
   };
+  const handleGotoWhatsApp = (price :number,days:number,userName:string,Userid:string) =>{
+  const createAmessage = `
+#طلب إشتراك ${days} يوم#
 
+reqTopay : ${price}
+
+toGet#days : ${days}
+
+forThisId : ${Userid}
+
+forThisUser : ${userName}
+`; // trim whitespace for a cleaner message
+
+const phoneNumber = "201124946537"; 
+const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(createAmessage)}`;
+window.open(url);
+  }
   // Custom plan price
   const customPrice = Math.round(
-    customDays * 10 - customDays ** 2 / customDays,
+    customDays * 5 
   );
 
   // SVG progress ring for custom plan
@@ -448,10 +465,12 @@ const Subscription: React.FC = () => {
                         onClick={(e) => {
                           createRipple(e);
                           handleActivate();
+                          handleGotoWhatsApp(customPrice, customDays, localStorage.getItem("UserName") || "", localStorage.getItem("userId_") || "");
                         }}
-                        className="relative overflow-hidden w-full bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-white font-bold py-3  transition shadow-md"
+                        className="relative overflow-hidden w-full flex flex-row justify-center items-center gap-2.5 bg-linear-to-r from-teal-400 to-emerald-600 hover:from-amber-500 hover:to-amber-700 text-white font-bold py-3  transition shadow-md"
                       >
                         {subscribeSuccess ? <AnimatedCheck /> : "اشترك الآن"}
+                        <BsWhatsapp />
                       </button>
                     </div>
                   </div>
@@ -497,14 +516,16 @@ const Subscription: React.FC = () => {
                             e.stopPropagation();
                             createRipple(e);
                             handleActivate();
+                            handleGotoWhatsApp(plan.price, plan.days, localStorage.getItem("UserName") || "", localStorage.getItem("userId_") || "");
                           }}
-                          className="mt-4 relative overflow-hidden w-full bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-white font-bold py-3  transition shadow-md"
+                          className="mt-4 relative overflow-hidden w-full flex flex-row items-center justify-center gap-2.5 bg-linear-to-r from-green-400 to-emerald-600 hover:from-amber-500 hover:to-amber-700 text-white font-bold py-3  transition shadow-md"
                         >
                           {subscribeSuccess ? (
                             <AnimatedCheck />
                           ) : (
-                            `اشترك بـ ${plan.price} ج.م`
+                            `اشترك بـ ${plan.price} ج.م` 
                           )}
+                          <BsWhatsapp />
                         </button>
                       </div>
                     ))}

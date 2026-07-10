@@ -47,7 +47,7 @@ const hasLikedPostToday   = isTodayInArray("LikedDays");
 const hasCommentedToday   = isTodayInArray("CommentDays");
 const hasEatenAllMeals    = isTodayInArray("DoneDays");
 const hasUsedTemplateToday = isTodayInArray("SystemStartDate");
-const hasCreatedDietPlanToday = isTodayInArray("SetDietManually");
+const hasCreatedDietPlanToday = localStorage.getItem("SetDietManually");
 
 // One‑time flags
 const hasShared = localStorage.getItem("mycodeUsed") === "true";
@@ -60,7 +60,7 @@ interface Task {
   icon: React.ReactNode;
   label: string;
   xp: number;
-  condition: boolean;   // for today’s highlighting
+  condition: boolean | React.ReactNode;   // for today’s highlighting
 }
 
 const DAILY_TASKS: Task[] = [
