@@ -18,7 +18,6 @@ interface ShowStoryProps {
 const ShowStory: React.FC<ShowStoryProps> = ({
   stories,
   onClose,
-  initialIndex = 0,
 }) => {
   // Reaction popup per story (emoji path)
   const [popups, setPopups] = useState<Record<string, string>>({});
@@ -72,7 +71,7 @@ const ShowStory: React.FC<ShowStoryProps> = ({
         [activeDragId]: { offset, opacity },
       }));
     };
-    const onPointerUp = (e: PointerEvent) => {
+    const onPointerUp = () => {
       if (isVerticalDrag) {
         const current = dragData[activeDragId];
         if (current && current.offset > dragThreshold) {

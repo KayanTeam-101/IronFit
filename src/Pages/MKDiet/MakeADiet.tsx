@@ -27,7 +27,7 @@ import AdditionPage from "./AdditionPage";
 type MealKey = "Breakfast" | "Lunch" | "Snacks" | "Dinner";
 
 type MealPlan = {
-  [key in MealKey]: [string[], number[]];
+  [key in MealKey]: [string[], any[]];
 };
 
 const MEAL_NAMES_AR: Record<MealKey, string> = {

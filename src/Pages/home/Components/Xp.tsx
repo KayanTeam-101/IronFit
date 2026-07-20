@@ -276,7 +276,7 @@ interface Badge {
 // ----------------------------------------------------------------
 //  Tasks & Badges Panel
 // ----------------------------------------------------------------
-export const TasksPanel: React.FC<TasksPanelProps> = ({ onClose, showTasks, setShowTasks, showRanking, setShowRank }) => {
+export const TasksPanel: React.FC<TasksPanelProps> = ({ onClose }) => {
   const [activeTab, setActiveTab] = React.useState<"tasks" | "badges">("tasks");
   return (
     <div
