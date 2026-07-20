@@ -1,46 +1,18 @@
-import React, { useEffect, useRef } from "react";
-import Video from "../../../assets/2026_07_19_03_14_46.mp4";
+import React from "react";
+import Video from "../../../assets/Screenshot from 2026-07-20 09-33-11.png";
 
 const Firstturn: React.FC = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
 
-    video.playbackRate = 2;
-
-    const handleLoadedMetadata = () => {
-      video.currentTime = 6;
-    };
-
-    const handleEnded = () => {
-      video.currentTime = 3;
-      video.play();
-    };
-
-    video.addEventListener("loadedmetadata", handleLoadedMetadata);
-    video.addEventListener("ended", handleEnded);
-
-    return () => {
-      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
-      video.removeEventListener("ended", handleEnded);
-    };
-  }, []);
 
   return (
     <div className="absolute top-1/2 left-1/2 -translate-1/2 w-full h-10/12 showAnim2">
 
       {/* Full‑screen background video */}
-      <video
-        ref={videoRef}
+      <img
         src={Video}
-        autoPlay
-        muted
-        playsInline
-        className="absolute top-5 left-1/2 -translate-x-1/2 rounded-4xl object-cover w-3xs scale-140 blur-[3px] animate-fadeIn   h-7/12 "
+        className="absolute -top-15 left-1/2 -translate-x-1/2 object-cover w-screen sca blur-[3px] animate-pulse   h-full "
       />
-
       {/* Gradient overlay: transparent top → semi‑transparent middle → solid black bottom */}
       <div className="absolute inset-0 " />
 

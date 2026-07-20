@@ -30,7 +30,7 @@ const Navbar = () => {
 
  
      <div
-     className="navbar overflow-hidden fixed bottom-2.5 z-0  grid grid-cols-5 items-center w-11/12 h-16 backdrop-blur-[3px]   dark:bg-black/60 border-t  border-gray-200 rounded-4xl text-xl text-gray-800 dark:from-slate-800/40 dark:to-black/40 dark:border-2 dark:border-gray-600/15"
+     className="navbar overflow-hidden fixed bottom-0 z-0  grid grid-cols-5 items-center w-full h-12 backdrop-blur-[3px]   dark:bg-black/60 border-t  border-gray-200 r text-xl text-gray-800 dark:from-slate-800/40 dark:to-black/40 dark:border-2 dark:border-gray-600/15"
     >
         <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-gray-400 "  to="me/home">
           <GoHomeFill />

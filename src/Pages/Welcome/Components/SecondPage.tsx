@@ -3,7 +3,7 @@ import { GoGoal } from "react-icons/go";
 import { LiaDumbbellSolid } from "react-icons/lia";
 const Second: React.FC = () => {
   return (
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-lg showAnim2">
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-lg showInTwoSecond">
       {/* Glowing background blobs */}
       <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-72 h-72 bg-amber-400 rounded-full opacity-20 blur-3xl animate-pulse" />
       <div className="absolute top-0 left-0 w-48 h-48 bg-indigo-400 rounded-full opacity-20 blur-3xl animate-pulse delay-1000" />

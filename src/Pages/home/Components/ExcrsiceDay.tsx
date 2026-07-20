@@ -123,7 +123,7 @@ const ExerciseDay: React.FC = () => {
           onClick={() => navigate("/me/exercises")}
           className="mt-4 flex items-center gap-2 bg-white backdrop-blur border border-white/50 dark:border-gray-600/20 p-3 shadow-lg w-fit rounded-3xl text-blue-500 font-bold transition-all hover:bg-white dark:hover:bg-white/20 active:scale-95"
         >
-          الذهاب لصفحة التمارين <FaCaretLeft />
+          صفحة التمارين <FaCaretLeft />
         </button>
       </div>
     );
@@ -142,7 +142,8 @@ const ExerciseDay: React.FC = () => {
             {nextTrainingDay}
           </h1>
           <p className="text-white/70 text-sm mt-1">
-            اليوم ليس يوم تمرين، استعد للقادم
+            انهاردة مش يوم تمرين, ريح جسمك وركز ع الجي
+
           </p>
         </div>
 
@@ -152,7 +153,7 @@ const ExerciseDay: React.FC = () => {
           onClick={() => navigate("/me/exercises")}
           className="flex cursor-pointer items-center gap-2 bg-white p-3 shadow-lg dark:border-2 dark:border-gray-600/20 w-fit rounded-3xl text-amber-600 font-bold hover:bg-amber-50 dark:hover:bg-white/10 active:scale-95 transition"
         >
-          الذهاب لصفحة التمارين <FaCaretLeft />
+           صفحة التمرين  <FaCaretLeft />
         </button>
       </div>
     );

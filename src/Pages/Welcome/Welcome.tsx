@@ -23,7 +23,7 @@ import CreateAUserName from "./Components/CreateAUserName";
 import BreakPage from "./Components/BreakPage";
 import { GoGoal } from "react-icons/go";
 import { PiConfettiLight } from "react-icons/pi";
-const TOTAL_STEPS = 15;
+const TOTAL_STEPS = 14;
 
 const Welcome: React.FC = () => {
   const [turn, setTurn] = useState(1);
@@ -138,18 +138,17 @@ const Welcome: React.FC = () => {
           return <ChPreiod />
       case 10:
         return <ShowBmi />;
+  
       case 11:
-        return <SelectDays />;
-      case 12:
         return <S_Goals />;
-      case 13 :
+      case 12 :
         return <BreakPage heading="اقتربت أن تكون فرداً منا!" text="متبقي فقط أن تعرفنا علي نفسك" SvgComponent={PiConfettiLight}/>
-      case 14:
+      case 13:
         return  <CreateAUserName
       setUsername={setUsername}
       onSaveSuccess={() => setIsUserDataSaved(true)}
     />;
-      case 15:
+      case 14:
         return <FinalSection />;
       default:
         return null;
@@ -180,19 +179,21 @@ const Welcome: React.FC = () => {
         {/* Footer */}
         <footer className="p-6">
           <button
-            disabled={loading || (turn === 14 && !isUserDataSaved)}
+            disabled={loading || (turn === 13 && !isUserDataSaved)}
             onClick={next}
             className={`w-full h-14 z-50 rounded-2xl font-semibold text-white flex items-center justify-center gap-3 transition-all ${
               loading
-                ? "bg-gray-300"
+                ? "bg-gray-400"
                 : "bg-orange-500 hover:bg-orange-600 active:scale-[0.98]"
             }`}
           >
-          {turn === 14 && !isUserDataSaved
-    ? "احفظ البيانات أولاً"
-    : turn === TOTAL_STEPS
-    ? "إبدء !"
-    : "استمر"}
+       {loading
+  ? " إنتظر قليلا.."
+  : turn === 14 && !isUserDataSaved
+  ? "احفظ البيانات أولاً"
+  : turn === TOTAL_STEPS
+  ? "إبدء !"
+  : "استمر"}
             <FaCaretLeft />
           </button>
         </footer>
