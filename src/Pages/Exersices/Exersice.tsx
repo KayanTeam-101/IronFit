@@ -18,6 +18,7 @@ import { GiShoulderArmor } from "react-icons/gi";
 import SelectDays from "../Welcome/Components/SelectDays";
 import EditWeightForm from "./Components/EditWightForm";  // adjust path
 import { giveExerciseAdvice } from "../../utilities/GiveAdvice";
+import { useNavigate } from "react-router";
 
 // ---------- Types ----------
 type SystemName = "ارنو سبلت" | "بروسبلت" | "بوش بون ليج";
@@ -157,7 +158,7 @@ const ExercisePage: React.FC = () => {
   const [currentDayIndex, setCurrentDayIndex] = useState<number>(-1);
   const todayDateStr = useMemo(() => new Date().toISOString().slice(0, 10), []);
   const todayIndex = new Date().getDay();
-
+  const navigate = useNavigate();
   // Modals
   const [addExerciseModal, setAddExerciseModal] = useState<{
     open: boolean;
@@ -326,7 +327,7 @@ const ExercisePage: React.FC = () => {
           </div>
           <div className="bg-amber-300/60 dark:bg-amber-300/20 border border-amber-400/50 rounded-xl w-11/12 p-2 dark:text-white text-black min-h-10 animate-pulse">
             مكسل تجدول تمارينك؟! <br /> تقدر تجرب القوالب الجاهزة من{" "}
-            <span onClick={() => window.location.href = "/templates"} className="text-amber-400 cursor-pointer underline">هنا</span>
+            <span onClick={() => (navigate('/templates'))} className="text-amber-400 cursor-pointer underline">هنا</span>
           </div>
         </div>
       </div>

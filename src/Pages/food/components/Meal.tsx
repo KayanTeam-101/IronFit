@@ -74,15 +74,15 @@ const consumedNutrition = useMemo(() => {
   });
 
   // If nothing eaten yet, fall back to the planned totals from getData
-  if (eatenDishes.length === 0 && getData?.[mealName]?.[1]) {
-    const planned = getData[mealName][1];
-    return {
-      calories: planned[0] || 0,
-      protein: planned[1] || 0,
-      Fat: planned[2] || 0,
-      Carb: planned[3] || 0,
-    };
-  }
+ if (eatenDishes.length === 0 && getData?.[mealName]?.[1]) {
+  const planned = getData[mealName][1];
+  return {
+    calories: Number(planned[0]) || 0,
+    protein: Number(planned[1]) || 0,
+    Fat: Number(planned[2]) || 0,
+    Carb: Number(planned[3]) || 0,
+  };
+}
 
   return { calories: cal, protein: prot, Fat: fat, Carb: carb };
 }, [eatenDishes, FoodInfo_s, mealName, getData]);
@@ -106,8 +106,8 @@ const consumedNutrition = useMemo(() => {
 
   const handleToggle = (dish: string) => {
     Eaten(dish, mealName);
-    localStorage.setItem(mealName +"-prot",consumedNutrition.protein);
-    localStorage.setItem(mealName +"-carb",consumedNutrition.Carb);
+    localStorage.setItem(mealName +"-prot",String(consumedNutrition.protein));
+    localStorage.setItem(mealName +"-carb",String(consumedNutrition.Carb));
     forceUpdate();
     window.location.reload();
   };

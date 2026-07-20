@@ -104,7 +104,7 @@ const TodayTask = () => {
       </div>
       
 {!localStorage.getItem("Diet") &&
-      <div onClick={() => navigate('/me/food')} className='bg-linear-to-l from-amber-400 to-orange-500 flex justify-center items-center p-2 font-black mt-2 text-white rounded-xl'>اضغط هنا لإنشاء نظامك <BsCaretLeftFill className='mb-1 text-sm'/></div>
+      <div onClick={() => navigate('/me/food')} className={`outline-swealing2 bg-linear-to-l from-amber-400 to-orange-500 flex justify-center items-center p-2 font-black mt-2 text-white rounded-xl`}>اضغط هنا لإنشاء نظامك <BsCaretLeftFill className='mb-1 text-sm'/></div>
 }
 
     </div>

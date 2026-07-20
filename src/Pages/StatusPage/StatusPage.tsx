@@ -265,8 +265,8 @@ const bmi = calcBMI(animatedWeight, animatedHeight);
    ) : (
      <div className="mt-5">
       <div>
-<div className="w-full h-1 mb-5 bg-gray-300/10 flex justify-center items-center m">
-<div className="relative top-2.5 bg-white dark:bg-[#111] flex items-center gap-2 text-gray-500 dark:text-gray-300 text-sm mb-4">
+<div className="w-full h-1 mb-5  flex justify-start mr-3 items-center m">
+<div className="relative top-2.5 bg-white dark:bg-[#111] flex items-center gap-2 text-gray-500 dark:text-gray-300 text-sm mb-4 font-black">
   تحليل البيانات <IoAnalytics className="text-amber-400 text-[20px]" />
 
 </div>

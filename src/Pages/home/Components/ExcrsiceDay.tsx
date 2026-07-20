@@ -97,7 +97,7 @@ const ExerciseDay: React.FC = () => {
   // ----- Case 1: Today is a training day -----
   if (todayWorkout) {
     return (
-      <div className={`${localStorage.getItem("Diet") ? "" : "opacity-60"} relative min-h-60 w-full p-5 bg-gradient-to-br from-sky-500 to-blue-600  overflow-hidden rounded-3xl border border-sky-50 dark:border-gray-600/20 flex flex-col justify-between shadow-xl transition-all hover:shadow-2xl`}>
+      <div className={`${localStorage.getItem("Diet") ? "" : "opacity-40"} relative min-h-60 w-full p-5 bg-gradient-to-br from-sky-500 to-blue-600  overflow-hidden rounded-3xl border border-sky-50 dark:border-gray-600/20 flex flex-col justify-between shadow-xl transition-all hover:shadow-2xl`}>
         <div className="flex items-center justify-between text-white/80 text-sm">
           <span>تمرين اليوم</span>
           <span className="font-black">{todayWeekday}</span>
@@ -132,7 +132,7 @@ const ExerciseDay: React.FC = () => {
   // ----- Case 2: Today is not a training day, but there is a next one -----
   if (nextTrainingDay) {
     return (
-      <div className={`relative min-h-60 w-full p-5 bg-gradient-to-b from-amber-500 to-orange-500  overflow-hidden rounded-3xl border border-amber-50 dark:border-gray-600/20 flex flex-col justify-between shadow-xl transition-all hover:shadow-2xl ${localStorage.getItem("Diet") ? "" : "opacity-60"}`}>
+      <div className={`relative min-h-60 w-full p-5 bg-gradient-to-b from-amber-500 to-orange-500  overflow-hidden rounded-3xl border border-amber-50 dark:border-gray-600/20 flex flex-col justify-between shadow-xl transition-all hover:shadow-2xl ${localStorage.getItem("Diet") ? "" : "opacity-40"}`}>
         <div className="flex flex-row items-center justify-between text-white/80 text-sm">
           <span>التمرين القادم</span>
         </div>

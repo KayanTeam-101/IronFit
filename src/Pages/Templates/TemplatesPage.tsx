@@ -19,8 +19,10 @@ import {EXERCISE_TEMPLATES, DIET_TEMPLATES} from "./Templates";
 interface FoodItem {
   FoodName: string;
   ProtineForOneKilo: string;
-  MostVitamens: string[];
   calForOneKilo: string;
+  FatForOneKilo: string;
+  CarbForOneKilo: string;
+  MostVitamens: string[];
 }
 interface MealEntry {
   foodName: string;
@@ -67,31 +69,37 @@ function getFoodData(foodName: string) {
 }
 
 function calcMealNutrition(entries: MealEntry[]) {
-  let calories = 0, protein = 0;
+  let calories = 0, protein = 0,fat=0,carb=0;
   const vitaminsSet = new Set<string>();
   entries.forEach(entry => {
     const food = getFoodData(entry.foodName);
     if (food) {
       const calPerKilo = Number(food.calForOneKilo);
       const protPerKilo = Number(food.ProtineForOneKilo);
+      const FatPerKilo = Number(food.FatForOneKilo);
+      const CarbPerKilo = Number(food.CarbForOneKilo);
       calories += (calPerKilo * entry.grams) / 1000;
       protein += (protPerKilo * entry.grams) / 1000;
+      fat += (FatPerKilo * entry.grams) / 1000;
+      carb += (CarbPerKilo * entry.grams) / 1000;
       food.MostVitamens.forEach(v => v && vitaminsSet.add(v));
     }
   });
-  return { calories, protein, vitamins: Array.from(vitaminsSet) };
+  return { calories, protein,fat,carb, vitamins: Array.from(vitaminsSet) };
 }
 
 function calcTotalNutrition(meals: DietTemplate["meals"]) {
-  let totalCal = 0, totalProt = 0;
+  let totalCal = 0, totalProt = 0,totalFat=0,totalCarb=0;
   const allVitamins = new Set<string>();
   Object.values(meals).forEach(entries => {
-    const { calories, protein, vitamins } = calcMealNutrition(entries);
+    const { calories, protein,fat,carb, vitamins } = calcMealNutrition(entries);
     totalCal += calories;
     totalProt += protein;
+    totalFat += fat;
+    totalCarb += carb;
     vitamins.forEach(v => allVitamins.add(v));
   });
-  return { calories: totalCal, protein: totalProt, vitamins: Array.from(allVitamins) };
+  return { calories: totalCal, protein: totalProt,fat:totalFat,carb:totalCarb, vitamins: Array.from(allVitamins) };
 }
 
 // ---------- Main Component ----------
@@ -121,8 +129,8 @@ const SYSTEMS: Record<SystemName, string[]> = {
     (Object.keys(template.meals) as Array<keyof typeof template.meals>).forEach(mealKey => {
       const entries = template.meals[mealKey];
       const foodNames = entries.map(e => e.foodName);
-      const { calories, protein, vitamins } = calcMealNutrition(entries);
-      dietObj[mealKey] = [foodNames, [calories, protein, vitamins]];
+      const { calories, protein,fat,carb, vitamins } = calcMealNutrition(entries);
+      dietObj[mealKey] = [foodNames, [calories, protein,fat,carb, vitamins]];
     });
     localStorage.setItem("Diet", JSON.stringify(dietObj));
 
@@ -135,7 +143,9 @@ const SYSTEMS: Record<SystemName, string[]> = {
           const protPerKilo = Number(food.ProtineForOneKilo);
           const cal = (calPerKilo * entry.grams) / 1000;
           const prot = (protPerKilo * entry.grams) / 1000;
-          foodInfo.push([mealKey, entry.foodName, entry.grams, cal, prot]);
+          const Fat = (protPerKilo * entry.grams) / 1000;
+          const Carb = (protPerKilo * entry.grams) / 1000;
+          foodInfo.push([mealKey, entry.foodName, entry.grams, cal, prot,Fat,Carb]);
         }
       });
     });
@@ -397,11 +407,17 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
             <p className="dark:text-gray-400 text-black mb-4">{selectedDiet.description}</p>
             {dietNutrition && (
               <div className="flex gap-3 mb-4">
-                <span className="bg-none text-orange-400 px-3 py-1 rounded-full text-sm font-medium">
+                <span className="bg-none text-orange-400 px-3 py-1 rounded-full text-sm font-black">
                   {Math.round(dietNutrition.calories)} سعرة
                 </span>
-                <span className="bg-none text-teal-400 px-3 py-1 rounded-full text-sm font-medium">
+                <span className="bg-none text-teal-400 px-3 py-1 rounded-full text-sm font-black">
                   {Math.round(dietNutrition.protein)}غ بروتين
+                </span>
+                <span className="bg-none text-blue-400 px-3 py-1 rounded-full text-sm font-black">
+                  {Math.round(dietNutrition.fat)}غ دهون
+                </span>
+                <span className="bg-none text-amber-400 px-3 py-1 rounded-full text-sm font-black">
+                  {Math.round(dietNutrition.carb)}غ كارب
                 </span>
               </div>
             )}
@@ -420,9 +436,9 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
               return (
                 <div key={mealKey} className="mb-3">
                   <h4 className="text-sm font-semibold dark:text-gray-300 text-black mb-1">{mealKey}</h4>
-                  <ul className="space-y-1">
+                  <ul className="space-y-2">
                     {entries.map((entry, idx) => (
-                      <li key={idx} className="flex justify-between text-md dark:text-gray-300 text-black dark:bg-gray-700/50 rounded-lg px-3 py-1">
+                      <li key={idx} className="flex justify-between text-md dark:text-gray-300 text-black dark:bg-gray-700/50 rounded-lg p-3">
                         <span>{entry.foodName}</span>
                         <span className="dark:text-gray-400 text-black">{entry.grams}غ</span>
                       </li>
@@ -466,9 +482,9 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
             {selectedExercise.days.map((day, idx) => (
               <div key={idx} className="mb-3">
                 <h4 className="text-sm font-semibold text-amber-400 mb-1">{day.dayName}</h4>
-                <ul className="space-y-1">
+                <ul className="space-y-2">
                   {day.exercises.map((ex, i) => (
-                    <li key={i} className="flex justify-between text-md dark:text-gray-300 text-black dark:bg-gray-700/50 rounded-lg px-3 py-1">
+                    <li key={i} className="flex justify-between text-md dark:text-gray-300 text-black dark:bg-gray-700/50 rounded-lg p-3">
                       <span>{ex.name}</span>
                       <span className="dark:text-gray-400 text-black">{ex.weight > 0 ? `${ex.weight} كغ` : "وزن الجسم"}</span>
                     </li>

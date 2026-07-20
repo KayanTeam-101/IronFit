@@ -164,13 +164,14 @@ h1, h2, h3, h4, h5, h6{
 }
 
 .outline-swealing{
-    animation: outlineAnim .7s cubic-bezier(0.475, 0.885, 0.32, 1) infinite;
+    animation: outlineAnim 1.7s ease-out infinite;
 }
 @keyframes outlineAnim {
     0%{
-        outline: 1px solid #ff880078;
+        outline: 1px solid #ff880000;
         outline-offset: 0px;
     }
+   
      50%{
         outline: 1px solid #ff8800;
         outline-offset: 0px;
@@ -178,6 +179,54 @@ h1, h2, h3, h4, h5, h6{
     100%{
         outline: 1px solid #6f00ff00;
         outline-offset: 20px;
+
+    }
+}
+.outline-swealing2{
+    animation: outlineAnim1 2s ease-out infinite;
+}
+@keyframes outlineAnim1 {
+    0%{
+        opacity: 1;
+        scale: 1;
+        rotate: 0deg;
+    }
+    20%{
+        opacity: .9;
+        scale: .93;
+        rotate:1deg;
+    }
+      30%{
+        opacity: .9;
+        scale: .93;
+        rotate:-1deg;
+    }
+    40%{
+     opacity: .9;
+        scale: .93;
+        rotate: 1deg;   
+    }
+     50%{
+        opacity: .9;
+        scale: .93;
+        rotate:-2deg;
+    }
+    60%{
+opacity: .9;
+        scale: .93;
+        rotate:2deg;
+    }
+    80%{
+        opacity: .9;
+        scale: .93;
+        rotate: -1deg;
+    }
+   
+  
+    100%{
+       opacity: 1;
+        scale: 1;
+        rotate: 0deg;
 
     }
 }
