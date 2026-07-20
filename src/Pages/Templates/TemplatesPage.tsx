@@ -278,7 +278,7 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
           onClick={() => setActiveTab("diet")}
           className={`px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 transition-all ${
             activeTab === "diet"
-              ? "bg-amber-500 text-white "
+              ? "bg-blue-500 text-white "
               : "bg-gray-800 text-gray-300 hover:bg-gray-700"
           }`}
         >
@@ -334,10 +334,10 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
                   <div className="flex gap-2 ml-4">
                     <button
                       onClick={() => openDietPreview(template)}
-                      className="p-2.5 px-5 dark:bg-gray-700 bg-slate-100 rounded-full hover:bg-gray-600 transition"
+                    className="p-1.5 px-3 flex flex-row gap-2 items-center text-sm  dark:bg-gray-700 bg-slate-100 rounded-full hover:bg-gray-600 transition"
                       title="معاينة"
                     >
-                      <FaEye className="dark:text-gray-300 text-slate-600" />
+                      معاينة<FaEye className="dark:text-gray-300 text-slate-600" />
                     </button>
                  
                   </div>
@@ -370,10 +370,10 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
                 <div className="flex gap-2 ml-4">
                   <button
                     onClick={() => openExercisePreview(template)}
-                    className="p-2.5 px-5 flex flex-row gap-2 items-center  dark:bg-gray-700 bg-slate-100 rounded-full hover:bg-gray-600 transition"
+                    className="p-1.5 px-3 flex flex-row gap-2 items-center text-sm  dark:bg-gray-700 bg-slate-100 rounded-full hover:bg-gray-600 transition"
                     title="معاينة"
                   >
-                    <FaEye className="dark:text-gray-300 text-slate-600" /> 
+                   معاينة <FaEye className="dark:text-gray-300 text-slate-600" /> 
                   </button>
                 
                 </div>

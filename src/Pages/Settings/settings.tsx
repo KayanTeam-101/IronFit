@@ -20,17 +20,9 @@ import { BsWhatsapp } from "react-icons/bs";
 
 // ---------- Plans data ----------
 const FIXED_PLANS = [
-  { days: 3, price: 27, popular: false },
-  { days: 7, price: 63, popular: true },
-  { days: 30, price: 270, popular: false },
-];
-
-const FEATURES = [
-  "قوالب غذائية",
-  "نصائح AI",
-  "قوالب تمارين",
-  "صفحة الحالة",
-  "فيتامينات الوجبات",
+  { days: 3, price: 15, popular: false },
+  { days: 7, price: 35, popular: true },
+  { days: 30, price: 150, popular: false },
 ];
 
 const exclusiveFeatures = [
@@ -152,8 +144,10 @@ const Subscription: React.FC = () => {
   const handleActivate = async () => {
     if (!friendId.trim()) return;
     const getUsers_ = await getUsers();
-    console.log(getUsers_);
-
+    const getUser = getUsers_.find(
+      (item) => item.UserName === localStorage.getItem("UserName"),
+    );
+    
     // If Unique Key
     const getIfUnique = getUsers_.find((item) => item.Unique == friendId);
     const getUserNameForLocalStorage = localStorage.getItem("UserName");
@@ -167,9 +161,6 @@ const Subscription: React.FC = () => {
     // If Friend's Code
     const getFriendCode = getUsers_.find(
       (item) => item.UserId_ === Number(friendId),
-    );
-    const getUser = getUsers_.find(
-      (item) => item.UserName === localStorage.getItem("UserName"),
     );
 
     if (
@@ -231,7 +222,7 @@ forThisId : ${Userid}
 forThisUser : ${userName}
 `; // trim whitespace for a cleaner message
 
-const phoneNumber = "201124946537"; 
+const phoneNumber = "201108313782"; 
 const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(createAmessage)}`;
 window.open(url);
   }
@@ -243,7 +234,7 @@ window.open(url);
   // SVG progress ring for custom plan
   const radius = 60;
   const circumference = 2 * Math.PI * radius;
-  const progress = Math.min((customDays / 90) * 100, 100);
+  const progress = Math.min((customDays / 30) * 100, 100);
   const dashOffset = circumference - (progress / 100) * circumference;
 
   // Ripple effect hook (simplified for button use)
@@ -281,7 +272,7 @@ window.open(url);
               <p className="dark:text-white mt-1 showInTwoSecond">
                 نظم حياتك و طورها لأنك تستحق{" "}
               </p>
-              <div className="my-4 w-full h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent showInTwoSecond" />
+              <div className="my-4 w-full h-px bg-linear-to-r from-transparent via-amber-400/50 to-transparent showInTwoSecond" />
             </div>
 
             {/* User ID Card */}
@@ -377,12 +368,12 @@ window.open(url);
                       خطة مخصصة
                     </h3>
                     <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                      اختر عدد الأيام (1 – 90)
+                      اختر عدد الأيام (1 – 30)
                     </p>
 
                     <div className="flex flex-col items-center gap-4">
                       {/* SVG ring */}
-                      <div className="relative w-48 h-48">
+                      <div className="relative w-72 h-72">
                         <svg
                           width="100%"
                           height="100%"
@@ -394,7 +385,7 @@ window.open(url);
                             cy="80"
                             r={radius}
                             fill="none"
-                            stroke="rgba(251,191,36,0.15)"
+                            stroke="rgba(251,191,36,0.01)"
                             strokeWidth="8"
                           />
                           <circle
@@ -404,7 +395,7 @@ window.open(url);
                             fill="none"
                             stroke="url(#customGradient)"
                             strokeWidth="8"
-                            strokeLinecap="round"
+                            strokeLinecap="butt"
                             strokeDasharray={circumference}
                             strokeDashoffset={dashOffset}
                             style={{
@@ -419,14 +410,14 @@ window.open(url);
                               x2="100%"
                               y2="0%"
                             >
-                              <stop offset="0%" stopColor="#996515" />
+                              <stop offset="0%" stopColor="#996555" />
                               <stop offset="50%" stopColor="#FFC834" />
-                              <stop offset="100%" stopColor="#996515" />
+                              <stop offset="100%" stopColor="#996555" />
                             </linearGradient>
                           </defs>
                         </svg>
                         <div className="absolute inset-0 flex flex-col items-center justify-center">
-                          <span className="text-3xl font-extrabold text-gray-800 dark:text-white">
+                          <span className="text-4xl font-extrabold text-gray-800 dark:text-white">
                             {customDays}
                           </span>
                           <span className="text-xs text-gray-500 dark:text-gray-400">
@@ -438,7 +429,7 @@ window.open(url);
                       <input
                         type="range"
                         min="3"
-                        max="90"
+                        max="30"
                         value={customDays}
                         onChange={(e) => {
                           setCustomDays(Number(e.target.value));

@@ -31,7 +31,7 @@ const ChanlangePreiod: React.FC = () => {
   return (
        <div className='  show-first h-3/4 flex items-center justify-between flex-col  ' >
       <div className="px-3">
-        <h2 className="text-3xl translate-y-10 text-amber-400 font-extrabold mb-4 text-center ">
+        <h2 className="text-3xl translate-y-10 text-amber-400 dark:text-white font-extrabold mb-4 text-center ">
           عايز توصل لهدفك بعد كام شهر <span className="text-amber-500">؟</span>
         </h2>
         {MinMonth(weightDiff) != 0 && (
@@ -39,10 +39,7 @@ const ChanlangePreiod: React.FC = () => {
           <p className="relative top-5 text-center text-gray-400   ">
             أقل فترة بالنسبة لفرق الوزن هي {MinMonth(weightDiff)} شهر
           </p>
-          <p className="relative top-5 text-center text-gray-400/70 flex flex-row">
-            {getCurrentWeight} <BiRightArrowAlt /> {getTargetWeight}
-          
-          </p>
+        
           </>
         )}
         <p className="relative top-5 text-center text-amber-700 text-sm p-4  ">

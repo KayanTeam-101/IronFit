@@ -24,7 +24,7 @@ function App() {
   useEffect(() => {
     // التحقق من التحميل
       (function () {
-        if ((localStorage.length < 8 && window.location.pathname !== '/' ) || (window.location.pathname !== '/'  && !localStorage.getItem("UserName"))) {
+        if ((localStorage.length < 12 && window.location.pathname !== '/' ) || (window.location.pathname !== '/'  && !localStorage.getItem("UserName"))) {
           localStorage.clear();
           window.location.href = '/';
         }
@@ -74,7 +74,7 @@ setTimeout(() => {
   // 3. شاشة التحميل
   if (isLoading) {
     return (
-      <div className="w-screen h-screen flex items-center justify-center bg-white dark:bg-black">
+      <div className="w-screen h-screen flex items-center justify-center bg-white dark:bg-[#111]">
         <div className="w-1/4">
         <Loading />
         </div>
@@ -107,7 +107,7 @@ setTimeout(() => {
         <Route
           path="/"
           element={
-            isFirstTime ? (
+            localStorage.length < 12 ? (
               <Welcome />
             ) : (
               <Navigate to="/me/home" replace />
@@ -124,7 +124,7 @@ setTimeout(() => {
         <Route path="/Settings" element={<Settings />} />
         <Route
           path="*"
-          element={<h1 className="p-5">404</h1>}
+          element={<h1 className="p-5 text-9xl text-rose-600">404</h1>}
         />
 
         <Route
@@ -139,7 +139,7 @@ setTimeout(() => {
         />
       </Routes>
 
-      {localStorage.length >= 9 && window.location.pathname !== "/MkADiet" && <Navbar />}
+      {localStorage.length >= 12 && window.location.pathname !== "/MkADiet" && <Navbar />}
     </>
   );
 }

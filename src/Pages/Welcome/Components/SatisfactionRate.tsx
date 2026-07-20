@@ -15,7 +15,7 @@ const SatisfactionRate : React.FC = () => {
        <div className='w-screen p-4 show-first h-3/4 flex items-center justify-between flex-col  ' >
  <div>
      
-     <h2 className='text-3xl translate-y-0 text-amber-400 font-extrabold  text-center '> ما مدي رضاك عن شكل جسمك <span className='text-amber-500'>؟</span></h2>
+     <h2 className='text-3xl translate-y-0 text-amber-400 dark:text-white font-extrabold  text-center '> ما مدي رضاك عن شكل جسمك <span className='text-amber-500'>؟</span></h2>
         <div className=' text-sm text-amber-700   text-center'>الرقم مجرد رأي لحظي — أنت أكبر من رقم. ابدأ بخطوة بسيطة النهاردة، ومهم تفتكر إن التغيّر الحقيقي بيبدأ بالاستمرار مش بالسرعة</div>
     
   </div>        

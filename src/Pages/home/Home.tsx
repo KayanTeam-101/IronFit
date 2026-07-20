@@ -3,15 +3,21 @@ import { FaBowlFood, FaCookieBite, FaFire } from "react-icons/fa6";
 import { BiInfoCircle } from "react-icons/bi";
 import ExerciseDay from "./Components/ExcrsiceDay";
 import Table from "./Components/Table";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Fire from '../../assets/animatedFire.gif'
 import InstallButton from "./Components/InstallButton";
 import StatusPage from "../StatusPage/StatusPage";
 import { useCountUp } from "../../Hooks/Increasing";
 import Subscribe from "./Components/Subscribe";
-import { giveHealthAdvice } from "../../utilities/GiveAdvice";
+import { TasksPanel } from "./Components/Xp";
 import { NavLink } from "react-router-dom";
-
+import { RiCopperCoinLine } from "react-icons/ri";
+import { PiTiktokLogoBold, PiTiktokLogoLight } from "react-icons/pi";
+import TodayTask from "./Components/TodayTask";
+import Xp, { calculateAllTimeXP } from "./Components/Xp";
+import { getUserRank, getUsers } from "../../firebase/user";
+import { BsInfoCircleFill } from "react-icons/bs";
+import { ImInfo } from "react-icons/im";
 // ---------- Streak calculator ----------
 const calculateStreak = (): number => {
   const raw = localStorage.getItem("CompletedDates");
@@ -62,8 +68,24 @@ const calculateStreak = (): number => {
   return streak;
 };
 
+const getUsers_ = await getUsers();
+const thisUser =getUsers_.find(item => item.UserId_ === Number(localStorage.getItem("userId_")))
+export const rank = await getUserRank(thisUser?.id || "");
+localStorage.setItem("rank",String(rank));
+
 const Home = () => {
   // Ensure StartedAT timestamp
+const [allTimeXP, setAllTimeXP] = React.useState(0);
+const [showTasks, setShowTasks] = useState(false);
+  const [showRanking, setShowRanking] = useState(false);
+
+  useEffect(() => {
+    const fetchXp = async () => {
+      const xp = await calculateAllTimeXP();
+      setAllTimeXP(xp);
+    };
+    fetchXp();
+  }, []);
   if (!localStorage.getItem("StartedAT")) {
     localStorage.setItem("StartedAT", new Date().getTime().toString());
   }
@@ -82,7 +104,6 @@ const Home = () => {
     const gender = localStorage.getItem("SelectedGender") || "";
       const [showSubscribe, setShowSubscribe] = useState(true); // or false
   const [IsActive, setIsActive] = useState(false);
-
   useEffect(() => {
    
   
@@ -131,11 +152,9 @@ const Home = () => {
   }, [dailyCaloriesGoal]);
 
 
-  const IsThere_A_Diet = localStorage.getItem("Diet");
   const streak = useMemo(() => calculateStreak(),[]);
-  const Advice = giveHealthAdvice();
   return (
-    <div className="relative min-h-screen w-screen  overflow-hidden p-4 flex flex-col gap-2.5 show-first">
+    <div className="relative min-h-screen w-screen  overflow-hidden p-4 flex flex-col gap-5 show-first">
           {showSubscribe  && !IsActive && (
         <Subscribe onClose={() => setShowSubscribe(false)} />
       )}
@@ -143,57 +162,65 @@ const Home = () => {
       <div className="relative w-full min-h-14 flex  flex-col">
       <div className="w-full flex flex-row justify-between">
 
-          <div className="text-2xl flex flex-row gap-1.5">
-            <GoHomeFill className="dark:text-white mt-2.5"/>
-            <div className="p-1.5 bg-linear-to-r bg-clip-text  from-yellow-500 via-orange-500  to-pink-500 felx justify-center align-center rounded-full text-sm text-transparent font-bold">
-            
-  V1.2.55
-  <br />
-<a href="https://www.tiktok.com/@iron_fit_app" target="_blank" rel="noopener noreferrer" className="underline text-amber-500">
-  شاركنا رأيك
-</a>
-            </div>
+          <div className="text-2xl flex flex-row items-center  gap-2.5">
+<div className="h-12 w-12  rounded-full ">
+  <img src={localStorage.getItem("PhotoUrl") || ""} alt="user imgage" className="w-full h-full scale-105 border border-orange-500 rounded-full shadow-[0_0_10px_-2px_orange]" />
+</div>
+<div className="flex flex-col">
+  <p className="dark:text-white font-thin text-[15px]"> اهلاً  {localStorage.getItem("UserName")} 👋</p>
+  <p className="font-thin text-sm -mb-2 text-gray-500"> جاهز ليوم مليئ بالتحديات؟🔥</p>
+  
+  </div>          
           </div>
         <InstallButton /> 
         
       </div>
         <br />
 
-        {IsThere_A_Diet ? (
-          <>
+          
             {/* Advice card */}
-            <div className="w-full rounded-3xl mb-2 p-5 shadow-sm dark:bg-black/20 dark:border-2 dark:border-gray-600/20  bg-white flex flex-row gap-2">
-              <FaCookieBite className="text-2xl text-amber-500 dark:text-amber-300" />
-              <p className="font-light text-md show-third dark:text-white">{Advice}</p>
-            </div>
+      <Table />
+    <TodayTask />
+
+     {showTasks && <TasksPanel   showTasks={showTasks}
+        setShowTasks={setShowTasks}
+        showRanking={showRanking}
+        setShowRank={setShowRanking} onClose={() => setShowTasks(false)} />}
 
             {/* Active streak card */}
-            <div className="rounded-3xl bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 text-white text-xl font-black tracking-tight flex flex-row justify-between items-center p-5 shadow-sm">
-              <p className="flex flex-row bg-linear-to-r from-rose-300 via-orange-400 to-yellow-400 bg-clip-text text-transparent items-center gap-1">
+          <div className="flex flex-row gap-3">
+                <div className="rounded-3xl bg-white dark:bg-[#222]/50 dark:border-2 dark:border-gray-600/20 text-white text-xl font-black tracking-tight flex flex-row  w-1/2 justify-between items-center p-2 shadow-sm">
+              <p className="flex flex-row bg-linear-to-r from-rose-300 via-orange-400 to-yellow-400 bg-clip-text text-transparent items-center gap-1 mt-2">
                 الأيام النشطة 
               </p>
-              <div className="flex bg-gray-50 dark:bg-transparent p-2 rounded-xl items-center gap-2.5">
+              <div className="flex  p-2 rounded-xl items-center gap-2.5">
             {streak > 0 ?
              <img src={Fire} alt="Fire" className="w-6 h-6 animate-pulse" />
              : <FaFire className="text-gray-400" />}
-                <span className="text-amber-500 font-extrabold mt-1 ">{useCountUp(streak)}</span>
+                <span className="text-amber-500 font-extrabold mt-1 ">{useCountUp(streak,800)}</span>
               </div>
             </div>
-          </>
-        ) : (
-          /* No diet yet – prompt to create one */
-          <NavLink to="/me/food">
-            <div className="w-full rounded-2xl mt-1.5 p-5 shadow-sm bg-white dark:bg-gray-400/15  dark:border-gray-600/20 flex flex-row gap-2 border-4 animate-pulse delay-1000">
-              <FaBowlFood className="text-2xl text-amber-300" />
-              <p className="font-light text-md show-first dark:text-white">دعنا نصنع أفضل نظام غذائي!</p>
+            
+              <div 
+  onClick={() => setShowTasks(true)}   // ✅ أضف هذا السطر
+              className="relative rounded-3xl  bg-white dark:bg-[#222]/50 dark:border-2 dark:border-gray-600/20 active:scale-95 active:opacity-65 transition delay-75 text-white text-xl font-black tracking-tight flex flex-row  w-1/2 justify-between items-center p-2 shadow-sm">
+              <p className="flex flex-row bg-linear-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent items-center gap-1 mt-2">
+                 نقاط Xp
+              </p>
+              <div className="flex  p-2 rounded-xl items-center gap-2.5">
+           <RiCopperCoinLine className="text-blue-500 " />
+           <ImInfo className="absolute top-2 right-2 text-gray-400 text-[12px]"/>
+                <span className="dark:text-white text-gray-600 font-extrabold mt-2 ">{useCountUp( allTimeXP,800)}</span>
+              </div>
             </div>
-          </NavLink>
-        )}
+            
+          </div>
+          
       </div>
 
       <ExerciseDay />
-      <Table />
       <StatusPage />
+      
       <div className="h-14" />
     </div>
   );

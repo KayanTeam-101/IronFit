@@ -55,7 +55,7 @@ const Subscribe: React.FC<SubscribeProps> = ({
         <div className="text-sm text-gray-600 dark:text-gray-300 space-y-3 text-right leading-relaxed">
           <p className="py-4 border-r-2 border-amber-300/40  px-2"> <strong>الخطوة ١:</strong> أرسل الكود التعريفي  لصديقك.</p>
           <p className="py-4 border-r-2 border-amber-300/60  px-2"><strong>الخطوة ٢:</strong> صديقك يدخل الكود في <span onClick={() => navigate("/Settings") } className="text-blue-600 dark:text-blue-400 font-medium  p-1 border   ">“تفعيل بصديق”</span> من صفحة أنا.</p>
-          <p className="py-4 border-r-2 border-amber-300  px-2"><strong>الخطوة ٣:</strong> بعد التفعيل، تحصل تلقائياً على 3 أيام مجانية!</p>
+          <p className="py-4 border-r-2 border-amber-300  px-2"><strong>الخطوة ٣:</strong> بعد التفعيل، تحصلان تلقائياً على 3 أيام مجانية ... ماذا تنتظر !</p>
         </div>
 
         {/* Divider */}

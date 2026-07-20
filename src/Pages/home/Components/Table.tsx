@@ -1,84 +1,105 @@
-import React from 'react'
-import {BsFlagFill } from "react-icons/bs";
+import React, { useRef, useEffect } from 'react';
+import { BsFlagFill } from 'react-icons/bs';
 
 const Table = () => {
-  // Function to generate array of day numbers (1, 2, 3... up to total days)
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // ---------- helpers ----------
+  const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
   function calculateDays() {
-    const getMonthsCount: number = Number(localStorage.getItem("challengePeriod")) || 0; 
-    const NOD = getMonthsCount * 30;
-    const daysArray = [];
-    for (let i = 1; i <= NOD; i++) {
-      daysArray.push(i);
-    }
-    return daysArray;
+    const months = Number(localStorage.getItem('challengePeriod')) || 0;
+    const total = months * 30;
+    return Array.from({ length: total }, (_, i) => i + 1);
   }
 
+  const startTime = Number(localStorage.getItem('StartedAT') || Date.now());
+  const today = new Date();
+  const daysSinceStart = Math.floor((today.getTime() - startTime) / 86400000);
+  const totalDays = calculateDays().length;
+  const currentDayNumber = Math.min(daysSinceStart + 1, totalDays);
 
+  // ---------- localStorage trackers ----------
+  const noneExerciseDays: number[] = JSON.parse(
+    localStorage.getItem('none-exercise') || '[]'
+  );
+  const eatAllDishesDays: number[] = JSON.parse(
+    localStorage.getItem('EatAllDishes') || '[]'
+  );
 
-  // Alternative version if you want to track "completed" days
-  function getDayColorAlternative(day: number) {
-    // Get the current day of challenge (1-based)
-      const startTime = Number(localStorage.getItem("StartedAT"));
-          console.log("Start Time :" + startTime);
-          
-          const today = new Date();
-          const daysSinceStart = Math.floor((today.getTime() - startTime) / (60 * 60 * 24 *1000));
-
-          console.log("Days Since Start :"+ daysSinceStart );
-          
-    // If this day is in the past of the challenge
-    if (day < daysSinceStart) {
-      return "bg-linear-to-t from-orange-200 scale-90 opacity-60   dark:from-slate-800/40 dark:to-black/40 dark:border-2 dark:border-gray-600/20  text-white"; // Completed days
-    } 
-    // If this is today's challenge day
-    
-    else if (day === daysSinceStart) {
-      return "bg-linear-to-t from-amber-300 to-orange-400 shadow-md text-white dark:from-slate-700/40 dark:to-black/40 dark:border-2 dark:border-gray-600/20 animate-pulse "; // Current day
-    }else{
-      return " text-gray-500"; // Future days
+  // ---------- day box background (original logic) ----------
+  function getDayColor(dayIndex: number) {
+    if (dayIndex < daysSinceStart) {
+      return ' bg-white dark:bg-slate-800/40 dark:border dark:border-gray-600/20 text-white';
     }
+    if (dayIndex === daysSinceStart) {
+      return 'shadow-md text-white bg-orange-500/90  dark:border dark:border-gray-600/20';
+    }
+    return 'text-gray-500';
   }
+
+  
+
+  // ---------- auto‑scroll to today ----------
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      const el = document.getElementById(`day-${currentDayNumber}`);
+      if (el) {
+        el.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center',
+        });
+      }
+    }
+  }, [currentDayNumber]);
 
   return (
-    <div className='relative flex items-center flex-col w-full min-h-14  p-2 bg-white  dark:bg-black/40 dark:border-2 dark:border-gray-600/20 rounded-2xl border-amber-50 '>
-      <div className='w-full h-10 flex items-center justify-between border-b-2 border-amber-100 dark:border-b-gray-400/20 mb-2'>
-        <div className='flex items-center'>
-          <span className='dark:text-white'>تقدمي</span>
-        </div>
-        <div className='flex items-center'>
-          <BsFlagFill className=' text-xl dark:text-white' />
-        </div>
-      </div>
-      {/* End Header */}
-      <div className='w-full min-h-2.5 max-h-35 p-2 grid grid-cols-7 gap-1.5 overflow-y-scroll'>
-        {calculateDays().map((item,idx) => (
-          <div 
-            key={item} 
-            className={`w-7 h-10 select-none ${getDayColorAlternative(idx)}  rounded-full  flex items-center justify-center font-blod`}
-          >
-            {item}
-          </div>
-        ))}
-      </div>
-      {/* Optional: Display current progress */}
-      <div className='mt-2 text-sm text-gray-600 dark:text-gray-400'>
-        {(() => {
-          const startTime = Number(localStorage.getItem("StartedAT"));
-          console.log("Start Time :" + startTime);
-          
-          const today = new Date();
-          const daysSinceStart = Math.floor((today.getTime() - startTime) / (60 * 60 * 24 *1000));
+    <div className="relative flex flex-col w-full min-h-14 p-2   rounded-2xl border-amber-50">
+  
+      {/* Days row – horizontally scrollable */}
+      <div
+        ref={scrollContainerRef}
+        className="overflow-x-auto pb-1"
+        style={{ scrollbarWidth: 'thin' }}
+      >
+        <div className="flex space-x-3 p-1">
+          {calculateDays().map((day, idx) => {
+            const date = new Date(startTime + idx * 86400000);
+            const weekday = weekdays[date.getDay()];
+            const bgClass = getDayColor(idx);
 
-          console.log("Days Since Start :"+ daysSinceStart );
-          
-          
-          const totalDays = calculateDays().length;
-          
-          return `اليوم ${Math.min(daysSinceStart + 1, totalDays)} من  ${totalDays}`;
-        })()}
+            return (
+              <div
+                key={day}
+                id={`day-${day}`}
+                className={`flex flex-col items-center w-12 select-none  rounded-full p-1 ${bgClass} `}
+              >
+                {/* weekday name */}
+                <span className="text-[9.5px] text-gray-400 dark:text-gray-100 mt-1.5 whitespace-nowrap">
+                  {weekday}
+                </span>
+
+                {/* day number box */}
+                <div
+                  className={`w-10 h-10 rounded-full flex items-center justify-center text-md font-black  `}
+                >
+                  {day}
+                </div>
+
+                {/* status dot */}
+              </div>
+            );
+          })}
+        </div>
       </div>
+
+      {/* Progress info
+      <div className=" text-sm text-gray-600 dark:text-gray-400 text-center">
+        {`اليوم ${currentDayNumber} من ${totalDays}`}
+      </div> */}
     </div>
-  )
-}
+  );
+};
 
-export default Table
+export default Table;

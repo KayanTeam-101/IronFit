@@ -3,954 +3,1272 @@
     "FoodName": "فول مدمس",
     "ProtineForOneKilo": "100",
     "MostVitamens": ["فيتامين أ", "فيتامين ج", "فيتامين ك", "حديد"],
-    "calForOneKilo": "2090"
+    "calForOneKilo": "2090",
+    "CarbForOneKilo": "310",
+    "FatForOneKilo": "50"
   },
   {
     "FoodName": "طعمية (فلافل مصرية)",
     "ProtineForOneKilo": "90",
     "MostVitamens": ["فيتامين أ", "حديد", "فولات"],
-    "calForOneKilo": "2500"
+    "calForOneKilo": "2500",
+    "CarbForOneKilo": "200",
+    "FatForOneKilo": "150"
   },
   {
     "FoodName": "فلافل إسكندراني",
     "ProtineForOneKilo": "88",
     "MostVitamens": ["فيتامين أ", "حديد", "كالسيوم"],
-    "calForOneKilo": "2450"
+    "calForOneKilo": "2450",
+    "CarbForOneKilo": "190",
+    "FatForOneKilo": "148"
   },
   {
     "FoodName": "بطاطس مقلية",
     "ProtineForOneKilo": "25",
     "MostVitamens": ["فيتامين ب6", "بوتاسيوم", "فيتامين ج"],
-    "calForOneKilo": "3120"
+    "calForOneKilo": "3120",
+    "CarbForOneKilo": "410",
+    "FatForOneKilo": "170"
   },
   {
     "FoodName": "بيض مسلوق",
     "ProtineForOneKilo": "130",
     "MostVitamens": ["فيتامين ب12", "فيتامين د", "سيلينيوم"],
-    "calForOneKilo": "1550"
+    "calForOneKilo": "1550",
+    "CarbForOneKilo": "10",
+    "FatForOneKilo": "105"
   },
   {
     "FoodName": "جبنة بيضاء (دمياطي)",
     "ProtineForOneKilo": "140",
     "MostVitamens": ["كالسيوم", "فيتامين أ", "فوسفور"],
-    "calForOneKilo": "2500"
+    "calForOneKilo": "2500",
+    "CarbForOneKilo": "20",
+    "FatForOneKilo": "200"
   },
   {
     "FoodName": "جبنة رومي",
     "ProtineForOneKilo": "260",
     "MostVitamens": ["كالسيوم", "فيتامين ب12", "زنك"],
-    "calForOneKilo": "4000"
+    "calForOneKilo": "4000",
+    "CarbForOneKilo": "10",
+    "FatForOneKilo": "320"
   },
   {
     "FoodName": "عسل أسود",
     "ProtineForOneKilo": "20",
     "MostVitamens": ["حديد", "ماغنسيوم", "بوتاسيوم"],
-    "calForOneKilo": "2900"
+    "calForOneKilo": "2900",
+    "CarbForOneKilo": "690",
+    "FatForOneKilo": "0"
   },
   {
     "FoodName": "طحينة",
     "ProtineForOneKilo": "180",
     "MostVitamens": ["كالسيوم", "نحاس", "فوسفور"],
-    "calForOneKilo": "5950"
+    "calForOneKilo": "5950",
+    "CarbForOneKilo": "150",
+    "FatForOneKilo": "520"
   },
   {
     "FoodName": "كشري",
     "ProtineForOneKilo": "50",
     "MostVitamens": ["حديد", "فولات", "فيتامين ج"],
-    "calForOneKilo": "1800"
+    "calForOneKilo": "1800",
+    "CarbForOneKilo": "280",
+    "FatForOneKilo": "40"
   },
   {
     "FoodName": "ملوخية",
     "ProtineForOneKilo": "42",
     "MostVitamens": ["فيتامين أ", "نياسين", "فيتامين ب6", "بوتاسيوم"],
-    "calForOneKilo": "1057"
+    "calForOneKilo": "1057",
+    "CarbForOneKilo": "160",
+    "FatForOneKilo": "30"
   },
   {
     "FoodName": "بامية",
     "ProtineForOneKilo": "50",
     "MostVitamens": ["فيتامين ج", "فيتامين ك", "فولات"],
-    "calForOneKilo": "1400"
+    "calForOneKilo": "1400",
+    "CarbForOneKilo": "200",
+    "FatForOneKilo": "40"
   },
   {
     "FoodName": "بسلة",
     "ProtineForOneKilo": "50",
     "MostVitamens": ["فيتامين ج", "فيتامين ك", "منجنيز"],
-    "calForOneKilo": "840"
+    "calForOneKilo": "840",
+    "CarbForOneKilo": "150",
+    "FatForOneKilo": "5"
   },
   {
     "FoodName": "فاصوليا خضراء",
     "ProtineForOneKilo": "18",
     "MostVitamens": ["فيتامين ج", "فيتامين أ", "حديد"],
-    "calForOneKilo": "310"
+    "calForOneKilo": "310",
+    "CarbForOneKilo": "60",
+    "FatForOneKilo": "1"
   },
   {
     "FoodName": "سبانخ",
     "ProtineForOneKilo": "29",
     "MostVitamens": ["فيتامين أ", "فيتامين ك", "حديد", "كالسيوم"],
-    "calForOneKilo": "230"
+    "calForOneKilo": "230",
+    "CarbForOneKilo": "30",
+    "FatForOneKilo": "5"
   },
   {
     "FoodName": "عدس شوربة",
     "ProtineForOneKilo": "90",
     "MostVitamens": ["حديد", "فولات", "فيتامين ب1"],
-    "calForOneKilo": "1050"
+    "calForOneKilo": "1050",
+    "CarbForOneKilo": "170",
+    "FatForOneKilo": "5"
   },
   {
     "FoodName": "محشي ورق عنب",
     "ProtineForOneKilo": "25",
     "MostVitamens": ["فيتامين أ", "فيتامين ج", "حديد"],
-    "calForOneKilo": "1400"
+    "calForOneKilo": "1400",
+    "CarbForOneKilo": "220",
+    "FatForOneKilo": "60"
   },
   {
     "FoodName": "محشي كرنب",
     "ProtineForOneKilo": "28",
     "MostVitamens": ["فيتامين ج", "فيتامين ك", "كالسيوم"],
-    "calForOneKilo": "1450"
+    "calForOneKilo": "1450",
+    "CarbForOneKilo": "210",
+    "FatForOneKilo": "70"
   },
   {
     "FoodName": "محشي كوسة",
     "ProtineForOneKilo": "20",
     "MostVitamens": ["فيتامين أ", "فيتامين ج", "بوتاسيوم"],
-    "calForOneKilo": "1200"
+    "calForOneKilo": "1200",
+    "CarbForOneKilo": "190",
+    "FatForOneKilo": "50"
   },
   {
     "FoodName": "محشي باذنجان",
     "ProtineForOneKilo": "22",
     "MostVitamens": ["فولات", "بوتاسيوم", "فيتامين ب6"],
-    "calForOneKilo": "1350"
+    "calForOneKilo": "1350",
+    "CarbForOneKilo": "200",
+    "FatForOneKilo": "60"
   },
   {
     "FoodName": "محشي فلفل",
     "ProtineForOneKilo": "18",
     "MostVitamens": ["فيتامين ج", "فيتامين أ", "بوتاسيوم"],
-    "calForOneKilo": "1150"
+    "calForOneKilo": "1150",
+    "CarbForOneKilo": "180",
+    "FatForOneKilo": "50"
   },
   {
     "FoodName": "محشي طماطم",
     "ProtineForOneKilo": "18",
     "MostVitamens": ["فيتامين ج", "ليكوبين", "بوتاسيوم"],
-    "calForOneKilo": "1100"
+    "calForOneKilo": "1100",
+    "CarbForOneKilo": "170",
+    "FatForOneKilo": "45"
   },
   {
     "FoodName": "كفتة",
     "ProtineForOneKilo": "180",
     "MostVitamens": ["حديد", "زنك", "فيتامين ب12"],
-    "calForOneKilo": "2500"
+    "calForOneKilo": "2500",
+    "CarbForOneKilo": "50",
+    "FatForOneKilo": "180"
   },
   {
     "FoodName": "كباب",
     "ProtineForOneKilo": "200",
     "MostVitamens": ["حديد", "فيتامين ب12", "سيلينيوم"],
-    "calForOneKilo": "2800"
+    "calForOneKilo": "2800",
+    "CarbForOneKilo": "30",
+    "FatForOneKilo": "200"
   },
   {
     "FoodName": "فراخ مشوية",
     "ProtineForOneKilo": "270",
     "MostVitamens": ["فيتامين ب6", "نياسين", "سيلينيوم"],
-    "calForOneKilo": "2200"
+    "calForOneKilo": "2200",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "120"
   },
   {
     "FoodName": "حمام محشي",
     "ProtineForOneKilo": "220",
     "MostVitamens": ["حديد", "زنك", "فيتامين ب"],
-    "calForOneKilo": "2400"
+    "calForOneKilo": "2400",
+    "CarbForOneKilo": "10",
+    "FatForOneKilo": "160"
   },
   {
     "FoodName": "بط",
     "ProtineForOneKilo": "190",
     "MostVitamens": ["حديد", "نحاس", "سيلينيوم"],
-    "calForOneKilo": "3350"
+    "calForOneKilo": "3350",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "290"
   },
   {
     "FoodName": "أرانب",
     "ProtineForOneKilo": "210",
     "MostVitamens": ["فيتامين ب12", "حديد", "فوسفور"],
-    "calForOneKilo": "1950"
+    "calForOneKilo": "1950",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "120"
   },
   {
     "FoodName": "لحم بعجين",
     "ProtineForOneKilo": "150",
     "MostVitamens": ["زنك", "حديد", "فيتامين ب12"],
-    "calForOneKilo": "2800"
+    "calForOneKilo": "2800",
+    "CarbForOneKilo": "220",
+    "FatForOneKilo": "150"
   },
   {
     "FoodName": "مكرونة بشاميل",
     "ProtineForOneKilo": "80",
     "MostVitamens": ["كالسيوم", "فيتامين أ", "حديد"],
-    "calForOneKilo": "2200"
+    "calForOneKilo": "2200",
+    "CarbForOneKilo": "280",
+    "FatForOneKilo": "110"
   },
   {
     "FoodName": "صيادية",
     "ProtineForOneKilo": "70",
     "MostVitamens": ["فيتامين د", "اوميجا 3", "سيلينيوم"],
-    "calForOneKilo": "1600"
+    "calForOneKilo": "1600",
+    "CarbForOneKilo": "190",
+    "FatForOneKilo": "70"
   },
   {
     "FoodName": "جمبري",
     "ProtineForOneKilo": "240",
     "MostVitamens": ["سيلينيوم", "فيتامين ب12", "يود"],
-    "calForOneKilo": "1300"
+    "calForOneKilo": "1300",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "30"
   },
   {
     "FoodName": "سمك بلطي مشوي",
     "ProtineForOneKilo": "200",
     "MostVitamens": ["فيتامين د", "فوسفور", "سيلينيوم"],
-    "calForOneKilo": "1500"
+    "calForOneKilo": "1500",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "70"
   },
   {
     "FoodName": "سمك قشر بياض",
     "ProtineForOneKilo": "190",
     "MostVitamens": ["اوميجا 3", "فيتامين د", "بوتاسيوم"],
-    "calForOneKilo": "1700"
+    "calForOneKilo": "1700",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "100"
   },
   {
     "FoodName": "كابوريا",
     "ProtineForOneKilo": "180",
     "MostVitamens": ["نحاس", "زنك", "سيلينيوم"],
-    "calForOneKilo": "1200"
+    "calForOneKilo": "1200",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "45"
   },
   {
     "FoodName": "بابا غنوج",
     "ProtineForOneKilo": "18",
     "MostVitamens": ["فيتامين ب6", "بوتاسيوم", "فولات"],
-    "calForOneKilo": "1400"
+    "calForOneKilo": "1400",
+    "CarbForOneKilo": "130",
+    "FatForOneKilo": "100"
   },
   {
     "FoodName": "حمص",
     "ProtineForOneKilo": "80",
     "MostVitamens": ["حديد", "فولات", "منجنيز"],
-    "calForOneKilo": "1400"
+    "calForOneKilo": "1400",
+    "CarbForOneKilo": "200",
+    "FatForOneKilo": "60"
   },
   {
     "FoodName": "متبل",
     "ProtineForOneKilo": "20",
     "MostVitamens": ["كالسيوم", "حديد", "ماغنسيوم"],
-    "calForOneKilo": "1600"
+    "calForOneKilo": "1600",
+    "CarbForOneKilo": "120",
+    "FatForOneKilo": "130"
   },
   {
     "FoodName": "تقلية",
     "ProtineForOneKilo": "15",
     "MostVitamens": ["فيتامين أ", "حديد", "بوتاسيوم"],
-    "calForOneKilo": "500"
+    "calForOneKilo": "500",
+    "CarbForOneKilo": "70",
+    "FatForOneKilo": "25"
   },
   {
     "FoodName": "سلطة بلدي",
     "ProtineForOneKilo": "10",
     "MostVitamens": ["فيتامين ج", "فيتامين أ", "بوتاسيوم"],
-    "calForOneKilo": "150"
+    "calForOneKilo": "150",
+    "CarbForOneKilo": "30",
+    "FatForOneKilo": "1"
   },
   {
     "FoodName": "كنافة",
     "ProtineForOneKilo": "50",
     "MostVitamens": ["كالسيوم", "حديد"],
-    "calForOneKilo": "4500"
+    "calForOneKilo": "4500",
+    "CarbForOneKilo": "600",
+    "FatForOneKilo": "250"
   },
   {
     "FoodName": "قطايف",
     "ProtineForOneKilo": "45",
     "MostVitamens": ["كالسيوم", "ماغنسيوم"],
-    "calForOneKilo": "3800"
+    "calForOneKilo": "3800",
+    "CarbForOneKilo": "520",
+    "FatForOneKilo": "190"
   },
   {
     "FoodName": "بسبوسة",
     "ProtineForOneKilo": "40",
     "MostVitamens": ["فيتامين هـ", "حديد"],
-    "calForOneKilo": "3800"
+    "calForOneKilo": "3800",
+    "CarbForOneKilo": "550",
+    "FatForOneKilo": "170"
   },
   {
     "FoodName": "أم علي",
     "ProtineForOneKilo": "55",
     "MostVitamens": ["كالسيوم", "فيتامين أ", "فوسفور"],
-    "calForOneKilo": "2900"
+    "calForOneKilo": "2900",
+    "CarbForOneKilo": "380",
+    "FatForOneKilo": "140"
   },
   {
     "FoodName": "أرز بلبن",
     "ProtineForOneKilo": "30",
     "MostVitamens": ["كالسيوم", "فيتامين د"],
-    "calForOneKilo": "1400"
+    "calForOneKilo": "1400",
+    "CarbForOneKilo": "230",
+    "FatForOneKilo": "50"
   },
   {
     "FoodName": "جلاش",
     "ProtineForOneKilo": "45",
     "MostVitamens": ["حديد", "كالسيوم"],
-    "calForOneKilo": "4200"
+    "calForOneKilo": "4200",
+    "CarbForOneKilo": "580",
+    "FatForOneKilo": "220"
   },
   {
     "FoodName": "مهلبية",
     "ProtineForOneKilo": "25",
     "MostVitamens": ["كالسيوم", "فيتامين ب2"],
-    "calForOneKilo": "1200"
+    "calForOneKilo": "1200",
+    "CarbForOneKilo": "200",
+    "FatForOneKilo": "40"
   },
   {
     "FoodName": "عرق سوس",
     "ProtineForOneKilo": "10",
     "MostVitamens": ["كالسيوم", "ماغنسيوم", "بوتاسيوم"],
-    "calForOneKilo": "350"
+    "calForOneKilo": "350",
+    "CarbForOneKilo": "80",
+    "FatForOneKilo": "0"
   },
   {
     "FoodName": "كركديه",
     "ProtineForOneKilo": "5",
     "MostVitamens": ["فيتامين ج", "حديد", "كالسيوم"],
-    "calForOneKilo": "380"
+    "calForOneKilo": "380",
+    "CarbForOneKilo": "90",
+    "FatForOneKilo": "0"
   },
   {
     "FoodName": "خروب",
     "ProtineForOneKilo": "8",
     "MostVitamens": ["كالسيوم", "بوتاسيوم", "حديد"],
-    "calForOneKilo": "400"
+    "calForOneKilo": "400",
+    "CarbForOneKilo": "95",
+    "FatForOneKilo": "0"
   },
   {
     "FoodName": "تمر هندي",
     "ProtineForOneKilo": "6",
     "MostVitamens": ["فيتامين ب1", "حديد", "ماغنسيوم"],
-    "calForOneKilo": "350"
+    "calForOneKilo": "350",
+    "CarbForOneKilo": "85",
+    "FatForOneKilo": "0"
   },
   {
     "FoodName": "سحلب",
     "ProtineForOneKilo": "35",
     "MostVitamens": ["كالسيوم", "زنك", "ماغنسيوم"],
-    "calForOneKilo": "1450"
+    "calForOneKilo": "1450",
+    "CarbForOneKilo": "250",
+    "FatForOneKilo": "40"
   },
   {
     "FoodName": "قمر الدين",
     "ProtineForOneKilo": "15",
     "MostVitamens": ["فيتامين أ", "حديد", "بوتاسيوم"],
-    "calForOneKilo": "1050"
+    "calForOneKilo": "1050",
+    "CarbForOneKilo": "240",
+    "FatForOneKilo": "10"
   },
   {
     "FoodName": "فتة صعيدي",
     "ProtineForOneKilo": "95",
     "MostVitamens": ["كالسيوم", "حديد", "فوسفور"],
-    "calForOneKilo": "2800"
+    "calForOneKilo": "2800",
+    "CarbForOneKilo": "380",
+    "FatForOneKilo": "120"
   },
   {
     "FoodName": "كشك صعيدي",
     "ProtineForOneKilo": "70",
     "MostVitamens": ["كالسيوم", "فيتامين د", "زنك"],
-    "calForOneKilo": "2100"
+    "calForOneKilo": "2100",
+    "CarbForOneKilo": "300",
+    "FatForOneKilo": "90"
   },
   {
     "FoodName": "بتاو (عيش الصعيد)",
     "ProtineForOneKilo": "60",
     "MostVitamens": ["حديد", "ماغنسيوم", "فيتامين ب1"],
-    "calForOneKilo": "1850"
+    "calForOneKilo": "1850",
+    "CarbForOneKilo": "320",
+    "FatForOneKilo": "30"
   },
   {
     "FoodName": "فايش صعيدي",
     "ProtineForOneKilo": "55",
     "MostVitamens": ["كالسيوم", "بوتاسيوم", "فوسفور"],
-    "calForOneKilo": "1700"
+    "calForOneKilo": "1700",
+    "CarbForOneKilo": "280",
+    "FatForOneKilo": "40"
   },
   {
     "FoodName": "عيش شمسي",
     "ProtineForOneKilo": "65",
     "MostVitamens": ["حديد", "سيلينيوم", "فيتامين ب3"],
-    "calForOneKilo": "1950"
+    "calForOneKilo": "1950",
+    "CarbForOneKilo": "340",
+    "FatForOneKilo": "30"
   },
   {
     "FoodName": "منين بالعجوة",
     "ProtineForOneKilo": "45",
     "MostVitamens": ["بوتاسيوم", "ماغنسيوم", "حديد"],
-    "calForOneKilo": "2200"
+    "calForOneKilo": "2200",
+    "CarbForOneKilo": "380",
+    "FatForOneKilo": "70"
   },
   {
     "FoodName": "كركدي نوبي",
     "ProtineForOneKilo": "4",
     "MostVitamens": ["فيتامين ج", "حديد", "كالسيوم"],
-    "calForOneKilo": "380"
+    "calForOneKilo": "380",
+    "CarbForOneKilo": "90",
+    "FatForOneKilo": "0"
   },
   {
     "FoodName": "جلجلان نوبي",
     "ProtineForOneKilo": "120",
     "MostVitamens": ["كالسيوم", "نحاس", "منجنيز"],
-    "calForOneKilo": "3950"
+    "calForOneKilo": "3950",
+    "CarbForOneKilo": "200",
+    "FatForOneKilo": "310"
   },
   {
     "FoodName": "مُلوح نوبي (خبز الذرة)",
     "ProtineForOneKilo": "50",
     "MostVitamens": ["فيتامين ب6", "ماغنسيوم", "فوسفور"],
-    "calForOneKilo": "1600"
+    "calForOneKilo": "1600",
+    "CarbForOneKilo": "290",
+    "FatForOneKilo": "30"
   },
   {
     "FoodName": "ممبار",
     "ProtineForOneKilo": "75",
     "MostVitamens": ["حديد", "زنك", "فيتامين ب12"],
-    "calForOneKilo": "1950"
+    "calForOneKilo": "1950",
+    "CarbForOneKilo": "120",
+    "FatForOneKilo": "130"
   },
   {
     "FoodName": "كوارع",
     "ProtineForOneKilo": "120",
     "MostVitamens": ["كولاجين", "كالسيوم", "فوسفور"],
-    "calForOneKilo": "2100"
+    "calForOneKilo": "2100",
+    "CarbForOneKilo": "10",
+    "FatForOneKilo": "160"
   },
   {
     "FoodName": "فشة (كرشة)",
     "ProtineForOneKilo": "90",
     "MostVitamens": ["سيلينيوم", "فيتامين ب12", "زنك"],
-    "calForOneKilo": "1450"
+    "calForOneKilo": "1450",
+    "CarbForOneKilo": "5",
+    "FatForOneKilo": "110"
   },
   {
     "FoodName": "عكاوي",
     "ProtineForOneKilo": "110",
     "MostVitamens": ["كولاجين", "كالسيوم", "حديد"],
-    "calForOneKilo": "2350"
+    "calForOneKilo": "2350",
+    "CarbForOneKilo": "10",
+    "FatForOneKilo": "190"
   },
   {
     "FoodName": "كبدة اسكندراني",
     "ProtineForOneKilo": "150",
     "MostVitamens": ["فيتامين أ", "حديد", "فيتامين ب12"],
-    "calForOneKilo": "1900"
+    "calForOneKilo": "1900",
+    "CarbForOneKilo": "30",
+    "FatForOneKilo": "120"
   },
   {
     "FoodName": "سجق اسكندراني",
     "ProtineForOneKilo": "140",
     "MostVitamens": ["حديد", "زنك", "فيتامين ب"],
-    "calForOneKilo": "3100"
+    "calForOneKilo": "3100",
+    "CarbForOneKilo": "20",
+    "FatForOneKilo": "260"
   },
   {
     "FoodName": "حواوشي",
     "ProtineForOneKilo": "120",
     "MostVitamens": ["حديد", "فيتامين ب12", "زنك"],
-    "calForOneKilo": "2300"
+    "calForOneKilo": "2300",
+    "CarbForOneKilo": "200",
+    "FatForOneKilo": "140"
   },
   {
     "FoodName": "كفتة داوود باشا",
     "ProtineForOneKilo": "135",
     "MostVitamens": ["حديد", "زنك", "بوتاسيوم"],
-    "calForOneKilo": "2150"
+    "calForOneKilo": "2150",
+    "CarbForOneKilo": "80",
+    "FatForOneKilo": "140"
   },
   {
     "FoodName": "فراخ محمرة",
     "ProtineForOneKilo": "200",
     "MostVitamens": ["فيتامين ب6", "سيلينيوم", "نياسين"],
-    "calForOneKilo": "2450"
+    "calForOneKilo": "2450",
+    "CarbForOneKilo": "10",
+    "FatForOneKilo": "170"
   },
   {
     "FoodName": "فراخ مشوية بالفحم",
     "ProtineForOneKilo": "210",
     "MostVitamens": ["فيتامين ب6", "فوسفور", "سيلينيوم"],
-    "calForOneKilo": "1950"
+    "calForOneKilo": "1950",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "120"
   },
   {
     "FoodName": "فراخ بانسبة",
     "ProtineForOneKilo": "180",
     "MostVitamens": ["فيتامين ب3", "حديد", "زنك"],
-    "calForOneKilo": "2200"
+    "calForOneKilo": "2200",
+    "CarbForOneKilo": "40",
+    "FatForOneKilo": "130"
   },
   {
     "FoodName": "صينية فراخ وبطاطس",
     "ProtineForOneKilo": "140",
     "MostVitamens": ["فيتامين ب6", "بوتاسيوم", "فيتامين ج"],
-    "calForOneKilo": "1800"
+    "calForOneKilo": "1800",
+    "CarbForOneKilo": "150",
+    "FatForOneKilo": "90"
   },
   {
     "FoodName": "فراخ بالكريمة",
     "ProtineForOneKilo": "130",
     "MostVitamens": ["كالسيوم", "فيتامين أ", "فوسفور"],
-    "calForOneKilo": "2100"
+    "calForOneKilo": "2100",
+    "CarbForOneKilo": "30",
+    "FatForOneKilo": "160"
   },
   {
     "FoodName": "سمك وراطة",
     "ProtineForOneKilo": "160",
     "MostVitamens": ["اوميجا 3", "فيتامين د", "سيلينيوم"],
-    "calForOneKilo": "1400"
+    "calForOneKilo": "1400",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "80"
   },
   {
     "FoodName": "سمك موسى",
     "ProtineForOneKilo": "170",
     "MostVitamens": ["فيتامين ب12", "فوسفور", "يود"],
-    "calForOneKilo": "1350"
+    "calForOneKilo": "1350",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "70"
   },
   {
     "FoodName": "سمك بربون",
     "ProtineForOneKilo": "165",
     "MostVitamens": ["اوميجا 3", "سيلينيوم", "فيتامين د"],
-    "calForOneKilo": "1420"
+    "calForOneKilo": "1420",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "75"
   },
   {
     "FoodName": "جمبري صيادية",
     "ProtineForOneKilo": "185",
     "MostVitamens": ["يود", "زنك", "فيتامين ب12"],
-    "calForOneKilo": "1380"
+    "calForOneKilo": "1380",
+    "CarbForOneKilo": "10",
+    "FatForOneKilo": "70"
   },
   {
     "FoodName": "كابوريا مسلوقة",
     "ProtineForOneKilo": "150",
     "MostVitamens": ["نحاس", "زنك", "سيلينيوم"],
-    "calForOneKilo": "1150"
+    "calForOneKilo": "1150",
+    "CarbForOneKilo": "5",
+    "FatForOneKilo": "55"
   },
   {
     "FoodName": "سبيط (حبار)",
     "ProtineForOneKilo": "140",
     "MostVitamens": ["سيلينيوم", "فيتامين ب12", "حديد"],
-    "calForOneKilo": "1250"
+    "calForOneKilo": "1250",
+    "CarbForOneKilo": "5",
+    "FatForOneKilo": "65"
   },
   {
     "FoodName": "ويكة (بامية ناشفة)",
     "ProtineForOneKilo": "45",
     "MostVitamens": ["فيتامين ج", "كالسيوم", "فولات"],
-    "calForOneKilo": "950"
+    "calForOneKilo": "950",
+    "CarbForOneKilo": "150",
+    "FatForOneKilo": "25"
   },
   {
     "FoodName": "قلقاس",
     "ProtineForOneKilo": "22",
     "MostVitamens": ["فيتامين هـ", "بوتاسيوم", "حديد"],
-    "calForOneKilo": "1450"
+    "calForOneKilo": "1450",
+    "CarbForOneKilo": "310",
+    "FatForOneKilo": "10"
   },
   {
     "FoodName": "لوبيا بيضاء",
     "ProtineForOneKilo": "65",
     "MostVitamens": ["حديد", "فولات", "بوتاسيوم"],
-    "calForOneKilo": "880"
+    "calForOneKilo": "880",
+    "CarbForOneKilo": "150",
+    "FatForOneKilo": "5"
   },
   {
     "FoodName": "فاصوليا بيضاء",
     "ProtineForOneKilo": "70",
     "MostVitamens": ["حديد", "ماغنسيوم", "فولات"],
-    "calForOneKilo": "920"
+    "calForOneKilo": "920",
+    "CarbForOneKilo": "160",
+    "FatForOneKilo": "5"
   },
   {
     "FoodName": "باذنجان مخلل",
     "ProtineForOneKilo": "10",
     "MostVitamens": ["فيتامين ك", "بوتاسيوم", "ماغنسيوم"],
-    "calForOneKilo": "350"
+    "calForOneKilo": "350",
+    "CarbForOneKilo": "70",
+    "FatForOneKilo": "5"
   },
   {
     "FoodName": "ليمون مخلل",
     "ProtineForOneKilo": "5",
     "MostVitamens": ["فيتامين ج", "كالسيوم", "بوتاسيوم"],
-    "calForOneKilo": "180"
+    "calForOneKilo": "180",
+    "CarbForOneKilo": "40",
+    "FatForOneKilo": "0"
   },
   {
     "FoodName": "فتة بالعيش البلدي",
     "ProtineForOneKilo": "80",
     "MostVitamens": ["كالسيوم", "حديد", "فوسفور"],
-    "calForOneKilo": "2500"
+    "calForOneKilo": "2500",
+    "CarbForOneKilo": "350",
+    "FatForOneKilo": "110"
   },
   {
     "FoodName": "رقاق باللحمة المفرومة",
     "ProtineForOneKilo": "110",
     "MostVitamens": ["حديد", "زنك", "فيتامين ب12"],
-    "calForOneKilo": "2800"
+    "calForOneKilo": "2800",
+    "CarbForOneKilo": "320",
+    "FatForOneKilo": "140"
   },
   {
     "FoodName": "فطير مشلتت",
     "ProtineForOneKilo": "70",
     "MostVitamens": ["كالسيوم", "فيتامين أ", "حديد"],
-    "calForOneKilo": "3200"
+    "calForOneKilo": "3200",
+    "CarbForOneKilo": "420",
+    "FatForOneKilo": "160"
   },
   {
     "FoodName": "قرص فلاحي",
     "ProtineForOneKilo": "55",
     "MostVitamens": ["حديد", "سيلينيوم", "فيتامين ب1"],
-    "calForOneKilo": "1950"
+    "calForOneKilo": "1950",
+    "CarbForOneKilo": "330",
+    "FatForOneKilo": "40"
   },
   {
     "FoodName": "بكاكين فلاحي",
     "ProtineForOneKilo": "50",
     "MostVitamens": ["فيتامين ب3", "حديد", "ماغنسيوم"],
-    "calForOneKilo": "1850"
+    "calForOneKilo": "1850",
+    "CarbForOneKilo": "310",
+    "FatForOneKilo": "45"
   },
   {
     "FoodName": "أصابع زينب",
     "ProtineForOneKilo": "40",
     "MostVitamens": ["كالسيوم", "حديد", "فيتامين هـ"],
-    "calForOneKilo": "4100"
+    "calForOneKilo": "4100",
+    "CarbForOneKilo": "590",
+    "FatForOneKilo": "190"
   },
   {
     "FoodName": "زلابية (لقمة القاضي)",
     "ProtineForOneKilo": "35",
     "MostVitamens": ["حديد", "كالسيوم"],
-    "calForOneKilo": "4300"
+    "calForOneKilo": "4300",
+    "CarbForOneKilo": "620",
+    "FatForOneKilo": "200"
   },
   {
     "FoodName": "غريبة",
     "ProtineForOneKilo": "45",
     "MostVitamens": ["كالسيوم", "حديد", "زنك"],
-    "calForOneKilo": "5100"
+    "calForOneKilo": "5100",
+    "CarbForOneKilo": "620",
+    "FatForOneKilo": "280"
   },
   {
     "FoodName": "كحك العيد",
     "ProtineForOneKilo": "50",
     "MostVitamens": ["كالسيوم", "حديد", "ماغنسيوم"],
-    "calForOneKilo": "4400"
+    "calForOneKilo": "4400",
+    "CarbForOneKilo": "600",
+    "FatForOneKilo": "210"
   },
   {
     "FoodName": "بيتي فور",
     "ProtineForOneKilo": "40",
     "MostVitamens": ["فيتامين أ", "كالسيوم"],
-    "calForOneKilo": "4700"
+    "calForOneKilo": "4700",
+    "CarbForOneKilo": "650",
+    "FatForOneKilo": "220"
   },
   {
     "FoodName": "عاشوراء (قمحية)",
     "ProtineForOneKilo": "45",
     "MostVitamens": ["حديد", "ماغنسيوم", "فيتامين ب"],
-    "calForOneKilo": "1550"
+    "calForOneKilo": "1550",
+    "CarbForOneKilo": "260",
+    "FatForOneKilo": "40"
   },
   {
     "FoodName": "شاي صعيدي (حبر)",
     "ProtineForOneKilo": "2",
     "MostVitamens": ["مضادات أكسدة", "منجنيز"],
-    "calForOneKilo": "50"
+    "calForOneKilo": "50",
+    "CarbForOneKilo": "10",
+    "FatForOneKilo": "0"
   },
   {
     "FoodName": "شاي كشري",
     "ProtineForOneKilo": "2",
     "MostVitamens": ["مضادات أكسدة", "فلوريد"],
-    "calForOneKilo": "45"
+    "calForOneKilo": "45",
+    "CarbForOneKilo": "9",
+    "FatForOneKilo": "0"
   },
   {
     "FoodName": "دوم",
     "ProtineForOneKilo": "8",
     "MostVitamens": ["كالسيوم", "بوتاسيوم", "ماغنسيوم"],
-    "calForOneKilo": "320"
+    "calForOneKilo": "320",
+    "CarbForOneKilo": "70",
+    "FatForOneKilo": "1"
   },
   {
     "FoodName": "حمص الشام",
     "ProtineForOneKilo": "45",
     "MostVitamens": ["حديد", "فولات", "فوسفور"],
-    "calForOneKilo": "850"
+    "calForOneKilo": "850",
+    "CarbForOneKilo": "140",
+    "FatForOneKilo": "15"
   },
   {
     "FoodName": "ترمس",
     "ProtineForOneKilo": "70",
     "MostVitamens": ["حديد", "ماغنسيوم", "زنك"],
-    "calForOneKilo": "920"
+    "calForOneKilo": "920",
+    "CarbForOneKilo": "120",
+    "FatForOneKilo": "20"
   },
   {
     "FoodName": "أرز أبيض",
     "ProtineForOneKilo": "70",
     "MostVitamens": ["فيتامين ب1", "فيتامين ب3", "ماغنسيوم"],
-    "calForOneKilo": "3600"
+    "calForOneKilo": "3600",
+    "CarbForOneKilo": "780",
+    "FatForOneKilo": "10"
   },
   {
     "FoodName": "أرز بني",
     "ProtineForOneKilo": "75",
     "MostVitamens": ["فيتامين ب1", "ماغنسيوم", "فوسفور"],
-    "calForOneKilo": "3500"
+    "calForOneKilo": "3500",
+    "CarbForOneKilo": "760",
+    "FatForOneKilo": "20"
   },
   {
     "FoodName": "مكرونة مسلوقة",
     "ProtineForOneKilo": "55",
     "MostVitamens": ["فيتامين ب1", "حديد", "فولات"],
-    "calForOneKilo": "1580"
+    "calForOneKilo": "1580",
+    "CarbForOneKilo": "310",
+    "FatForOneKilo": "15"
   },
   {
     "FoodName": "خبز بلدي",
     "ProtineForOneKilo": "90",
     "MostVitamens": ["حديد", "فيتامين ب1", "سيلينيوم"],
-    "calForOneKilo": "2500"
+    "calForOneKilo": "2500",
+    "CarbForOneKilo": "450",
+    "FatForOneKilo": "30"
   },
   {
     "FoodName": "خبز فينو",
     "ProtineForOneKilo": "85",
     "MostVitamens": ["فيتامين ب1", "حديد"],
-    "calForOneKilo": "2650"
+    "calForOneKilo": "2650",
+    "CarbForOneKilo": "480",
+    "FatForOneKilo": "40"
   },
   {
     "FoodName": "توست أبيض",
     "ProtineForOneKilo": "95",
     "MostVitamens": ["حديد", "فيتامين ب3"],
-    "calForOneKilo": "2700"
+    "calForOneKilo": "2700",
+    "CarbForOneKilo": "500",
+    "FatForOneKilo": "35"
   },
   {
     "FoodName": "توست بني",
     "ProtineForOneKilo": "110",
     "MostVitamens": ["ماغنسيوم", "حديد", "فيتامين ب1"],
-    "calForOneKilo": "2600"
+    "calForOneKilo": "2600",
+    "CarbForOneKilo": "460",
+    "FatForOneKilo": "45"
   },
   {
     "FoodName": "شوفان",
     "ProtineForOneKilo": "170",
     "MostVitamens": ["ماغنسيوم", "حديد", "فيتامين ب1"],
-    "calForOneKilo": "3890"
+    "calForOneKilo": "3890",
+    "CarbForOneKilo": "670",
+    "FatForOneKilo": "70"
   },
   {
     "FoodName": "ذرة صفراء",
     "ProtineForOneKilo": "90",
     "MostVitamens": ["فيتامين ب6", "ماغنسيوم", "فوسفور"],
-    "calForOneKilo": "3650"
+    "calForOneKilo": "3650",
+    "CarbForOneKilo": "740",
+    "FatForOneKilo": "40"
   },
   {
     "FoodName": "فشار",
     "ProtineForOneKilo": "110",
     "MostVitamens": ["فيتامين ب3", "ماغنسيوم"],
-    "calForOneKilo": "3750"
+    "calForOneKilo": "3750",
+    "CarbForOneKilo": "740",
+    "FatForOneKilo": "50"
   },
   {
     "FoodName": "بطاطا",
     "ProtineForOneKilo": "16",
     "MostVitamens": ["فيتامين أ", "فيتامين ج", "بوتاسيوم"],
-    "calForOneKilo": "860"
+    "calForOneKilo": "860",
+    "CarbForOneKilo": "200",
+    "FatForOneKilo": "1"
   },
   {
     "FoodName": "بطاطس مسلوقة",
     "ProtineForOneKilo": "20",
     "MostVitamens": ["فيتامين ب6", "بوتاسيوم"],
-    "calForOneKilo": "870"
+    "calForOneKilo": "870",
+    "CarbForOneKilo": "200",
+    "FatForOneKilo": "1"
   },
   {
     "FoodName": "بطاطس مهروسة",
     "ProtineForOneKilo": "25",
     "MostVitamens": ["فيتامين ب6", "بوتاسيوم"],
-    "calForOneKilo": "900"
+    "calForOneKilo": "900",
+    "CarbForOneKilo": "190",
+    "FatForOneKilo": "10"
   },
   {
     "FoodName": "جزر",
     "ProtineForOneKilo": "9",
     "MostVitamens": ["فيتامين أ", "بيتا كاروتين", "فيتامين ك"],
-    "calForOneKilo": "410"
+    "calForOneKilo": "410",
+    "CarbForOneKilo": "100",
+    "FatForOneKilo": "2"
   },
   {
     "FoodName": "خيار",
     "ProtineForOneKilo": "7",
     "MostVitamens": ["فيتامين ك", "بوتاسيوم"],
-    "calForOneKilo": "150"
+    "calForOneKilo": "150",
+    "CarbForOneKilo": "30",
+    "FatForOneKilo": "1"
   },
   {
     "FoodName": "طماطم",
     "ProtineForOneKilo": "9",
     "MostVitamens": ["فيتامين ج", "ليكوبين", "بوتاسيوم"],
-    "calForOneKilo": "180"
+    "calForOneKilo": "180",
+    "CarbForOneKilo": "40",
+    "FatForOneKilo": "2"
   },
   {
     "FoodName": "خس",
     "ProtineForOneKilo": "14",
     "MostVitamens": ["فيتامين أ", "فيتامين ك", "فولات"],
-    "calForOneKilo": "150"
+    "calForOneKilo": "150",
+    "CarbForOneKilo": "25",
+    "FatForOneKilo": "2"
   },
   {
     "FoodName": "كرنب",
     "ProtineForOneKilo": "13",
     "MostVitamens": ["فيتامين ج", "فيتامين ك"],
-    "calForOneKilo": "250"
+    "calForOneKilo": "250",
+    "CarbForOneKilo": "50",
+    "FatForOneKilo": "2"
   },
   {
     "FoodName": "بروكلي",
     "ProtineForOneKilo": "28",
     "MostVitamens": ["فيتامين ج", "فيتامين ك", "فولات"],
-    "calForOneKilo": "340"
+    "calForOneKilo": "340",
+    "CarbForOneKilo": "60",
+    "FatForOneKilo": "4"
   },
   {
     "FoodName": "قرنبيط",
     "ProtineForOneKilo": "19",
     "MostVitamens": ["فيتامين ج", "فيتامين ب6"],
-    "calForOneKilo": "250"
+    "calForOneKilo": "250",
+    "CarbForOneKilo": "50",
+    "FatForOneKilo": "2"
   },
   {
     "FoodName": "كوسة",
     "ProtineForOneKilo": "12",
     "MostVitamens": ["فيتامين أ", "بوتاسيوم"],
-    "calForOneKilo": "170"
+    "calForOneKilo": "170",
+    "CarbForOneKilo": "30",
+    "FatForOneKilo": "2"
   },
   {
     "FoodName": "باذنجان",
     "ProtineForOneKilo": "10",
     "MostVitamens": ["فيتامين ب6", "بوتاسيوم"],
-    "calForOneKilo": "240"
+    "calForOneKilo": "240",
+    "CarbForOneKilo": "50",
+    "FatForOneKilo": "2"
   },
   {
     "FoodName": "فلفل أخضر",
     "ProtineForOneKilo": "10",
     "MostVitamens": ["فيتامين ج", "فيتامين أ"],
-    "calForOneKilo": "200"
+    "calForOneKilo": "200",
+    "CarbForOneKilo": "45",
+    "FatForOneKilo": "2"
   },
   {
     "FoodName": "فلفل أحمر",
     "ProtineForOneKilo": "10",
     "MostVitamens": ["فيتامين ج", "فيتامين أ"],
-    "calForOneKilo": "310"
+    "calForOneKilo": "310",
+    "CarbForOneKilo": "70",
+    "FatForOneKilo": "2"
   },
   {
     "FoodName": "تفاح",
     "ProtineForOneKilo": "3",
     "MostVitamens": ["فيتامين ج", "بوتاسيوم"],
-    "calForOneKilo": "520"
+    "calForOneKilo": "520",
+    "CarbForOneKilo": "140",
+    "FatForOneKilo": "1"
   },
   {
     "FoodName": "موز",
     "ProtineForOneKilo": "11",
     "MostVitamens": ["بوتاسيوم", "فيتامين ب6"],
-    "calForOneKilo": "890"
+    "calForOneKilo": "890",
+    "CarbForOneKilo": "230",
+    "FatForOneKilo": "3"
   },
   {
     "FoodName": "برتقال",
     "ProtineForOneKilo": "9",
     "MostVitamens": ["فيتامين ج", "فولات"],
-    "calForOneKilo": "470"
+    "calForOneKilo": "470",
+    "CarbForOneKilo": "120",
+    "FatForOneKilo": "1"
   },
   {
     "FoodName": "يوسفي",
     "ProtineForOneKilo": "8",
     "MostVitamens": ["فيتامين ج", "فيتامين أ"],
-    "calForOneKilo": "530"
+    "calForOneKilo": "530",
+    "CarbForOneKilo": "130",
+    "FatForOneKilo": "2"
   },
   {
     "FoodName": "عنب",
     "ProtineForOneKilo": "7",
     "MostVitamens": ["فيتامين ك", "بوتاسيوم"],
-    "calForOneKilo": "690"
+    "calForOneKilo": "690",
+    "CarbForOneKilo": "180",
+    "FatForOneKilo": "2"
   },
   {
     "FoodName": "مانجو",
     "ProtineForOneKilo": "8",
     "MostVitamens": ["فيتامين أ", "فيتامين ج"],
-    "calForOneKilo": "600"
+    "calForOneKilo": "600",
+    "CarbForOneKilo": "150",
+    "FatForOneKilo": "4"
   },
   {
     "FoodName": "فراولة",
     "ProtineForOneKilo": "8",
     "MostVitamens": ["فيتامين ج", "منجنيز"],
-    "calForOneKilo": "320"
+    "calForOneKilo": "320",
+    "CarbForOneKilo": "80",
+    "FatForOneKilo": "1"
   },
   {
     "FoodName": "رمان",
     "ProtineForOneKilo": "17",
     "MostVitamens": ["فيتامين ج", "بوتاسيوم"],
-    "calForOneKilo": "830"
+    "calForOneKilo": "830",
+    "CarbForOneKilo": "190",
+    "FatForOneKilo": "3"
   },
   {
     "FoodName": "تين",
     "ProtineForOneKilo": "7",
     "MostVitamens": ["كالسيوم", "بوتاسيوم"],
-    "calForOneKilo": "740"
+    "calForOneKilo": "740",
+    "CarbForOneKilo": "190",
+    "FatForOneKilo": "3"
   },
   {
     "FoodName": "تمر",
     "ProtineForOneKilo": "25",
     "MostVitamens": ["بوتاسيوم", "ماغنسيوم", "حديد"],
-    "calForOneKilo": "2820"
+    "calForOneKilo": "2820",
+    "CarbForOneKilo": "750",
+    "FatForOneKilo": "5"
   },
   {
     "FoodName": "لوز",
     "ProtineForOneKilo": "210",
     "MostVitamens": ["فيتامين هـ", "ماغنسيوم"],
-    "calForOneKilo": "5750"
+    "calForOneKilo": "5750",
+    "CarbForOneKilo": "200",
+    "FatForOneKilo": "490"
   },
   {
     "FoodName": "فول سوداني",
     "ProtineForOneKilo": "260",
     "MostVitamens": ["فيتامين ب3", "ماغنسيوم"],
-    "calForOneKilo": "5670"
+    "calForOneKilo": "5670",
+    "CarbForOneKilo": "160",
+    "FatForOneKilo": "490"
   },
   {
     "FoodName": "جوز",
     "ProtineForOneKilo": "150",
     "MostVitamens": ["اوميجا 3", "ماغنسيوم"],
-    "calForOneKilo": "6540"
+    "calForOneKilo": "6540",
+    "CarbForOneKilo": "140",
+    "FatForOneKilo": "650"
   },
   {
     "FoodName": "بندق",
     "ProtineForOneKilo": "150",
     "MostVitamens": ["فيتامين هـ", "ماغنسيوم"],
-    "calForOneKilo": "6280"
+    "calForOneKilo": "6280",
+    "CarbForOneKilo": "170",
+    "FatForOneKilo": "600"
   },
   {
     "FoodName": "فستق",
     "ProtineForOneKilo": "200",
     "MostVitamens": ["فيتامين ب6", "بوتاسيوم"],
-    "calForOneKilo": "5600"
+    "calForOneKilo": "5600",
+    "CarbForOneKilo": "280",
+    "FatForOneKilo": "450"
   },
   {
     "FoodName": "لب سوري",
     "ProtineForOneKilo": "210",
     "MostVitamens": ["ماغنسيوم", "حديد"],
-    "calForOneKilo": "5800"
+    "calForOneKilo": "5800",
+    "CarbForOneKilo": "200",
+    "FatForOneKilo": "480"
   },
   {
     "FoodName": "لب أبيض",
     "ProtineForOneKilo": "300",
     "MostVitamens": ["ماغنسيوم", "زنك"],
-    "calForOneKilo": "5600"
+    "calForOneKilo": "5600",
+    "CarbForOneKilo": "100",
+    "FatForOneKilo": "450"
   },
   {
     "FoodName": "زيت زيتون",
     "ProtineForOneKilo": "0",
     "MostVitamens": ["فيتامين هـ", "فيتامين ك"],
-    "calForOneKilo": "8840"
+    "calForOneKilo": "8840",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "1000"
   },
   {
     "FoodName": "زبدة",
     "ProtineForOneKilo": "8",
     "MostVitamens": ["فيتامين أ", "فيتامين د"],
-    "calForOneKilo": "7170"
+    "calForOneKilo": "7170",
+    "CarbForOneKilo": "1",
+    "FatForOneKilo": "810"
   },
   {
     "FoodName": "سمن بلدي",
     "ProtineForOneKilo": "0",
     "MostVitamens": ["فيتامين أ", "فيتامين هـ"],
-    "calForOneKilo": "9000"
+    "calForOneKilo": "9000",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "1000"
   },
   {
     "FoodName": "لبن كامل الدسم",
     "ProtineForOneKilo": "34",
     "MostVitamens": ["كالسيوم", "فيتامين ب12", "فيتامين د"],
-    "calForOneKilo": "610"
+    "calForOneKilo": "610",
+    "CarbForOneKilo": "48",
+    "FatForOneKilo": "35"
   },
   {
     "FoodName": "لبن خالي الدسم",
     "ProtineForOneKilo": "36",
     "MostVitamens": ["كالسيوم", "فيتامين ب12"],
-    "calForOneKilo": "420"
+    "calForOneKilo": "420",
+    "CarbForOneKilo": "50",
+    "FatForOneKilo": "5"
   },
   {
     "FoodName": "زبادي",
     "ProtineForOneKilo": "50",
     "MostVitamens": ["كالسيوم", "فيتامين ب12"],
-    "calForOneKilo": "600"
+    "calForOneKilo": "600",
+    "CarbForOneKilo": "40",
+    "FatForOneKilo": "30"
   },
   {
     "FoodName": "زبادي يوناني",
     "ProtineForOneKilo": "100",
     "MostVitamens": ["كالسيوم", "فيتامين ب12"],
-    "calForOneKilo": "970"
+    "calForOneKilo": "970",
+    "CarbForOneKilo": "40",
+    "FatForOneKilo": "50"
   },
   {
     "FoodName": "جبنة شيدر",
     "ProtineForOneKilo": "250",
     "MostVitamens": ["كالسيوم", "فيتامين ب12"],
-    "calForOneKilo": "4030"
+    "calForOneKilo": "4030",
+    "CarbForOneKilo": "20",
+    "FatForOneKilo": "330"
   },
   {
     "FoodName": "جبنة موزاريلا",
     "ProtineForOneKilo": "220",
     "MostVitamens": ["كالسيوم", "فوسفور"],
-    "calForOneKilo": "3000"
+    "calForOneKilo": "3000",
+    "CarbForOneKilo": "30",
+    "FatForOneKilo": "220"
   },
   {
     "FoodName": "تونة",
     "ProtineForOneKilo": "290",
     "MostVitamens": ["فيتامين د", "سيلينيوم", "اوميجا 3"],
-    "calForOneKilo": "1320"
+    "calForOneKilo": "1320",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "25"
   },
   {
     "FoodName": "سردين",
     "ProtineForOneKilo": "250",
     "MostVitamens": ["اوميجا 3", "فيتامين د", "كالسيوم"],
-    "calForOneKilo": "2080"
+    "calForOneKilo": "2080",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "110"
   },
   {
     "FoodName": "سلمون",
     "ProtineForOneKilo": "250",
     "MostVitamens": ["اوميجا 3", "فيتامين د", "فيتامين ب12"],
-    "calForOneKilo": "2080"
+    "calForOneKilo": "2080",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "110"
   },
   {
     "FoodName": "لحم بقري",
     "ProtineForOneKilo": "260",
     "MostVitamens": ["حديد", "زنك", "فيتامين ب12"],
-    "calForOneKilo": "2500"
+    "calForOneKilo": "2500",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "160"
   },
   {
     "FoodName": "لحم ضأن",
     "ProtineForOneKilo": "250",
     "MostVitamens": ["حديد", "زنك"],
-    "calForOneKilo": "2940"
+    "calForOneKilo": "2940",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "210"
   },
   {
     "FoodName": "ديك رومي",
     "ProtineForOneKilo": "290",
     "MostVitamens": ["فيتامين ب6", "سيلينيوم"],
-    "calForOneKilo": "1890"
+    "calForOneKilo": "1890",
+    "CarbForOneKilo": "0",
+    "FatForOneKilo": "75"
   }
 ]

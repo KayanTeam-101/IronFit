@@ -1,28 +1,14 @@
 import React, { useState, useMemo, useEffect } from "react";
 import foods from "../../assets/FoodsList.json";
-import {
-  FaArrowLeft,
-  FaSearch,
-  FaTimes,
-} from "react-icons/fa";
-import {
-  IoInformation,
-  IoClose,
-  IoDiamond,
-} from "react-icons/io5";
-import {
-  BsSave,
-} from "react-icons/bs";
-import {
-  GiBiceps,
-  GiFruitBowl,
-} from "react-icons/gi";
+import { FaArrowLeft, FaSearch, FaTimes } from "react-icons/fa";
+import { IoClose, IoDiamond } from "react-icons/io5";
+import { BsSave } from "react-icons/bs";
+import { GiFruitBowl } from "react-icons/gi";
 import { BiInfoCircle } from "react-icons/bi";
 
-// ---- Unit definitions ----
 interface UnitOption {
   label: string;
-  grams: number | null; // null means custom input
+  grams: number | null;
 }
 
 const UNIT_OPTIONS: UnitOption[] = [
@@ -41,50 +27,46 @@ const UNIT_OPTIONS: UnitOption[] = [
   { label: "غرام (أدخل كمية معينة)", grams: null },
 ];
 
-// ---- Component ----
 const AdditionPage = (props: any) => {
   const [text, setText] = useState("");
   const [FoodArray, setFoodArray] = useState<string[]>([]);
   const [FoodInfo, setFoodInfo] = useState<any[]>([]);
 
+  const [IsActive, setIsActive] = useState(false);
 
-    const [IsActive, setIsActive] = useState(false);
-  
-    useEffect(() => {
-     
-    
-     const encoded = localStorage.getItem("foods____");
-      if (encoded) {
-        try {
-          const decoded = JSON.parse(atob(encoded));
-          const period = decoded.SubscriptionPeriod;
-          if (period && period > Date.now()) {
-            setIsActive(true);
-            return;
-          }
-        } catch (e) {
-          console.error("Invalid subscription data");
+  useEffect(() => {
+    const encoded = localStorage.getItem("foods____");
+    if (encoded) {
+      try {
+        const decoded = JSON.parse(atob(encoded));
+        const period = decoded.SubscriptionPeriod;
+        if (period && period > Date.now()) {
+          setIsActive(true);
+          return;
         }
+      } catch (e) {
+        console.error("Invalid subscription data");
       }
-    }, []);
+    }
+  }, []);
 
-
-  // ---- Unit modal ----
   const [showUnitModal, setShowUnitModal] = useState(false);
   const [selectedFoodName, setSelectedFoodName] = useState("");
   const [customGrams, setCustomGrams] = useState("");
 
-  // ---- Delete confirmation ----
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
 
-  // ---- Memoized totals ----
+  // ✅ Totals now correctly reflect actual fat/carb grams
   const totals = useMemo(() => {
     const mealFoods = FoodInfo.filter(
       (entry: any) => entry[0] === props.Meal
     );
     const cal = mealFoods.reduce((sum: number, entry: any) => sum + entry[3], 0);
     const prot = mealFoods.reduce((sum: number, entry: any) => sum + entry[4], 0);
+    const Fat = mealFoods.reduce((sum: number, entry: any) => sum + entry[5], 0);
+    const Carb = mealFoods.reduce((sum: number, entry: any) => sum + entry[6], 0);
+
     const vitaminsSet = new Set<string>();
     mealFoods.forEach((entry: any) => {
       const food = foods.find((f) => f.FoodName === entry[1]);
@@ -94,10 +76,9 @@ const AdditionPage = (props: any) => {
         });
       }
     });
-    return { cal, prot, vitamins: Array.from(vitaminsSet) };
+    return { cal, prot, vitamins: Array.from(vitaminsSet), Fat, Carb };
   }, [FoodInfo, props.Meal]);
 
-  // Filtered search results
   const filteredFoods = useMemo(() => {
     if (!text.trim()) return [];
     return foods
@@ -105,13 +86,12 @@ const AdditionPage = (props: any) => {
       .filter((name) => name.toLowerCase().includes(text.toLowerCase()));
   }, [text]);
 
-  // ---- Handlers ----
   const handleSelectUnit = (unit: UnitOption) => {
     if (unit.grams !== null) {
       addFoodWithGrams(selectedFoodName, unit.grams);
       setShowUnitModal(false);
     } else {
-    return;
+      return; // wait for custom input
     }
   };
 
@@ -126,39 +106,37 @@ const AdditionPage = (props: any) => {
     setCustomGrams("");
   };
 
-  // Core function to add food with exact grams
-const addFoodWithGrams = (foodName: string, grams: number) => {
-  if (FoodArray.includes(foodName)) {
-    alert(`${foodName} مضاف بالفعل`);
-    return;
-  }
+  // ✅ CORRECTED: store actual fat & carb (not per‑kilo)
+  const addFoodWithGrams = (foodName: string, grams: number) => {
+    if (FoodArray.includes(foodName)) {
+      alert(`${foodName} مضاف بالفعل`);
+      return;
+    }
 
-  const foodData = foods.find((f) => f.FoodName === foodName);
-  if (!foodData) return;
+    const foodData = foods.find((f) => f.FoodName === foodName);
+    if (!foodData) return;
 
-  // ✅ Convert string values to numbers
-  const calPerKilo = Number(foodData.calForOneKilo);
-  const protPerKilo = Number(foodData.ProtineForOneKilo);
+    const calPerKilo = Number(foodData.calForOneKilo);
+    const protPerKilo = Number(foodData.ProtineForOneKilo);
+    const fatPerKilo = Number(foodData.FatForOneKilo);
+    const carbPerKilo = Number(foodData.CarbForOneKilo);
 
-  const cal = (calPerKilo * grams) / 1000;
-  const prot = (protPerKilo * grams) / 1000;
+    const cal = (calPerKilo * grams) / 1000;
+    const prot = (protPerKilo * grams) / 1000;
+    const fat = (fatPerKilo * grams) / 1000;
+    const carb = (carbPerKilo * grams) / 1000;
 
-  setFoodArray((prev) => [...prev, foodName]);
-  setFoodInfo((prev: any) => [
-    ...prev,
-    [props.Meal, foodName, grams, cal, prot],
-  ]);
-};
+    setFoodArray((prev) => [...prev, foodName]);
+    setFoodInfo((prev: any) => [
+      ...prev,
+      [props.Meal, foodName, grams, cal, prot, fat, carb],
+    ]);
+  };
 
-  // Open unit modal
   const handleAddClick = (food: string) => {
-      const getData = JSON.parse(localStorage.getItem("Diet") || "{}");
-  const mealData = getData[props.Meal] || [[], []];
-  if (FoodArray.includes(food) || mealData[0].includes(food)) {
-    alert(`${food} مضاف بالفعل`);
-    return;
-  }
-    if (FoodArray.includes(food)) {
+    const getData = JSON.parse(localStorage.getItem("Diet") || "{}");
+    const mealData = getData[props.Meal] || [[], []];
+    if (FoodArray.includes(food) || mealData[0].includes(food)) {
       alert(`${food} مضاف بالفعل`);
       return;
     }
@@ -167,7 +145,6 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
     setShowUnitModal(true);
   };
 
-  // Remove food
   const confirmDelete = (index: number) => {
     setDeleteIndex(index);
     setShowDeleteConfirm(true);
@@ -176,7 +153,6 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
   const deleteFood = () => {
     if (deleteIndex === null) return;
     const foodName = FoodArray[deleteIndex];
-    // Remove from FoodInfo – find first occurrence that matches
     const newFoodInfo = [...FoodInfo];
     const idxToRemove = newFoodInfo.findIndex(
       (entry: any) => entry[0] === props.Meal && entry[1] === foodName
@@ -189,7 +165,6 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
     setDeleteIndex(null);
   };
 
-  // Get food info
   const handleGetInfo = (food: string) => {
     const f = foods.find((item) => item.FoodName === food);
     if (f) {
@@ -199,7 +174,6 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
     }
   };
 
-  // Save
   const handleSave = () => {
     const getData = JSON.parse(localStorage.getItem("Diet") || "{}");
     const mealData = getData[props.Meal] || [[], []];
@@ -208,7 +182,9 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
     const updatedInfo = [
       totals.cal + (mealData[1][0] || 0),
       totals.prot + (mealData[1][1] || 0),
-      [...new Set([...totals.vitamins, ...(mealData[1][2] || [])])],
+      totals.Fat + (mealData[1][2] || 0),
+      totals.Carb + (mealData[1][3] || 0),
+      [...new Set([...totals.vitamins, ...(mealData[1][4] || [])])],  // ✅ index 4 for vitamins
     ];
 
     const newData = {
@@ -216,7 +192,13 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
       [props.Meal]: [updatedFoods, updatedInfo],
     };
     localStorage.setItem("Diet", JSON.stringify(newData));
-    localStorage.setItem("FoodInfo_s", JSON.stringify(FoodInfo));
+
+    // ✅ Preserve existing FoodInfo_s instead of overwriting
+    const existingFoodInfo = JSON.parse(
+      localStorage.getItem("FoodInfo_s") || "[]"
+    );
+    const mergedFoodInfo = [...existingFoodInfo, ...FoodInfo];
+    localStorage.setItem("FoodInfo_s", JSON.stringify(mergedFoodInfo));
 
     window.location.reload();
   };
@@ -235,13 +217,13 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
           <h1 className="text-white text-xl font-bold flex items-center gap-2">
             إضافة أطباق
           </h1>
-          <div className="w-8" /> {/* spacer */}
+          <div className="w-8" />
         </div>
       </div>
 
       {/* Search */}
       <div className="px-4 mt-6 z-10">
-        <div className="bg-white/70  backdrop-blur-lg border border-white/60 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 shadow-xl rounded-2xl p-4">
+        <div className="bg-white/70 backdrop-blur-lg border border-white/60 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 shadow-xl rounded-2xl p-4">
           <div className="relative">
             <FaSearch className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" />
             <input
@@ -250,18 +232,17 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
               onChange={(e) => setText(e.target.value)}
               autoFocus
               placeholder="ابحث عن طبق مثلا: فول سوداني..."
-            className='w-full bg-gray-50 border-2 border-gray-200 outline-2 outline-amber-200 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white text-black rounded-b-4xl rounded-xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-orange-400 transition"'
+              className="w-full bg-gray-50 border-2 border-gray-200 outline-2 outline-amber-200 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white text-black rounded-b-4xl rounded-xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-orange-400 transition"
             />
           </div>
 
-          {/* Search results */}
           {text.trim() !== "" && (
             <div className="mt-3 max-h-52 overflow-y-auto space-y-1">
               {filteredFoods.length > 0 ? (
                 filteredFoods.map((food, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center justify-between p-3 bg-gray-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20   hover:bg-orange-50 rounded-xl transition cursor-pointer group"
+                    className="flex items-center justify-between p-3 bg-gray-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 hover:bg-orange-50 rounded-xl transition cursor-pointer group"
                   >
                     <span
                       className="flex-1 font-medium text-gray-700 dark:text-white group-hover:text-orange-700"
@@ -273,7 +254,7 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
                       onClick={() => handleGetInfo(food)}
                       className="p-1.5 bg-white rounded-full dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white text-black shadow-sm hover:bg-orange-100 transition"
                     >
-                      <BiInfoCircle className="text-gray-500  group-hover:text-orange-600" />
+                      <BiInfoCircle className="text-gray-500 group-hover:text-orange-600" />
                     </button>
                   </div>
                 ))
@@ -287,7 +268,7 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
 
       {/* Added foods */}
       <div className="px-4 mt-5">
-        <div className="bg-white/70 backdrop-blur-lg border border-white/60 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 shadow-xl rounded-2xl p-4">
+        <div className="bg-white/70 backdrop-blur-lg dark:bg-black/20 shadow-xl rounded-2xl p-4">
           <h2 className="text-lg font-bold text-gray-700 dark:text-white mb-3 flex items-center gap-2">
             <GiFruitBowl className="text-orange-500" />
             الطعام المُضاف
@@ -302,14 +283,14 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
               {FoodArray.map((food, idx) => (
                 <div
                   key={idx}
-                  className="group relative flex items-center gap-2 bg-white/70 dark:bg-black/20 dark:border-2 dark:border-gray-600/20  border border-orange-100 rounded-xl px-3 py-2 shadow-sm hover:shadow-md transition"
+                  className="group relative flex items-center gap-2 bg-white/70 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 border border-orange-100 rounded-xl px-3 py-2 shadow-sm hover:shadow-md transition"
                 >
                   <span className="text-sm font-medium text-gray-700 dark:text-white">
                     {food}
                   </span>
                   <button
                     onClick={() => confirmDelete(idx)}
-                    className="p-0.5 rounded-full bg-white/80 hover:bg-red-100 text-gray-400 hover:text-red-500 transition "
+                    className="p-0.5 rounded-full bg-white/80 hover:bg-red-100 text-gray-400 hover:text-red-500 transition"
                   >
                     <FaTimes size={12} />
                   </button>
@@ -322,49 +303,62 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
 
       {/* Nutrition summary */}
       <div className="px-4 mt-5">
-        <div className="bg-white/70 backdrop-blur-lg border border-white/60 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 shadow-xl rounded-2xl p-4">
+        <div className="backdrop-blur-lg shadow-xl rounded-2xl p-4">
           <h2 className="text-lg font-bold dark:text-white text-gray-700 mb-3 flex items-center gap-2">
-            <IoInformation className="text-orange-500" />
+            <BiInfoCircle className="text-orange-500" />
             المعلومات الغذائية
           </h2>
 
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-amber-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-xl p-3 border border-orange-200">
+            <div className="p-3">
               <div className="text-xs text-orange-600 mb-1">السعرات</div>
               <div className="text-xl font-bold text-orange-700">
                 {totals.cal.toFixed(0)}
               </div>
             </div>
-            <div className="bg-teal-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-xl p-3 border border-teal-200">
+            <div className="rounded-xl p-3">
               <div className="text-xs text-teal-600 mb-1">بروتين</div>
               <div className="text-xl font-bold text-teal-700">
                 {totals.prot.toFixed(1)} غ
               </div>
             </div>
+            <div className="rounded-xl p-3">
+              <div className="text-xs text-blue-700 mb-1">الدهون</div>
+              <div className="text-xl font-bold text-blue-700">
+                {totals.Fat.toFixed(1)} غ
+              </div>
+            </div>
+            <div className="rounded-xl p-3">
+              <div className="text-xs text-amber-600 mb-1">كاربهايدريت</div>
+              <div className="text-xl font-bold text-amber-700">
+                {totals.Carb.toFixed(1)} غ
+              </div>
+            </div>
           </div>
 
           {totals.vitamins.length > 0 && (
-            <div className="mt-3 bg-indigo-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-xl p-3 border border-purple-200">
-              <div className="text-xs text-purple-600 mb-1">الفيتامينات</div>
+            <div className="mt-3 rounded-xl p-3">
+              <div className="text-xs text-purple-600 mb-1">
+                الفيتامينات و المعادن
+              </div>
               <div className="flex flex-wrap gap-1">
-                { IsActive ? (
-                  totals.vitamins.map((vit, i) => (
-                  <span
-                    key={i}
-                    className="px-2 py-0.5 bg-white rounded-full text-xs font-medium text-purple-700"
-                  >
-                    {vit}
-                  </span>
-                ))) : (
-                  totals.vitamins.map((i) => (
-                  <span
-                    key={i}
-                    className="px-2 py-0.5 bg-white rounded-full text-xs font-medium text-purple-700"
-                  >
-                    VIP <IoDiamond />
-                  </span>
-                ))
-                )}
+                {IsActive
+                  ? totals.vitamins.map((vit, i) => (
+                      <span
+                        key={i}
+                        className="px-2 py-0.5 bg-white rounded-full text-xs font-medium text-purple-700"
+                      >
+                        {vit}
+                      </span>
+                    ))
+                  : totals.vitamins.map((i) => (
+                      <span
+                        key={i}
+                        className="px-2 py-0.5 bg-white rounded-full text-xs font-medium text-purple-700"
+                      >
+                        VIP <IoDiamond />
+                      </span>
+                    ))}
               </div>
             </div>
           )}
@@ -382,10 +376,10 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
         </button>
       </div>
 
-      {/* ---------- Unit Selector Modal ---------- */}
+      {/* Unit Selector Modal */}
       {showUnitModal && (
-        <div className="fixed inset-0 z-[60]  flex items-center justify-center  backdrop-blur-sm p-4 animate-fadeIn">
-          <div className="bg-white backdrop-blur-md border border-white/50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 shadow-2xl rounded-3xl p-6 w-full max-w-sm ">
+        <div className="fixed inset-0 z-[60] flex items-center justify-center backdrop-blur-sm p-4 animate-fadeIn">
+          <div className="bg-white backdrop-blur-md border border-white/50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 shadow-2xl rounded-3xl p-6 w-full max-w-sm">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold text-gray-800 dark:text-white">
                 اختر الكمية لـ {selectedFoodName}
@@ -405,12 +399,13 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
                   onClick={() => handleSelectUnit(unit)}
                   className="w-full flex items-center justify-between bg-orange-50 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 border border-orange-100 p-3 rounded-xl hover:shadow-md active:scale-[0.98] transition"
                 >
-                  <span className="font-medium text-gray-700  dark:text-white">{unit.label}</span>
+                  <span className="font-medium text-gray-700 dark:text-white">
+                    {unit.label}
+                  </span>
                   <span className="text-sm text-orange-600">{unit.grams}غ</span>
                 </button>
               ))}
 
-              {/* Custom grams input */}
               <div className="pt-2">
                 <div className="flex items-center gap-2">
                   <input
@@ -441,7 +436,9 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
             <h3 className="text-lg font-bold dark:text-white text-gray-800 mb-2">
               إزالة الطعام
             </h3>
-            <p className="text-gray-600 mb-4">هل أنت متأكد من إزالة هذا العنصر؟</p>
+            <p className="text-gray-600 mb-4">
+              هل أنت متأكد من إزالة هذا العنصر؟
+            </p>
             <div className="flex gap-3 justify-center">
               <button
                 onClick={() => setShowDeleteConfirm(false)}
@@ -463,7 +460,7 @@ const addFoodWithGrams = (foodName: string, grams: number) => {
   );
 };
 
-// Inject keyframe animations (added to index.css or as a style tag)
+// Inject keyframe animations
 const style = document.createElement("style");
 style.textContent = `
   @keyframes fadeIn {

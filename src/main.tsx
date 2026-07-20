@@ -14,7 +14,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-
+window.oncontextmenu =(e) => e.preventDefault();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <div className="w-screen min-h-screen bg-gray-100 dark:bg-[#111111]">

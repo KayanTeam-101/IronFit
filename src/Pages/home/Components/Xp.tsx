@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { RiCopperCoinLine } from "react-icons/ri";
+import React, { useEffect, useMemo, useState } from "react";
+import { RiBarChart2Fill, RiCopperCoinLine } from "react-icons/ri";
 import {
   FaTimes,
   FaRegCircle,
@@ -17,8 +17,23 @@ import {
 } from "react-icons/fa";
 import { GiNinjaHead } from "react-icons/gi";
 import { LuDumbbell } from "react-icons/lu";
-import { BsStar } from "react-icons/bs";
+import { BsStar, BsStarFill } from "react-icons/bs";
 import { useCountUp } from "../../../Hooks/Increasing";
+import { getUsers, updateXp } from "../../../firebase/user";
+import Rank from "./Rank";
+import { rank } from "../Home";
+import { levels } from "./Rank";
+interface TasksPanelProps {
+  onClose: () => void;
+  showTasks: boolean;
+  setShowTasks: React.Dispatch<React.SetStateAction<boolean>>;
+  showRanking: boolean;
+  setShowRank: React.Dispatch<React.SetStateAction<boolean>>;
+}
+interface XpProps {
+  xp: number;
+}
+ 
 
 // ----------------------------------------------------------------
 //  Date helpers
@@ -42,11 +57,11 @@ const isTodayInArray = (key: string): boolean => {
 // ----------------------------------------------------------------
 //  Daily completion flags
 // ----------------------------------------------------------------
-const hasPostedToday      = isTodayInArray("PostedDays");
-const hasLikedPostToday   = isTodayInArray("LikedDays");
-const hasCommentedToday   = isTodayInArray("CommentDays");
-const hasEatenAllMeals    = isTodayInArray("DoneDays");
-const hasUsedTemplateToday = isTodayInArray("SystemStartDate");
+const hasPostedToday      = isTodayInArray("PostedDays"); // []
+const hasLikedPostToday   = isTodayInArray("LikedDays"); // []
+const hasCommentedToday   = isTodayInArray("CommentDays");// []
+const hasEatenAllMeals    = isTodayInArray("DoneDays"); // []
+const hasUsedTemplateToday = isTodayInArray("SystemStartDate"); // string
 const hasCreatedDietPlanToday = localStorage.getItem("SetDietManually");
 
 // One‑time flags
@@ -117,31 +132,62 @@ const DAILY_TASKS: Task[] = [
 // ----------------------------------------------------------------
 //  XP calculations
 // ----------------------------------------------------------------
-const calculateTodayXP = (): number =>
-  DAILY_TASKS.reduce((sum, task) => (task.condition ? sum + task.xp : sum), 0);
 
-const calculateAllTimeXP = (): number => {
-  // Repeatable daily tasks – each completion date gives the task’s XP
+// Return the border class for a given XP value
+
+const LevelBorder = (xp: number): string => {
+  let borderClass = "border-gray-400"; // افتراضي
+  for (const level of levels) {
+    const [min, max] = level.text.split("-").map(Number);
+    if (xp >= min && xp <= max) {
+      return level.gradient + " " + level.border + " " + level.iconColor + " " + level.shadow; // يطابق النطاق مباشرة
+    }
+    if (xp > max) {
+      borderClass = level.border; // يحتفظ بأعلى مستوى تجاوزه
+    }
+  }
+  return borderClass;
+};
+export const calculateAllTimeXP = async () => {
+  // 🔥 Read flags each time to get current values
+  const hasShared = localStorage.getItem("mycodeUsed") === "true";
+  const isIronVIP = localStorage.getItem("IronVIP") === "true";
+
   const repeatable = [
-    { key: "PostedDays",       xp: 25 },
-    { key: "LikedDays",            xp: 10 },
-    { key: "CommentDays",          xp: 12 },
-    { key: "DoneDays",             xp: 30 },
-    { key: "SystemStartDate",      xp: 13 },
-    { key: "SetDietManually",      xp: 22 },
+    { key: "PostedDays", xp: 40 },
+    { key: "LikedDays", xp: 1 },
+    { key: "CommentDays", xp: 9 },
+    { key: "DoneDays", xp: 1 },
+    { key: "SystemStartDate", xp: 4 },
+    { key: "SetDietManually", xp: 4 },
   ];
 
   let total = 0;
 
-  // 1. Sum up XP from every date in every repeatable task
   repeatable.forEach(({ key, xp }) => {
-    const dates = getArrayFromStorage(key);
+    if(key === "SetDietManually" || key === "SystemStartDate"){
+      total += 10
+    }
+    else{
+      const dates = getArrayFromStorage(key);
+    console.log(dates);
+    
     total += dates.length * xp;
+    console.log(total);
+
+    }
   });
 
-  // 2. One‑time rewards
   if (hasShared) total += 17;
   if (isIronVIP) total += 200;
+
+  const getUsers_ = await getUsers();
+  const getUser = getUsers_.find(
+    (item) => item.UserName === localStorage.getItem("UserName")
+  );
+  updateXp(String(getUser?.id), total);
+  localStorage.setItem("Xp",String(total))
+  // Only update if we found a valid user
 
   return total;
 };
@@ -230,12 +276,13 @@ interface Badge {
 // ----------------------------------------------------------------
 //  Tasks & Badges Panel
 // ----------------------------------------------------------------
-const TasksPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+export const TasksPanel: React.FC<TasksPanelProps> = ({ onClose, showTasks, setShowTasks, showRanking, setShowRank }) => {
   const [activeTab, setActiveTab] = React.useState<"tasks" | "badges">("tasks");
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[1px] p-4 show-first">
-      <div className="relative w-full max-w-sm min-h-3/4 bg-white/90 dark:bg-black/80 backdrop-blur-xl border border-amber-300/60 dark:border-gray-600/50 shadow-2xl rounded-3xl p-6 text-center show-third">
+    <div
+    onDoubleClick={onClose}
+    className="fixed inset-0 z-50 flex items-center justify-center p-4 show-first">
+      <div className="relative w-full max-w-sm max-h-3/4 bg-white/90 dark:bg-black/80 backdrop-blur-xl border border-amber-300/60 dark:border-gray-600/50 shadow-2xl rounded-3xl p-6 text-center ">
         <button
           onClick={onClose}
           className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700/50 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
@@ -352,28 +399,29 @@ const TasksPanel: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 // ----------------------------------------------------------------
 //  XP Badge
 // ----------------------------------------------------------------
-const Xp: React.FC = () => {
-  const [showTasks, setShowTasks] = React.useState(false);
-  const allTimeXP = useMemo(() => calculateAllTimeXP(), []);
-
+const Xp: React.FC<XpProps> = ({ xp }) => {
+    const [showRanking, setShowRanking] = useState(false);
+  
   return (
-    <>
+    <div className="w-fit flex flex-row gap-1">
+     
+
+      {/* Sort button */}
       <div
-        onClick={() => setShowTasks(true)}
-        className="relative min-w-[4rem] p-2 h-14 overflow-hidden border-2 flex flex-row items-center justify-center text-center shadow-sm dark:bg-amber-400/10 dark:border-2 dark:border-amber-600/20 border-gray-100 rounded-2xl cursor-pointer hover:shadow-md transition-all active:scale-95"
+        onClick={() => setShowRanking(true)}
+        className={`relative min-w-16 p-4 h-14  flex flex-col items-center justify-center text-center s rounded-full cursor-pointer hover:shadow-md transition-all active:scale-95 border-4 bg-linear-to-l ${LevelBorder(Number(xp))}`}
       >
-        <div className="text-[13px] dark:text-white text-gray-400 flex flex-row gap-0.5 mt-1">
-          <RiCopperCoinLine className="text-[16px]" /> XP
+        <div className="text-[13px] flex flex-row gap-0.5 mt-2 ">
+          <p>الترتيب</p>
+          <RiBarChart2Fill className="text-[12px]" />
         </div>
-        <div className="text-lg font-bold dark:text-amber-100 animate-pulse ml-1">
-          {useCountUp(allTimeXP, 600)}
+        <div className="text-lg font-bold ">
+          {useCountUp(rank || 0, 600)}
         </div>
-        <div className="absolute bottom-0 right-0 w-[40%] h-0.5 bg-amber-500" />
       </div>
 
-      {showTasks && <TasksPanel onClose={() => setShowTasks(false)} />}
-    </>
+      {showRanking && <Rank onClose={() => setShowRanking(false)} />}
+    </div>
   );
 };
-
 export default Xp;

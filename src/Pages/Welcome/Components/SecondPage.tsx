@@ -1,4 +1,5 @@
 import React from "react";
+import { GoGoal } from "react-icons/go";
 import { LiaDumbbellSolid } from "react-icons/lia";
 const Second: React.FC = () => {
   return (
@@ -9,19 +10,20 @@ const Second: React.FC = () => {
       <div className="absolute bottom-0 right-0 w-56 h-56 bg-teal-400 rounded-full opacity-20 blur-3xl animate-pulse delay-2000" />
 
       {/* Main card */}
-      <div className="relative bg-white/20 dark:bg-black/20 dark:border-gray-600/5 dark:border-4 backdrop-blur-sm show-first border border-white/50 shadow-2xl rounded-4xl p-8 text-center space-y-6">
+      <div className="relative bg-linear-to-b from-orange-500 to-amber-400  show-second  shadow-2xl rounded-4xl p-8 text-center space-y-6">
         {/* Icon with glowing ring */}
         <div className="flex justify-center">
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-600 rounded-full blur-xl opacity-40" />
+            <div className="absolute inset-0 rounded-full blur-xl " />
             
+          <h1 className=" text-9xl font-black mt-2 text-white showAnim2"><GoGoal /></h1>
           </div>
         </div>
 
         {/* Welcome text */}
         <div className="show-second ">
-          <p className="text-3xl font-extrabold text-gray-800 dark:text-white"> بسم اللّه</p>
-          <p className="text-2xl font-black mt-2 dark:text-white text-gray-900">
+          <p className="text-3xl font-extrabold text-white"> بسم اللّه</p>
+          <p className="text-2xl font-black mt-2 text-white">
         هنحتاج دقيقة واحدة عشان تكّمل الأسئلة الجاية          
           </p>
         </div>
@@ -30,7 +32,6 @@ const Second: React.FC = () => {
       
 
         {/* Subtle divider */}
-        <div className="w-2/3 mx-auto h-0.5 animate-pulse delay-1000 bg-gradient-to-r from-transparent via-orange-400 to-transparent rounded-full" />
       </div>
     </div>
   );

@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import InputsContainer from "./Components/InputsContainer";
 import { getAvatarColorClasses } from "./Components/Post";
 import PostsContainer from "./Components/PostsContainer";
-import { RiMessage3Fill } from "react-icons/ri";
+import { RiCopperCoinFill, RiCopperCoinLine, RiMessage3Fill } from "react-icons/ri";
 import { FaFire } from "react-icons/fa6";
+import Status from "./Components/Story";
 
 const Page = () => {
   const [headerVisible, setHeaderVisible] = useState(true);
@@ -40,24 +41,29 @@ const Page = () => {
     <div className="relative w-screen min-h-screen flex  flex-col pt-16">
       {/* Fixed header that slides up/down */}
       <div
-        className={`fixed top-0 left-0 w-full h-16 p-4 flex justify-between items-center bg-white/50 backdrop-blur-xl dark:bg-gray-900/50 rounded-b-4xl z-50 transition-transform duration-300 ${
+        className={`fixed top-0 left-0 w-full h-16 p-4 z-5 flex justify-between items-center  transition-transform duration-300 ${
           headerVisible ? "translate-y-0 " : "-translate-y-full"
-        }`}
+        } ${window.scrollY > 50 ?"bg-white/50 backdrop-blur-xl dark:bg-gray-900/50 shadow-xl":'' } `}
       >
          <div className="relative flex flex-row h-full">
-          <div
+          {
+            localStorage.getItem("PhotoUrl") ? (
+           <div className='w-8 h-8 bg-gray-200 rounded-xl overflow-hidden'>
+        <img src={localStorage.getItem("PhotoUrl") || undefined} className='w-full h-full' alt='userImage' />
+    </div>
+            ) : (
+              <div
             className={`w-8 h-8 p-4 flex items-center justify-center rounded-xl outline-3 dark:outline-slate-400/30 ${colorClasses}`}
           >
             <span className="font-bold mt-1">{initial}</span>
           </div>
+            )
+          }
           
 
   <div className="flex flex-col justify-center items-start mr-2 mt-2">
             <div className="text-md text-gray-700 dark:text-white flex gap-1">
-            <span>
-           اهلاً 
-
-            </span>
+            
             <div>
                  {getUserName}
               <span className="text-orange-600">@</span>
@@ -67,12 +73,23 @@ const Page = () => {
           </div>
           
          </div>
-        <div className="header text-orange-500 text-xl flex flex-row items-center justify-center gap-2.5">
-          <RiMessage3Fill className="mb-2" />
+
+         {/* Items Section */}
+    <div className="flex flex-row gap-1.5">
+          <div className="dark:text-white dark:bg-[#1111115e] text-gray-500  p-2 rounded-2xl text-xl flex flex-row items-center justify-center gap-2.5">
+<span className="font-black">312</span>
+<span><RiCopperCoinFill className="text-[18px] text-blue-600 dark:text-sky-500 mb-1" /></span>
         </div>
+
+            <div className="dark:text-white dark:bg-[#1111115e] text-gray-500  p-2 rounded-2xl text-xl flex flex-row items-center justify-center gap-2.5">
+<span className="font-black">312</span>
+<span><FaFire className="text-[18px] text-rose-600 dark:text-rose-500 mb-1" /></span>
+        </div>
+    </div>
 
      
       </div>
+      <Status />
       <PostsContainer />
     </div>
   );

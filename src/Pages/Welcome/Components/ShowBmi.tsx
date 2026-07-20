@@ -1,262 +1,170 @@
-import React, { useMemo } from 'react'
-import CircularProgress from '../../../Components/UI/CircleProgress';
-import { useCountUp } from '../../../Hooks/Increasing';
-import { FaBullseye, FaFire, FaRulerVertical } from 'react-icons/fa6';
-import { FaHeartbeat } from 'react-icons/fa';
+import React, { useEffect, useMemo } from "react";
+import { useCountUp } from "../../../Hooks/Increasing";
+import { FaFire, FaHeartbeat, FaBullseye, FaRulerVertical } from "react-icons/fa";
+import CircularProgress from "../../../Components/UI/CircleProgress"; // يمكنك استخدامه إذا أردت حلقات تقدم
 
+// دوال الحساب
 const calcBMI = (weightKg: number, heightCm: number) => {
   if (heightCm <= 0) return 0;
   return weightKg / (heightCm / 100) ** 2;
 };
-
- 
 
 const calcBMR = (weight: number, height: number, age: number, gender: string) => {
   // Mifflin-St Jeor
   if (gender === "ذكر") return 10 * weight + 6.25 * height - 5 * age + 5;
   return 10 * weight + 6.25 * height - 5 * age - 161;
 };
-interface UserData {
-  currentWeight: number;
-  targetWeight: number;
-  height: number; // cm
-  dailyCalories: number;
-  age: number;
-  gender: "ذكر" | "انثى";
-}
 
 const getIdealWeightRange = (heightCm: number) => {
-  // Hamwi formula (approximate)
   const low = Math.round(18.5 * (heightCm / 100) ** 2);
   const high = Math.round(24.9 * (heightCm / 100) ** 2);
   return [low, high];
 };
 
+// تصنيف الـ BMI (بدون نصائح طبية)
+const getBMICategory = (bmi: number) => {
+  if (bmi < 18.5) return "نقص في الوزن";
+  if (bmi < 25) return "وزن طبيعي";
+  if (bmi < 30) return "زيادة في الوزن";
+  if (bmi < 35) return "سمنة درجة أولى";
+  if (bmi < 40) return "سمنة درجة ثانية";
+  return "سمنة مفرطة";
+};
 
-const ShowBmi = () => {
-    
+interface UserData {
+  currentWeight: number;
+  targetWeight: number;
+  height: number;
+  dailyCalories: number;
+  age: number;
+  gender: "ذكر" | "انثى";
+}
+
+const ShowBmi: React.FC = () => {
+  // قراءة البيانات من localStorage
   const currentWeight = Number(localStorage.getItem("currentWeight") || 0);
   const targetWeight = Number(localStorage.getItem("targetWeight") || 0);
   const height = Number(localStorage.getItem("height") || 0);
   const age = Number(localStorage.getItem("age") || 0);
   const challengePeriod = Number(localStorage.getItem("challengePeriod") || 0);
-  const gender = localStorage.getItem("SelectedGender") || "";
+  const gender = (localStorage.getItem("SelectedGender") as "ذكر" | "انثى") || "ذكر";
 
+  // تجميع بيانات المستخدم لتجنب التكرار
+  const userData: UserData = useMemo(
+    () => ({
+      currentWeight,
+      targetWeight,
+      height,
+      dailyCalories: Number(localStorage.getItem("dailyCalories") || 0),
+      age,
+      gender,
+    }),
+    [currentWeight, targetWeight, height, age, gender]
+  );
 
-    const userData: UserData = useMemo(() => {
-        return {
-          currentWeight: Number(localStorage.getItem("currentWeight")) || 45,
-          targetWeight: Number(localStorage.getItem("targetWeight")) || 52,
-          height: Number(localStorage.getItem("height")) || 132,
-          dailyCalories: Number(localStorage.getItem("dailyCalories")) || 2683,
-          age: Number(localStorage.getItem("age")) || 25,
-          gender: (localStorage.getItem("SelectedGender") as "ذكر" | "انثى") || "ذكر",
-        };
-      }, []);
-    
-      const dailyCaloriesGoal = useMemo(() => {
+  // حساب السعرات اليومية المطلوبة (بدون تأثير جانبي هنا)
+  const dailyCaloriesGoal = useMemo(() => {
     if (!challengePeriod || challengePeriod <= 0) return 0;
-
-    let bmr: number;
-    if (gender === "ذكر") {
-      bmr = 10 * currentWeight + 6.25 * height - 5 * age + 5;
-    } else {
-      bmr = 10 * currentWeight + 6.25 * height - 5 * age - 161;
-    }
-
-    const tdee = bmr * 1.5; // activity factor
-    const weightDiff = targetWeight - currentWeight;
+    const bmr = calcBMR(userData.currentWeight, userData.height, userData.age, userData.gender);
+    const tdee = bmr * 1.5; // معامل نشاط متوسط
+    const weightDiff = userData.targetWeight - userData.currentWeight;
     const totalCaloriesNeeded = weightDiff * 7700;
     const days = challengePeriod * 30;
-
     if (days === 0) return Math.round(tdee);
     const daily = tdee + totalCaloriesNeeded / days;
-    localStorage.setItem("dailyCalories", Math.round(daily).toString());
     return Math.round(daily);
-  }, [currentWeight, targetWeight, height, age, challengePeriod, gender]);
+  }, [userData, challengePeriod]);
 
+  // تخزين السعرات في localStorage عند تغيرها (تأثير جانبي صحيح)
+  useEffect(() => {
+    localStorage.setItem("dailyCalories", dailyCaloriesGoal.toString());
+  }, [dailyCaloriesGoal]);
 
-      const bmi = calcBMI(userData.currentWeight, userData.height);
-      const bmr = calcBMR(
-        userData.currentWeight,
-        userData.height,
-        userData.age,
-        userData.gender
-      );
-      const idealRange = getIdealWeightRange(userData.height);
-      const weightDiff = userData.targetWeight - userData.currentWeight;
-    
-      // Progress percentages for rings
-      const weightProgressPercent = Math.min(
-        (userData.currentWeight / userData.targetWeight) * 100,
-        100
-      );
-      const caloriePercent = Math.min((userData.dailyCalories / 3000) * 100, 100);
-      const bmiPercent = Math.min((bmi / 40) * 100, 100);
-        const animatedWeight = useCountUp(userData.currentWeight);
-      const animatedTargetWeight = useCountUp(userData.targetWeight);
-      const animatedHeight = useCountUp(userData.height);
-      const animatedAge = useCountUp(userData.age);
-      const animatedBMR = useCountUp(Math.round(bmr));
-      // Exercise streak (if available)
-      const streak = useMemo(() => {
-        const raw = localStorage.getItem("CompletedDates");
-        if (!raw) return 0;
-        try {
-          const dates: string[] = JSON.parse(raw);
-          if (!Array.isArray(dates) || dates.length === 0) return 0;
-          const sorted = dates
-            .map((d) => {
-              const [y, m, day] = d.split("-").map(Number);
-              return new Date(y, m - 1, day);
-            })
-            .sort((a, b) => b.getTime() - a.getTime());
-          const today = new Date();
-          today.setHours(0, 0, 0, 0);
-          const yesterday = new Date(today);
-          yesterday.setDate(today.getDate() - 1);
-          const mostRecent = new Date(sorted[0]);
-          mostRecent.setHours(0, 0, 0, 0);
-          if (
-            mostRecent.getTime() !== today.getTime() &&
-            mostRecent.getTime() !== yesterday.getTime()
-          )
-            return 0;
-          let count = 1;
-          let cur = new Date(mostRecent);
-          for (let i = 1; i < sorted.length; i++) {
-            const prev = new Date(sorted[i]);
-            prev.setHours(0, 0, 0, 0);
-            const diff =
-              (cur.getTime() - prev.getTime()) / (1000 * 60 * 60 * 24);
-            if (diff === 1) {
-              count++;
-              cur = prev;
-            } else break;
-          }
-          return count;
-        } catch {
-          return 0;
-        }
-      }, []);
-    
-      // Card style identical to Home component
-      const cardStyle =
-        "bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 shadow-sm rounded-3xl p-4 backdrop-blur-md hover:shadow-xl transition-all";
-    
+  // الحسابات الأساسية
+  const bmi = calcBMI(userData.currentWeight, userData.height);
+  const bmr = calcBMR(userData.currentWeight, userData.height, userData.age, userData.gender);
+  const idealRange = getIdealWeightRange(userData.height);
+  const weightDiff = userData.targetWeight - userData.currentWeight;
+
+  // قيم مؤثرة للعدادات
+  const animatedWeight = useCountUp(userData.currentWeight);
+  const animatedTargetWeight = useCountUp(userData.targetWeight);
+  const animatedHeight = useCountUp(userData.height);
+  const animatedAge = useCountUp(userData.age);
+  const animatedBMR = useCountUp(Math.round(bmr));
+  const animatedBMI = useCountUp(Number(bmi.toFixed(1)));
+  const animatedCalories = useCountUp(dailyCaloriesGoal);
+
+  // سلسلة التمارين (اختياري)
+  const streak = useMemo(() => {
+    const raw = localStorage.getItem("CompletedDates");
+    if (!raw) return 0;
+    try {
+      const dates: string[] = JSON.parse(raw);
+      if (!Array.isArray(dates) || dates.length === 0) return 0;
+      const sorted = dates
+        .map((d) => {
+          const [y, m, day] = d.split("-").map(Number);
+          return new Date(y, m - 1, day);
+        })
+        .sort((a, b) => b.getTime() - a.getTime());
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const yesterday = new Date(today);
+      yesterday.setDate(today.getDate() - 1);
+      const mostRecent = new Date(sorted[0]);
+      mostRecent.setHours(0, 0, 0, 0);
+      if (mostRecent.getTime() !== today.getTime() && mostRecent.getTime() !== yesterday.getTime())
+        return 0;
+      let count = 1;
+      let cur = new Date(mostRecent);
+      for (let i = 1; i < sorted.length; i++) {
+        const prev = new Date(sorted[i]);
+        prev.setHours(0, 0, 0, 0);
+        const diff = (cur.getTime() - prev.getTime()) / (1000 * 60 * 60 * 24);
+        if (diff === 1) {
+          count++;
+          cur = prev;
+        } else break;
+      }
+      return count;
+    } catch {
+      return 0;
+    }
+  }, []);
+
+  // نمط البطاقات
+  const cardStyle =
+    "bg-white  dark:border-2 dark:border-gray-600/20 shadow-sm rounded-3xl p-4 backdrop-blur-md hover:shadow-xl transition-all";
+
   return (
-    <>
-    <div className="min-h-screen w-full flex justify-center items-center show-first z-0 sm:p-5 font-arabic relative overflow-hidden">
-      {/* Decorative blur */}
+    <div className="flex flex-col gap-6 pb-8">
+      {/* القسم العلوي: السعرات الحرارية اليومية */}
+      <div className="relative w-full h-[70vh] overflow-hidden rounded-[60px] shadow-xl show-fast">
+        <div className="absolute inset-0 bg-gradient-to-br from-green-500 to-teal-500" />
+        <FaFire className="absolute top-20 w-3/4 h-1/2 text-emerald-300 dark:text-emerald-300/80 show-third" />
 
-        
-      <div className="relative z-10">
-        {/* Header */}
-        {/* Extra Data Cards (non‑ring) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-  
-          {/* Quick stats */}
-          <div className={`${cardStyle} space-y-2`}>
-            <h3 className="text-lg font-bold text-amber-800 dark:text-white flex items-center gap-2">
-              <FaHeartbeat className="text-rose-500" />  نظرة عامة
-            </h3>
-            <div className="grid grid-cols-2 gap-2 text-sm">
-              <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
-                <span className="text-gray-500 dark:text-gray-400">الوزن الحالي</span>
-                <p className="font-bold text-amber-700 dark:text-white">
-                  {animatedWeight} كجم
-                </p>
-              </div>
-              <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
-                <span className="text-gray-500 dark:text-gray-400">المستهدف</span>
-                <p className="font-bold text-amber-700 dark:text-white">
-                  {animatedTargetWeight} كجم
-                </p>
-              </div>
-              <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
-                <span className="text-gray-500 dark:text-gray-400">الطول</span>
-                <p className="font-bold text-amber-700 dark:text-white">
-                  {animatedHeight} سم
-                </p>
-              </div>
-              <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
-                <span className="text-gray-500 dark:text-gray-400">معدل الأيض</span>
-                <p className="font-bold text-amber-700 dark:text-white">
-                  {Math.round(animatedBMR)} سعرة
-                </p>
-              </div>
-            </div>
+        <div className="relative z-10 flex flex-col justify-center h-full px-6">
+          <div className="relative  text-4xl w-3/4 leading-15 text-right text-white mb-4 drop-shadow-2xl text-shadow-xs font-black show-first">
+            أنت تحتاج حوالي {dailyCaloriesGoal} سعرة حرارية
           </div>
-        </div>
-        {/* Circular Progress Rings Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
-     
-
-          {/* Daily Calories Ring */}
-          <div className={`${cardStyle} flex justify-center`}>
-            <CircularProgress
-              value={useCountUp(userData.dailyCalories)}
-              max={localStorage.getItem("dailyCalories") ? Number(localStorage.getItem("dailyCalories")) : 0}
-              label="س.ع المستهدفة"
-              unit="سعرة"
-              color="#f97316"
-              icon={<FaFire className="text-orange-400" />}
-            />
-          </div>
-
-          {/* BMI Ring */}
-          <div className={`${cardStyle} flex justify-center`}>
-            <CircularProgress
-              value={bmi}
-              max={40}
-              label="مؤشر كتلة الجسم"
-              unit="BMI"
-              color="#3b82f6"
-              icon={<FaRulerVertical className="text-blue-500" />}
-              subText={bmi < 18.5 ? "نقص" : bmi < 25 ? "طبيعي" : bmi < 30 ? "زيادة" : "سمنة"}
-            />
-          </div>
-
-       
-
-          {/* BMR Ring (derived) */}
-          <div className={`${cardStyle} flex justify-center`}>
-            <CircularProgress
-              value={Math.round(animatedBMR)}
-              max={2500}
-              label="معدل الأيض الأساسي"
-              unit="سعرة"
-              color="#8b5cf6"
-              icon={<FaHeartbeat className="text-purple-500" />}
-              subText="حرق أثناء الراحة"
-            />
-          </div>
-
-          {/* Weight Difference Ring */}
-          <div className={`${cardStyle} flex justify-center`}>
-            <CircularProgress
-              value={Math.abs(weightDiff)}
-              max={20}
-              label="الفرق عن المستهدف"
-              unit="كجم"
-              color={weightDiff > 0 ? "#f59e0b" : "#22c55e"}
-              icon={<FaBullseye className="text-yellow-500" />}
-              subText={weightDiff > 0 ? "تحتاج زيادة" : "فوق المستهدف"}
-            />
-          </div>
-
-          
-
-        
+          <p className="text-xl w-11/12 text-gray-100 text-shadow-xs font-black leading-relaxed max-w-md show-second">
+            حتي تصل الي {targetWeight} كجم في غضون {challengePeriod}{" "}
+            {challengePeriod > 1 ? "شهور" : "شهر"}، لا تقلق أنا سأتولي مهمة أن يكون لديك نظام غذائي
+            ممتاز لإحتياجاتك علي حسب أطعمة متوفرة لديك
+          </p>
+            <div className={cardStyle}>
+          <FaFire className="text-amber-400 text-2xl mb-2" />
+          <p className="text-sm font-medium text-gray-500 ">معدل الأيض الأساسي</p>
+          <p className="text-3xl font-bold text-gray-900">{animatedBMR}</p>
+          <p className="text-xs text-gray-500 ">سعرة حرارية في الراحة</p>
         </div>
 
-        {/* Bottom spacer for mobile nav */}
-        <div className="h-16" />
+        </div>
       </div>
+
     </div>
+  );
+};
 
-    </>
-  )
-}
-
-export default ShowBmi
+export default ShowBmi;

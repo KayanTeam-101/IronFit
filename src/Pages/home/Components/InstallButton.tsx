@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { MdInstallMobile } from "react-icons/md";
-import Xp from "./Xp";
+import Xp, { calculateAllTimeXP } from "./Xp";
 
 type Platform = "ios" | "android" | "other" | "desktop";
 
@@ -12,27 +12,26 @@ function detectPlatform(ua: string): Platform {
   return "desktop";
 }
 
-// Genuine in-app / embedded webviews that block install APIs entirely
-// and need to be redirected out to a real browser first.
 const EMBEDDED_WEBVIEW_REGEX =
   /TikTok|Bytedance|musical_ly|trill|snssdk|FBAN|FBAV|Instagram|Line\/|MicroMessenger|;\s?wv\)/i;
 
-function InstallButton() {
+const InstallButton: React.FC = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showButton, setShowButton] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
-  const [isEmbedded, setIsEmbedded] = useState(false); // was "isTikTok"
+  const [isEmbedded, setIsEmbedded] = useState(false);
   const [isFallback, setIsFallback] = useState(false);
   const [platform, setPlatform] = useState<Platform>("desktop");
+  const [xp, setXp] = useState(0);  // 🆕 state for XP value
 
-  const errorLoggedRef = useRef(false);
-  const hideAndLog = useCallback((reason: string) => {
-    setShowButton(false);
-    if (!errorLoggedRef.current) {
-      console.error(`[InstallButton] ${reason}`);
-      errorLoggedRef.current = true;
-    }
-  }, []); // stable forever now — a ref instead of state
+  // Fetch XP asynchronously once
+  useEffect(() => {
+    const fetchXp = async () => {
+      const xpValue = await calculateAllTimeXP();
+      setXp(xpValue);
+    };
+    fetchXp();
+  }, []);
 
   useEffect(() => {
     const standaloneMedia = window.matchMedia("(display-mode: standalone)");
@@ -47,8 +46,6 @@ function InstallButton() {
     const plat = detectPlatform(ua);
     setPlatform(plat);
 
-    // Real embedded browser: never fires beforeinstallprompt reliably,
-    // so don't wait for it — go straight to the "open in real browser" flow.
     if (EMBEDDED_WEBVIEW_REGEX.test(ua)) {
       console.log("[InstallButton] embedded webview detected");
       setIsEmbedded(true);
@@ -61,7 +58,7 @@ function InstallButton() {
       e.preventDefault();
       setDeferredPrompt(e);
       setShowButton(true);
-      setIsFallback(false); // real event beats any earlier fallback guess
+      setIsFallback(false);
     };
     window.addEventListener("beforeinstallprompt", promptHandler);
 
@@ -75,11 +72,9 @@ function InstallButton() {
     let fallbackTimer: ReturnType<typeof setTimeout> | null = null;
 
     if (plat === "ios") {
-      // Safari/Chrome/Firefox on iOS never fire beforeinstallprompt at all.
       setIsFallback(true);
       setShowButton(true);
     } else {
-      // Give the real event a fair window before assuming it isn't coming.
       fallbackTimer = setTimeout(() => {
         setDeferredPrompt((dp: any) => {
           if (!dp) {
@@ -88,7 +83,7 @@ function InstallButton() {
               setIsFallback(true);
               setShowButton(true);
             } else {
-              hideAndLog("Installation is not available in this browser.");
+              alert("Installation is not available in this browser.");
             }
           }
           return dp;
@@ -101,9 +96,8 @@ function InstallButton() {
       window.removeEventListener("appinstalled", installedHandler);
       if (fallbackTimer) clearTimeout(fallbackTimer);
     };
-  }, [hideAndLog]); // effectively runs once — hideAndLog never changes now
+  }, []);
 
-  // Manual instructions only — NEVER navigates/redirects anything.
   const openInstructions = () => {
     if (platform === "ios") {
       alert(
@@ -116,8 +110,6 @@ function InstallButton() {
     }
   };
 
-  // Only ever called when isEmbedded is true — i.e. only inside a real
-  // in-app webview, never inside plain Chrome/Safari.
   const escapeEmbeddedBrowser = async () => {
     const currentUrl = window.location.href;
     try {
@@ -141,7 +133,7 @@ function InstallButton() {
         alert("افتح الرابط في متصفح Chrome أو Safari لتثبيت التطبيق.");
       }
     } catch (err) {
-      hideAndLog("Escaping embedded browser failed.");
+alert("")
     }
   };
 
@@ -180,7 +172,7 @@ function InstallButton() {
     }
   };
 
-  if (isInstalled) return <Xp />;
+  if (true) return <Xp xp={xp} />;
   if (!showButton) return null;
 
   const message = isEmbedded

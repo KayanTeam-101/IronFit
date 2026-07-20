@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
-import Meal from "./Meal";
-import { FaBowlFood } from "react-icons/fa6";
+import Meal from "./components/Meal";
+import { FaBowlFood, FaCookieBite } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import foods from "../../assets/FoodsList.json";
 import { VscSettings } from "react-icons/vsc";
 import Settings from "./Settings";
+import { giveHealthAdvice } from "../../utilities/GiveAdvice";
 import { BiCalendarAlt, BiInfoCircle } from "react-icons/bi";
 import { GrAddCircle } from "react-icons/gr";
 import CircularProgress from "./components/circleprogress";
@@ -102,7 +103,9 @@ const Diet = () => {
     } else {
       localStorage.removeItem("dailyCalories");
     }
+    
   }, [dailyCaloriesGoal]);
+  const Advice = giveHealthAdvice();
 
   // Read planned diet — re-parsed only on mount and whenever Settings closes,
   // since that's the only place the saved plan can change
@@ -112,7 +115,7 @@ const Diet = () => {
   }, [settingsOpened]);
 
   // --- Recalculate eaten calories ---
-  const recalcCalories = useCallback(() => {
+   const recalcCalories = useCallback(() => {
     const today = new Date();
     const currentDate = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
     const todayMeals = history[currentDate]?.meals || {};
@@ -135,7 +138,7 @@ const Diet = () => {
         if (cal !== undefined) total += cal;
       }
     }
-
+    localStorage.setItem("EatenCalories",String(total))
     setEatenCalories(total);
   }, [history]);
 
@@ -257,7 +260,13 @@ const Diet = () => {
           </button>
         </div>
       </div>
+ <div className="w-full rounded-3xl mb-2 p-5 flex flex-row gap-2">
+<div className="w-5 h-5">
+              <FaCookieBite className="text-2xl text-amber-500 dark:text-amber-300" />
 
+</div>
+              <p className="font-light text-md show-third dark:text-white" dangerouslySetInnerHTML={{__html:Advice}}></p>
+            </div>
       {/* Progress & add unscheduled button */}
       <div className="grid grid-cols-2 p-2 mb-6">
         <CircularProgress

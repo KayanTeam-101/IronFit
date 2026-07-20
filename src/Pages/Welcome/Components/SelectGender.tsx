@@ -15,7 +15,7 @@ const SelectGender: React.FC = () => {
 
   return (
     <div className='h-11/12 flex flex-col items-center'>
-        <h2 className='text-3xl translate-y-10 text-amber-400 font-extrabold mb-4 text-center '> ذكر أم انثي<span className='text-amber-500'>؟</span></h2>
+        <h2 className='text-3xl translate-y-10 text-amber-400 dark:text-white font-extrabold mb-4 text-center '> ذكر أم انثي<span className='text-amber-500'>؟</span></h2>
 
       <div className='relative top-15 grid grid-cols-2 gap-2'>
         {genders.map((g, i) => {

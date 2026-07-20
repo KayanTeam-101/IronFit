@@ -43,10 +43,10 @@ const SelectDays: React.FC = () => {
 
   return (
     <div className="h-full w-full flex  justify-center">
+        <div className="absolute -top-10 -right-10 w-32 h-32 bg-amber-400 rounded-full opacity-50 blur-3xl" />
+        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-teal-400 rounded-full opacity-50 blur-3xl" />
       <div className="relative w-11/12 max-w-lg mt-5 ">
         {/* Decorative blobs */}
-        <div className="absolute -top-10 -right-10 w-32 h-32 bg-amber-400 rounded-full opacity-20 blur-3xl" />
-        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-indigo-400 rounded-full opacity-20 blur-3xl" />
 
         {/* Header */}
         <div className="text-center mb-6">
@@ -68,7 +68,7 @@ const SelectDays: React.FC = () => {
             {selectedDays.map((day, i) => (
               <span
                 key={i}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 dark:text-white bg-white/80 dark:border-black/30 dark:bg-black/20 dark:border border border-amber-200  rounded-full text-sm font-medium text-amber-700"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 dark:text-white bg-white/80 dark:border-black/70 dark:bg-black/60 dark:border border border-amber-200  rounded-full text-sm font-medium text-amber-700"
               >
                 {day}
                 <button
@@ -76,7 +76,7 @@ const SelectDays: React.FC = () => {
                     e.stopPropagation();
                     toggleDay(day);
                   }}
-                  className="text-amber-400 dark:text-white hover:text-red-500 transition"
+                  className="text-amber-400 dark:text-whitedark:text-white hover:text-red-500 transition"
                 >
                   <FaTimes size={12} />
                 </button>
