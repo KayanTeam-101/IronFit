@@ -146,12 +146,30 @@ const ShowBmi: React.FC = () => {
 
         <div className="relative z-10 flex flex-col justify-center h-full px-6">
           <div className="relative  text-4xl w-3/4 leading-15 text-right text-white mb-4 drop-shadow-2xl text-shadow-xs font-black show-first">
-            أنت تحتاج حوالي {dailyCaloriesGoal} سعرة حرارية
+            {localStorage.getItem("SelectedGender") === "ذكر" ? "انت" : "انتي" }
+            {" "}
+
+            {localStorage.getItem("SelectedGender") === "ذكر" ? "محتاج" : "محتاجه" }
+            {" "}
+             
+              حوالي 
+            {dailyCaloriesGoal}
+             سعرة حرارية
           </div>
           <p className="text-xl w-11/12 text-gray-100 text-shadow-xs font-black leading-relaxed max-w-md show-second">
-            حتي تصل الي {targetWeight} كجم في غضون {challengePeriod}{" "}
-            {challengePeriod > 1 ? "شهور" : "شهر"}، لا تقلق أنا سأتولي مهمة أن يكون لديك نظام غذائي
-            ممتاز لإحتياجاتك علي حسب أطعمة متوفرة لديك
+             حتي 
+            {" "}
+            {localStorage.getItem("SelectedGender") === "ذكر" ? "توصل" : "توصلي" }
+            {" "}
+             
+              لــ 
+              {targetWeight} 
+            كجم في غضون {
+            challengePeriod}
+            {challengePeriod > 1 ? "شهور" : "شهر"}، 
+            لازم يبقي فيه نظام غذائي كويس
+         ف مهمة أن يكون فيه نظام غذائي ممتاز علي حسب الاحتياج البدني دي مهمتي
+          😄
           </p>
             <div className={cardStyle}>
           <FaFire className="text-amber-400 text-2xl mb-2" />

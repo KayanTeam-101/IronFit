@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { lazy, Suspense,useState } from 'react';
 import {
   FaArrowLeft,
   FaArrowRight,
@@ -6,21 +6,20 @@ import {
   FaCaretRight,
 } from "react-icons/fa6";
 
-import Firstturn from "./Components/Firstturn";
-import ChooseHight from "./Components/ChooseHight";
-import ChooseAge from "./Components/ChooseAge";
-import CurrentWeight from "./Components/CurrentWeight";
-import TargetWeight from "./Components/TargetWeight";
-import SatisfactionRate from "./Components/SatisfactionRate";
-import SelectDays from "./Components/SelectDays";
-import SelectGender from "./Components/SelectGender";
-import FinalSection from "./Components/FinalSection";
-import ChPreiod from "./Components/ChPreiod";
-import S_Goals from "./Components/SetGoals";
-import Second from "./Components/SecondPage";
-import ShowBmi from "./Components/ShowBmi";
-import CreateAUserName from "./Components/CreateAUserName";
-import BreakPage from "./Components/BreakPage";
+import Firstturn from './Components/Firstturn'; // eager
+
+const ChooseHight = lazy(() => import('./Components/ChooseHight'));
+const ChooseAge = lazy(() => import('./Components/ChooseAge'));
+const CurrentWeight = lazy(() => import('./Components/CurrentWeight'));
+const TargetWeight = lazy(() => import('./Components/TargetWeight'));
+const SelectGender = lazy(() => import('./Components/SelectGender'));
+const FinalSection = lazy(() => import('./Components/FinalSection'));
+const ChPreiod = lazy(() => import('./Components/ChPreiod'));
+const S_Goals = lazy(() => import('./Components/SetGoals'));
+const Second = lazy(() => import('./Components/SecondPage'));
+const ShowBmi = lazy(() => import('./Components/ShowBmi'));
+const CreateAUserName = lazy(() => import('./Components/CreateAUserName'));
+const BreakPage = lazy(() => import('./Components/BreakPage'));
 import { GoGoal } from "react-icons/go";
 import { PiConfettiLight } from "react-icons/pi";
 const TOTAL_STEPS = 14;
@@ -100,7 +99,7 @@ const Welcome: React.FC = () => {
     setTurn((prev) => prev + 1);
     setTimeout(() => {
       setLoading(false);
-    }, 5000);
+    }, 50);
   };
 
   const previous = () => {
@@ -189,7 +188,7 @@ const Welcome: React.FC = () => {
           >
        {loading
   ? " إنتظر قليلا.."
-  : turn === 14 && !isUserDataSaved
+  : turn === 13 && !isUserDataSaved
   ? "احفظ البيانات أولاً"
   : turn === TOTAL_STEPS
   ? "إبدء !"

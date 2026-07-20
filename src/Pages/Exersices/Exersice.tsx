@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, lazy, Suspense } from "react";
 import { BiTrendingUp } from "react-icons/bi";
 import {
   FaPlus,
@@ -15,10 +15,12 @@ import { FaPersonRunning, FaXmark } from "react-icons/fa6";
 import { RiResetRightFill } from "react-icons/ri";
 import { VscSettings } from "react-icons/vsc";
 import { GiShoulderArmor } from "react-icons/gi";
-import SelectDays from "../Welcome/Components/SelectDays";
-import EditWeightForm from "./Components/EditWightForm";  // adjust path
 import { giveExerciseAdvice } from "../../utilities/GiveAdvice";
 import { useNavigate } from "react-router";
+
+// Lazy‑loaded components
+const SelectDays = lazy(() => import("../Welcome/Components/SelectDays"));
+const EditWeightForm = lazy(() => import("./Components/EditWightForm"));
 
 // ---------- Types ----------
 type SystemName = "ارنو سبلت" | "بروسبلت" | "بوش بون ليج";

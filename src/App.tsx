@@ -1,93 +1,85 @@
-import Navbar from "./Components/layouts/Navbar";
-import Exersice from "./Pages/Exersices/Exersice";
-import FoodPage from "./Pages/food/FoodPage";
-import Page from "./Pages/food/History/page";
-import Home from "./Pages/home/Home";
-import MakeADiet from "./Pages/MKDiet/MakeADiet";
-import Welcome from "./Pages/Welcome/Welcome";
-import SocialPage from "./Pages/SocialPage/Page";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import ExercisePage from "./Pages/Exersices/Exersice";
-import StatusPage from "./Pages/StatusPage/StatusPage";
-import Settings from "./Pages/Settings/settings";
-import TemplatesPage from "./Pages/Templates/TemplatesPage";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { useState, useEffect, Suspense, lazy } from "react";
 import Loading from "./Components/layouts/Loading";
+
+// Lazy‑loaded page components
+const Welcome = lazy(() => import("./Pages/Welcome/Welcome"));
+const Home = lazy(() => import("./Pages/home/Home"));
+const FoodPage = lazy(() => import("./Pages/food/FoodPage"));
+const MakeADiet = lazy(() => import("./Pages/MKDiet/MakeADiet"));
+const ExercisePage = lazy(() => import("./Pages/Exersices/Exersice"));
+const TemplatesPage = lazy(() => import("./Pages/Templates/TemplatesPage"));
+const SocialPage = lazy(() => import("./Pages/SocialPage/Page"));
+const Settings = lazy(() => import("./Pages/Settings/settings"));
+const Page = lazy(() => import("./Pages/food/History/page"));
+const Navbar = lazy(() => import("./Components/layouts/Navbar"));
 
 function App() {
   const isFirstTime: boolean = localStorage.getItem("isFirstTime") === null;
 
-  const [isDesktop, setIsDesktop] = useState(false); // 1. حالة جديدة لاكتشاف الحاسوب
+  const [isDesktop, setIsDesktop] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [condition,SetCondition] = useState(localStorage.length >= 12 && window.location.pathname !== "/MKADiet");
+  const [condition, SetCondition] = useState(
+    localStorage.length >= 12 && window.location.pathname !== "/MKADiet"
+  );
 
-  
+  const location = useLocation(); // needed to update condition on route change
+
+  // Initial load & path guard
   useEffect(() => {
-    // التحقق من التحميل
-      (function () {
-        if ((localStorage.length < 12 && window.location.pathname !== '/' ) || (window.location.pathname !== '/'  && !localStorage.getItem("UserName"))) {
-          localStorage.clear();
-          window.location.href = '/';
-        }
-        else{return null;}
-       })();
+    (function () {
+      if (
+        (localStorage.length < 12 && window.location.pathname !== "/") ||
+        (window.location.pathname !== "/" &&
+          !localStorage.getItem("UserName"))
+      ) {
+        localStorage.clear();
+        window.location.href = "/";
+      }
+    })();
+
     const handleLoad = () => {
-setTimeout(() => {
-      setIsLoading(false);
-}, 1000);     
+      setIsLoading(false)
     };
 
     if (document.readyState === "complete") {
-setTimeout(() => {
-      setIsLoading(false);
-}, 1000);
+      setIsLoading(false)
     } else {
       window.addEventListener("load", handleLoad);
     }
 
-    return () => {
-      window.removeEventListener("load", handleLoad);
-    };
+    return () => window.removeEventListener("load", handleLoad);
   }, []);
 
-  // 2. فحص حجم الشاشة لمعرفة ما إذا كان المستخدم على حاسوب
+  // Detect desktop
   useEffect(() => {
     const checkDeviceType = () => {
-      // إذا كان عرض الشاشة أكبر من 768 بكسل (أجهزة التابلت والكمبيوتر)
-      if (window.innerWidth > 868) {
-        setIsDesktop(true);
-      } else {
-        setIsDesktop(false);
-      }
+      setIsDesktop(window.innerWidth > 868);
     };
-
-    // الفحص عند أول تحميل
     checkDeviceType();
-
-    // الفحص في حال قام المستخدم بتغيير حجم نافذة المتصفح
     window.addEventListener("resize", checkDeviceType);
-
-    return () => {
-      window.removeEventListener("resize", checkDeviceType);
-    };
+    return () => window.removeEventListener("resize", checkDeviceType);
   }, []);
+
+  // Update Navbar visibility on route change
   useEffect(() => {
     SetCondition(
       localStorage.length >= 12 && location.pathname !== "/MKADiet"
     );
   }, [location.pathname]);
-  // 3. شاشة التحميل
+
+  // 1. Initial app loader
   if (isLoading) {
     return (
       <div className="w-screen h-screen flex items-center justify-center bg-white dark:bg-[#111]">
         <div className="w-1/4">
-        <Loading />
+          <Loading />
         </div>
       </div>
     );
   }
 
-  // 4. إذا كان المستخدم يفتح من حاسوب، نظهر له هذه الشاشة بدلاً من التطبيق
+  // 2. Desktop restriction
   if (isDesktop) {
     return (
       <div className="w-screen h-screen flex flex-col items-center justify-center bg-gray-50 p-5 text-center">
@@ -96,18 +88,26 @@ setTimeout(() => {
             هذا الموقع مخصص للهواتف فقط
           </h1>
           <p className="text-gray-500 leading-relaxed">
-            للحصول على أفضل تجربة استخدام، يرجى فتح هذا الرابط من خلال متصفح هاتفك المحمول.
+            للحصول على أفضل تجربة استخدام، يرجى فتح هذا الرابط من خلال متصفح
+            هاتفك المحمول.
           </p>
         </div>
       </div>
     );
   }
 
- 
-
-  // 5. إذا كان من الهاتف، يتم عرض التطبيق بشكل طبيعي
+  // 3. Main app with lazy routes and Navbar
   return (
-    <>
+    <Suspense
+      fallback={
+        <div className="w-screen h-screen flex items-center justify-center">
+<div className="w-25">
+          <Loading />
+
+</div>
+        </div>
+      }
+    >
       <Routes>
         <Route
           path="/"
@@ -119,7 +119,6 @@ setTimeout(() => {
             )
           }
         />
-
         <Route path="/me/home" element={<Home />} />
         <Route path="/me/food" element={<FoodPage />} />
         <Route path="/mkAdiet" element={<MakeADiet />} />
@@ -127,11 +126,6 @@ setTimeout(() => {
         <Route path="/Templates" element={<TemplatesPage />} />
         <Route path="/Chat" element={<SocialPage />} />
         <Route path="/Settings" element={<Settings />} />
-        <Route
-          path="*"
-          element={<h1 className="p-5 text-9xl text-rose-600">404</h1>}
-        />
-
         <Route
           path="/me/history"
           element={
@@ -142,10 +136,14 @@ setTimeout(() => {
             )
           }
         />
+        <Route
+          path="*"
+          element={<h1 className="p-5 text-9xl text-rose-600">404</h1>}
+        />
       </Routes>
 
       {condition && <Navbar />}
-    </>
+    </Suspense>
   );
 }
 

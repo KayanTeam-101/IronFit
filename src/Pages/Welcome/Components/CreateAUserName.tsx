@@ -122,9 +122,9 @@ const CreateAUserName = ({
   };
 
   return (
-    <div className="w-full px-4 py-8 flex flex-col items-center">
-         <div className="absolute -top-10 -right-10 w-32 h-32 bg-amber-400 rounded-full opacity-50 blur-3xl" />
-        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-orange-400 rounded-full opacity-50 blur-3xl" />
+    <div className="w-full px-4 flex flex-col items-center">
+         <div className="absolute -top-10 -right-10 w-32 h-32 bg-rose-400 rounded-full animate-pulse opacity-35 blur-3xl" />
+        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-orange-400 rounded-full animate-pulse opacity-35 blur-3xl" />
 
       <div className="w-full max-w-sm space-y-6">
         {/* Image upload (kept same style as original but without absolute overlay) */}
@@ -134,11 +134,11 @@ const CreateAUserName = ({
               <img
                 src={photoUrl}
                 alt="Preview"
-                className="w-full h-full rounded-full object-contain  border-2 border-orange-400 shadow-lg"
+                className="w-full h-full rounded-full object-cover  border-2 border-orange-400 shadow-lg"
               />
               <label
                 htmlFor="avatar-upload"
-                className="absolute bottom-0 right-0 bg-teal-500 text-white p-1 rounded-full cursor-pointer hover:bg-teal-600"
+                className="absolute bottom-1 right-5 bg-amber-500 text-white p-1 rounded-full cursor-pointer hover:bg-teal-600"
               >
                 <PiPlusBold className="w-4 h-4" />
               </label>
@@ -146,7 +146,7 @@ const CreateAUserName = ({
           ) : (
             <label
               htmlFor="avatar-upload"
-              className="w-40 h-40 rounded-full border-2 border-dashed border-gray-500 flex flex-col items-center justify-center cursor-pointer hover:border-orange-400 bg-gray-800/30"
+              className="w-45 h-45 rounded-full border-2 border-dashed dark:border-gray-500 border-gray-400 dark:bg-[#111] pop bg-transparent flex flex-col items-center justify-center cursor-pointer hover:border-orange-400 "
             >
               <PiPlusBold className="text-3xl text-gray-400" />
               <span className="text-xs text-gray-500 mt-1">صورة شخصية</span>
@@ -170,9 +170,8 @@ const CreateAUserName = ({
             value={text}
             onChange={(e) => setText(e.target.value)}
             maxLength={USERNAME_MAX_LENGTH}
-            autoFocus
             placeholder="أكتب اسم المستخدم, مثال: Ahmed-Fit1"
-            className="w-full bg-transparent border-b-2 border-gray-600/40 px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-orange-400 transition-colors"
+            className="w-full bg-transparent border-2 rounded-2xl border-gray-600/40 px-4 py-3 dark:text-white text-slate-900 placeholder-gray-500 focus:outline-none focus:border-orange-400 transition-colors"
           />
           {validationError && <p className="text-rose-400 text-sm mt-2">{validationError}</p>}
           {!validationError && isChecking && <p className="text-gray-400 text-sm mt-2">التحقق...</p>}
@@ -191,7 +190,7 @@ const CreateAUserName = ({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="البريد الإلكتروني (اختياري)"
-            className="w-full bg-transparent border-b-2 border-gray-600/40 px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-orange-400 transition-colors"
+            className="w-full bg-transparent border-2 rounded-2xl border-gray-600/40 px-4 py-3 dark:text-white text-slate-900 placeholder-gray-500 focus:outline-none focus:border-orange-400 transition-colors"
           />
         </div>
 
@@ -199,10 +198,10 @@ const CreateAUserName = ({
         <button
           onClick={handleSave}
           disabled={!canSave}
-          className={`w-full py-3 rounded-xl font-semibold transition-all duration-200 ${
+          className={`w-fit p-3 rounded-xl font-semibold transition-all duration-200 ${
             canSave
               ? "bg-gradient-to-r from-teal-500 to-emerald-500 text-white hover:from-teal-600 hover:to-emerald-600 shadow-lg shadow-teal-500/25"
-              : "bg-gray-700/50 text-gray-400 cursor-not-allowed"
+              : "dark:bg-gray-700/50 dark:text-gray-400 bg-gray-300 text-gray-400 cursor-not-allowed"
           } ${saveState === "success" ? "hidden" : ""}`}
         >
           {saveState === "loading" ? "⏳  يرجي الانتظار قليلا..." : "حفظ البيانات"}

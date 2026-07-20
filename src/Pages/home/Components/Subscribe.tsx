@@ -18,7 +18,7 @@ const Subscribe: React.FC<SubscribeProps> = ({
   const handleCopyCode = () => {
     navigator.clipboard.writeText(referralCode || "");
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setCopied(false);
   };
   if (localStorage.getItem("SubscriptionPeriod")) return null; // Don't show if user already has a subscription
 

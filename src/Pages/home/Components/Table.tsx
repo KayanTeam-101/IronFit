@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import { BsFlagFill } from 'react-icons/bs';
 
 const Table = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, lazy, Suspense } from "react";
 import {
   BiCookie,
 } from "react-icons/bi";
@@ -21,8 +21,8 @@ import {
   GiBiceps,
   GiWheat,
 } from "react-icons/gi";
-import { IoArrowBack } from "react-icons/io5";
-import AdditionPage from "./AdditionPage";
+
+const AdditionPage = lazy(() => import("./AdditionPage"));
 
 type MealKey = "Breakfast" | "Lunch" | "Snacks" | "Dinner";
 

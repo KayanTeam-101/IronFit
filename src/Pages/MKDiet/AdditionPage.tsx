@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import foods from "../../assets/FoodsList.json";
+import foods from "../../assets/FoodsList.json"; // this is a large Json file 36.7KB
 import { FaArrowLeft, FaCaretRight, FaSearch, FaTimes } from "react-icons/fa";
 import { IoClose, IoDiamond } from "react-icons/io5";
 import { BsSave } from "react-icons/bs";

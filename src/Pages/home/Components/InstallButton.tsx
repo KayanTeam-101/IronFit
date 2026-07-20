@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback,lazy } from "react";
 import { MdInstallMobile } from "react-icons/md";
-import Xp, { calculateAllTimeXP } from "./Xp";
+import { calculateAllTimeXP } from "./Xp";
+const Xp = lazy(() => import("./Xp"));
 
 type Platform = "ios" | "android" | "other" | "desktop";
 
@@ -32,71 +33,73 @@ const InstallButton: React.FC = () => {
     };
     fetchXp();
   }, []);
+useEffect(() => {
+  const standaloneMedia = window.matchMedia("(display-mode: standalone)");
+  const isStandalone =
+    standaloneMedia.matches || (window.navigator as any).standalone === true;
+  if (isStandalone) {
+    setIsInstalled(true);
+    return;
+  }
 
-  useEffect(() => {
-    const standaloneMedia = window.matchMedia("(display-mode: standalone)");
-    const isStandalone =
-      standaloneMedia.matches || (window.navigator as any).standalone === true;
-    if (isStandalone) {
-      setIsInstalled(true);
-      return;
-    }
+  const ua = navigator.userAgent || (window as any).opera || "";
+  const plat = detectPlatform(ua);
+  setPlatform(plat);
 
-    const ua = navigator.userAgent || (window as any).opera || "";
-    const plat = detectPlatform(ua);
-    setPlatform(plat);
+  if (EMBEDDED_WEBVIEW_REGEX.test(ua)) {
+    console.log("[InstallButton] embedded webview detected");
+    setIsEmbedded(true);
+    setShowButton(true);
+    return;
+  }
 
-    if (EMBEDDED_WEBVIEW_REGEX.test(ua)) {
-      console.log("[InstallButton] embedded webview detected");
-      setIsEmbedded(true);
-      setShowButton(true);
-      return;
-    }
+  const promptHandler = (e: Event) => {
+    console.log("[InstallButton] beforeinstallprompt fired");
+    e.preventDefault();
+    setDeferredPrompt(e);
+    setShowButton(true);
+    setIsFallback(false);
+    // Clear any fallback timer if the prompt eventually fires
+    if (fallbackTimer) clearTimeout(fallbackTimer);
+  };
+  window.addEventListener("beforeinstallprompt", promptHandler);
 
-    const promptHandler = (e: Event) => {
-      console.log("[InstallButton] beforeinstallprompt fired");
-      e.preventDefault();
-      setDeferredPrompt(e);
-      setShowButton(true);
-      setIsFallback(false);
-    };
-    window.addEventListener("beforeinstallprompt", promptHandler);
+  const installedHandler = () => {
+    setIsInstalled(true);
+    setShowButton(false);
+    setDeferredPrompt(null);
+  };
+  window.addEventListener("appinstalled", installedHandler);
 
-    const installedHandler = () => {
-      setIsInstalled(true);
-      setShowButton(false);
-      setDeferredPrompt(null);
-    };
-    window.addEventListener("appinstalled", installedHandler);
+  let fallbackTimer: ReturnType<typeof setTimeout> | null = null;
 
-    let fallbackTimer: ReturnType<typeof setTimeout> | null = null;
-
-    if (plat === "ios") {
-      setIsFallback(true);
-      setShowButton(true);
-    } else {
-      fallbackTimer = setTimeout(() => {
-        setDeferredPrompt((dp: any) => {
-          if (!dp) {
-            if (plat === "android" || plat === "other") {
-              console.log("[InstallButton] no native prompt yet -> manual instructions");
-              setIsFallback(true);
-              setShowButton(true);
-            } else {
-              alert("Installation is not available in this browser.");
-            }
+  if (plat === "ios") {
+    setIsFallback(true);
+    setShowButton(true);
+  } else {
+    // 🔧 FIX: Use setTimeout to wait a bit for the native prompt
+    fallbackTimer = setTimeout(() => {
+      setDeferredPrompt((dp: any) => {
+        if (!dp) {
+          if (plat === "android" || plat === "other") {
+            console.log("[InstallButton] no native prompt yet -> manual instructions");
+            setIsFallback(true);
+            setShowButton(true);
+          } else {
+            alert("Installation is not available in this browser.");
           }
-          return dp;
-        });
-      }, 3000);
-    }
+        }
+        return dp;
+      });
+    }, 3000); // wait 3 seconds, adjust as needed
+  }
 
-    return () => {
-      window.removeEventListener("beforeinstallprompt", promptHandler);
-      window.removeEventListener("appinstalled", installedHandler);
-      if (fallbackTimer) clearTimeout(fallbackTimer);
-    };
-  }, []);
+  return () => {
+    window.removeEventListener("beforeinstallprompt", promptHandler);
+    window.removeEventListener("appinstalled", installedHandler);
+    if (fallbackTimer) clearTimeout(fallbackTimer);
+  };
+}, []);
 
   const openInstructions = () => {
     if (platform === "ios") {

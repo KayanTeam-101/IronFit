@@ -137,7 +137,7 @@ const Subscription: React.FC = () => {
   const handleCopy = () => {
     navigator.clipboard.writeText(userID || "");
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setCopied(false);
   };
 
   // Friend activation

@@ -32,10 +32,7 @@ const CountdownTimer: React.FC<{ targetTimestamp: number }> = ({ targetTimestamp
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   useEffect(() => {
-    const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
-    }, 1000);
-    return () => clearInterval(timer);
   }, [calculateTimeLeft]);
 
   const pad = (num: number) => String(num).padStart(2, "0");
