@@ -22,8 +22,8 @@ const getRandomBySeed = <T>(arr: T[]): T =>
 const getToday = (): string => {
   const d = new Date();
   const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
+  const m = String(d.getMonth() + 1);
+  const day = String(d.getDate());
   return `${y}/${m}/${day}`;
 };
 
@@ -66,7 +66,7 @@ export function giveHealthAdvice(): string {
   const allFoods = Object.values(todayMeals).flat() as string[];
 
   if (allFoods.length === 0) {
-    return ` لم تُسجل أي وجبات اليوم.<a href='/me/food' style="text-decoration:underline;color:#07f"> اصنع نظامك لتحصل على نصيحة ! </a>`;
+    return ` لم تُسجل أي وجبات اليوم.أضف طعاما  لتحصل على نصيحة ! `;
   }
 
   // البروتين الفعلي – يُجمع لكل طبق (إذا تكرر الطبق يُحسب مرة واحدة بسبب FoodInfo_s)
@@ -138,9 +138,9 @@ export function giveHealthAdvice(): string {
     }
 
     if (totalProtein < proteinTarget - 10) {
-      parts.push(`بروتينك ${totalProtein}غم، تحتاج ~${Math.round(proteinTarget)}غم، أضف مصدراً بروتينياً`);
-    } else if (totalProtein > proteinTarget + 30) {
-      parts.push(`بروتينك ${totalProtein}غم أعلى من اللازم، ركّز على الكارب المعقد والخضار`);
+      parts.push(`بروتينك ${Math.round(totalProtein)}غم، تحتاج ~${Math.round(proteinTarget)}غم، أضف مصدراً بروتينياً`);
+    } else if (Math.round(totalProtein) > proteinTarget + 30) {
+      parts.push(`بروتينك ${Math.round(totalProtein)}غم أعلى من اللازم، ركّز على الكارب المعقد والخضار`);
     } else {
       parts.push("والبروتين كافٍ");
     }

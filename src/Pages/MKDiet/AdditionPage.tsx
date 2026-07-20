@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import foods from "../../assets/FoodsList.json";
-import { FaArrowLeft, FaSearch, FaTimes } from "react-icons/fa";
+import { FaArrowLeft, FaCaretRight, FaSearch, FaTimes } from "react-icons/fa";
 import { IoClose, IoDiamond } from "react-icons/io5";
 import { BsSave } from "react-icons/bs";
 import { GiFruitBowl } from "react-icons/gi";
@@ -10,7 +10,10 @@ interface UnitOption {
   label: string;
   grams: number | null;
 }
-
+interface AdditionPageProps{
+  Meal: any;
+  onClose: () => void;   // onClose is a function with no arguments, returns void
+}
 const UNIT_OPTIONS: UnitOption[] = [
   { label: "طبق صغير", grams: 100 },
   { label: "طبق وسط ", grams: 200 },
@@ -27,7 +30,7 @@ const UNIT_OPTIONS: UnitOption[] = [
   { label: "غرام (أدخل كمية معينة)", grams: null },
 ];
 
-const AdditionPage = (props: any) => {
+const AdditionPage = ({ Meal, onClose }: AdditionPageProps) => {
   const [text, setText] = useState("");
   const [FoodArray, setFoodArray] = useState<string[]>([]);
   const [FoodInfo, setFoodInfo] = useState<any[]>([]);
@@ -60,7 +63,7 @@ const AdditionPage = (props: any) => {
   // ✅ Totals now correctly reflect actual fat/carb grams
   const totals = useMemo(() => {
     const mealFoods = FoodInfo.filter(
-      (entry: any) => entry[0] === props.Meal
+      (entry: any) => entry[0] === Meal
     );
     const cal = mealFoods.reduce((sum: number, entry: any) => sum + entry[3], 0);
     const prot = mealFoods.reduce((sum: number, entry: any) => sum + entry[4], 0);
@@ -77,7 +80,7 @@ const AdditionPage = (props: any) => {
       }
     });
     return { cal, prot, vitamins: Array.from(vitaminsSet), Fat, Carb };
-  }, [FoodInfo, props.Meal]);
+  }, [FoodInfo, Meal]);
 
   const filteredFoods = useMemo(() => {
     if (!text.trim()) return [];
@@ -129,13 +132,13 @@ const AdditionPage = (props: any) => {
     setFoodArray((prev) => [...prev, foodName]);
     setFoodInfo((prev: any) => [
       ...prev,
-      [props.Meal, foodName, grams, cal, prot, fat, carb],
+      [Meal, foodName, grams, cal, prot, fat, carb],
     ]);
   };
 
   const handleAddClick = (food: string) => {
     const getData = JSON.parse(localStorage.getItem("Diet") || "{}");
-    const mealData = getData[props.Meal] || [[], []];
+    const mealData = getData[Meal] || [[], []];
     if (FoodArray.includes(food) || mealData[0].includes(food)) {
       alert(`${food} مضاف بالفعل`);
       return;
@@ -155,7 +158,7 @@ const AdditionPage = (props: any) => {
     const foodName = FoodArray[deleteIndex];
     const newFoodInfo = [...FoodInfo];
     const idxToRemove = newFoodInfo.findIndex(
-      (entry: any) => entry[0] === props.Meal && entry[1] === foodName
+      (entry: any) => entry[0] === Meal && entry[1] === foodName
     );
     if (idxToRemove !== -1) newFoodInfo.splice(idxToRemove, 1);
 
@@ -176,7 +179,7 @@ const AdditionPage = (props: any) => {
 
   const handleSave = () => {
     const getData = JSON.parse(localStorage.getItem("Diet") || "{}");
-    const mealData = getData[props.Meal] || [[], []];
+    const mealData = getData[Meal] || [[], []];
 
     const updatedFoods = [...new Set([...mealData[0], ...FoodArray])];
     const updatedInfo = [
@@ -189,7 +192,7 @@ const AdditionPage = (props: any) => {
 
     const newData = {
       ...getData,
-      [props.Meal]: [updatedFoods, updatedInfo],
+      [Meal]: [updatedFoods, updatedInfo],
     };
     localStorage.setItem("Diet", JSON.stringify(newData));
 
@@ -200,25 +203,24 @@ const AdditionPage = (props: any) => {
     const mergedFoodInfo = [...existingFoodInfo, ...FoodInfo];
     localStorage.setItem("FoodInfo_s", JSON.stringify(mergedFoodInfo));
 
-    window.location.reload();
+    onClose();
   };
 
   return (
     <div className="fixed show-first top-0 left-0 w-screen h-screen flex flex-col bg-gray-100 dark:bg-[#111111] z-50 overflow-y-scroll">
       {/* Header */}
-      <div className="relative w-full bg-gradient-to-b from-orange-400 to-orange-500 dark:from-black/20 dark:to-amber-400/20 p-5 pt-15 rounded-b-full shadow-xl godown">
-        <div className="flex items-center justify-between">
+        <div className="mt-5 flex items-center justify-between dark:text-white ">
           <button
-            onClick={() => window.location.reload()}
-            className="text-white hover:bg-white/20 p-2 rounded-full transition"
+            onClick={onClose}
+            className=" hover:bg-white/20 p-2 rounded-full transition"
           >
-            <FaArrowLeft size={20} />
+            <FaCaretRight size={20}/>
           </button>
-          <h1 className="text-white text-xl font-bold flex items-center gap-2">
+          <div className="relative  text-xl font-bold flex flex-col items-center -gap-2">
             إضافة أطباق
-          </h1>
+            <div className="w-5 h-[3px] bg-orange-500 rounded-4xl"></div>
+          </div>
           <div className="w-8" />
-        </div>
       </div>
 
       {/* Search */}

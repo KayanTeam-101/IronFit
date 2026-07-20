@@ -164,11 +164,11 @@ const [showTasks, setShowTasks] = useState(false);
 
           <div className="text-2xl flex flex-row items-center  gap-2.5">
 <div className="h-12 w-12  rounded-full ">
-  <img src={localStorage.getItem("PhotoUrl") || ""} alt="user imgage" className="w-full h-full scale-105 border border-orange-500 rounded-full shadow-[0_0_10px_-2px_orange]" />
+  <img src={localStorage.getItem("PhotoUrl") || ""} alt="user imgage" className="w-full h-full scale-105 border border-orange-500 object-cover rounded-full shadow-[0_0_10px_-2px_orange]" />
 </div>
 <div className="flex flex-col">
   <p className="dark:text-white font-thin text-[15px]"> اهلاً  {localStorage.getItem("UserName")} 👋</p>
-  <p className="font-thin text-sm -mb-2 text-gray-500"> جاهز ليوم مليئ بالتحديات؟🔥</p>
+  <p className="font-thin text-[12px] -mb-2 text-gray-500"> جاهز ليوم مليئ بالتحديات؟🔥</p>
   
   </div>          
           </div>
@@ -189,7 +189,7 @@ const [showTasks, setShowTasks] = useState(false);
 
             {/* Active streak card */}
           <div className="flex flex-row gap-3">
-                <div className="rounded-3xl bg-white dark:bg-[#222]/50 dark:border-2 dark:border-gray-600/20 text-white text-xl font-black tracking-tight flex flex-row  w-1/2 justify-between items-center p-2 shadow-sm">
+                <div className={` ${localStorage.getItem("Diet") ? "" : "opacity-60"} rounded-3xl bg-white dark:bg-[#222]/50 dark:border-2 dark:border-gray-600/20 text-white text-xl font-black tracking-tight flex flex-row  w-1/2 justify-between items-center p-2 shadow-sm`}>
               <p className="flex flex-row bg-linear-to-r from-rose-300 via-orange-400 to-yellow-400 bg-clip-text text-transparent items-center gap-1 mt-2">
                 الأيام النشطة 
               </p>
@@ -203,7 +203,7 @@ const [showTasks, setShowTasks] = useState(false);
             
               <div 
   onClick={() => setShowTasks(true)}   // ✅ أضف هذا السطر
-              className="relative rounded-3xl  bg-white dark:bg-[#222]/50 dark:border-2 dark:border-gray-600/20 active:scale-95 active:opacity-65 transition delay-75 text-white text-xl font-black tracking-tight flex flex-row  w-1/2 justify-between items-center p-2 shadow-sm">
+              className={`relative rounded-3xl  bg-white dark:bg-[#222]/50 dark:border-2 dark:border-gray-600/20 active:scale-85 active:opacity-65 transition delay-75 text-white text-xl font-black tracking-tight flex flex-row  w-1/2 justify-between items-center p-2 shadow-sm ${localStorage.getItem("Diet") ? "" : "opacity-60"}`}>
               <p className="flex flex-row bg-linear-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent items-center gap-1 mt-2">
                  نقاط Xp
               </p>

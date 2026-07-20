@@ -52,7 +52,7 @@ const Meal = (props: any) => {
 
   // Use zero-padded date to match the key created by the Eaten utility
 const today = new Date();
-const currentDate = `${today.getFullYear()}/${String(today.getMonth() + 1).padStart(2, "0")}/${String(today.getDate()).padStart(2, "0")}`;
+const currentDate = `${today.getFullYear()}/${String(today.getMonth() + 1)}/${String(today.getDate())}`;
 const eatenDishes: string[] = useMemo(
   () => History[currentDate]?.meals?.[mealName] || [],
   [History, currentDate, mealName]
@@ -225,19 +225,19 @@ const consumedNutrition = useMemo(() => {
       )}
 
       <div className="flex flex-wrap gap-2.5">
-        <div className="flex items-center gap-1.5 px-3 py-1.5 text-rose-500 bg-rose-500/10 rounded-full text-sm font-medium">
+        <div className="flex items-center gap-1.5 px-3 py-1.5 text-rose-500 bg-rose-500/3 rounded-full text-sm font-black">
           <FaFire className="text-base text-rose-500" />
           السعرات: {consumedNutrition.calories.toFixed(1)}
         </div>
-        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-teal-500/10 text-emerald-500 rounded-full text-sm font-medium">
+        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-teal-500/3 text-emerald-500 rounded-full text-sm font-black">
           <GiBiceps className="text-base text-teal-500" />
           البروتين: {consumedNutrition.protein.toFixed(1)} غ
         </div>
-        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500/10 text-orange-500 rounded-full text-sm font-medium">
+        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500/3 text-orange-500 rounded-full text-sm font-black">
           <FaTachometerAlt className="text-base text-orange-500" />
           الدهون: {consumedNutrition.Fat.toFixed(1)} غ
         </div>
-        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500/10 text-amber-500 rounded-full text-sm font-medium">
+        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500/3 text-amber-500 rounded-full text-sm font-black">
           <GiWheat className="text-base text-amber-500" />
           كارب {consumedNutrition.Carb.toFixed(1)} غ
         </div>

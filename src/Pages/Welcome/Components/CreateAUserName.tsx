@@ -6,16 +6,16 @@ import imageCompression from "browser-image-compression";
 import { PiPlusBold } from "react-icons/pi";
 
 const USERNAME_MIN_LENGTH = 6;
-const USERNAME_MAX_LENGTH = 10;
+const USERNAME_MAX_LENGTH = 13;
 
 const getValidationError = (username: string): string | null => {
   const trimmed = username.trim();
   if (!trimmed) return null;
   if (trimmed.length < USERNAME_MIN_LENGTH)
-    return `يجب أن يكون ${USERNAME_MIN_LENGTH} أحرف على الأقل`;
+    return `يجب أن يكون ${USERNAME_MIN_LENGTH} أحرف و أرقام على الأقل Ahmed-fit901 :`;
   if (trimmed.length > USERNAME_MAX_LENGTH)
     return `يجب أن يكون أقل من ${USERNAME_MAX_LENGTH} حرف`;
-  if (!/\d/.test(trimmed)) return "يجب أن يحتوي على أرقام، مثال: Ahmed-777";
+  if (!/\d/.test(trimmed)) return "يجب أن يحتوي على أرقام، مثال: Ahmed-fit901";
   return null;
 };
 
@@ -124,17 +124,17 @@ const CreateAUserName = ({
   return (
     <div className="w-full px-4 py-8 flex flex-col items-center">
          <div className="absolute -top-10 -right-10 w-32 h-32 bg-amber-400 rounded-full opacity-50 blur-3xl" />
-        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-teal-400 rounded-full opacity-50 blur-3xl" />
+        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-orange-400 rounded-full opacity-50 blur-3xl" />
 
       <div className="w-full max-w-sm space-y-6">
         {/* Image upload (kept same style as original but without absolute overlay) */}
         <div className="flex flex-col items-center">
           {photoUrl ? (
-            <div className="relative w-32 h-32">
+            <div className="relative w-40 h-40">
               <img
                 src={photoUrl}
                 alt="Preview"
-                className="w-full h-full rounded-full object-cover border-2 border-teal-400 shadow-lg"
+                className="w-full h-full rounded-full object-contain  border-2 border-orange-400 shadow-lg"
               />
               <label
                 htmlFor="avatar-upload"
@@ -146,7 +146,7 @@ const CreateAUserName = ({
           ) : (
             <label
               htmlFor="avatar-upload"
-              className="w-32 h-32 rounded-full border-2 border-dashed border-gray-500 flex flex-col items-center justify-center cursor-pointer hover:border-teal-400 bg-gray-800/30"
+              className="w-40 h-40 rounded-full border-2 border-dashed border-gray-500 flex flex-col items-center justify-center cursor-pointer hover:border-orange-400 bg-gray-800/30"
             >
               <PiPlusBold className="text-3xl text-gray-400" />
               <span className="text-xs text-gray-500 mt-1">صورة شخصية</span>
@@ -160,7 +160,7 @@ const CreateAUserName = ({
             disabled={isCompressing}
             className="hidden"
           />
-          {isCompressing && <p className="text-teal-400 text-xs mt-2">⏳ جاري الضغط...</p>}
+          {isCompressing && <p className="text-orange-400 text-xs mt-2">⏳ يرجي الانتظار قليلا ...</p>}
         </div>
 
         {/* Username input (border-bottom style like original) */}
@@ -172,7 +172,7 @@ const CreateAUserName = ({
             maxLength={USERNAME_MAX_LENGTH}
             autoFocus
             placeholder="أكتب اسم المستخدم, مثال: Ahmed-Fit1"
-            className="w-full bg-transparent border-b-2 border-gray-600/40 px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-amber-400 transition-colors"
+            className="w-full bg-transparent border-b-2 border-gray-600/40 px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-orange-400 transition-colors"
           />
           {validationError && <p className="text-rose-400 text-sm mt-2">{validationError}</p>}
           {!validationError && isChecking && <p className="text-gray-400 text-sm mt-2">التحقق...</p>}
@@ -191,7 +191,7 @@ const CreateAUserName = ({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="البريد الإلكتروني (اختياري)"
-            className="w-full bg-transparent border-b-2 border-gray-600/40 px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-amber-400 transition-colors"
+            className="w-full bg-transparent border-b-2 border-gray-600/40 px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-orange-400 transition-colors"
           />
         </div>
 
@@ -205,7 +205,7 @@ const CreateAUserName = ({
               : "bg-gray-700/50 text-gray-400 cursor-not-allowed"
           } ${saveState === "success" ? "hidden" : ""}`}
         >
-          {saveState === "loading" ? "⏳ جاري الحفظ..." : "حفظ البيانات"}
+          {saveState === "loading" ? "⏳  يرجي الانتظار قليلا..." : "حفظ البيانات"}
         </button>
         {saveState === "error" && <p className="text-rose-400 text-sm text-center">حدث خطأ، حاول مجدداً</p>}
       </div>

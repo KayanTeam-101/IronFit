@@ -30,9 +30,10 @@ const TargetWhight: React.FC = () => {
     directionLabel = ' (نقص في الوزن) '
   }
   if (Math.abs(Dif) < 5) {
-    directionLabel += 'هذة بداية جيدة و أعتقد انه من السهل الاستمرار عليا لمدة شهر أو اثنين';
+        directionLabel += ' ودي بداية ممتازة و أعتقد انه من السهل الاستمرار عليها لمدة شهر أو شهرين';
+
   }  if (Math.abs(Dif) >= 5) {
-    directionLabel += 'هذا تحدي جيد و يحتاج صبر و استمرارية ';
+    directionLabel += 'دا تحدي كويس و يحتاج شوية صبر و مثابرة !';
   } 
 
   // 2. Intensity based on absolute difference

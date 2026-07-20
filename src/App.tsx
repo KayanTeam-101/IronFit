@@ -19,6 +19,7 @@ function App() {
 
   const [isDesktop, setIsDesktop] = useState(false); // 1. حالة جديدة لاكتشاف الحاسوب
   const [isLoading, setIsLoading] = useState(true);
+  const [condition,SetCondition] = useState(localStorage.length >= 12 && window.location.pathname !== "/MKADiet");
 
   
   useEffect(() => {
@@ -70,7 +71,11 @@ setTimeout(() => {
       window.removeEventListener("resize", checkDeviceType);
     };
   }, []);
-
+  useEffect(() => {
+    SetCondition(
+      localStorage.length >= 12 && location.pathname !== "/MKADiet"
+    );
+  }, [location.pathname]);
   // 3. شاشة التحميل
   if (isLoading) {
     return (
@@ -139,7 +144,7 @@ setTimeout(() => {
         />
       </Routes>
 
-      {localStorage.length >= 12 && window.location.pathname !== "/MkADiet" && <Navbar />}
+      {condition && <Navbar />}
     </>
   );
 }

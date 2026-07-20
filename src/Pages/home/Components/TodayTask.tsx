@@ -70,7 +70,7 @@ const TodayTask = () => {
   return (
     <div className="bg-white dark:bg-[#222]/20 dark:border-2 dark:border-gray-600/20 rounded-4xl border border-amber-100 p-4 shadow-sm mb-6.5">
       {/* Header */}
-      <div className="flex items-center justify-between   pb-2">
+      <div className={`${localStorage.getItem("Diet") ? "" : "opacity-30"} flex items-center justify-between   pb-2`}>
         <h3 className="text-lg font-semibold dark:text-white flex items-center gap-2">
           أهداف اليوم
           <span className="text-sm text-gray-500 dark:text-gray-400">(اليوم {currentDay})</span>
@@ -81,21 +81,21 @@ const TodayTask = () => {
       <div className="flex flex-row  gap-2 justify-center">
       
         {/* Calories card – flex-col */}
-        <div className="flex flex-col items-center max-w-[100px] active:scale-95 transition delay-100 flex-1 p-3 rounded-xl bg-gray-50 shadow  dark:bg-[#222]/50  ">
+        <div className={`flex flex-col items-center max-w-[100px] active:scale-95 transition delay-100 flex-1 p-3 rounded-xl bg-gray-50 shadow  dark:bg-[#222]/50  ${localStorage.getItem("Diet") ? "" : "opacity-40"}`}>
           <FaFire className="text-3xl text-red-500 mb-1" />
           <p className="text-[12px] p-1 font-medium dark:text-white">السعرات</p>
           <ProgressBar current={localStorage.getItem("EatenCalories") ? Number(localStorage.getItem("EatenCalories")) : "???"} target={Number(localStorage.getItem("dailyCalories"))} color="bg-red-500" />
         </div>
 
         {/* Protein card – flex-col */}
-        <div className="flex flex-col items-center max-w-[100px] active:scale-95 transition delay-100 flex-1 p-3 rounded-xl bg-gray-50 shadow  dark:bg-[#222]/50 ">
+        <div className={`${localStorage.getItem("Diet") ? "" : "opacity-40"} flex flex-col items-center max-w-[100px] active:scale-95 transition delay-100 flex-1 p-3 rounded-xl bg-gray-50 shadow  dark:bg-[#222]/50 `}>
           <GiBiceps className="text-3xl text-blue-600 mb-1" />
           <p className="text-[12px] p-1 font-medium dark:text-white">البروتين</p>
           <ProgressBar current={allProtine === 0 ? "???" : allProtine} target={Math.round(Number(localStorage.getItem("currentWeight")) * 1.6)} color="bg-blue-600" />
         </div>
 
         {/* Water card – flex-col */}
-        <div className="flex flex-col items-center max-w-[100px] active:scale-95 transition delay-100 flex-1 p-3 rounded-xl bg-gray-50 shadow dark:bg-[#222]/50 ">
+        <div className={`flex flex-col items-center max-w-[100px] active:scale-95 transition delay-100 flex-1 p-3 rounded-xl bg-gray-50 shadow dark:bg-[#222]/50 ${localStorage.getItem("Diet") ? "" : "opacity-40"}`}>
           <GiWheat className="text-3xl text-amber-500 mb-1" />
           <p className="text-[12px] p-1 font-medium dark:text-white">الكربوهيدريت</p>
           <ProgressBar current={allCarb} target={50} color="bg-amber-500" />

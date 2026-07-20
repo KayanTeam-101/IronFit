@@ -44,22 +44,22 @@ const MEAL_ICONS: Record<MealKey, React.ReactNode> = {
   Dinner: <BsMoon className="text-indigo-400" />,
 };
 
-// Initialise Diet once when module loads
-if (!localStorage.getItem("Diet")) {
-  localStorage.setItem(
-    "Diet",
-    JSON.stringify({
-      Breakfast: [[], []],
-      Lunch: [[], []],
-      Snacks: [[], []],
-      Dinner: [[], []],
-    })
-  );
-}
 
 const MakeADiet: React.FC = () => {
+  // Initialise Diet once when module loads
+  if (!localStorage.getItem("Diet")) {
+    localStorage.setItem(
+      "Diet",
+      JSON.stringify({
+        Breakfast: [[], []],
+        Lunch: [[], []],
+        Snacks: [[], []],
+        Dinner: [[], []],
+      })
+    );
+  }
   const navigate = useNavigate();
-
+  
   const [mealPlan, setMealPlan] = useState<MealPlan>(
     JSON.parse(localStorage.getItem("Diet") || "{}")
   );

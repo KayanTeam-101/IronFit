@@ -29,7 +29,7 @@ const Firstturn: React.FC = () => {
   }, []);
 
   return (
-    <div className="absolute top-1/2 left-1/2 -translate-1/2 w-full h-10/12">
+    <div className="absolute top-1/2 left-1/2 -translate-1/2 w-full h-10/12 showAnim2">
 
       {/* Full‑screen background video */}
       <video
@@ -38,7 +38,7 @@ const Firstturn: React.FC = () => {
         autoPlay
         muted
         playsInline
-        className="absolute top-45 left-1/2 -translate-x-1/2 rounded-4xl object-cover w-3xs scale-140 blur-[3px] animate-fadeIn   h-7/12 "
+        className="absolute top-5 left-1/2 -translate-x-1/2 rounded-4xl object-cover w-3xs scale-140 blur-[3px] animate-fadeIn   h-7/12 "
       />
 
       {/* Gradient overlay: transparent top → semi‑transparent middle → solid black bottom */}
@@ -77,7 +77,7 @@ const Firstturn: React.FC = () => {
 
           {/* Tagline */}
           <p className="text-lg font-medium text-gray-300 leading-relaxed showAnim">
-            هنا تقدر تنظم كل جدولك الجمّاوّية بشكل بسيط و جميل في نفس الوقت
+    هنا تقدر تنظم حياتك الصحية و البدنية و حتي النفسية
           </p>
 
           {/* Animated divider */}

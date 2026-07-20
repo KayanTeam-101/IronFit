@@ -164,22 +164,19 @@ h1, h2, h3, h4, h5, h6{
 }
 
 .outline-swealing{
-    animation: outlineAnim 1.2s cubic-bezier(0.175, 0.885, 0.32, 2) infinite;
+    animation: outlineAnim .7s cubic-bezier(0.475, 0.885, 0.32, 1) infinite;
 }
 @keyframes outlineAnim {
     0%{
-        outline: 1px solid #6f00ff;
-        scale: 1;
+        outline: 1px solid #ff880078;
         outline-offset: 0px;
     }
      50%{
-        outline: 1px solid #6f00ff;
-        scale: 1.02;
+        outline: 1px solid #ff8800;
         outline-offset: 0px;
     }
     100%{
         outline: 1px solid #6f00ff00;
-        scale: 1;
         outline-offset: 20px;
 
     }

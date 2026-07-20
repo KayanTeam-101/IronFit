@@ -1,8 +1,10 @@
 import React from 'react'
 import { FaArrowLeft, FaBowlFood } from 'react-icons/fa6';
+import { useNavigate } from 'react-router';
 import Diet from './Diet';
 
 const FoodPage = () => {
+  const navigate = useNavigate(); 
   const IsThere_A_Diet : string | null = localStorage.getItem('Diet') || null;
   const IsValid = IsThere_A_Diet ? (JSON.parse(IsThere_A_Diet) && IsThere_A_Diet.length > 130) : null;
   return (
@@ -20,11 +22,9 @@ const FoodPage = () => {
       <div className="absolute  top-10 -z-10 w-full h-[400px] opacity-35 blur-3xl bg-amber-500 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 from-amber-400 via-indigo-400 to-teal-300" />
 
 <h1 className='text-white text-3xl flex flex-row gap-3 text-center'>لم تقم بوضع نظامك الغذائي بعد ؟</h1>
-  <a href="/MkADiet">
-<button className='flex items-center gap-2 bg-white p-3 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-slate-300 shadow-2xl w-fit rounded-xl text-amber-500 font-bold'>
+<button onClick={() => navigate('/MKADiet')} className='flex items-center gap-2 bg-white p-3 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-slate-300 shadow-2xl w-fit rounded-xl text-amber-500 font-bold'>
       اصنع نظامك الغذائي الان! <FaArrowLeft />
       </button>
-    </a>
   </div>
       )}
     </div>
