@@ -54,7 +54,7 @@ export const levels = [
       crown: true,   
     },
     {
-      text: '1500-2500',
+      text: '1500-3000',
       name: 'بلاتيني',
       gradient: 'from-indigo-500 via-blue-600 to-teal-500',
       border: 'border-indigo-400',
@@ -64,7 +64,7 @@ export const levels = [
 
     },
     {
-      text: '2500-10000',
+      text: '3000-10000',
       name: 'خارق',
       gradient: 'from-rose-600 via-red-600 to-orange-500',
       border: 'border-red-600',

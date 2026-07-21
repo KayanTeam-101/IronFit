@@ -30,22 +30,22 @@ const Navbar = () => {
 
  
      <div
-     className="navbar overflow-hidden fixed bottom-0 z-0  grid grid-cols-5 items-center w-full h-12 backdrop-blur-[3px]   dark:bg-black/60 border-t  border-gray-200 r text-xl text-gray-800 dark:from-slate-800/40 dark:to-black/40 dark:border-2 dark:border-gray-600/15"
+     className="navbar overflow-hidden fixed bottom-0 z-0  grid grid-cols-5 items-center w-full min-h-14 backdrop-blur-[3px]   dark:bg-black/60 border-t  border-gray-200 r text-xl text-gray-800 dark:from-slate-800/40 dark:to-black/40 dark:border-2 dark:border-gray-600/15"
     >
         <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-gray-400 "  to="me/home">
           <GoHomeFill />
-          <p className='text-[12px] mt-2'>الرئسية</p>
+          <p className='text-[12px] '>الرئسية</p>
         </NavLink>
         <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-gray-400 " to="me/food">
           <FaAppleAlt />
-          <p className='text-[12px] mt-2'>نظامي </p>
+          <p className='text-[12px] '>نظامي </p>
           
         </NavLink>
 
 
           {!isChatPage ?  <NavLink onClick={() => vebrate()} className="relative flex flex-col text-center dark:text-gray-400 " to="/Chat">
           <RiMessage3Fill />
-          <p className='text-[12px] mt-2'>تواصل</p>
+          <p className='text-[12px] '>تواصل</p>
     <div className='absolute top-2 right-5 w-2.5 h-2.5 bg-red-500 rounded-2xl animate-ping'></div>
     <div className='absolute top-2 right-5 w-2.5 h-2.5 bg-red-500 rounded-2xl '></div>
         </NavLink> : 
@@ -65,13 +65,13 @@ const Navbar = () => {
 
         <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-gray-400 " to="/me/exercises">
           <FaPersonRunning />
-          <p className='text-[12px] mt-2'>التمارين</p>
+          <p className='text-[12px] '>التمارين</p>
 
         </NavLink>
      
          <NavLink onClick={() => vebrate()} className="flex flex-col text-center dark:text-gray-400 " to="/Settings">
           <IoDiamond />
-          <p className='text-[12px] mt-2'>أنا</p>
+          <p className='text-[12px] '>أنا</p>
         </NavLink>
         
     </div>

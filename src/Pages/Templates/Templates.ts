@@ -100,6 +100,62 @@ Dinner: [
 },
 },
 {
+id: "d9",
+name: "الطيبات 1 - 2800 سعرة",
+description: "نظام مستوحى من مسموحات الطيبات",
+type: "maintenance",
+meals: {
+Breakfast: [
+{ foodName: "أرز أبيض مطبوخ", grams: 300 },
+{ foodName: "لحم بقري مشوي", grams: 180 },
+{ foodName: "خيار", grams: 100 },
+],
+Lunch: [
+{ foodName: "أرز أبيض مطبوخ", grams: 380 },
+{ foodName: "سمك مشوي", grams: 250 },
+{ foodName: "كوسة مطهية", grams: 200 },
+{ foodName: "زيت زيتون", grams: 15 },
+],
+Snacks: [
+{ foodName: "تمر", grams: 80 },
+{ foodName: "كمثرى", grams: 200 },
+],
+Dinner: [
+{ foodName: "بطاطس مسلوقة", grams: 400 },
+{ foodName: "لحم بقري مشوي", grams: 220 },
+{ foodName: "خيار", grams: 150 },
+],
+},
+},
+{
+id: "d10",
+name: "الطيبات 2 - 2800 سعرة",
+description: "نظام متنوع من أطعمة الطيبات",
+type: "maintenance",
+meals: {
+Breakfast: [
+{ foodName: "بطاطس مسلوقة", grams: 350 },
+{ foodName: "سمك مشوي", grams: 180 },
+{ foodName: "خيار", grams: 100 },
+],
+Lunch: [
+{ foodName: "أرز أبيض مطبوخ", grams: 420 },
+{ foodName: "لحم ضأن مشوي", grams: 240 },
+{ foodName: "بامية مطهية", grams: 200 },
+],
+Snacks: [
+{ foodName: "تمر", grams: 100 },
+{ foodName: "تفاح", grams: 300 },
+],
+Dinner: [
+{ foodName: "بطاطس مشوية", grams: 400 },
+{ foodName: "سمك مشوي", grams: 250 },
+{ foodName: "خس", grams: 150 },
+{ foodName: "زيت زيتون", grams: 10 },
+],
+},
+},
+{
 id: "d3",
 name: "ثبات الوزن 2500 سعرة",
 description: "نظام متوازن للمحافظة على الوزن الحالي",
@@ -125,35 +181,6 @@ Dinner: [
 { foodName: "مكرونة مسلوقة", grams: 200 },
 { foodName: "تونة", grams: 120 },
 { foodName: "سلطة بلدي", grams: 150 },
-],
-},
-},
-{
-id: "d4",
-name: "نباتي 2200 سعرة",
-description: "نظام نباتي غني بالبروتين النباتي والألياف",
-type: "cut",
-meals: {
-Breakfast: [
-{ foodName: "فول مدمس", grams: 250 },
-{ foodName: "طحينة", grams: 40 },
-{ foodName: "خبز بلدي", grams: 100 },
-{ foodName: "سلطة بلدي", grams: 100 },
-],
-Lunch: [
-{ foodName: "عدس شوربة", grams: 300 },
-{ foodName: "أرز أبيض", grams: 150 },
-{ foodName: "بامية", grams: 150 },
-],
-Snacks: [
-{ foodName: "حمص", grams: 100 },
-{ foodName: "جزر", grams: 150 },
-{ foodName: "تفاح", grams: 150 },
-],
-Dinner: [
-{ foodName: "مكرونة مسلوقة", grams: 170 },
-{ foodName: "فاصوليا بيضاء", grams: 100 },
-{ foodName: "بروكلي", grams: 100 },
 ],
 },
 },
@@ -269,62 +296,7 @@ Dinner: [
 ],
 },
 },
-{
-id: "d9",
-name: "الطيبات 1 - 2800 سعرة",
-description: "نظام مستوحى من مسموحات الطيبات",
-type: "maintenance",
-meals: {
-Breakfast: [
-{ foodName: "أرز أبيض مطبوخ", grams: 300 },
-{ foodName: "لحم بقري مشوي", grams: 180 },
-{ foodName: "خيار", grams: 100 },
-],
-Lunch: [
-{ foodName: "أرز أبيض مطبوخ", grams: 380 },
-{ foodName: "سمك مشوي", grams: 250 },
-{ foodName: "كوسة مطهية", grams: 200 },
-{ foodName: "زيت زيتون", grams: 15 },
-],
-Snacks: [
-{ foodName: "تمر", grams: 80 },
-{ foodName: "كمثرى", grams: 200 },
-],
-Dinner: [
-{ foodName: "بطاطس مسلوقة", grams: 400 },
-{ foodName: "لحم بقري مشوي", grams: 220 },
-{ foodName: "خيار", grams: 150 },
-],
-},
-},
-{
-id: "d10",
-name: "الطيبات 2 - 2800 سعرة",
-description: "نظام متنوع من أطعمة الطيبات",
-type: "maintenance",
-meals: {
-Breakfast: [
-{ foodName: "بطاطس مسلوقة", grams: 350 },
-{ foodName: "سمك مشوي", grams: 180 },
-{ foodName: "خيار", grams: 100 },
-],
-Lunch: [
-{ foodName: "أرز أبيض مطبوخ", grams: 420 },
-{ foodName: "لحم ضأن مشوي", grams: 240 },
-{ foodName: "بامية مطهية", grams: 200 },
-],
-Snacks: [
-{ foodName: "تمر", grams: 100 },
-{ foodName: "تفاح", grams: 300 },
-],
-Dinner: [
-{ foodName: "بطاطس مشوية", grams: 400 },
-{ foodName: "سمك مشوي", grams: 250 },
-{ foodName: "خس", grams: 150 },
-{ foodName: "زيت زيتون", grams: 10 },
-],
-},
-},
+
 {
 id: "d11",
 name: "ضخامة بدون دهون 3200 سعرة",
@@ -417,65 +389,7 @@ Dinner: [
 ],
 },
 },
-{
-id: "d14",
-name: "ضخامة نباتية 3200 سعرة",
-description: "نظام نباتي لبناء العضلات",
-type: "bulk",
-meals: {
-Breakfast: [
-{ foodName: "فول مدمس", grams: 300 },
-{ foodName: "طحينة", grams: 50 },
-{ foodName: "خبز بلدي", grams: 150 },
-{ foodName: "سلطة بلدي", grams: 100 },
-],
-Lunch: [
-{ foodName: "عدس شوربة", grams: 350 },
-{ foodName: "أرز بني", grams: 250 },
-{ foodName: "بامية", grams: 200 },
-{ foodName: "زيت زيتون", grams: 10 },
-],
-Snacks: [
-{ foodName: "حمص", grams: 150 },
-{ foodName: "لوز", grams: 40 },
-{ foodName: "تمر", grams: 50 },
-],
-Dinner: [
-{ foodName: "مكرونة مسلوقة", grams: 250 },
-{ foodName: "فاصوليا بيضاء", grams: 150 },
-{ foodName: "بروكلي", grams: 150 },
-],
-},
-},
-{
-id: "d15",
-name: "نباتي خالص 2500 سعرة",
-description: "نظام نباتي 100% بدون منتجات حيوانية",
-type: "maintenance",
-meals: {
-Breakfast: [
-{ foodName: "شوفان", grams: 80 },
-{ foodName: "لبن صويا", grams: 300 },
-{ foodName: "موز", grams: 150 },
-{ foodName: "لوز", grams: 20 },
-],
-Lunch: [
-{ foodName: "حمص", grams: 200 },
-{ foodName: "أرز بني", grams: 200 },
-{ foodName: "سبانخ", grams: 150 },
-{ foodName: "زيت زيتون", grams: 10 },
-],
-Snacks: [
-{ foodName: "فول سوداني", grams: 40 },
-{ foodName: "تفاح", grams: 200 },
-],
-Dinner: [
-{ foodName: "عدس شوربة", grams: 300 },
-{ foodName: "بطاطا حلوة", grams: 250 },
-{ foodName: "بروكلي", grams: 150 },
-],
-},
-},
+
 {
 id: "d16",
 name: "بحر المتوسط 2200 سعرة",

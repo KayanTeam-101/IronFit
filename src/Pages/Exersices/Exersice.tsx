@@ -352,11 +352,13 @@ const ExercisePage: React.FC = () => {
       {/* Header */}
       <div className="relative w-full min-h-14 flex flex-row p-3 justify-between">
         <div className="text-xl flex flex-row"><FaPersonRunning className="dark:text-white" /></div>
-        <div className="flex flex-row gap-2">
-          <div onClick={() => setIsDisabled(true)} className="bg-gray-100 text-md flex dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white items-center cursor-pointer flex-row gap-2 mb-5 p-2 rounded-4xl">
-            الاعدادات <VscSettings />
-          </div>
-        </div>
+      <button
+                  onClick={() => setIsDisabled(true)}
+                  className="bg-gray-100 flex dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-slate-300 items-center gap-2 px-2  rounded-full"
+                >
+                   <span className="text-[12px] dark:text-white">الإعدادات</span>
+                   <VscSettings /> 
+                </button>
       </div>
 
       {/* Next workout */}
@@ -383,18 +385,22 @@ const ExercisePage: React.FC = () => {
             <GiShoulderArmor className="absolute text-[150px] scale-150 left-0 top-0 opacity-10 text-white" />
               </div>
             </div>
-            <div className="relative z-10 -top-4 w-full min-h-1 scale-97 bg-amber-400/20 py-6 dark:text-white dark:bg-transparent p-2 flex items-end rounded-2xl">
+            <div className="relative z-10 -top-4 w-full min-h-1 scale-97 bg-amber-400/20 py-6 dark:text-white dark:bg-gray-600/20 p-2 flex items-end rounded-2xl">
               {selectedDays.join(" - ")} (أيام التمرين)
             </div>
           </>
         ) : schedule.length > 0 ? (
-          <div className="relative min-h-[250px] w-full p-5 bg-slate-300 dark:bg-slate-800/20 dark:border-2 dark:border-gray-600/20 overflow-hidden rounded-2xl border border-gray-200 flex flex-col gap-4 transition-all hover:shadow-lg">
+         <> <div className="relative min-h-[250px] w-full p-5 bg-slate-300 dark:bg-slate-800/20 dark:border-2 dark:border-gray-600/20 overflow-hidden rounded-2xl border border-gray-200 flex flex-col gap-4 transition-all hover:shadow-lg">
             <div className="flex flex-row items-center justify-between">
               <h1 className="text-4xl text-white font-bold m-3"> إستراحة محارب !</h1>
             </div>
             <h1 className="text-xl text-white">استرح يا بطل!</h1>
             <GiShoulderArmor className="absolute text-[150px] scale-150 left-0 top-10 opacity-10 text-white" />
           </div>
+           <div className="relative z-10 -top-4 w-full min-h-1 scale-97 bg-amber-400/50 py-6 dark:text-white dark:bg-gray-600/20 p-2 flex items-end rounded-2xl">
+              {selectedDays.join(" - ")} (أيام التمرين)
+            </div>
+          </>
         ) : (
           <div className="relative min-h-[150px] w-full p-5 bg-slate-300 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-2xl border border-gray-200 flex flex-col gap-4 transition-all hover:shadow-lg">
             <div className="flex flex-row items-center justify-between">

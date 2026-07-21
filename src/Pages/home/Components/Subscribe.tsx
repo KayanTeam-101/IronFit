@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaCopy, FaCheck, FaShareAlt, FaTimes } from "react-icons/fa";
+import { FaCopy, FaCheck, FaShareAlt, FaTimes, FaWhatsapp } from "react-icons/fa";
 import { IoDiamond } from "react-icons/io5";
 
 interface SubscribeProps {
@@ -15,17 +15,25 @@ const Subscribe: React.FC<SubscribeProps> = ({
   const [copied, setCopied] = useState(false);
 
   const navigate = useNavigate();
+
   const handleCopyCode = () => {
     navigator.clipboard.writeText(referralCode || "");
     setCopied(true);
-    setCopied(false);
+    setTimeout(() => setCopied(false), 2000);
   };
+
+  const handleWhatsAppShare = () => {
+    const message = `استخدم كود الإحالة الخاص بي للحصول على 3 أيام VIP مجانية: ${referralCode}`;
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
+  };
+
   if (localStorage.getItem("SubscriptionPeriod")) return null; // Don't show if user already has a subscription
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center  backdrop-blur-[1px] p-4 showAnim2">
+    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[1px] p-4">
       {/* Main card */}
-      <div className="relative w-full max-w-sm  border dark:bg-black/95  dark:border-2 dark:border-gray-600/20 border-amber-300 bg-white/95 shadow-2xl  p-6 text-center show-third">
+      <div className="relative w-full max-w-sm border dark:bg-black/95 dark:border-2 dark:border-gray-600/20 border-amber-300 bg-white/95 shadow-2xl p-6 text-center show-third">
         {/* Close button */}
         <button
           onClick={onClose}
@@ -38,12 +46,10 @@ const Subscribe: React.FC<SubscribeProps> = ({
         <div className="flex justify-center mb-3">
           <div className="p-3 w-full flex items-center flex-col">
             <IoDiamond className="text-amber-400 dark:text-amber-400 text-6xl" />
-<p className="dark:text-white mt-2">
-          شارك التطبيق واحصل على 3 أيام VIP مجانية
-
-</p>
-        <div className="my-4 w-full h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent" />
-
+            <p className="dark:text-white mt-2">
+              شارك التطبيق واحصل على 3 أيام VIP مجانية
+            </p>
+            <div className="my-4 w-full h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent" />
           </div>
         </div>
 
@@ -53,16 +59,30 @@ const Subscribe: React.FC<SubscribeProps> = ({
 
         {/* Explanation steps */}
         <div className="text-sm text-gray-600 dark:text-gray-300 space-y-3 text-right leading-relaxed">
-          <p className="py-4 border-r-2 border-amber-300/40  px-2"> <strong>الخطوة ١:</strong> أرسل الكود التعريفي  لصديقك.</p>
-          <p className="py-4 border-r-2 border-amber-300/60  px-2"><strong>الخطوة ٢:</strong> صديقك يدخل الكود في <span onClick={() => navigate("/Settings") } className="text-blue-600 dark:text-blue-400 font-medium  p-1 border   ">“تفعيل بصديق”</span> من صفحة أنا.</p>
-          <p className="py-4 border-r-2 border-amber-300  px-2"><strong>الخطوة ٣:</strong> بعد التفعيل، تحصلان تلقائياً على 3 أيام مجانية ... ماذا تنتظر !</p>
+          <p className="py-4 border-r-2 border-amber-300/40 px-2 show-first">
+            <strong>الخطوة ١:</strong> أرسل الكود التعريفي لصديقك.
+          </p>
+          <p className="py-4 border-r-2 border-amber-300/60 px-2 show-second">
+            <strong>الخطوة ٢:</strong> صديقك يدخل الكود في{" "}
+            <span
+              onClick={() => navigate("/Settings")}
+              className="text-blue-600 dark:text-blue-400 font-medium p-1 border"
+            >
+              “تفعيل بصديق”
+            </span>{" "}
+            من صفحة أنا.
+          </p>
+          <p className="py-4 border-r-2 border-amber-300 px-2 show-third">
+            <strong>الخطوة ٣:</strong> بعد التفعيل، تحصلان تلقائياً على 3 أيام
+            مجانية ... ماذا تنتظر !
+          </p>
         </div>
 
-        {/* Divider */}
-
-        {/* Referral code */}
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">الكود التعريفي الخاص بك</p>
+        {/* Referral code & actions */}
+        <div className="space-y-2 ">
+          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+            الكود التعريفي الخاص بك
+          </p>
           <div className="flex items-center justify-center gap-2">
             <span className="text-2xl font-extrabold tracking-widest text-gray-800 dark:text-white">
               {referralCode}
@@ -73,9 +93,18 @@ const Subscribe: React.FC<SubscribeProps> = ({
             >
               {copied ? <FaCheck className="text-green-500" /> : <FaCopy />}
             </button>
+      <span className="p-1 dark:text-gray-400">
+                    أو
+
+      </span>
+            <button
+              onClick={handleWhatsAppShare}
+              className="p-3 rounded-xl bg-green-100 dark:bg-green-800/30 hover:bg-green-200 dark:hover:bg-green-700/40 transition text-green-500"
+            >
+              <FaWhatsapp />
+            </button>
           </div>
         </div>
-
       </div>
 
       {/* CSS animations */}

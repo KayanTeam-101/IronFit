@@ -1,8 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, {  useState } from "react";
 import { RiBarChart2Fill, RiCopperCoinLine } from "react-icons/ri";
 import {
   FaTimes,
-  FaRegCircle,
   FaFire,
   FaHeart,
   FaCommentAlt,
@@ -23,6 +22,7 @@ import { getUsers, updateXp } from "../../../firebase/user";
 import Rank from "./Rank";
 import { rank } from "../Home";
 import { levels } from "./Rank";
+import { useNavigate } from "react-router-dom";
 interface TasksPanelProps {
   onClose: () => void;
   showTasks: boolean;
@@ -57,16 +57,6 @@ const isTodayInArray = (key: string): boolean => {
 // ----------------------------------------------------------------
 //  Daily completion flags
 // ----------------------------------------------------------------
-const hasPostedToday      = isTodayInArray("PostedDays"); // []
-const hasLikedPostToday   = isTodayInArray("LikedDays"); // []
-const hasCommentedToday   = isTodayInArray("CommentDays");// []
-const hasEatenAllMeals    = isTodayInArray("DoneDays"); // []
-const hasUsedTemplateToday = isTodayInArray("SystemStartDate"); // string
-const hasCreatedDietPlanToday = localStorage.getItem("SetDietManually");
-
-// One‑time flags
-const hasShared = localStorage.getItem("mycodeUsed") === "true";
-const isIronVIP = localStorage.getItem("IronVIP") === "true";   // example
 
 // ----------------------------------------------------------------
 //  Daily tasks definition
@@ -75,60 +65,9 @@ interface Task {
   icon: React.ReactNode;
   label: string;
   xp: number;
-  condition: boolean | React.ReactNode;   // for today’s highlighting
+  condition: boolean | React.ReactNode;  
+  to?:string; // for today’s highlighting
 }
-
-const DAILY_TASKS: Task[] = [
-  {
-    icon: <GiNinjaHead className="text-blue-600" />,
-    label: "انضم إلي IRON-VIP",
-    xp: 200,
-    condition: isIronVIP,
-  },
-  {
-    icon: <FaHeart className="text-rose-400" />,
-    label: "أضف إعجاب على بوست",
-    xp: 10,
-    condition: hasLikedPostToday,
-  },
-  {
-    icon: <FaCommentAlt className="text-purple-400" />,
-    label: "أضف تعليق على بوست",
-    xp: 12,
-    condition: hasCommentedToday,
-  },
-  {
-    icon: <BsStar className="text-orange-400" />,
-    label: "أضف أول بوست!",
-    xp: 25,
-    condition: hasPostedToday,
-  },
-  {
-    icon: <FaUserFriends className="text-green-400" />,
-    label: "شارك مع اصدقائك",
-    xp: 17,
-    condition: hasShared,
-  },
-  {
-    icon: <LuDumbbell className="text-blue-400" />,
-    label: "جرب استخدام قالب رياضي",
-    xp: 13,
-    condition: hasUsedTemplateToday,
-  },
-  {
-    icon: <FaAppleAlt className="text-sky-400" />,
-    label: "عمل نظامك الغذائي الخاص بك",
-    xp: 22,
-    condition: hasCreatedDietPlanToday,
-  },
-  {
-    icon: <FaFire className="text-orange-400" />,
-    label: "أكمل جميع وجباتك لليوم",
-    xp: 30,
-    condition: hasEatenAllMeals,
-  },
-];
-
 // ----------------------------------------------------------------
 //  XP calculations
 // ----------------------------------------------------------------
@@ -154,19 +93,21 @@ export const calculateAllTimeXP = async () => {
   const isIronVIP = localStorage.getItem("IronVIP") === "true";
 
   const repeatable = [
-    { key: "PostedDays", xp: 40 },
-    { key: "LikedDays", xp: 1 },
-    { key: "CommentDays", xp: 9 },
-    { key: "DoneDays", xp: 1 },
-    { key: "SystemStartDate", xp: 4 },
-    { key: "SetDietManually", xp: 4 },
+    { key: "PostedDays", xp: 100 },
+    { key: "LikedDays", xp: 50 },
+    { key: "CommentDays", xp: 50 },
+    { key: "DoneDays", xp: 200 },
+    { key: "SystemStartDate", xp: 100 },
+    { key: "UseDietTemplate", xp: 100 },
+    { key: "mycodeUsed", xp: 100 },
+    { key: "SetDietManually", xp: 100 },
   ];
 
   let total = 0;
 
   repeatable.forEach(({ key, xp }) => {
-    if(key === "SetDietManually" || key === "SystemStartDate"){
-      total += 10
+    if(key === "SetDietManually" || key === "SystemStartDate" || key === "UseDietTemplate"){
+      total += 125
     }
     else{
       const dates = getArrayFromStorage(key);
@@ -232,6 +173,7 @@ const BADGES: Badge[] = (() => {
       name: "البطل الذهبي",
       description: "أكمل 30 يوم تمرين متتالية",
       earned: streak30,
+      
     },
     {
       icon: <FaMedal className="text-sky-400 text-2xl" />,
@@ -277,7 +219,96 @@ interface Badge {
 //  Tasks & Badges Panel
 // ----------------------------------------------------------------
 export const TasksPanel: React.FC<TasksPanelProps> = ({ onClose }) => {
+  const navigate =useNavigate();
   const [activeTab, setActiveTab] = React.useState<"tasks" | "badges">("tasks");
+
+const hasPostedToday      = isTodayInArray("PostedDays"); // []
+const hasLikedPostToday   = isTodayInArray("LikedDays"); // []
+const hasCommentedToday   = isTodayInArray("CommentDays");// []
+const hasEatenAllMeals    = isTodayInArray("DoneDays"); // []
+const hasUsedTemplateToday = localStorage.getItem("WorkoutNames"); // string
+const UseFoodTemplate = localStorage.getItem("UseDietTemplate");
+const hasCreatedDietPlanToday = localStorage.getItem("SetDietManually");
+
+// One‑time flags
+const hasShared = localStorage.getItem("mycodeUsed") === "true";
+const isIronVIP = localStorage.getItem("IronVIP") === "true";   // example
+
+// UseDietTemplate
+const DAILY_TASKS: Task[] = [
+  
+   {
+    icon: <FaAppleAlt className="text-orange-500" />,
+    label: "إستخدم قالب غذائي",
+    xp: 125,
+    condition: UseFoodTemplate,
+    to:'/templates'
+  },
+  
+  {
+    icon: <LuDumbbell className="text-blue-400" />,
+    label: "جرب استخدام قالب رياضي",
+    xp: 125,
+    condition: hasUsedTemplateToday,
+    to:'/templates'
+
+  },
+   {
+    icon: <FaUserFriends className="text-green-400" />,
+    label: "شارك مع اصدقائك كودك الشخصي للحصول علي 3 أيام VIP",
+    xp: 200,
+    condition: hasShared,
+    to:'/Settings'
+
+  },
+   {
+    icon: <FaAppleAlt className="text-orange-500" />,
+    label: "تناول وجباتك كاملة",
+    xp: 200,
+    condition: hasEatenAllMeals,
+    to:'/templates'
+  },
+   {
+    icon: <BsStar className="text-orange-400" />,
+    label: "أضف بوست!",
+    xp: 125,
+    condition: hasPostedToday,
+    to:'/Chat'
+
+  },
+  {
+    icon: <FaHeart className="text-rose-400" />,
+    label: "أضف إعجاب على بوست",
+    xp: 50,
+    condition: hasLikedPostToday,
+    to:'/Chat'
+
+  },
+  {
+    icon: <FaCommentAlt className="text-purple-400" />,
+    label: "أضف تعليق على بوست",
+    xp: 50,
+    condition: hasCommentedToday,
+    to:'/Chat'
+
+  },
+ 
+  {
+    icon: <FaAppleAlt className="text-sky-400" />,
+    label: "عمل نظامك الغذائي الخاص بك يدويا",
+    xp: 125,
+    condition: hasCreatedDietPlanToday,
+
+  },
+  {
+    icon: <GiNinjaHead className="text-blue-600" />,
+    label: "انضم إلي IRON-VIP",
+    xp: 1000,
+    condition: isIronVIP,
+    to:'/Settings'
+  }
+];
+
   return (
     <div
     onDoubleClick={onClose}
@@ -328,7 +359,9 @@ export const TasksPanel: React.FC<TasksPanelProps> = ({ onClose }) => {
             {DAILY_TASKS.map((task, idx) => (
               <div
                 key={idx}
-                className={`flex items-center justify-between gap-3 border-2 p-3 ${
+onClick={() => {
+  if (task.to && !task.condition) navigate(task.to);
+}}                className={`flex items-center justify-between gap-3 border-2 p-3 ${
                   task.condition
                     ? "bg-teal-100 border-teal-600 dark:border-teal-300 dark:bg-teal-500/20"
                     : "bg-gray-50 dark:bg-black/20 border-gray-100 dark:border-gray-600/30"
@@ -403,7 +436,7 @@ const Xp: React.FC<XpProps> = ({ xp }) => {
     const [showRanking, setShowRanking] = useState(false);
   
   return (
-    <div className="w-fit flex flex-row gap-1">
+    <div className="w-fit flex flex-row gap-1 z-10">
      
 
       {/* Sort button */}

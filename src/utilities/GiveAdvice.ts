@@ -71,11 +71,19 @@ export function giveHealthAdvice(): string {
 
   // البروتين الفعلي – يُجمع لكل طبق (إذا تكرر الطبق يُحسب مرة واحدة بسبب FoodInfo_s)
   let totalProtein = 0;
+  let totalCarb = 0;
   const foodSet = new Set(allFoods);
   if (foodInfoRaw) {
-    const foodInfo: [string, string, number, number, number][] = JSON.parse(foodInfoRaw);
+    const foodInfo: [string, string, number, number, number,number,number][] = JSON.parse(foodInfoRaw);
     for (const [, name, , , protein] of foodInfo) {
       if (foodSet.has(name)) totalProtein += protein;
+      localStorage.setItem("totalProtine",String(totalProtein))
+      
+    }
+    for (const [, name, , , , , carb] of foodInfo) {
+      if (foodSet.has(name)) totalCarb += carb;
+      localStorage.setItem("totalCarb",String(totalCarb))
+      
     }
   }
 

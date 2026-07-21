@@ -10,11 +10,11 @@ import {
   FaLeaf,
   FaRunning,
   FaPlus,
+  FaTiktok,
 } from "react-icons/fa";
 import { GiBiceps, GiMuscleUp, GiWeightLiftingUp } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
 import foods from "../../assets/FoodsList.json"; // adjust the import path as needed
-import { HiTemplate } from "react-icons/hi";
 import {EXERCISE_TEMPLATES, DIET_TEMPLATES} from "./Templates";
 interface FoodItem {
   FoodName: string;
@@ -150,8 +150,10 @@ const SYSTEMS: Record<SystemName, string[]> = {
       });
     });
     localStorage.setItem("FoodInfo_s", JSON.stringify(foodInfo));
+    localStorage.setItem("UseDietTemplate","done");
+    
     setSuccessMessage("تم تطبيق القالب الغذائي بنجاح!");
-    setTimeout(() => setSuccessMessage(""), 3000);
+  navigate('/me/food')
   };
 // At the top of TemplatesPage, add this constant for default weekdays
 const DEFAULT_WEEKDAYS = [
@@ -221,7 +223,8 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
   });
   localStorage.setItem("SetWorkout", "true");
   setSuccessMessage("تم تطبيق قالب التمارين بنجاح!");
-  setTimeout(() => setSuccessMessage(""), 3000);
+  navigate('/me/exercises')
+  
 };
 
 
@@ -270,16 +273,15 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
       {/* Header */}
       <div className="text-center mb-6 pt-4">
  <div className="text-2xl flex flex-row gap-1.5">
-            <HiTemplate className="dark:text-white"/>
+            <FaTiktok className="text-gray-500"/>
             <div className="p-0.5 felx justify-center align-center rounded-full text-sm text-transparent font-bold">
   
-<a href="https://www.tiktok.com/@iron_fit_app" target="_blank" rel="noopener noreferrer" className="underline text-amber-500">
+<a href="https://www.tiktok.com/@iron_fit_app" target="_blank" rel="noopener noreferrer" className="underline text-gray-500">
   شاركنا رأيك
 </a>
             </div>
           </div>
        
-        <p className="text-gray-400 mt-1">ابدأ بسرعة مع قوالب مصممة لأهدافك</p>
       </div>
 
       {/* Tabs */}
@@ -302,7 +304,7 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
               : "bg-gray-800 text-gray-300 hover:bg-gray-700"
           }`}
         >
-          <FaDumbbell /> تمارين
+          <FaDumbbell /> رياضي
 
         </button>
       </div>
@@ -316,14 +318,24 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
 
       {/* Template cards */}
       <div className="grid gap-4  max-w-lg mx-auto">
-
-        {activeTab === "diet" &&
+                  {activeTab === "diet" && (
+                    <>
+                    
+        <span className="text-center text-xl text-black dark:text-gray-50 pr-3 font-thin showAnim2">إختار قالب غذائي علي حسب احتياجك</span>
+        <h1 className="text-center  text-gray-500 dark:text-gray-400 text-sm pr-3 font-black">الاحتياج اليومي للسعرات : {localStorage.getItem("dailyCalories")} سعرة  </h1>  </>
+                  )}
+         {activeTab === "exercise" && (
+                    <>
+                    
+        <span className="text-black dark:text-gray-50 pr-3 font-black ">بعد تطبيق القالب تقدر تعدل فـ ألاوزان براحتك</span>
+</>                  )}
+        {activeTab === "diet"  &&
           DIET_TEMPLATES.map(template => {
             const nut = calcTotalNutrition(template.meals);
             return (
               <div
               key={template.id}
-              className="bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-sm border border-gray-700/50 shadow-xl rounded-3xl p-5 hover:shadow-2xl transition-all hover:scale-[1.02] group"
+              className="bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-sm border border-gray-700/50 shadow-xl rounded-3xl p-5 hover:shadow-2xl transition-all hover:scale-[1.02] group showAnim2"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -344,7 +356,7 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
                   <div className="flex gap-2 ml-4">
                     <button
                       onClick={() => openDietPreview(template)}
-                    className="p-1.5 px-3 flex flex-row gap-2 items-center text-sm  dark:bg-gray-700 bg-slate-100 rounded-full hover:bg-gray-600 transition"
+                    className={`p-1.5 px-3 flex flex-row gap-2 items-center text-sm  dark:bg-gray-700 bg-slate-100 rounded-full hover:bg-gray-600 transition ${localStorage.getItem("hasCongratulatedDiet") ? "" : "outline-swealing2"}` }
                       title="معاينة"
                     >
                       معاينة<FaEye className="dark:text-gray-300 text-slate-600" />
@@ -360,7 +372,7 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
           EXERCISE_TEMPLATES.map(template => (
             <div
               key={template.id}
-              className=" dark:bg-black/20 dark:border-2 dark:border-gray-600/20  backdrop-blur-sm border border-gray-700/50 shadow-xl rounded-3xl p-5 hover:shadow-2xl transition-all hover:scale-[1.02] group"
+              className=" dark:bg-black/20 dark:border-2 dark:border-gray-600/20  backdrop-blur-sm border border-gray-700/50 shadow-xl rounded-3xl p-5 hover:shadow-2xl transition-all hover:scale-[1.02] group showAnim2 "
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">

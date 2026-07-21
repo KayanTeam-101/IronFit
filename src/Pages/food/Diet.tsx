@@ -10,6 +10,8 @@ import { BiCalendarAlt, BiInfoCircle } from "react-icons/bi";
 import { GrAddCircle } from "react-icons/gr";
 import CircularProgress from "./components/circleprogress";
 import { IoClose } from "react-icons/io5";
+import BreakPage from "../Welcome/Components/BreakPage";
+import { RiCopperCoinLine } from "react-icons/ri";
 
 // ---------- Types ----------
 type MealPlan = {
@@ -61,12 +63,12 @@ const Diet = () => {
   );
   const [eatenCalories, setEatenCalories] = useState<number>(0);
   const [settingsOpened, setSettingsOpened] = useState(false);
-
   // Modal states
   const [showAddModal, setShowAddModal] = useState(false);
   const [text, setText] = useState("");
   const [selectedFood, setSelectedFood] = useState("");
   const [showUnitModal, setShowUnitModal] = useState(false);
+  const [showCongratulation, setShowCongratulation] = useState(false);
   const [customGrams, setCustomGrams] = useState("");
   const navigate = useNavigate();
   // --- Daily calorie goal (computed once on mount from saved profile data) ---
@@ -162,8 +164,28 @@ const Diet = () => {
 
     }
    }
-   CheckAllMealsHasEatn()
+   CheckAllMealsHasEatn();
+
+   function ShowCong() {
+    if (localStorage.getItem("Diet") && !localStorage.getItem("hasCongratulatedDiet")) {
+      localStorage.setItem("hasCongratulatedDiet","done");
+      setShowCongratulation(true);
+      window.scrollBy(0,150);
+    }
+    else{return;}
+  }
+  ShowCong();
   },[])
+  const hideCongratulation = () =>{
+    console.log("ff");
+    
+    setShowCongratulation(false)
+    window.scrollTo(0,100);
+setTimeout(() =>{
+    navigate('/me/home');
+
+},3500)
+  }
   // --- Filtered search results ---
   const filteredFoods = useMemo(() => {
     const query = text.trim().toLowerCase();
@@ -240,23 +262,37 @@ const Diet = () => {
 
   return (
     <div className="relative min-h-screen  ">
+    {showCongratulation && (
+      <div onDoubleClick={hideCongratulation} className="fixed flex justify-center items-center top-0 left-0 w-screen h-screen backdrop-blur-[2px] z-50">
+
+      <div className="  w-11/12  z-50 showAnim2">
+        <BreakPage heading="مبروك 🥳 " text="كدا نكون حققنا أول نظام غذائي , اتمني إنه يكون مناسب (ولو لقيته غير مناسب ممكن نغيره بعدين) , ومتنساش إن الاستمرارية من أهم الحاجات في الفترة دي عشان نضمن إننا نوصل ف أسرع وقت🔥" SvgComponent={RiCopperCoinLine} />
+        <div className=" blur-3xl absolute top-30 left-2 -z-10 animate-pulse">
+        <BreakPage heading="مبروك 🥳 " text="كدا نكون حققنا أول نظام غذائي , اتمني إنه يكون مناسب (ولو لقيته غير مناسب ممكن نغيره بعدين) , ومتنساش إن الاستمرارية من أهم الحاجات في الفترة دي عشان نضمن إننا نوصل ف أسرع وقت🔥" SvgComponent={RiCopperCoinLine} />
+
+        </div>
+      </div>
+      </div>
+    )}
       {/* Header */}
-      <div className="flex justify-between items-center p-4">
+      <div className="flex justify-between items-center p">
         <div className="text-2xl">
-          <FaBowlFood className="dark:text-white"/>
         </div>
         <div className="flex gap-2">
           <button
             onClick={() => setSettingsOpened(true)}
-            className="bg-gray-100 flex dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-slate-300 items-center gap-2 px-4 py-2 rounded-full"
+            className="bg-gray-100 flex dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-slate-300 items-center gap-2 px-2  rounded-full"
           >
-            الاعدادات <VscSettings />
+             <span className="text-[12px] dark:text-white">الإعدادات</span>
+             <VscSettings /> 
           </button>
           <button
             onClick={() => navigate("/me/history")}
-            className="bg-gray-100 flex dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-slate-300 items-center gap-2 px-4 py-2 rounded-full"
+            className="bg-gray-100 flex dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-slate-300 items-center gap-2 px-2 py-2 rounded-full"
           >
-            التاريخ <BiCalendarAlt />
+             <span className="text-[12px] dark:text-white">التاريخ</span>
+
+             <BiCalendarAlt />
           </button>
         </div>
       </div>
@@ -268,22 +304,20 @@ const Diet = () => {
               <p className="font-light text-md show-third dark:text-white" dangerouslySetInnerHTML={{__html:Advice}}></p>
             </div>
       {/* Progress & add unscheduled button */}
-      <div className="grid grid-cols-2 p-2 mb-6">
+      <div className="flex flex-col gap-3 mb-6">
         <CircularProgress
-          current={eatenCalories}
-          size={140}
-          strokeWidth={12}
-          goal={dailyCaloriesGoal}
+          current={Number(eatenCalories.toFixed(0))}
+          goal={Number(dailyCaloriesGoal.toFixed(0))}
         />
 
         <div
           onClick={openAddModal}
-          className="bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-4xl p-4 flex flex-col items-center justify-center cursor-pointer hover:shadow-lg transition"
+          className="bg-white dark:bg-[#222]/30 rounded-xl p-4 flex flex-row items-center justify-between cursor-pointer hover:shadow-lg transition"
         >
           <span className="font-medium text-slate-600 dark:text-gray-100 mb-2 text-center">
             اكلت طعام غير مجدول
           </span>
-          <GrAddCircle className="text-slate-500 text-2xl" />
+          <GrAddCircle className="text-slate-500 dark:text-white text-xl mb-1" />
         </div>
       </div>
 
@@ -291,7 +325,7 @@ const Diet = () => {
       <div className=" space-y-4">
         {convertToObj &&
           (Object.keys(convertToObj) as Array<keyof MealPlan>).map(
-            (key, idx) => <Meal key={idx} MealName={key} />
+            (key) => <Meal key={Math.random()} MealName={key} />
           )}
       </div>
 
@@ -299,7 +333,7 @@ const Diet = () => {
 
       {/* ---------- Add Food Modal ---------- */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-4 animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center  backdrop-blur-[2px] p-4 animate-fadeIn">
           <div className="bg-white/90 dark:bg-black/20 backdrop-blur-md border border-white/50 dark:border-black/70 shadow-2xl rounded-3xl p-6 w-full max-w-md animate-scaleIn">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-bold text-gray-800 dark:text-white">أضف طعام</h3>

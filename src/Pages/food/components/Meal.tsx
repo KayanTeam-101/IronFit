@@ -253,7 +253,7 @@ const consumedNutrition = useMemo(() => {
                   </span>
                 ))
               : Array.from(GetVitamines).map(() => (
-                  <div className="p-1 text-amber-500 bg-indigo-50 rounded-3xl dark:text-gray-100 dark:bg-black flex flex-row gap-1 px-3 justify-center items-center">
+                  <div className="p-1 text-amber-500 bg-stone-100 rounded-3xl dark:text-gray-100 dark:bg-black flex flex-row gap-1 px-3 justify-center items-center">
                     <IoDiamond className="mb-1 text-sm text-amber-400" /> VIP
                   </div>
                 ))}

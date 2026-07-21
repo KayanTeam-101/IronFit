@@ -162,7 +162,7 @@ const Welcome: React.FC = () => {
         <header className="px-6 pt-6 pb-2">
           <div className="mt-6 w-full h-2 rounded-full bg-zinc-200 dark:bg-zinc-800/20 overflow-hidden">
             <div
-              className="h-full bg-linear-to-l from-pink-500 via-rose-500 to-amber-600 transition-all duration-500 rounded-full"
+              className="h-full bg-linear-to-l from-pink-500 via-rose-500 to-amber-600 transition-all duration-500 rounded-full animate-pulse"
               style={{
                 width: `${(turn / TOTAL_STEPS) * 100}%`,
               }}

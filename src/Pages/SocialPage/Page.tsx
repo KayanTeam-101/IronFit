@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
-import InputsContainer from "./Components/InputsContainer";
+import { useState, useEffect, useRef,lazy } from "react";
 import { getAvatarColorClasses } from "./Components/Post";
-import PostsContainer from "./Components/PostsContainer";
-import { RiCopperCoinFill, RiCopperCoinLine, RiMessage3Fill } from "react-icons/ri";
+import { RiCopperCoinFill } from "react-icons/ri";
 import { FaFire } from "react-icons/fa6";
-import Status from "./Components/Story";
-
+const PostsContainer = lazy(() => import('./Components/PostsContainer'))
+const Status = lazy(() => import('./Components/Story'))
 const Page = () => {
   const [headerVisible, setHeaderVisible] = useState(true);
   const lastScrollY = useRef(0);
@@ -48,7 +46,7 @@ const Page = () => {
          <div className="relative flex flex-row h-full">
           {
             localStorage.getItem("PhotoUrl") ? (
-           <div className='w-8 h-8 bg-gray-200 rounded-xl overflow-hidden'>
+           <div className='w-10 h-10 bg-gray-200 rounded-full border-gray-500 border-2 overflow-hidden'>
         <img src={localStorage.getItem("PhotoUrl") || undefined} className='w-full h-full' alt='userImage' />
     </div>
             ) : (
@@ -75,7 +73,7 @@ const Page = () => {
          </div>
 
          {/* Items Section */}
-    <div className="flex flex-row gap-1.5">
+   {/*  <div className="flex flex-row gap-1.5">
           <div className="dark:text-white dark:bg-[#1111115e] text-gray-500  p-2 rounded-2xl text-xl flex flex-row items-center justify-center gap-2.5">
 <span className="font-black">312</span>
 <span><RiCopperCoinFill className="text-[18px] text-blue-600 dark:text-sky-500 mb-1" /></span>
@@ -85,7 +83,7 @@ const Page = () => {
 <span className="font-black">312</span>
 <span><FaFire className="text-[18px] text-rose-600 dark:text-rose-500 mb-1" /></span>
         </div>
-    </div>
+    </div>*/}
 
      
       </div>

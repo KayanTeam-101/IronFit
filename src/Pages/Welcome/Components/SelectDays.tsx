@@ -54,7 +54,7 @@ const SelectDays: React.FC = () => {
           
           </div>
           <h2 className="text-2xl font-extrabold text-gray-800 dark:text-white">
-            إيه أيام التمرين <span className="text-sm text-gray-500">(لو موجودة)</span><span className="text-amber-500">؟</span>
+            إيه أيام التمرين<span className="text-amber-500 text-4xl">؟</span>
           </h2>
   
         </div>

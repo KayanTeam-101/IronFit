@@ -7,6 +7,7 @@ import {
   FaDumbbell,
 } from "react-icons/fa6";
 import { GiShoulderArmor } from "react-icons/gi";
+import { SlCalender } from "react-icons/sl";
 import { useNavigate } from "react-router";
 
 // ---------- Helpers (mirrors ExercisePage logic) ----------
@@ -97,7 +98,7 @@ const ExerciseDay: React.FC = () => {
   // ----- Case 1: Today is a training day -----
   if (todayWorkout) {
     return (
-      <div className={`${localStorage.getItem("Diet") ? "" : "opacity-40"} relative min-h-60 w-full p-5 bg-gradient-to-br from-sky-500 to-blue-600  overflow-hidden rounded-3xl border border-sky-50 dark:border-gray-600/20 flex flex-col justify-between shadow-xl transition-all hover:shadow-2xl`}>
+      <div className={`${localStorage.getItem("Diet") ? "" : "opacity-10"} relative min-h-60 w-full p-5 bg-gradient-to-br from-sky-500 to-blue-600  overflow-hidden rounded-3xl border border-sky-50 dark:border-gray-600/20 flex flex-col justify-between shadow-xl transition-all hover:shadow-2xl`}>
         <div className="flex items-center justify-between text-white/80 text-sm">
           <span>تمرين اليوم</span>
           <span className="font-black">{todayWeekday}</span>
@@ -132,7 +133,7 @@ const ExerciseDay: React.FC = () => {
   // ----- Case 2: Today is not a training day, but there is a next one -----
   if (nextTrainingDay) {
     return (
-      <div className={`relative min-h-60 w-full p-5 bg-gradient-to-b from-amber-500 to-orange-500  overflow-hidden rounded-3xl border border-amber-50 dark:border-gray-600/20 flex flex-col justify-between shadow-xl transition-all hover:shadow-2xl ${localStorage.getItem("Diet") ? "" : "opacity-40"}`}>
+      <div className={`relative min-h-60 w-full p-5 bg-gradient-to-b from-amber-500 to-orange-500  overflow-hidden rounded-3xl border border-amber-50 dark:border-gray-600/20 flex flex-col justify-between shadow-xl transition-all hover:shadow-2xl ${localStorage.getItem("Diet") ? "" : "opacity-10"}`}>
         <div className="flex flex-row items-center justify-between text-white/80 text-sm">
           <span>التمرين القادم</span>
         </div>
@@ -161,19 +162,19 @@ const ExerciseDay: React.FC = () => {
 
   // ----- Case 3: No training days selected at all -----
   return (
-    <div className="relative min-h-60 w-full p-5 bg-slate-300 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 overflow-hidden rounded-3xl border-gray-200 flex flex-col justify-between shadow-xl transition-all hover:shadow-2xl">
+    <div className={`relative min-h-60 w-full p-5 bg-gray-200 dark:bg-black/20 rounded-4xl flex flex-col justify-between  transition-all hover:shadow-2xl ${localStorage.getItem("Diet") ? "" : "opacity-10"}`}>
       <div className="flex flex-row items-center justify-between">
-        <h2 className="text-3xl text-white font-bold">أيام التمرين</h2>
+        <h2 className="text-3xl dark:text-white text-gray-500 font-bold">جدول التدريب</h2>
       </div>
-      <h1 className="text-2xl text-white font-bold mb-2">
-        لم تقم باختيار أيام التمرين بعد!
+      <h1 className="text-2xl dark:text-gray-300 text-gray-400 font-bold mb-2">
+      لسة مش موجود جدول لحد دلوقتي
       </h1>
-      <GiShoulderArmor className="absolute text-8xl scale-150 left-0 top-0 opacity-20 text-white" />
+      <SlCalender className="absolute  text-8xl left-10 top-10 scale-170 opacity-20 text-white" />
       <button
         onClick={() => navigate("/me/exercises")}
         className="flex items-center gap-2 bg-white p-3 shadow-2xl w-fit rounded-xl text-amber-500 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-slate-300 font-bold"
       >
-        اختر أيام التمرين <FaCaretLeft />
+        صفحة التمرين   <FaCaretLeft />
       </button>
     </div>
   );

@@ -1,118 +1,56 @@
- import React, { useEffect, useState } from "react";
+import React from "react";
+import { HiFire } from "react-icons/hi2";
+import { useCountUp } from "../../../Hooks/Increasing";
 
-interface CircularProgressProps {
-  goal: number;     // e.g. from localStorage 'dailyCalories'
-  current: number;  // e.g. eatenCalories
-  size?: number;    // diameter in px (default 120)
-  strokeWidth?: number;
+interface ModernLinearProgressProps {
+  goal: number; // Daily target calories
+  current: number; // Eaten calories
+  width?: string; // e.g., "100%" or "350px"
+  dir?: "rtl" | "ltr"; // Defaults to "rtl"
 }
 
-const CircularProgress: React.FC<CircularProgressProps> = ({
+const ModernLinearProgress: React.FC<ModernLinearProgressProps> = ({
   goal,
   current,
-  size = 150,
-  strokeWidth = 15,
+  width = "100%",
+  dir = "rtl",
 }) => {
-const [GetSuccessfullDays, SetGetSuccessfullDays] = useState<string[]>(
-  JSON.parse(localStorage.getItem('GetSuccessfullDays') || '[]')
-);
-  const radius = (size - strokeWidth) / 2;
-  const circumference = radius * 2 * Math.PI;
   const percent = goal > 0 ? Math.min((current / goal) * 100, 100) : 0;
-  const offset = circumference - (percent / 100) * circumference;
 
-  useEffect(() => {
-    const checkifSuccessfull = () => {
-            if (goal <= current) {
-          const today = new Date();
-          const currentDate = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
-          if (GetSuccessfullDays.includes(currentDate)) {
-            return false
-          }else{
-            const UpdatedData =[...GetSuccessfullDays,currentDate]
-            localStorage.setItem('GetSuccessfullDays',JSON.stringify(UpdatedData))
-            alert('Congratulations! You have achieved your daily calorie goa!')
-          }
-        }
-    }
-    checkifSuccessfull();
-
-  },[])
   return (
-    <div className="relative w-fit h-fit   flex flex-col items-center justify-center ">
-      {/* Outer glow ring */}
-      <svg
-        width={size }
-        height={size  }
-        
-        className="transform -rotate-90 bg-transparent overflow-visible "
-      >
-        {/* Background circle */}
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="transparent"
-          stroke="rgba(245,245,245,.3)"
-          strokeWidth={strokeWidth}
-        />
-        {/* Progress circle */}
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="transparent"
-          stroke="url(#gradient)"
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          strokeDashoffset={offset}
-          style={{ transition: "stroke-dashoffset 1.8s ease-in-out" }}
-        />
-         <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius - 5}
-          fill="transparent"
-          stroke="url(#gradient)"
-          strokeWidth={strokeWidth }
-          strokeLinecap="round"
-          strokeDasharray={circumference }
-          strokeDashoffset={offset}
-          className="blur-sm"
-          style={{ transition: "stroke-dashoffset 1.8s ease-in-out"}}
-        />
-        {/* Gradient definition */}
-        <defs>
-          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#1fb8f6" /> {/* teal-500 */}
-            <stop offset="50%" stopColor="pink" /> {/* orange-600 */}
-            <stop offset="60%" stopColor="#FFC0CB" /> {/* orange-600 */}
-            <stop offset="75%" stopColor="skyblue" /> {/* orange-600 */}
-            <stop offset="100%" stopColor="#3b82f6" /> {/* orange-600 */}
-          </linearGradient>
-        </defs>
-      </svg>
+    <div
+      dir={dir}
+      className="flex items-center gap-3 w-full bg-white dark:bg-[#222]/30 rounded-xl p-4 "
+      style={{ maxWidth: width }}
+    >
+   
 
-      {/* Center content */}
-      <div
-        className="absolute dark:text-white bottom-0 flex flex-col items-center justify-center text-black drop-shadow-lg"
-        style={{ width: size, height: size }}
-      >
-        <div className="relative flex items-baseline  gap-1">
-          <span className="text-3xl font-black">{Math.round(percent)}</span>
-          <div className="text-sm  flex-row flex ">%
+      {/* Main Progress Bar Outer Track */}
+      <div className="relative flex-1 h-5 rounded-full bg-slate-100 dark:bg-[#111] p-1 shadow-inner border border-slate-200/50 dark:border-slate-700/50">
+        {/* Animated Filled Bar */}
+        <div
+          className="h-full rounded-full transition-all duration-700 ease-out bg-linear-to-l from-orange-500 to-amber-400 shadow-md"
+          style={{ width: `${percent}%` }}
+        />
 
-          </div>
-        </div>
-        <div className="flex items-center gap-1 mt-1 text-xs font-medium text-black">
-          <span  className="dark:text-white text-slate-800">
-            {goal.toFixed(0)} / {current.toFixed(0)} 
+        {/* Text Overlay */}
+        <div className="absolute -top-8 inset-0 flex items-center justify-between px-4 text-xs font-bold text-slate-700 dark:text-slate-200">
+<span>
+            {current.toLocaleString()} 
+
+</span>
+          <span>
+             {goal.toLocaleString()}{" "}
           </span>
         </div>
+      </div>
+
+      {/* Percentage Indicator */}
+      <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-orange-500/10 text-orange-400 font-black border-orange-400/40 border dark:bg-amber-500/20 shrink-0">
+        {useCountUp(Math.round(percent),700)}%
       </div>
     </div>
   );
 };
 
-export default CircularProgress;
+export default ModernLinearProgress;

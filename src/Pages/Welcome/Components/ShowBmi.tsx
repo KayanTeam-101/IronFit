@@ -153,11 +153,11 @@ const ShowBmi: React.FC = () => {
             {" "}
              
               حوالي 
-            {dailyCaloriesGoal}
+            {dailyCaloriesGoal.toLocaleString()}
              سعرة حرارية
           </div>
           <p className="text-xl w-11/12 text-gray-100 text-shadow-xs font-black leading-relaxed max-w-md show-second">
-             حتي 
+             عشان 
             {" "}
             {localStorage.getItem("SelectedGender") === "ذكر" ? "توصل" : "توصلي" }
             {" "}

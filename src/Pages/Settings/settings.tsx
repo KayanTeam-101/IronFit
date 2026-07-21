@@ -18,6 +18,10 @@ import { TbCircleLetterD, TbCircleLetterDFilled } from "react-icons/tb";
 import { SiGoogleanalytics } from "react-icons/si";
 import { BsWhatsapp } from "react-icons/bs";
 
+   const getUsers_ = await getUsers();
+    export const getUser = getUsers_.find(
+      (item) => item.UserName === localStorage.getItem("UserName"),
+    );
 // ---------- Plans data ----------
 const FIXED_PLANS = [
   { days: 3, price: 15, popular: false },
@@ -118,6 +122,7 @@ const Subscription: React.FC = () => {
             JSON.stringify({ SubscriptionPeriod: getUser?.SubscriptionPeriod }),
           ),
         );
+        localStorage.setItem("mycodeUsed","done")
         console.log("done");
       } else {
         console.log("nothing");
@@ -143,10 +148,7 @@ const Subscription: React.FC = () => {
   // Friend activation
   const handleActivate = async () => {
     if (!friendId.trim()) return;
-    const getUsers_ = await getUsers();
-    const getUser = getUsers_.find(
-      (item) => item.UserName === localStorage.getItem("UserName"),
-    );
+ 
     
     // If Unique Key
     const getIfUnique = getUsers_.find((item) => item.Unique == friendId);
@@ -200,7 +202,7 @@ const Subscription: React.FC = () => {
     }
 
     if (Number(friendId) === Number(getUser?.UserId_)) {
-      alert("لا يمكنك استخدام كودك الخاص");
+      alert("لا يمكنك استخدام كودك الخاص بك");
     }
 
     if (getFriendCode?.mycodeUsed !== false) {

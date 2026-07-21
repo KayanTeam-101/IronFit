@@ -1,7 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FaCaretRight } from "react-icons/fa";
-
+import Heart from '../../../../assets/emojies/heart.png'
+import fire from '../../../../assets/emojies/fire.png'
+import hhh from '../../../../assets/emojies/laugh.png'
+import angry from '../../../../assets/emojies/angry.png'
+import hew from '../../../../assets/emojies/hew.png'
+import love from '../../../../assets/emojies/love.png'
 interface StoryType {
   id: string;
   imageUrl: string;
@@ -110,12 +115,12 @@ const ShowStory: React.FC<ShowStoryProps> = ({
 
   // Action buttons (unchanged)
   const Action_buttons = [
-    { path: "/src/assets/emojies/love.png", text: "ادعمة" },
-    { path: "/src/assets/emojies/heart.png", text: "اعجبني" },
-    { path: "/src/assets/emojies/fire.png", text: "متحمس" },
-    { path: "/src/assets/emojies/laugh.png", text: "ههه" },
-    { path: "/src/assets/emojies/angry.png", text: "غاضب" },
-    { path: "/src/assets/emojies/hew.png", text: "منزهل" },
+    { path: love, text: "ادعمة" },
+    { path: Heart, text: "اعجبني" },
+    { path: fire, text: "متحمس" },
+    { path: hhh, text: "ههه" },
+    { path: angry, text: "غاضب" },
+    { path: hew, text: "منزهل" },
   ];
 
   // Handle reaction: visual feedback + save after popup

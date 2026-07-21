@@ -1,6 +1,7 @@
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate,useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect, Suspense, lazy } from "react";
 import Loading from "./Components/layouts/Loading";
+import { getUser } from "./Pages/Settings/settings";
 
 // Lazy‑loaded page components
 const Welcome = lazy(() => import("./Pages/Welcome/Welcome"));
@@ -15,7 +16,7 @@ const Page = lazy(() => import("./Pages/food/History/page"));
 const Navbar = lazy(() => import("./Components/layouts/Navbar"));
 
 function App() {
-  const isFirstTime: boolean = localStorage.getItem("isFirstTime") === null;
+  const navigate = useNavigate();
 
   const [isDesktop, setIsDesktop] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +25,14 @@ function App() {
   );
 
   const location = useLocation(); // needed to update condition on route change
-
+    useEffect(() =>{
+    const ReCheckSubscription =() =>{
+ localStorage.setItem(
+        "foods____",
+        btoa(JSON.stringify({ SubscriptionPeriod: getUser?.SubscriptionPeriod })),
+      );    }
+      ReCheckSubscription()
+  },[])
   // Initial load & path guard
   useEffect(() => {
     (function () {
@@ -34,8 +42,8 @@ function App() {
           !localStorage.getItem("UserName"))
       ) {
         localStorage.clear();
-        window.location.href = "/";
-      }
+        navigate('/')
+        }
     })();
 
     const handleLoad = () => {
