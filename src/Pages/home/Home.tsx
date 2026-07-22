@@ -221,7 +221,7 @@ const Home = () => {
 
             <div 
             onClick={() => alert("الأيام النشطة عبارة عن الأيام ال إنتظمت فيها حيث كان يوم تمرين و لعبتو أو أكلت وجبة اليوم كاملة")}
-            className={`${localStorage.getItem("Diet") ? "" : "opacity-10"} relative rounded-3xl active:scale-85 transition-all bg-white dark:bg-[#222]/50 dark:border-2 dark:border-gray-600/20 text-white text-xl font-black tracking-tight flex flex-row w-1/2 justify-between items-center p-2 shadow-sm `}>
+            className={`${localStorage.getItem("Diet") ? "" : "opacity-10"} relative rounded-3xl active:scale-85 transition-all bg-white dark:bg-[#222]/50 dark:border-2 dark:border-gray-600/20 text-white text-xl font-black tracking-tight flex flex-row w-1/2 justify-between items-center p-2 shadow-sm  ${localStorage.getItem("hasCongratulatedDiet") && !localStorage.getItem("openXpBefore") ? "opacity-20" : ""}`}>
               <ImInfo className="absolute top-2 left-3 text-gray-400 text-[12px]" />
               <p className="relative flex flex-row bg-linear-to-r from-rose-300 via-orange-400 to-yellow-400 bg-clip-text text-transparent items-center gap-1 mt-2">
                 الأيام النشطة

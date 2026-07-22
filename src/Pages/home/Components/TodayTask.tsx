@@ -76,7 +76,7 @@ const TodayTask = () => {
       <div className="flex flex-row  gap-2 justify-center">
       
         {/* Calories card – flex-col */}
-        <div className={`flex flex-col items-center max-w-[100px] active:scale-95 transition delay-100 flex-1 p-3 rounded-xl bg-gray-50 shadow  dark:bg-[#222]/50  ${localStorage.getItem("Diet") ? "" : "opacity-10"}`}>
+        <div className={`flex flex-col items-center max-w-[100px] active:scale-95 transition delay-100 flex-1 p-3 rounded-xl bg-gray-50 shadow  dark:bg-[#222]/50  ${localStorage.getItem("Diet") ? "" : "opacity-10"} ${localStorage.getItem("hasCongratulatedDiet") && !localStorage.getItem("openXpBefore") ? "opacity-20" : ""}`}>
           <FaFire className="text-3xl text-red-500 mb-1" />
           <p className="text-[12px] p-1 font-medium dark:text-white">السعرات</p>
           <ProgressBar current={localStorage.getItem("EatenCalories") ? Number(localStorage.getItem("EatenCalories")) : "???"} target={Number(localStorage.getItem("dailyCalories"))} color="bg-red-500" />
