@@ -1,9 +1,6 @@
 import React, { lazy, Suspense,useState } from 'react';
 import {
-  FaArrowLeft,
-  FaArrowRight,
   FaCaretLeft,
-  FaCaretRight,
 } from "react-icons/fa6";
 
 import Firstturn from './Components/Firstturn'; // eager
@@ -99,7 +96,7 @@ const Welcome: React.FC = () => {
     setTurn((prev) => prev + 1);
     setTimeout(() => {
       setLoading(false);
-    }, 50);
+    }, 3500);
   };
 
   const previous = () => {
@@ -171,7 +168,7 @@ const Welcome: React.FC = () => {
         </header>
 
         {/* Page */}
-        <main className="flex-1 flex items-center justify-around px-6 overflow-y-auto">
+        <main className="flex-1 w-screen overflow-x-hidden flex items-center justify-around px-6 overflow-y-auto">
           <div className="w-full h-10/12 animate-fade-in">{renderPage()}</div>
         </main>
 
