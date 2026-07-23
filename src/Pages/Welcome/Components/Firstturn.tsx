@@ -21,7 +21,7 @@ const Firstturn: React.FC = () => {
             <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-72 h-72 bg-amber-400 rounded-full opacity-20 blur-3xl animate-pulse" />
       <div className="absolute top-0 left-0 w-48 h-48 bg-cyan-500 rounded-full opacity-20 blur-3xl animate-pulse delay-1000" />
       <div className="absolute bottom-0 right-0 w-56 h-56 bg-blue-500 rounded-full opacity-20 blur-3xl animate-pulse delay-2000" />
-
+ 
         <div className="mx-auto max-w-sm backdrop-blur-xl dark:bg-black/40 rounded-3xl p-6 text-center space-y-5 shadow-2xl animate-fade-slide-up">
           {/* Logo */}
           <div className="flex justify-center -mt-14">

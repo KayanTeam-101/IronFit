@@ -1,12 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FaCaretRight } from "react-icons/fa";
-import Heart from '../../../../assets/emojies/heart.png'
-import fire from '../../../../assets/emojies/fire.png'
-import hhh from '../../../../assets/emojies/laugh.png'
-import angry from '../../../../assets/emojies/angry.png'
-import hew from '../../../../assets/emojies/hew.png'
-import love from '../../../../assets/emojies/love.png'
+
 interface StoryType {
   id: string;
   imageUrl: string;
@@ -24,7 +19,7 @@ const ShowStory: React.FC<ShowStoryProps> = ({
   stories,
   onClose,
 }) => {
-  // Reaction popup per story (emoji path)
+  // Reaction popup per story (emoji string now)
   const [popups, setPopups] = useState<Record<string, string>>({});
   // Reacted stories (persisted in localStorage)
   const [reactedStories, setReactedStories] = useState<Set<string>>(() => {
@@ -113,25 +108,25 @@ const ShowStory: React.FC<ShowStoryProps> = ({
     };
   }, [activeDragId, isVerticalDrag, dragData, onClose]);
 
-  // Action buttons (unchanged)
+  // Action buttons with emojis instead of image paths
   const Action_buttons = [
-    { path: love, text: "ادعمة" },
-    { path: Heart, text: "اعجبني" },
-    { path: fire, text: "متحمس" },
-    { path: hhh, text: "ههه" },
-    { path: angry, text: "غاضب" },
-    { path: hew, text: "منزهل" },
+    { emoji: "😍", text: "ادعمة" },    // love
+    { emoji: "❤️", text: "اعجبني" },    // like
+    { emoji: "🔥", text: "متحمس" },      // fire
+    { emoji: "😂", text: "ههه" },         // haha
+    { emoji: "😡", text: "غاضب" },        // angry
+    { emoji: "😲", text: "منزهل" },       // shocked
   ];
 
   // Handle reaction: visual feedback + save after popup
-  const handleReact = (story: StoryType, path: string) => {
+  const handleReact = (story: StoryType, emoji: string) => {
     if (reactedStories.has(story.id)) return;
 
     // Immediately mark the selected action
-    setSelectedAction((prev) => ({ ...prev, [story.id]: path }));
+    setSelectedAction((prev) => ({ ...prev, [story.id]: emoji }));
 
     // Show the floating emoji popup
-    setPopups((prev) => ({ ...prev, [story.id]: path }));
+    setPopups((prev) => ({ ...prev, [story.id]: emoji }));
 
     // After 1.5s, clear popup, reset selectedAction, and mark as reacted
     setTimeout(() => {
@@ -175,7 +170,7 @@ const ShowStory: React.FC<ShowStoryProps> = ({
       <div className="snap-x snap-mandatory w-screen h-screen overflow-x-scroll scroll-smooth flex flex-row">
         {stories.map((story) => {
           const isReacted = reactedStories.has(story.id);
-          const storySelected = selectedAction[story.id]; // currently active emoji path (or undefined)
+          const storySelected = selectedAction[story.id]; // currently active emoji (or undefined)
           const isReactionDone = isReacted && !storySelected; // reaction fully completed
           const disableBar = !!storySelected || isReactionDone; // disable clicks during popup/after
 
@@ -229,11 +224,9 @@ const ShowStory: React.FC<ShowStoryProps> = ({
                   className="w-full rounded-lg shadow-2xl"
                 />
                 {popups[story.id] && (
-                  <img
-                    src={popups[story.id]}
-                    alt="reaction"
-                    className="absolute top-1/2 -translate-y-1/2 z-40 w-40 pop animate-pop-in"
-                  />
+                  <span className="absolute top-1/2 z-40 text-9xl pop animate-pop-in">
+                    {popups[story.id]}
+                  </span>
                 )}
               </div>
 
@@ -244,8 +237,7 @@ const ShowStory: React.FC<ShowStoryProps> = ({
                 }`}
               >
                 {Action_buttons.map((item) => {
-                  const isSelected = storySelected === item.path;
-                  // Opacity: if nothing is selected/disabled, 1. If bar is disabled but this button is the selected one, keep it 1. Otherwise 0.5.
+                  const isSelected = storySelected === item.emoji;
                   const buttonOpacity = disableBar
                     ? isSelected
                       ? 1
@@ -254,7 +246,7 @@ const ShowStory: React.FC<ShowStoryProps> = ({
                   return (
                     <button
                       key={item.text}
-                      onClick={() => handleReact(story, item.path)}
+                      onClick={() => handleReact(story, item.emoji)}
                       className="flex flex-col justify-center items-center gap-1.5 shrink-0 transition-all duration-300"
                       style={{
                         opacity: buttonOpacity,
@@ -264,11 +256,7 @@ const ShowStory: React.FC<ShowStoryProps> = ({
                           : "none",
                       }}
                     >
-                      <img
-                        src={item.path}
-                        alt={item.text}
-                        className="w-12 h-12"
-                      />
+                      <span className="text-5xl">{item.emoji}</span>
                       <p className="text-black dark:text-gray-200 text-xs font-medium">
                         {item.text}
                       </p>

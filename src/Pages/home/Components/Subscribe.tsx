@@ -1,40 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaCopy, FaCheck, FaShareAlt, FaTimes, FaWhatsapp } from "react-icons/fa";
+import { FaCopy, FaCheck, FaTimes, FaWhatsapp } from "react-icons/fa";
 import { IoDiamond } from "react-icons/io5";
 
 interface SubscribeProps {
   onClose: () => void;
-  referralCode?: string;   // optional – defaults to "123456"
+  referralCode?: string;
 }
 
 const Subscribe: React.FC<SubscribeProps> = ({
   onClose,
-  referralCode = localStorage.getItem('userId_')
+  referralCode = localStorage.getItem("userId_"),
 }) => {
   const [copied, setCopied] = useState(false);
-
   const navigate = useNavigate();
 
-  const handleCopyCode = () => {
+  const handleCopyCode = useCallback(() => {
     navigator.clipboard.writeText(referralCode || "");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
-  };
+  }, [referralCode]);
 
-  const handleWhatsAppShare = () => {
+  const handleWhatsAppShare = useCallback(() => {
     const message = `استخدم كود الإحالة الخاص بي للحصول على 3 أيام VIP مجانية: ${referralCode}`;
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
-  };
+    window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, "_blank");
+  }, [referralCode]);
 
-  if (localStorage.getItem("SubscriptionPeriod")) return null; // Don't show if user already has a subscription
+  if (localStorage.getItem("SubscriptionPeriod")) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[1px] p-4">
-      {/* Main card */}
       <div className="relative w-full max-w-sm border dark:bg-black/95 dark:border-2 dark:border-gray-600/20 border-amber-300 bg-white/95 shadow-2xl p-6 text-center">
-        {/* Close button */}
         <button
           onClick={onClose}
           className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full dark:bg-black/20 dark:border-2 dark:border-gray-600/20 bg-white/60 opacity-70"
@@ -42,7 +38,6 @@ const Subscribe: React.FC<SubscribeProps> = ({
           <FaTimes className="text-gray-500 dark:text-gray-300" />
         </button>
 
-        {/* Icon */}
         <div className="flex justify-center mb-3">
           <div className="p-3 w-full flex items-center flex-col">
             <IoDiamond className="text-amber-400 dark:text-amber-400 text-6xl" />
@@ -53,11 +48,8 @@ const Subscribe: React.FC<SubscribeProps> = ({
           </div>
         </div>
 
-        {/* Title */}
-        <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
-        </h2>
+        <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2"></h2>
 
-        {/* Explanation steps */}
         <div className="text-sm text-gray-600 dark:text-gray-300 space-y-3 text-right leading-relaxed">
           <p className="py-4 border-r-2 border-amber-300/40 px-2 show-first">
             <strong>الخطوة ١:</strong> أرسل الكود التعريفي لصديقك.
@@ -78,8 +70,7 @@ const Subscribe: React.FC<SubscribeProps> = ({
           </p>
         </div>
 
-        {/* Referral code & actions */}
-        <div className="space-y-2 ">
+        <div className="space-y-2">
           <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
             الكود التعريفي الخاص بك
           </p>
@@ -93,10 +84,7 @@ const Subscribe: React.FC<SubscribeProps> = ({
             >
               {copied ? <FaCheck className="text-green-500" /> : <FaCopy />}
             </button>
-      <span className="p-1 dark:text-gray-400">
-                    أو
-
-      </span>
+            <span className="p-1 dark:text-gray-400">أو</span>
             <button
               onClick={handleWhatsAppShare}
               className="p-3 rounded-xl bg-green-100 dark:bg-green-800/30 hover:bg-green-200 dark:hover:bg-green-700/40 transition text-green-500"
@@ -107,7 +95,6 @@ const Subscribe: React.FC<SubscribeProps> = ({
         </div>
       </div>
 
-      {/* CSS animations */}
       <style>{`
         @keyframes fadeIn {
           from { opacity: 0; }

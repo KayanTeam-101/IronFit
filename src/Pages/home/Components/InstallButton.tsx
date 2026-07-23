@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useCallback,lazy } from "react";
+import React, { useEffect, useState, useCallback, lazy } from "react";
 import { MdInstallMobile } from "react-icons/md";
 import { calculateAllTimeXP } from "./Xp";
+
 const Xp = lazy(() => import("./Xp"));
 
 type Platform = "ios" | "android" | "other" | "desktop";
@@ -23,9 +24,8 @@ const InstallButton: React.FC = () => {
   const [isEmbedded, setIsEmbedded] = useState(false);
   const [isFallback, setIsFallback] = useState(false);
   const [platform, setPlatform] = useState<Platform>("desktop");
-  const [xp, setXp] = useState(0);  // 🆕 state for XP value
+  const [xp, setXp] = useState(0);
 
-  // Fetch XP asynchronously once
   useEffect(() => {
     const fetchXp = async () => {
       const xpValue = await calculateAllTimeXP();
@@ -33,75 +33,76 @@ const InstallButton: React.FC = () => {
     };
     fetchXp();
   }, []);
-useEffect(() => {
-  const standaloneMedia = window.matchMedia("(display-mode: standalone)");
-  const isStandalone =
-    standaloneMedia.matches || (window.navigator as any).standalone === true;
-  if (isStandalone) {
-    setIsInstalled(true);
-    return;
-  }
 
-  const ua = navigator.userAgent || (window as any).opera || "";
-  const plat = detectPlatform(ua);
-  setPlatform(plat);
+  useEffect(() => {
+    const standaloneMedia = window.matchMedia("(display-mode: standalone)");
+    const isStandalone =
+      standaloneMedia.matches || (window.navigator as any).standalone === true;
+    if (isStandalone) {
+      setIsInstalled(true);
+      return;
+    }
 
-  if (EMBEDDED_WEBVIEW_REGEX.test(ua)) {
-    console.log("[InstallButton] embedded webview detected");
-    setIsEmbedded(true);
-    setShowButton(true);
-    return;
-  }
+    const ua = navigator.userAgent || (window as any).opera || "";
+    const plat = detectPlatform(ua);
+    setPlatform(plat);
 
-  const promptHandler = (e: Event) => {
-    console.log("[InstallButton] beforeinstallprompt fired");
-    e.preventDefault();
-    setDeferredPrompt(e);
-    setShowButton(true);
-    setIsFallback(false);
-    // Clear any fallback timer if the prompt eventually fires
-    if (fallbackTimer) clearTimeout(fallbackTimer);
-  };
-  window.addEventListener("beforeinstallprompt", promptHandler);
+    if (EMBEDDED_WEBVIEW_REGEX.test(ua)) {
+      console.log("[InstallButton] embedded webview detected");
+      setIsEmbedded(true);
+      setShowButton(true);
+      return;
+    }
 
-  const installedHandler = () => {
-    setIsInstalled(true);
-    setShowButton(false);
-    setDeferredPrompt(null);
-  };
-  window.addEventListener("appinstalled", installedHandler);
+    const promptHandler = (e: Event) => {
+      console.log("[InstallButton] beforeinstallprompt fired");
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setShowButton(true);
+      setIsFallback(false);
+      if (fallbackTimer) clearTimeout(fallbackTimer);
+    };
+    window.addEventListener("beforeinstallprompt", promptHandler);
 
-  let fallbackTimer: ReturnType<typeof setTimeout> | null = null;
+    const installedHandler = () => {
+      setIsInstalled(true);
+      setShowButton(false);
+      setDeferredPrompt(null);
+    };
+    window.addEventListener("appinstalled", installedHandler);
 
-  if (plat === "ios") {
-    setIsFallback(true);
-    setShowButton(true);
-  } else {
-    // 🔧 FIX: Use setTimeout to wait a bit for the native prompt
-    fallbackTimer = setTimeout(() => {
-      setDeferredPrompt((dp: any) => {
-        if (!dp) {
-          if (plat === "android" || plat === "other") {
-            console.log("[InstallButton] no native prompt yet -> manual instructions");
-            setIsFallback(true);
-            setShowButton(true);
-          } else {
-            alert("Installation is not available in this browser.");
+    let fallbackTimer: ReturnType<typeof setTimeout> | null = null;
+
+    if (plat === "ios") {
+      setIsFallback(true);
+      setShowButton(true);
+    } else {
+      fallbackTimer = setTimeout(() => {
+        setDeferredPrompt((dp: any) => {
+          if (!dp) {
+            if (plat === "android" || plat === "other") {
+              console.log(
+                "[InstallButton] no native prompt yet -> manual instructions"
+              );
+              setIsFallback(true);
+              setShowButton(true);
+            } else {
+              alert("Installation is not available in this browser.");
+            }
           }
-        }
-        return dp;
-      });
-    }, 3000); // wait 3 seconds, adjust as needed
-  }
+          return dp;
+        });
+      }, 3000);
+    }
 
-  return () => {
-    window.removeEventListener("beforeinstallprompt", promptHandler);
-    window.removeEventListener("appinstalled", installedHandler);
-    if (fallbackTimer) clearTimeout(fallbackTimer);
-  };
-}, []);
+    return () => {
+      window.removeEventListener("beforeinstallprompt", promptHandler);
+      window.removeEventListener("appinstalled", installedHandler);
+      if (fallbackTimer) clearTimeout(fallbackTimer);
+    };
+  }, []);
 
-  const openInstructions = () => {
+  const openInstructions = useCallback(() => {
     if (platform === "ios") {
       alert(
         "لتثبيت التطبيق: اضغط على زر المشاركة (المربع وبه سهم لأعلى) ثم اختر 'إضافة إلى الشاشة الرئيسية'."
@@ -111,9 +112,9 @@ useEffect(() => {
         " لتثبيت التطبيق: اضغط على قائمة المتصفح (⋮) في الأعلى ثم اختر 'تثبيت التطبيق' أو 'إضافة إلى الشاشة الرئيسية للحصول علي كافة المميزات'."
       );
     }
-  };
+  }, [platform]);
 
-  const escapeEmbeddedBrowser = async () => {
+  const escapeEmbeddedBrowser = useCallback(async () => {
     const currentUrl = window.location.href;
     try {
       if (platform === "android") {
@@ -136,11 +137,11 @@ useEffect(() => {
         alert("افتح الرابط في متصفح Chrome أو Safari لتثبيت التطبيق.");
       }
     } catch (err) {
-alert("")
+      alert("");
     }
-  };
+  }, [platform]);
 
-  const handleAction = async () => {
+  const handleAction = useCallback(async () => {
     console.log("[InstallButton] click", {
       isEmbedded,
       isFallback,
@@ -173,8 +174,9 @@ alert("")
       setIsFallback(true);
       openInstructions();
     }
-  };
+  }, [isEmbedded, isFallback, deferredPrompt, platform, escapeEmbeddedBrowser, openInstructions]);
 
+  // Always show Xp (as in the original – you can remove this condition later)
   if (true) return <Xp xp={xp} />;
   if (!showButton) return null;
 
@@ -182,7 +184,8 @@ alert("")
     ? "تطبيقنا غير متاح للتثبيت المباشر هنا. يرجى الضغط على الزر أدناه لفتح الموقع في متصفحك الخارجي أو إضافته للشاشة الرئيسية."
     : null;
 
-  const buttonLabel = isEmbedded || isFallback ? "تثبيت التطبيق" : "حمل التطبيق";
+  const buttonLabel =
+    isEmbedded || isFallback ? "تثبيت التطبيق" : "حمل التطبيق";
 
   return (
     <div className="flex flex-col items-center gap-3">
@@ -201,10 +204,12 @@ alert("")
         } dark:bg-black/20 dark:border-2 dark:border-gray-600/20 text-white px-4 py-2 rounded-xl flex items-center justify-center gap-2 transition-all w-full max-w-xs outline-swealing`}
       >
         {buttonLabel}
-        {!(isEmbedded || isFallback) && <MdInstallMobile className="text-lg" />}
+        {!(isEmbedded || isFallback) && (
+          <MdInstallMobile className="text-lg" />
+        )}
       </button>
     </div>
   );
-}
+};
 
 export default InstallButton;
