@@ -51,10 +51,10 @@ const Subscribe: React.FC<SubscribeProps> = ({
         <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2"></h2>
 
         <div className="text-sm text-gray-600 dark:text-gray-300 space-y-3 text-right leading-relaxed">
-          <p className="py-4 border-r-2 border-amber-300/40 px-2 show-first">
+          <p className="py-4 border-r-2 border-amber-300/40 px-2 ">
             <strong>الخطوة ١:</strong> أرسل الكود التعريفي لصديقك.
           </p>
-          <p className="py-4 border-r-2 border-amber-300/60 px-2 show-second">
+          <p className="py-4 border-r-2 border-amber-300/60 px-2 ">
             <strong>الخطوة ٢:</strong> صديقك يدخل الكود في{" "}
             <span
               onClick={() => navigate("/Settings")}
@@ -64,7 +64,7 @@ const Subscribe: React.FC<SubscribeProps> = ({
             </span>{" "}
             من صفحة أنا.
           </p>
-          <p className="py-4 border-r-2 border-amber-300 px-2 show-third">
+          <p className="py-4 border-r-2 border-amber-300 px-2">
             <strong>الخطوة ٣:</strong> بعد التفعيل، تحصلان تلقائياً على 3 أيام
             مجانية ... ماذا تنتظر !
           </p>

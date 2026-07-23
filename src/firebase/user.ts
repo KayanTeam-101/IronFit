@@ -26,19 +26,24 @@ export interface UserType {
 
 // --- Existing functions ---
 
-export const getUsers = async (): Promise<UserType[]> => {
+export const getUsers = async (
+  limitCount: number = 2
+): Promise<UserType[]> => {
   try {
     const usersQuery = query(
       collection(db, "users"),
       orderBy("Xp", "desc"),
+      limit(limitCount)
     );
+
     const snap = await getDocs(usersQuery);
+
     return snap.docs.map(
       (doc) =>
         ({
           id: doc.id,
           ...doc.data(),
-        }) as UserType,
+        }) as UserType
     );
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -119,6 +124,7 @@ export const getUserRank = async (userId: string): Promise<number | null> => {
     const usersQuery = query(
       collection(db, "users"),
       orderBy("Xp", "desc"),
+      limit(30)
     );
     const snap = await getDocs(usersQuery);
     const users = snap.docs.map((doc) => ({
@@ -138,7 +144,7 @@ export const getUserRank = async (userId: string): Promise<number | null> => {
  * Returns the top N users by XP.
  * @param limitCount - Number of users to return (default 10).
  */
-export const getTopUsers = async (limitCount: number = 10): Promise<UserType[]> => {
+export const getTopUsers = async (limitCount: number = 4): Promise<UserType[]> => {
   try {
     const usersQuery = query(
       collection(db, "users"),

@@ -23,28 +23,40 @@ export const  sendStory = async (id:string,UserName: string,text:string,image:st
     })
 }
 
-export const getStories =  async (
+export const getStories = async (
   limitCount: number = 5,
   startAfterDoc: any = null
-): Promise<{ Stories: StoryType[]; lastVisible: any }> => {
+) => {
   const constraints: any[] = [
     orderBy("CreateAt", "desc"),
     limit(limitCount),
   ];
 
   if (startAfterDoc) {
-    constraints.splice(2, 0, startAfter(startAfterDoc.data().createdAt, startAfterDoc.id));
+    constraints.splice(
+      1,
+      0,
+      startAfter(startAfterDoc)
+    );
   }
 
-  const StoriesQuery = query(collection(db, "Stories"), ...constraints);
+  const StoriesQuery = query(
+    collection(db, "Stories"),
+    ...constraints
+  );
+
   const snap = await getDocs(StoriesQuery);
 
-  const Stories = snap.docs.map(doc => ({
+  const Stories = snap.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
-  } as StoryType));
+  }) as StoryType);
 
-  const lastVisible = snap.docs[snap.docs.length - 1] || null;
+  const lastVisible =
+    snap.docs[snap.docs.length - 1] || null;
 
-  return { Stories, lastVisible };
+  return {
+    Stories,
+    lastVisible,
+  };
 };

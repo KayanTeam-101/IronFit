@@ -12,6 +12,7 @@ import {
   arrayUnion,
   arrayRemove,
   increment,
+  limit,
 } from "firebase/firestore";
 import { db } from "./main";
 
@@ -47,7 +48,8 @@ export const listenToComments = (
 ) => {
   const q = query(
     collection(db, "posts", postId, "comments"),
-    orderBy("createdAt", "asc")
+    orderBy("createdAt", "asc"),
+    limit(10)
   );
   return onSnapshot(q, (snapshot) => {
     const comments = snapshot.docs.map((doc) => ({
