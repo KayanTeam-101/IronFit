@@ -93,14 +93,14 @@ export const calculateAllTimeXP = async () => {
   const isIronVIP = localStorage.getItem("IronVIP") === "true";
 
   const repeatable = [
-    { key: "PostedDays", xp: 100 },
+    { key: "PostedDays", xp: 125 },
     { key: "LikedDays", xp: 50 },
     { key: "CommentDays", xp: 50 },
     { key: "DoneDays", xp: 200 },
     { key: "SystemStartDate", xp: 100 },
-    { key: "UseDietTemplate", xp: 100 },
-    { key: "mycodeUsed", xp: 100 },
-    { key: "SetDietManually", xp: 100 },
+    { key: "UseDietTemplate", xp: 125 },
+    { key: "mycodeUsed", xp: 200 },
+    { key: "SetDietManually", xp: 125 },
   ];
 
   let total = 0;
@@ -128,7 +128,6 @@ export const calculateAllTimeXP = async () => {
   );
   updateXp(String(getUser?.id), total);
   localStorage.setItem("Xp",String(total))
-  // Only update if we found a valid user
 
   return total;
 };

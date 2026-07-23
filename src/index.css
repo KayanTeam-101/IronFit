@@ -7,7 +7,6 @@
 
 *{
   font-family: "Tajawal", sans-serif;
-  font-style: normal;
   direction: rtl;
   transition: .1s cubic-bezier(0.175, 0.885, 0.32);
   scroll-behavior: smooth;

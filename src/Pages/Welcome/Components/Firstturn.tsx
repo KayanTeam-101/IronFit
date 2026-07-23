@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Video from "../../../assets/Screenshot from 2026-07-20 09-33-11.png";
 
 const Firstturn: React.FC = () => {
 
-
+    window.scrollBy(0,200),[]
 
   return (
     <div className="absolute top-1/2 left-1/2 -translate-1/2 w-full h-10/12 showAnim2">
@@ -48,7 +48,7 @@ const Firstturn: React.FC = () => {
           </div>
 
           {/* Tagline */}
-          <p className="text-lg font-medium text-gray-300 leading-relaxed showAnim">
+          <p className="text-lg font-light text-gray-300 dark:text-white leading-relaxed showAnim">
     هنا تقدر تنظم حياتك الصحية و البدنية و حتي النفسية
           </p>
 
