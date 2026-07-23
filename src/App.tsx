@@ -44,17 +44,17 @@ function App() {
   }, []);
 
   // Store subscription data once on mount
-  useEffect(() => {
-    try {
-      const user = getUser;          // call the function
-      localStorage.setItem(
-        "foods____",
-        btoa(JSON.stringify({ SubscriptionPeriod: user?.SubscriptionPeriod }))
-      );
-    } catch {
+ // useEffect(() => {
+   // try {
+     // const user = getUser;          // call the function
+    //  localStorage.setItem(
+      //  "foods____",
+      //  btoa(JSON.stringify({ SubscriptionPeriod: user?.SubscriptionPeriod }))
+     // );
+   // } catch {
       // silently ignore
-    }
-  }, []);
+   // }
+  //}, []);
 
   // Navbar shown on all authenticated pages except /mkAdiet
   const showNavbar = isAuthenticated() && location.pathname !== "/mkAdiet";
