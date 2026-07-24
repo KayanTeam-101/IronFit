@@ -21,15 +21,15 @@ export const levels = [
       iconColor: 'text-gray-700',
     },
     {
-      text: '450-850',
+      text: '450-950',
       name: 'ذهبي',
       gradient: 'from-yellow-500 via-amber-500 to-orange-500',
       border: 'border-yellow-500',
       shadow: 'shadow-yellow-500',
-      iconColor: 'text-yellow-800',
+      iconColor: 'text-orange-900 font-black ',
     },
     {
-      text: '850-950',
+      text: '950-1450',
       name: 'ملحمي',
       gradient: 'from-purple-400 to-blue-400 ',
       border: 'border-none',
@@ -37,7 +37,7 @@ export const levels = [
       iconColor: 'text-pink-100',
     },
     {
-      text: '950-1000',
+      text: '1450-2000',
       name: 'ماسي',
       gradient: 'from-cyan-300  to-blue-500',
       border: 'border-cyan-100',
@@ -45,7 +45,7 @@ export const levels = [
       iconColor: 'text-cyan-50',
     },
     {
-      text: '1000-1500',
+      text: '2000-2500',
       name: 'أسطوري',
       gradient: 'from-fuchsia-600 via-purple-600 to-indigo-600',
       border: 'border-fuchsia-400',
@@ -54,7 +54,7 @@ export const levels = [
       crown: true,   
     },
     {
-      text: '1500-3000',
+      text: '2500-3500',
       name: 'بلاتيني',
       gradient: 'from-indigo-500 via-blue-600 to-teal-500',
       border: 'border-indigo-400',
@@ -64,7 +64,7 @@ export const levels = [
 
     },
     {
-      text: '3000-10000',
+      text: '3500-10000',
       name: 'خارق',
       gradient: 'from-rose-600 via-red-600 to-orange-500',
       border: 'border-red-600',
@@ -94,9 +94,9 @@ const Rank: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <div
       onDoubleClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
+      className="fixed inset-0 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm z-50"
     >
-      <div className="relative w-full max-w-sm overflow-hidden rounded-3xl border border-white/20 bg-white/70 dark:bg-black/70 backdrop-blur-xl shadow-2xl p-6 text-center">
+      <div className="relative w-full max-w-sm overflow-hidden rounded-3xl border border-white/20 bg-white/70 dark:bg-black/70 backdrop-blur-xl shadow-2xl p-6 text-center z-50">
         {/* Close button */}
         <button
           onClick={onClose}

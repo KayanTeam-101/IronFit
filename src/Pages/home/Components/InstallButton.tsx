@@ -175,7 +175,7 @@ alert("")
     }
   };
 
-  if (isInstalled) return <Xp xp={xp} />;
+  if (true) return <Xp xp={xp} />;
   if (!showButton) return null;
 
   const message = isEmbedded

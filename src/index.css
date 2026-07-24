@@ -18,8 +18,20 @@
 div{
     user-select: none;
 }
-::-webkit-scrollbar{display: none  !important;}
-::-webkit-scrollbar-thumb{display: none;}
+/* Hide scrollbar for Chrome, Safari, Edge */
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+html {
+  scrollbar-width: none;
+}
+
+/* Fallback for older IE/Edge */
+html {
+  -ms-overflow-style: none;
+}
 #root{
     position: relative;
     min-height: 100vh;

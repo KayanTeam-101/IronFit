@@ -33,7 +33,7 @@ const Subscribe: React.FC<SubscribeProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[1px] p-4">
       {/* Main card */}
-      <div className="relative w-full max-w-sm border dark:bg-black/95 dark:border-2 dark:border-gray-600/20 border-amber-300 bg-white/95 shadow-2xl p-6 text-center show-third">
+      <div className="relative w-full max-w-sm border dark:bg-black/95 dark:border-2 dark:border-gray-600/20 border-amber-300 bg-white/95 shadow-2xl p-6 text-center">
         {/* Close button */}
         <button
           onClick={onClose}

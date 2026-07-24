@@ -9,11 +9,16 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
+       registerType: 'autoUpdate',
+  workbox: {
+    cleanupOutdatedCaches: true
+  },
       manifest: {
         name: 'Iron Fit',
         short_name: 'Iron Fit',
         description: 'Fitness and diet tracking',
         theme_color: '#111111',
+        
         background_color: '#ffffff',
         display: 'standalone',
         start_url: '/',

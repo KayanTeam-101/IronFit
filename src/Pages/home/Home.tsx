@@ -20,7 +20,7 @@ const TasksPanel = lazy(() =>
 
 // ---------- Streak calculator ----------
 const calculateStreak = (): number => {
-  const raw = localStorage.getItem("CompletedDates");
+  const raw = localStorage.getItem("DoneDays");  // <-- changed key
   if (!raw) return 0;
   let dates: string[];
   try {
@@ -30,12 +30,13 @@ const calculateStreak = (): number => {
   }
   if (!Array.isArray(dates) || dates.length === 0) return 0;
 
+  // dates are expected in "YYYY-MM-DD" format (e.g., "2026-07-22")
   const sorted = dates
     .map((dateStr) => {
       const [y, m, day] = dateStr.split("-").map(Number);
       return new Date(y, m - 1, day);
     })
-    .sort((a, b) => b.getTime() - a.getTime());
+    .sort((a, b) => b.getTime() - a.getTime()); // newest first
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -45,6 +46,7 @@ const calculateStreak = (): number => {
   const mostRecent = new Date(sorted[0]);
   mostRecent.setHours(0, 0, 0, 0);
 
+  // If the most recent date is neither today nor yesterday, streak is broken
   if (
     mostRecent.getTime() !== today.getTime() &&
     mostRecent.getTime() !== yesterday.getTime()
@@ -55,6 +57,7 @@ const calculateStreak = (): number => {
   let streak = 1;
   let current = new Date(mostRecent);
 
+  // Count consecutive days backwards
   for (let i = 1; i < sorted.length; i++) {
     const prev = new Date(sorted[i]);
     prev.setHours(0, 0, 0, 0);
@@ -70,9 +73,22 @@ const calculateStreak = (): number => {
 
   return streak;
 };
-export const rank = (): number => {
-  return Number(localStorage.getItem("rank") || 0);
+
+const fetchRank = async () => {
+  try {
+    const users = await getUsers();
+    const thisUser = users.find(
+      (item) => item.UserId_ === Number(localStorage.getItem("userId_"))
+    );
+    if (thisUser) {
+      const rank = await getUserRank(thisUser.id || "");
+      return rank
+    }
+  } catch (e) {
+    console.error("Failed to fetch user rank", e);
+  }
 };
+export const rank = fetchRank();
 const Home = () => {
   const [allTimeXP, setAllTimeXP] = useState(0);
   const [showTasks, setShowTasks] = useState(false);
@@ -83,20 +99,6 @@ const Home = () => {
   // 1. Move top‑level awaits + localStorage side effects here
   useEffect(() => {
     // ----- Firebase calls (previously top‑level await) -----
-    const fetchRank = async () => {
-      try {
-        const users = await getUsers();
-        const thisUser = users.find(
-          (item) => item.UserId_ === Number(localStorage.getItem("userId_"))
-        );
-        if (thisUser) {
-          const rank = await getUserRank(thisUser.id || "");
-          localStorage.setItem("rank", String(rank));
-        }
-      } catch (e) {
-        console.error("Failed to fetch user rank", e);
-      }
-    };
     fetchRank();
 
     // ----- localStorage initialisation (moved from render) -----
@@ -219,7 +221,7 @@ const Home = () => {
 
             <div 
             onClick={() => alert("الأيام النشطة عبارة عن الأيام ال إنتظمت فيها حيث كان يوم تمرين و لعبتو أو أكلت وجبة اليوم كاملة")}
-            className={`${localStorage.getItem("Diet") ? "" : "opacity-10"} relative rounded-3xl active:scale-85 transition-all bg-white dark:bg-[#222]/50 dark:border-2 dark:border-gray-600/20 text-white text-xl font-black tracking-tight flex flex-row w-1/2 justify-between items-center p-2 shadow-sm z-10`}>
+            className={`${localStorage.getItem("Diet") ? "" : "opacity-10"} relative rounded-3xl active:scale-85 transition-all bg-white dark:bg-[#222]/50 dark:border-2 dark:border-gray-600/20 text-white text-xl font-black tracking-tight flex flex-row w-1/2 justify-between items-center p-2 shadow-sm `}>
               <ImInfo className="absolute top-2 left-3 text-gray-400 text-[12px]" />
               <p className="relative flex flex-row bg-linear-to-r from-rose-300 via-orange-400 to-yellow-400 bg-clip-text text-transparent items-center gap-1 mt-2">
                 الأيام النشطة

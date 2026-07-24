@@ -54,7 +54,7 @@ const Table = () => {
   }, [currentDayNumber]);
 
   return (
-    <div className={`${localStorage.getItem("Diet") ? "" : "opacity-10"} relative flex flex-col w-full min-h-14 p-2   rounded-2xl border-amber-50 z-10`}>
+    <div className={`${localStorage.getItem("Diet") ? "" : "opacity-10"} relative flex flex-col w-full min-h-14 p-2   rounded-2xl border-amber-50`}>
   
       {/* Days row – horizontally scrollable */}
       <div

@@ -127,7 +127,7 @@ const consumedNutrition = useMemo(() => {
 
   return (
     <div
-      className={`relative bg-white/70 backdrop-blur-lg border dark:bg-black/20 dark:border dark:border-gray-600/20 border-white/50 dark:shadow-none shadow-xl rounded-3xl p-6 space-y-5 transition-all duration-500 hover:shadow-2xl ${
+      className={`relative bg-white/70 backdrop-blur-lg border dark:bg-[#222]/20 dark:border dark:border-gray-600/20 border-white/50 dark:shadow-none shadow-xl rounded-3xl p-6 space-y-5 transition-all duration-500 hover:shadow-2xl ${
         allEaten ? "ring-2 ring-teal-500 shadow-green-100/50" : ""
       }`}
     >

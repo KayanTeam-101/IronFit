@@ -449,7 +449,7 @@ const Xp: React.FC<XpProps> = ({ xp }) => {
           <RiBarChart2Fill className="text-[12px]" />
         </div>
         <div className="text-lg font-bold ">
-          {useCountUp(Number(rank) || 0, 600)}
+        {rank}
         </div>
       </div>
 

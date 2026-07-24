@@ -63,7 +63,7 @@ const TodayTask = () => {
   };
 
   return (
-    <div className="bg-white dark:bg-[#222]/20 dark:border-2 dark:border-gray-600/20 rounded-4xl border border-amber-100 p-4 shadow-sm mb-6.5 z-10">
+    <div className="bg-white dark:bg-[#222]/20 dark:border-2 dark:border-gray-600/20 rounded-4xl border border-amber-100 p-4 shadow-sm mb-6.5 ">
       {/* Header */}
       <div className={`${localStorage.getItem("Diet") ? "" : "opacity-30"} flex items-center justify-between   pb-2`}>
         <h3 className="text-lg font-semibold dark:text-white flex items-center gap-2">
