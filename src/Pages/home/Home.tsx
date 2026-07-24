@@ -1,10 +1,8 @@
 import React, { useEffect, useMemo, useState, Suspense, lazy } from "react";
 import { FaFire } from "react-icons/fa6";
 import Fire from "../../assets/animatedFire.gif";
-import { useCountUp } from "../../Hooks/Increasing";
 import { RiCopperCoinLine } from "react-icons/ri";
 import { calculateAllTimeXP } from "./Components/Xp";
-import { getUserRank, getUsers } from "../../firebase/user";
 import { ImInfo } from "react-icons/im";
 import Subscribe from "./Components/Subscribe";
 
@@ -21,7 +19,7 @@ const calculateStreak = (): number => {
   const raw = localStorage.getItem("DoneDays");
   if (!raw) return 0;
   let dates: string[];
-  try {
+  try { 
     dates = JSON.parse(raw);
   } catch {
     return 0;
@@ -114,6 +112,7 @@ const Home = () => {
       age: Number(localStorage.getItem("age") || 0),
       challengePeriod: Number(localStorage.getItem("challengePeriod") || 0),
       gender: localStorage.getItem("SelectedGender") || "",
+      
     });
   }, []);
 
@@ -219,7 +218,7 @@ const Home = () => {
                   <FaFire className="text-gray-400" />
                 )}
                 <span className="text-amber-500 font-extrabold mt-1">
-                  {useCountUp(streak, 800)}
+                  {streak}
                 </span>
               </div>
             </div>
@@ -250,7 +249,7 @@ const Home = () => {
                   ""
                 )}
                 <span className="dark:text-white text-gray-600 font-extrabold mt-2">
-                  {useCountUp(allTimeXP, 800)}
+                  {allTimeXP}
                 </span>
               </div>
             </div>

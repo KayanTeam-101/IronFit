@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback, lazy } from "react";
 import { MdInstallMobile } from "react-icons/md";
-import { calculateAllTimeXP } from "./Xp";
 
 const Xp = lazy(() => import("./Xp"));
 
@@ -24,16 +23,9 @@ const InstallButton: React.FC = () => {
   const [isEmbedded, setIsEmbedded] = useState(false);
   const [isFallback, setIsFallback] = useState(false);
   const [platform, setPlatform] = useState<Platform>("desktop");
-  const [xp, setXp] = useState(0);
+  const xp = localStorage.getItem("Xp");
 
-  useEffect(() => {
-    const fetchXp = async () => {
-      const xpValue = await calculateAllTimeXP();
-      setXp(xpValue);
-    };
-    fetchXp();
-  }, []);
-
+ 
   useEffect(() => {
     const standaloneMedia = window.matchMedia("(display-mode: standalone)");
     const isStandalone =
@@ -177,7 +169,7 @@ const InstallButton: React.FC = () => {
   }, [isEmbedded, isFallback, deferredPrompt, platform, escapeEmbeddedBrowser, openInstructions]);
 
   // Always show Xp (as in the original – you can remove this condition later)
-  if (true) return <Xp xp={xp} />;
+  if (true) return <Xp xp={Number(xp)} />;
   if (!showButton) return null;
 
   const message = isEmbedded

@@ -71,7 +71,7 @@ export const calculateAllTimeXP = async (): Promise<number> => {
   const user = users.find(
     (u) => u.UserName === localStorage.getItem("UserName")
   );
-  if (user) await updateXp(String(user.id), total);
+  if (user && Number(localStorage.getItem("Xp")) != total) await updateXp(String(user.id), total);
   localStorage.setItem("Xp", String(total));
   return total;
 };
@@ -107,7 +107,7 @@ const Xp: React.FC<{ xp: number }> = ({ xp }) => {
       if (xp > max) cls = level.border;
     }
     return cls;
-  }, [xp]);
+  }, []);
 
   return (
     <div className="w-fit flex flex-row gap-1 z-10">

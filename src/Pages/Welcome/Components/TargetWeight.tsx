@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { period } from '../../../utilities/utilities';
 import CounterY from '../../../utilities/CounterY';
-import { useCountUp } from '../../../Hooks/Increasing';
 
 const TargetWhight: React.FC = () => {
   const numbers: number[] = period(30, 110);

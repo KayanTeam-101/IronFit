@@ -1,15 +1,12 @@
 import React, { useMemo, useEffect, useState } from "react";
 import CircularProgress from "../../Components/UI/CircleProgress";
-import { useCountUp } from "../../Hooks/Increasing";
 import {
   FaWeight,
   FaFire,
   FaRulerVertical,
   FaBullseye,
   FaHeartbeat,
-  FaTint,
-  FaRunning,
-  FaDatabase,
+  
 } from "react-icons/fa";
 import { IoAnalytics, IoDiamond, IoDiamondOutline } from "react-icons/io5";
 
@@ -70,11 +67,11 @@ const StatusPage: React.FC = () => {
   // Fetch all data from localStorage
   const userData: UserData = useMemo(() => {
     return {
-      currentWeight: Number(localStorage.getItem("currentWeight")) || 45,
-      targetWeight: Number(localStorage.getItem("targetWeight")) || 52,
+      currentWeight: Number(localStorage.getItem("currentWeight")) || 0,
+      targetWeight: Number(localStorage.getItem("targetWeight")) || 0,
       height: Number(localStorage.getItem("height")) || 132,
-      dailyCalories: Number(localStorage.getItem("dailyCalories")) || 2683,
-      age: Number(localStorage.getItem("age")) || 25,
+      dailyCalories: Number(localStorage.getItem("dailyCalories")) || 0,
+      age: Number(localStorage.getItem("age")) || 0,
       gender: (localStorage.getItem("SelectedGender") as "ذكر" | "انثى") || "ذكر",
     };
   }, []);
@@ -85,64 +82,58 @@ const StatusPage: React.FC = () => {
     userData.age,
     userData.gender
   );
-  const idealRange = getIdealWeightRange(userData.height);
-  const weightDiff = userData.targetWeight - userData.currentWeight;
-  const animatedWeight = useCountUp(userData.currentWeight);
-const animatedTargetWeight = useCountUp(userData.targetWeight);
-const animatedHeight = useCountUp(userData.height);
-const animatedAge = useCountUp(userData.age);
-const animatedBMR = useCountUp(Math.round(bmr));
-const bmi = calcBMI(animatedWeight, animatedHeight);
+
+const bmi = calcBMI(userData.currentWeight, userData.height);
 // Progress percentages for rings
   const weightProgressPercent = Math.min(
     (userData.currentWeight / userData.targetWeight) * 100,
     100
   );
-  const caloriePercent = Math.min((userData.dailyCalories / 3000) * 100, 100);
-  const bmiPercent = Math.min((bmi / 40) * 100, 100);
+  // const caloriePercent = Math.min((userData.dailyCalories / 3000) * 100, 100);
+  // const bmiPercent = Math.min((bmi / 40) * 100, 100);
 
-  // Exercise streak (if available)
-  const streak = useMemo(() => {
-    const raw = localStorage.getItem("CompletedDates");
-    if (!raw) return 0;
-    try {
-      const dates: string[] = JSON.parse(raw);
-      if (!Array.isArray(dates) || dates.length === 0) return 0;
-      const sorted = dates
-        .map((d) => {
-          const [y, m, day] = d.split("-").map(Number);
-          return new Date(y, m - 1, day);
-        })
-        .sort((a, b) => b.getTime() - a.getTime());
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const yesterday = new Date(today);
-      yesterday.setDate(today.getDate() - 1);
-      const mostRecent = new Date(sorted[0]);
-      mostRecent.setHours(0, 0, 0, 0);
-      if (
-        mostRecent.getTime() !== today.getTime() &&
-        mostRecent.getTime() !== yesterday.getTime()
-      )
-        return 0;
-      let count = 1;
-      let cur = new Date(mostRecent);
-      for (let i = 1; i < sorted.length; i++) {
-        const prev = new Date(sorted[i]);
-        prev.setHours(0, 0, 0, 0);
-        const diff =
-          (cur.getTime() - prev.getTime()) / (1000 * 60 * 60 * 24);
-        if (diff === 1) {
-          count++;
-          cur = prev;
-        } else break;
-      }
-      return count;
-    } catch {
-      return 0;
-    }
-  }, []);
-
+  // // Exercise streak (if available)
+  // const streak = useMemo(() => {
+  //   const raw = localStorage.getItem("CompletedDates");
+  //   if (!raw) return 0;
+  //   try {
+  //     const dates: string[] = JSON.parse(raw);
+  //     if (!Array.isArray(dates) || dates.length === 0) return 0;
+  //     const sorted = dates
+  //       .map((d) => {
+  //         const [y, m, day] = d.split("-").map(Number);
+  //         return new Date(y, m - 1, day);
+  //       })
+  //       .sort((a, b) => b.getTime() - a.getTime());
+  //     const today = new Date();
+  //     today.setHours(0, 0, 0, 0);
+  //     const yesterday = new Date(today);
+  //     yesterday.setDate(today.getDate() - 1);
+  //     const mostRecent = new Date(sorted[0]);
+  //     mostRecent.setHours(0, 0, 0, 0);
+  //     if (
+  //       mostRecent.getTime() !== today.getTime() &&
+  //       mostRecent.getTime() !== yesterday.getTime()
+  //     )
+  //       return 0;
+  //     let count = 1;
+  //     let cur = new Date(mostRecent);
+  //     for (let i = 1; i < sorted.length; i++) {
+  //       const prev = new Date(sorted[i]);
+  //       prev.setHours(0, 0, 0, 0);
+  //       const diff =
+  //         (cur.getTime() - prev.getTime()) / (1000 * 60 * 60 * 24);
+  //       if (diff === 1) {
+  //         count++;
+  //         cur = prev;
+  //       } else break;
+  //     }
+  //     return count;
+  //   } catch {
+  //     return 0;
+  //   }
+  // }, []);
+  let  weightDiff= userData.targetWeight - userData.currentWeight;
   // Card style identical to Home component
   const cardStyle =
     "bg-white dark:bg-black/40 dark:border-2 dark:border-gray-600/20 shadow-sm rounded-3xl p-4 backdrop-blur-md hover:shadow-xl transition-all";
@@ -166,32 +157,32 @@ const bmi = calcBMI(animatedWeight, animatedHeight);
               <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">الوزن الحالي</span>
                 <p className="font-bold text-amber-700 dark:text-white">
-                  {animatedWeight} كجم
+                  {userData.currentWeight} كجم
                 </p>
               </div>
               <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">المستهدف</span>
                 <p className="font-bold text-amber-700 dark:text-white">
-                  {animatedTargetWeight} كجم
+                  {userData.targetWeight} كجم
                 </p>
               </div>
               <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">الطول</span>
                 <p className="font-bold text-amber-700 dark:text-white">
-                  {animatedHeight} سم
+                  {userData.height} سم
                 </p>
               </div>
               <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">العمر</span>
                 <p className="font-bold text-amber-700 dark:text-white">
-                  {animatedAge} سنة
+                  {userData.age} سنة
                 </p>
               </div>
          
               <div className="bg-amber-50 dark:bg-white/5 rounded-xl p-2">
                 <span className="text-gray-500 dark:text-gray-400">معدل الأيض</span>
                 <p className="font-bold text-amber-700 dark:text-white">
-                  {Math.round(animatedBMR)} سعرة
+                  {Math.round(bmr)} سعرة
                 </p>
               </div>
             </div>

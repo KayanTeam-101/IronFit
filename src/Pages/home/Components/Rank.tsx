@@ -77,7 +77,7 @@ const Rank: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   const currentIndex = useMemo(() => {
     for (let i = levels.length - 1; i >= 0; i--) {
-      const range = levels[i].text.replace("+", "").split("-");
+      const range = levels[i].text.split("-");
       const min = Number(range[0]);
       const max = range[1] ? Number(range[1]) : Infinity;
       if (currentXP >= min && currentXP <= max) return i;

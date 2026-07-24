@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import { useCountUp } from "../../../Hooks/Increasing";
 import { FaFire, FaHeartbeat, FaBullseye, FaRulerVertical } from "react-icons/fa";
-import CircularProgress from "../../../Components/UI/CircleProgress"; // يمكنك استخدامه إذا أردت حلقات تقدم
 
 // دوال الحساب
 const calcBMI = (weightKg: number, heightCm: number) => {
@@ -81,19 +79,9 @@ const ShowBmi: React.FC = () => {
   }, [dailyCaloriesGoal]);
 
   // الحسابات الأساسية
-  const bmi = calcBMI(userData.currentWeight, userData.height);
   const bmr = calcBMR(userData.currentWeight, userData.height, userData.age, userData.gender);
-  const idealRange = getIdealWeightRange(userData.height);
-  const weightDiff = userData.targetWeight - userData.currentWeight;
-
-  // قيم مؤثرة للعدادات
-  const animatedWeight = useCountUp(userData.currentWeight);
-  const animatedTargetWeight = useCountUp(userData.targetWeight);
-  const animatedHeight = useCountUp(userData.height);
-  const animatedAge = useCountUp(userData.age);
-  const animatedBMR = useCountUp(Math.round(bmr));
-  const animatedBMI = useCountUp(Number(bmi.toFixed(1)));
-  const animatedCalories = useCountUp(dailyCaloriesGoal);
+ 
+  const animatedBMR = Math.round(bmr);
 
   // سلسلة التمارين (اختياري)
   const streak = useMemo(() => {

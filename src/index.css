@@ -3,6 +3,8 @@
 @font-face {
     font-family: "Tajawal";
     src: url(/src/assets/Fonts/Tajawal-Regular.ttf) format("truetype");
+  font-display: swap;
+    
 }
 
 *{
@@ -12,6 +14,7 @@
   scroll-behavior: smooth;
   user-select: none;
   -webkit-user-drag: none;
+  font-display: swap;
   
 }
 div{
