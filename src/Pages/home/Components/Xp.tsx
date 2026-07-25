@@ -20,6 +20,7 @@ import { BsCaretLeftFill, BsCheckCircleFill, BsStar } from "react-icons/bs";
 import { getUsers, updateXp, getUserRank } from "../../../firebase/user";
 import Rank from "./Rank";
 import { levels } from "./Rank";
+import { calculateStreak } from "../Home";
 import { useNavigate } from "react-router-dom";
 import { FaCalendarCheck } from "react-icons/fa6";
 
@@ -66,7 +67,7 @@ export const calculateAllTimeXP = async (): Promise<number> => {
   });
 
   if (hasShared) total += 17;
-  if (isIronVIP) total += 200;
+  if (isIronVIP) total += 1250;
 
   const users = await getUsers();
   const user = users.find(
@@ -257,21 +258,19 @@ export const TasksPanel: React.FC<TasksPanelProps> = ({ onClose }) => {
         icon: <FaCalendarCheck className="text-orange-300" />,
         label: "عيش مع IronFit يومان",
         xp: 125,
-        condition: hasUsedTemplateToday,
+        condition: calculateStreak()   >= 2,
       },
        {
         icon: <FaCalendarCheck className="text-rose-400" />,
         label: "عيش مع IronFit اربع أيام",
         xp: 125,
-        condition: hasUsedTemplateToday,
-        to: "/templates",
+        condition: calculateStreak()  >= 4,
       },
        {
         icon: <FaCalendarCheck className="text-teal-400" />,
         label: "عيش مع IronFit أسبوع",
         xp: 125,
-        condition: hasUsedTemplateToday,
-        to: "/templates",
+        condition: calculateStreak() >= 7,
       },
       {
         icon: <BsStar className="text-orange-400" />,
@@ -303,7 +302,7 @@ export const TasksPanel: React.FC<TasksPanelProps> = ({ onClose }) => {
       {
         icon: <GiNinjaHead className="text-blue-600" />,
         label: "انضم إلي IRON-VIP",
-        xp: 1000,
+        xp: 1250,
         condition: isIronVIP,
         to: "/Settings",
       },
@@ -404,12 +403,16 @@ export const TasksPanel: React.FC<TasksPanelProps> = ({ onClose }) => {
                 
                 {
                   task.condition ? (
-                      <div className="text-teal-400 text-md ml-2">
+                   
+                    <div className="text-teal-400 text-md ml-2">
                     <BsCheckCircleFill />
                   </div>
-                  ) : (  <div className=" text-gray-400 text-sm ml-2">
+                  
+                  ) : ( 
+                     task.to ? (  
+                     <div className=" text-gray-400 text-sm ml-2">
                     <BsCaretLeftFill />
-                  </div>)
+                  </div>) : (""))
                 }
               </div>
             ))}

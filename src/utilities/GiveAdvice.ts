@@ -81,8 +81,10 @@ export function giveHealthAdvice(): string {
       
     }
     for (const [, name, , , , , carb] of foodInfo) {
-      if (foodSet.has(name)) totalCarb += carb;
+      if (foodSet.has(name) && typeof carb === "number") totalCarb += carb;
       localStorage.setItem("totalCarb",String(totalCarb))
+      console.log(totalCarb+"fadf");
+      
       
     }
   }

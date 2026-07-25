@@ -21,8 +21,8 @@ const FoodPage = () => {
        <div className="absolute top-10 z-0 w-full h-[400px] animate-pulse blur-[100px] bg-gradient-to-r from-blue-600  to-teal-500" />
   <div className='w-11/12 h-52 z-40 flex overflow-hidden items-center mx-2.5 justify-center flex-col gap-5'>
 
-<h1 className='dark:text-white text-3xl flex flex-row gap-3 text-center'>لم تقم بوضع نظامك الغذائي بعد ؟</h1>
-<button onClick={() => navigate('/MKADiet')} className='flex items-center gap-2 bg-white p-3 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-slate-300 shadow-2xl w-fit rounded-xl text-amber-500 font-bold outline-swealing2'>
+<h1 className='dark:text-white text-gray-800 text-3xl flex flex-row gap-3 text-center'>لم تقم بوضع نظامك الغذائي بعد ؟</h1>
+<button onClick={() => navigate('/MKADiet')} className='flex items-center gap-2 bg-linear-120 from-orange-400 to-amber-300 p-3   text-white  w-fit rounded-xl  font-bold outline-swealing2'>
       اصنع نظامك الغذائي الان! <FaArrowLeft />
       </button>
   </div>

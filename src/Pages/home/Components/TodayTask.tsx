@@ -61,10 +61,10 @@ const TodayTask = () => {
         </div>
         <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-0.5">
           <span className="p-1">
-            {current ?? "???"}
+            {current?.toFixed(1) ?? "0"}
             {target < 500 ? "جم" : ""}
           </span>
-          <span className="p-1">{target}</span>
+          <span className="p-1">{target.toFixed(1)}</span>
         </div>
       </div>
     );
@@ -75,7 +75,12 @@ const TodayTask = () => {
       <div
         className={`${
           localStorage.getItem("Diet") ? "" : "opacity-30"
-        } flex items-center justify-between pb-2`}
+        } ${
+            localStorage.getItem("hasCongratulatedDiet") &&
+            !localStorage.getItem("openXpBefore")
+              ? "opacity-20"
+              : ""
+          } flex items-center justify-between pb-2`}
       >
         <h3 className="text-lg font-semibold dark:text-white flex items-center gap-2">
           أهداف اليوم
@@ -87,13 +92,8 @@ const TodayTask = () => {
 
       <div className="flex flex-row gap-2 justify-center">
         <div
-          className={`flex flex-col items-center max-w-[100px] active:scale-95 transition delay-100 flex-1 p-3 rounded-xl bg-gray-50 shadow dark:bg-[#222]/50 ${
+          className={`flex flex-col items-center min-w-[100px] active:scale-95 transition delay-100 flex-1 p-3 rounded-xl ${Number(eatenCalories) >= dailyCalories ? "border-teal-400 border-2 " : "bg-gray-50 shadow dark:bg-[#222]/50 "} ${
             localStorage.getItem("Diet") ? "" : "opacity-10"
-          } ${
-            localStorage.getItem("hasCongratulatedDiet") &&
-            !localStorage.getItem("openXpBefore")
-              ? "opacity-20"
-              : ""
           }`}
         >
           <FaFire className="text-3xl text-red-500 mb-1" />
@@ -110,14 +110,14 @@ const TodayTask = () => {
         <div
           className={`${
             localStorage.getItem("Diet") ? "" : "opacity-10"
-          } flex flex-col items-center max-w-[100px] active:scale-95 transition delay-100 flex-1 p-3 rounded-xl bg-gray-50 shadow dark:bg-[#222]/50`}
+          } flex flex-col items-center min-w-[100px] active:scale-95 transition delay-100 flex-1 p-3 rounded-xl ${ Number(localStorage.getItem("currentWeight")) * 1.6 <= Number(totalProtine) ? "border-teal-400 border-2 " : "bg-gray-50 shadow dark:bg-[#222]/50 "}`}
         >
           <GiBiceps className="text-3xl text-blue-600 mb-1" />
           <p className="text-[12px] p-1 font-medium dark:text-white">
             البروتين
           </p>
           <ProgressBar
-            current={totalProtine === 0 ? null : totalProtine}
+            current={totalProtine}
             target={Math.round(
               Number(localStorage.getItem("currentWeight")) * 1.6
             )}
@@ -125,8 +125,8 @@ const TodayTask = () => {
           />
         </div>
 
-        <div
-          className={`flex flex-col items-center max-w-[100px] active:scale-95 transition delay-100 flex-1 p-3 rounded-xl bg-gray-50 shadow dark:bg-[#222]/50 ${
+        {/* <div
+          className={`flex flex-col items-center min-w-[100px] active:scale-95 transition delay-100 flex-1 p-3 rounded-xl ${ Number(localStorage.getItem("currentWeight")) * 1.6 <= Number(totalCarb) ? "border-teal-400 border-2 " : "bg-gray-50 shadow dark:bg-[#222]/50 "} ${
             localStorage.getItem("Diet") ? "" : "opacity-10"
           }`}
         >
@@ -136,10 +136,10 @@ const TodayTask = () => {
           </p>
           <ProgressBar
             current={totalCarb}
-            target={50}
+            target={Number((dailyCalories / 8).toFixed(1))}
             color="bg-amber-500"
           />
-        </div>
+        </div> */}
       </div>
 
       {!localStorage.getItem("Diet") && (

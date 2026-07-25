@@ -21,6 +21,7 @@ import {
   GiBiceps,
   GiWheat,
 } from "react-icons/gi";
+import { IoWarning } from "react-icons/io5";
 
 const AdditionPage = lazy(() => import("./AdditionPage"));
 
@@ -266,15 +267,22 @@ const MakeADiet: React.FC = () => {
         </div>
       </div>
       <div className="p-4 flex items-center justify-center w-screen ">
-        <div className="bg-amber-300/60 dark:bg-amber-300/20 border border-amber-400/50 outline-swealing2 rounded-xl w-11/12 p-2 dark:text-white text-black min-h-10 animate-pulse">
-          بدل مــــتعمل نظامك بنفسك, تقدر تختار القوالب الجاهزة من 
+        <div className="bg-amber-300/20 dark:bg-amber-300/20 border border-amber-400/50  animate-bounce rounded-xl w-11/12 p-2 dark:text-white text-black min-h-10 flex flex-col">
+        <div className="w-full h-5">
+          <IoWarning className="text-amber-600 text-[18px]" />
+        </div>
+        <div>
+            بدل مــــتعمل نظامك بنفسك, تقدر تختار القوالب الجاهزة من 
           {" "}
+          
           <span
             onClick={() => (navigate('/templates'))}
-            className="text-amber-400 cursor-pointer underline p-2"
+            className="text-amber-400 cursor-pointer underline p-2 text-shadow-xs"
           >
-            هنا
+          __هنا__
           </span>
+        </div>
+
         </div>
       </div>
 

@@ -15,7 +15,7 @@ const TasksPanel = lazy(() =>
   import("./Components/Xp").then((mod) => ({ default: mod.TasksPanel }))
 );
 
-const calculateStreak = (): number => {
+export const calculateStreak = (): number => {
   const raw = localStorage.getItem("DoneDays");
   if (!raw) return 0;
   let dates: string[];
@@ -51,6 +51,7 @@ const calculateStreak = (): number => {
       current = prev;
     } else break;
   }
+  
   return streak;
 };
 
