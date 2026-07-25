@@ -169,7 +169,7 @@ const InstallButton: React.FC = () => {
   }, [isEmbedded, isFallback, deferredPrompt, platform, escapeEmbeddedBrowser, openInstructions]);
 
   // Always show Xp (as in the original – you can remove this condition later)
-  if (true) return <Xp xp={Number(xp)} />;
+  if (isInstalled) return <Xp xp={Number(xp)} />;
   if (!showButton) return null;
 
   const message = isEmbedded
