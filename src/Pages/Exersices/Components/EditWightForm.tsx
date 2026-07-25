@@ -21,7 +21,7 @@ const EditWeightForm: React.FC<Props> = ({ currentWeight, onSave }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <h3 className="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
-        تعديل الوزن
+        تطوير الوزن
       </h3>
       <input
         type="number"

@@ -89,16 +89,16 @@ const ExerciseDay: React.FC = () => {
           <span>تمرين اليوم</span>
           <span className="font-black">{todayWeekday}</span>
         </div>
-        <div className="relative z-10">
+        <div className="relative z-0">
           <h1 className="text-4xl sm:text-5xl text-white font-bold mb-1 drop-shadow-lg">
             {todayWorkout}
           </h1>
-          <div className="flex flex-col gap-4 mt-3 mr-3 text-white/80 text-sm">
+          <div className="flex flex-col gap-4 mt-3 mr-3 text-white/80 text-sm ">
             <span className="flex items-center gap-1">
               <FaClock className="text-amber-300" /> {estimatedDuration}
             </span>
             <span className="flex items-center gap-1">
-              <FaFire className="text-amber-300" /> {estimatedCalories} سعرة
+              <FaFire className="text-amber-300" /> {estimatedCalories}~ سعرة
             </span>
           </div>
         </div>

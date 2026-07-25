@@ -11,7 +11,7 @@ const Firstturn: React.FC = () => {
       {/* Full‑screen background video */}
       <img
         src={Video}
-        className="absolute -top-15 left-1/2 -translate-x-1/2 object-cover w-screen sca blur-[3px] animate-pulse   h-full "
+        className="absolute -top-15 left-1/2 -translate-x-1/2 object-cover w-screen scale-110 opacity-70 blur-[3px] animate-pulse   h-full "
       />
       {/* Gradient overlay: transparent top → semi‑transparent middle → solid black bottom */}
       <div className="absolute inset-0 " />

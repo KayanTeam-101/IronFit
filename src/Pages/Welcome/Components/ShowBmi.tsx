@@ -123,14 +123,14 @@ const ShowBmi: React.FC = () => {
 
   // نمط البطاقات
   const cardStyle =
-    "bg-white  dark:border-2 dark:border-gray-600/20 shadow-sm rounded-3xl p-4 backdrop-blur-md hover:shadow-xl transition-all";
+    "bg-white  dark:border-2 dark:border-gray-600/20 shadow-sm rounded-4xl p-4 backdrop-blur-md hover:shadow-xl transition-all";
 
   return (
     <div className="flex flex-col gap-6 pb-8">
       {/* القسم العلوي: السعرات الحرارية اليومية */}
       <div className="relative w-full h-[70vh] overflow-hidden rounded-[60px] shadow-xl show-fast">
-        <div className="absolute inset-0 bg-gradient-to-br from-green-500 to-teal-500" />
-        <FaFire className="absolute top-20 w-3/4 h-1/2 text-emerald-300 dark:text-emerald-300/80 show-third" />
+      <div className="absolute inset-0 bg-gradient-to-br from-amber-400 to-orange-500 rounded-4xl" />
+        <FaFire className="absolute top-20 w-3/4 h-1/2 text-orange-300 dark:text-orange-200/70 show-third" />
 
         <div className="relative z-10 flex flex-col justify-center h-full px-6">
           <div className="relative  text-4xl w-3/4 leading-15 text-right text-white mb-4 drop-shadow-2xl text-shadow-xs font-black show-first">

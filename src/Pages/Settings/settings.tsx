@@ -18,10 +18,16 @@ import { TbCircleLetterD, TbCircleLetterDFilled } from "react-icons/tb";
 import { SiGoogleanalytics } from "react-icons/si";
 import { BsWhatsapp } from "react-icons/bs";
 
-   const getUsers_ = await getUsers();
-    export const getUser = getUsers_.find(
-      (item) => item.UserName === localStorage.getItem("UserName"),
-    );
+  
+interface User {
+  id: string | number;
+  UserId_: number;
+  UserName: string;
+  SubscriptionPeriod?: number;
+  mycodeUsed?: boolean | string;
+  Unique?: string;
+}
+
 // ---------- Plans data ----------
 const FIXED_PLANS = [
   { days: 3, price: 15, popular: false },
@@ -90,156 +96,173 @@ const AnimatedCheck = () => (
 );
 
 const Subscription: React.FC = () => {
-  // Tab state: '3' | '7' | '30' | 'custom'
-  const [activeTab, setActiveTab] = useState<string>("7");
+    const [activeTab, setActiveTab] = useState<string>("7");
   const [friendId, setFriendId] = useState("");
   const [customDays, setCustomDays] = useState(30);
   const [copied, setCopied] = useState(false);
   const [activateSuccess, setActivateSuccess] = useState(false);
   const [subscribeSuccess, setSubscribeSuccess] = useState(false);
-  const [selectedFixedPlan, setSelectedFixedPlan] = useState<number | null>(
-    null,
+  const [selectedFixedPlan, setSelectedFixedPlan] = useState<number | null>(null);
+
+  // Data state – fetched only once
+  const [usersList, setUsersList] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Current user derived from the list (memoised)
+  const currentUserName = localStorage.getItem("UserName");
+  const currentUser = useMemo(
+    () => usersList.find((u) => u.UserName === currentUserName) || null,
+    [usersList, currentUserName]
   );
+
   const userID = localStorage.getItem("userId_");
 
+  // ---------- Fetch all users once on mount ----------
   useEffect(() => {
-    async function IsSubscribe() {
-      const getUsers_ = await getUsers();
-      const getUser = getUsers_.find(
-        (item) => item.UserName === localStorage.getItem("UserName"),
-      );
-      if (
-        getUser?.SubscriptionPeriod &&
-        getUser?.SubscriptionPeriod > new Date().getTime()
-      ) {
-        localStorage.setItem(
-          "SubscriptionPeriod",
-          String(getUser?.SubscriptionPeriod),
-        );
-        localStorage.setItem(
-          "foods____",
-          btoa(
-            JSON.stringify({ SubscriptionPeriod: getUser?.SubscriptionPeriod }),
-          ),
-        );
-        localStorage.setItem("mycodeUsed","done")
-        console.log("done");
-      } else {
-        console.log("nothing");
+    let cancelled = false;
+    const fetchUsers = async () => {
+      try {
+        setLoading(true);
+        const data = await getUsers(); // your async function
+        if (!cancelled) {
+          setUsersList(data);
+        }
+      } catch (err) {
+        if (!cancelled) setError("فشل تحميل البيانات");
+      } finally {
+        if (!cancelled) setLoading(false);
       }
+    };
+    fetchUsers();
+    return () => {
+      cancelled = true;
+    };
+  }, []); // empty dependency array → runs only once
+
+  // ---------- Sync subscription status with localStorage ----------
+  useEffect(() => {
+    if (!currentUser) return;
+
+    if (
+      currentUser.SubscriptionPeriod &&
+      currentUser.SubscriptionPeriod > Date.now()
+    ) {
+      localStorage.setItem(
+        "SubscriptionPeriod",
+        String(currentUser.SubscriptionPeriod)
+      );
+      localStorage.setItem(
+        "foods____",
+        btoa(
+          JSON.stringify({ SubscriptionPeriod: currentUser.SubscriptionPeriod })
+        )
+      );
+      localStorage.setItem("mycodeUsed", "done");
     }
-    IsSubscribe();
-  }, [
-    activeTab,
-    friendId,
-    customDays,
-    copied,
-    activateSuccess,
-    subscribeSuccess,
-    selectedFixedPlan,
-  ]);
-  // Copy user ID
+  }, [currentUser]); // runs whenever the current user changes
+
+  // ---------- Copy user ID ----------
   const handleCopy = () => {
     navigator.clipboard.writeText(userID || "");
     setCopied(true);
-    setCopied(false);
+    setTimeout(() => setCopied(false), 1500);
   };
 
-  // Friend activation
+  // ---------- Friend activation ----------
   const handleActivate = async () => {
     if (!friendId.trim()) return;
- 
-    
-    // If Unique Key
-    const getIfUnique = getUsers_.find((item) => item.Unique == friendId);
-    const getUserNameForLocalStorage = localStorage.getItem("UserName");
-    if (getIfUnique?.UserName === getUserNameForLocalStorage) {
-      alert("welcome!!الحمدلله");
-    }
-    if (getIfUnique && getIfUnique?.UserName !== getUserNameForLocalStorage) {
-      alert("هذا كود خاص");
+
+    // Find by Unique key
+    const uniqueUser = usersList.find((u) => u.Unique === friendId);
+    if (uniqueUser) {
+      if (uniqueUser.UserName === currentUserName) {
+        alert("welcome!!");
+        setFriendId("");
+        return;
+      } else {
+        alert("هذا كود خاص");
+        setFriendId("");
+        return;
+      }
     }
 
-    // If Friend's Code
-    const getFriendCode = getUsers_.find(
-      (item) => item.UserId_ === Number(friendId),
+    // Find by friend's UserId_
+    const friendUser = usersList.find(
+      (u) => u.UserId_ === Number(friendId)
     );
 
-    if (
-      getFriendCode?.UserId_ === Number(friendId) &&
-      Number(friendId) !== Number(getUser?.UserId_) &&
-      getFriendCode.mycodeUsed === false
-    ) {
-      const CreateASubscriptionPeriod =
-        new Date().getTime() + 3 * 24 * 60 * 60 * 1000;
+    if (!friendUser) {
+      alert("الكود غير صحيح");
+      setFriendId("");
+      return;
+    }
 
-      // Update data
-      updateUserSubscription(getFriendCode.id, CreateASubscriptionPeriod, true);
-      updateUserSubscription(
-        String(getUser?.id),
-        CreateASubscriptionPeriod,
-        true,
-      );
+    if (Number(friendId) === Number(currentUser?.UserId_)) {
+      alert("لا يمكنك استخدام كودك الخاص بك");
+      setFriendId("");
+      return;
+    }
 
-      // Save to localStorage
-      localStorage.setItem(
-        "SubscriptionPeriod",
-        String(CreateASubscriptionPeriod),
-      );
-      localStorage.setItem("mycodeUsed", "true");
-      // add encryption to localStorage
-      localStorage.setItem(
-        "foods____",
-        btoa(JSON.stringify({ SubscriptionPeriod: CreateASubscriptionPeriod })),
-      );
-      setSubscribeSuccess(true);
-        setActivateSuccess(true);
+    if (friendUser.mycodeUsed !== false && friendUser.mycodeUsed !== undefined) {
+      // if mycodeUsed is anything other than false (e.g., true or "done"), it's already used
+      alert("تم استخدام الكود مسبقاً");
+      setFriendId("");
+      return;
+    }
+
+    // Activate: give 3 days subscription
+    const subscriptionPeriod = Date.now() + 3 * 24 * 60 * 60 * 1000;
+
+    // Update both users in the database
+    await updateUserSubscription(String(friendUser.id), subscriptionPeriod, true);
+    await updateUserSubscription(String(currentUser?.id), subscriptionPeriod, true);
+
+    // Update local state
+    setUsersList((prev) =>
+      prev.map((u) => {
+        if (u.UserId_ === friendUser.UserId_) {
+          return { ...u, SubscriptionPeriod: subscriptionPeriod, mycodeUsed: true };
+        }
+        if (u.UserName === currentUserName) {
+          return { ...u, SubscriptionPeriod: subscriptionPeriod, mycodeUsed: "done" };
+        }
+        return u;
+      })
+    );
+
+    // Save to localStorage
+    localStorage.setItem("SubscriptionPeriod", String(subscriptionPeriod));
+    localStorage.setItem(
+      "foods____",
+      btoa(JSON.stringify({ SubscriptionPeriod: subscriptionPeriod }))
+    );
+    localStorage.setItem("mycodeUsed", "done");
+
+    setSubscribeSuccess(true);
+    setActivateSuccess(true);
     setFriendId("");
     setTimeout(() => setActivateSuccess(false), 2500);
-    }
-    if (friendId == "15036" + String(new Date().getMinutes()) ) {
-
-    }
-
-    if (Number(friendId) === Number(getUser?.UserId_)) {
-      alert("لا يمكنك استخدام كودك الخاص بك");
-    }
-
-    if (getFriendCode?.mycodeUsed !== false) {
-      alert("تم استخدام الكود");
-    }
-
-  
   };
-  const handleGotoWhatsApp = (price :number,days:number,userName:string,Userid:string) =>{
-  const createAmessage = `
-#طلب إشتراك ${days} يوم#
 
-reqTopay : ${price}
+  // ---------- WhatsApp redirect ----------
+  const handleGotoWhatsApp = (price: number, days: number, userName: string, userId: string) => {
+    const message = `#طلب إشتراك ${days} يوم#\n\nreqTopay : ${price}\n\ntoGet#days : ${days}\n\nforThisId : ${userId}\n\nforThisUser : ${userName}`;
+    const phoneNumber = "201108313782";
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+  };
 
-toGet#days : ${days}
+  // ---------- Custom price calculation ----------
+  const customPrice = Math.round(customDays * 5);
 
-forThisId : ${Userid}
-
-forThisUser : ${userName}
-`; // trim whitespace for a cleaner message
-
-const phoneNumber = "201108313782"; 
-const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(createAmessage)}`;
-window.open(url);
-  }
-  // Custom plan price
-  const customPrice = Math.round(
-    customDays * 5 
-  );
-
-  // SVG progress ring for custom plan
+  // ---------- Progress ring (unchanged) ----------
   const radius = 60;
   const circumference = 2 * Math.PI * radius;
   const progress = Math.min((customDays / 30) * 100, 100);
   const dashOffset = circumference - (progress / 100) * circumference;
 
-  // Ripple effect hook (simplified for button use)
+  // ---------- Ripple effect helper ----------
   const createRipple = (e: React.MouseEvent<HTMLButtonElement>) => {
     const button = e.currentTarget;
     const rect = button.getBoundingClientRect();
@@ -255,6 +278,7 @@ window.open(url);
     button.appendChild(ripple);
     setTimeout(() => ripple.remove(), 600);
   };
+
 
   return (
     <>

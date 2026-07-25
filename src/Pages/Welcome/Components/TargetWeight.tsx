@@ -48,16 +48,22 @@ const TargetWhight: React.FC = () => {
 
   // If you want separate colors for weight loss:
   SetdirectionLabel(directionLabel)
+  localStorage.setItem("directionLabel",directionLabel);
   SetColor(intensityColor);
-  SetDif(absDif);   // store absolute difference if you only want intensity
+  localStorage.setItem("intensityColor",intensityColor);
+  SetDif(absDif);   
+  localStorage.setItem("abs",String(absDif))
+  // store absolute difference if you only want intensity
   // or keep signed if you need the direction elsewhere
 };
 
   
   return (
        <div className='  show-first h-full flex items-center justify-between flex-col  ' >
-      <h2 className='text-4xl translate-y-10 text-amber-400 dark:text-white font-extrabold mb-4 text-center'>
+      <h2 className='text-4xl translate-y-10 text-gray-800 dark:text-white font-extrabold mb-4 text-center'>
         ايه الوزن ال نفسك توصلو<span className='text-amber-500'>؟</span>
+        <div className="relative block h-1 w-12 bg-amber-400 mt-2 mx-auto rounded-full fullWidth" />
+
       </h2>
 
       <CounterY

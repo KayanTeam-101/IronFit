@@ -19,7 +19,8 @@ const CreateAUserName = lazy(() => import('./Components/CreateAUserName'));
 const BreakPage = lazy(() => import('./Components/BreakPage'));
 import { GoGoal } from "react-icons/go";
 import { PiConfettiLight } from "react-icons/pi";
-const TOTAL_STEPS = 14;
+import { IoScaleOutline } from 'react-icons/io5';
+const TOTAL_STEPS = 15;
 
 const Welcome: React.FC = () => {
   const [turn, setTurn] = useState(1);
@@ -114,9 +115,15 @@ const Welcome: React.FC = () => {
         return <CurrentWeight />;
       case 4:
         return <TargetWeight />;
-      case 5:
+      case 5 :
+      return <BreakPage
+              heading={ 'فرق الوزن  ' + " " + localStorage.getItem("abs") + "كجم" }
+              text={ localStorage.getItem("directionLabel")}
+              SvgComponent={IoScaleOutline} />
+              
+      case 6:
         return <ChooseHight />;
-      case 6: {
+      case 7: {
         const details = getBMIDetails(currentWeight, height);
         return (
           <BreakPage
@@ -126,25 +133,25 @@ const Welcome: React.FC = () => {
           />
         );
       }
-      case 7:
-        return <ChooseAge />;
       case 8:
+        return <ChooseAge />;
+      case 9:
           return <SelectGender />;
-      case 9 : 
+      case 10 : 
           return <ChPreiod />
-      case 10:
+      case 11:
         return <ShowBmi />;
   
-      case 11:
+      case 12:
         return <S_Goals />;
-      case 12 :
+      case 13 :
         return <BreakPage heading="اقتربت أن تكون فرداً منا!" text="متبقي فقط أن تعرفنا علي نفسك" SvgComponent={PiConfettiLight}/>
-      case 13:
+      case 14:
         return  <CreateAUserName
       setUsername={setUsername}
       onSaveSuccess={() => setIsUserDataSaved(true)}
     />;
-      case 14:
+      case 15:
         return <FinalSection />;
       default:
         return null;
@@ -153,13 +160,14 @@ const Welcome: React.FC = () => {
 
   return (
     <div className="min-h-screen dark:bg-neutral-950 flex justify-center">
+      <div  className='absolute -top-20 right-1/2 w-70 h-50 dark:bg-amber-400 blur-[120px] opacity-75 animate-pulse '/>
       {/* Content Width */}
       <div className="w-screen max-w-md flex flex-col h-screen">
         {/* Header */}
         <header className="px-6 pt-6 pb-2">
-          <div className="mt-6 w-full h-2 rounded-full bg-zinc-200 dark:bg-zinc-800/20 overflow-hidden">
+          <div className="mt-6 w-full h-2 rounded-full bg-zinc-200 dark:bg-zinc-800/20 overflow-hidden z-50">
             <div
-              className="h-full bg-linear-to-l from-pink-500 via-rose-500 to-amber-600 transition-all duration-500 rounded-full animate-pulse"
+              className="h-full bg-linear-to-l from-amber-700 via-amber-400 to-amber-600 transition-all duration-500 rounded-full  "
               style={{
                 width: `${(turn / TOTAL_STEPS) * 100}%`,
               }}
@@ -175,7 +183,7 @@ const Welcome: React.FC = () => {
         {/* Footer */}
         <footer className="p-6">
           <button
-            disabled={loading || (turn === 13 && !isUserDataSaved)}
+            disabled={loading || (turn === 14 && !isUserDataSaved)}
             onClick={next}
             className={`w-full h-14 z-50 rounded-2xl font-semibold text-white flex items-center justify-center gap-3 transition-all ${
               loading

@@ -29,8 +29,9 @@ const Subscribe: React.FC<SubscribeProps> = ({
   if (localStorage.getItem("SubscriptionPeriod")) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[1px] p-4">
-      <div className="relative w-full max-w-sm border dark:bg-black/95 dark:border-2 dark:border-gray-600/20 border-amber-300 bg-white/95 shadow-2xl p-6 text-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[5px] p-4">
+      <div className="relative w-full max-w-sm border dark:bg-black/95 dark:border-2 dark:border-gray-600/20 border-amber-300 bg-white/95 shadow-2xl p-6 text-center overflow-hidden">
+      <div className="absolute -top-20 right-1/2  w-50 h-50 bg-amber-400 blur-[70px] rounded-full animate-pulse"></div>
         <button
           onClick={onClose}
           className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full dark:bg-black/20 dark:border-2 dark:border-gray-600/20 bg-white/60 opacity-70"

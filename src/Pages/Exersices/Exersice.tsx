@@ -437,7 +437,7 @@ const ExercisePage: React.FC = () => {
                 {day.exercises.length > 0 ? (
                   <ul className="space-y-2">
                     {day.exercises.map((ex, exIdx) => (
-                      <li key={exIdx} className="relative flex items-center justify-between bg-white dark:bg-black/20 border-2 border-gray-600/20 p-3 py-6 rounded-lg shadow-xl transition-all hover:shadow-md">
+                      <li key={exIdx} className="relative flex items-center justify-between bg-white dark:bg-black/20 border-2 border-gray-600/20 p-3 py-6 rounded-2xl shadow-xl transition-all hover:shadow-md">
                         <div className="absolute top-13 text-sm text-gray-500 dark:text-white/70 pl-2">{ex.weight} كغ</div>
                         <span
                           className="font-medium cursor-pointer dark:text-white underline text-gray-700 truncate flex-1"
@@ -455,9 +455,14 @@ const ExercisePage: React.FC = () => {
                                 currentWeight: ex.weight,
                               })
                             }
-                            className="p-1 text-amber-500 hover:text-amber-700 transition flex justify-center items-center rounded-full gap-1"
+                            className="p-1 text-amber-500 hover:text-amber-700 transition flex justify-center items-center flex-col rounded-full gap-1"
                           >
-                            <FaExchangeAlt />تطوير الوزن
+                            <FaExchangeAlt />
+                            
+<p className="text-[10px] font-black">
+                              تطوير الوزن
+
+</p>
                           </button>
                         </div>
                       </li>

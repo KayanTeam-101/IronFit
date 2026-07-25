@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate, useLocation, Outlet } from "react-router-dom";
 import { useState, useEffect, Suspense, lazy } from "react";
 import Loading from "./Components/layouts/Loading";
-import { getUser } from "./Pages/Settings/settings";
+// import { getUser } from "./Pages/Settings/settings";
 
 // Eagerly loaded – always needed
 import Welcome from "./Pages/Welcome/Welcome";

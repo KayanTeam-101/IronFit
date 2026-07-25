@@ -144,7 +144,7 @@ const Home = () => {
   const streak = useMemo(() => calculateStreak(), []);
 
   return (
-    <div className="relative min-h-screen w-screen overflow-hidden p-2 flex flex-col gap-5 show-first">
+    <div className="relative min-h-screen w-screen overflow-hidden p-2 flex flex-col gap-5 showAnim2">
       {showSubscribe && !isActive && (
         <Subscribe onClose={() => setShowSubscribe(false)} />
       )}

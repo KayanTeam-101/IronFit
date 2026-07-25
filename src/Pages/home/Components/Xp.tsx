@@ -16,11 +16,12 @@ import {
 } from "react-icons/fa";
 import { GiNinjaHead } from "react-icons/gi";
 import { LuDumbbell } from "react-icons/lu";
-import { BsStar } from "react-icons/bs";
+import { BsCaretLeftFill, BsCheckCircleFill, BsStar } from "react-icons/bs";
 import { getUsers, updateXp, getUserRank } from "../../../firebase/user";
 import Rank from "./Rank";
 import { levels } from "./Rank";
 import { useNavigate } from "react-router-dom";
+import { FaCalendarCheck } from "react-icons/fa6";
 
 // ---------- Helpers ----------
 const todayStr = new Date().toISOString().split("T")[0];
@@ -176,12 +177,7 @@ const BADGES = (() => {
       description: "ارفع أوزانك بنسبة 50%",
       earned: weightImprovedBy50Percent,
     },
-    {
-      icon: <FaAward className="text-purple-400 text-2xl" />,
-      name: "خبير التغذية",
-      description: "سجل 50 وجبة",
-      earned: mealsRecorded,
-    },
+   
     {
       icon: <FaCrown className="text-amber-400 text-2xl" />,
       name: "ملك الجيم",
@@ -244,17 +240,37 @@ export const TasksPanel: React.FC<TasksPanelProps> = ({ onClose }) => {
         to: "/templates",
       },
       {
+        icon: <FaAppleAlt className="text-orange-500" />,
+        label: "تناول وجباتك كاملة",
+        xp: 200,
+        condition: hasEatenAllMeals,
+        to: "/me/food",
+      },
+      {
         icon: <FaUserFriends className="text-green-400" />,
         label: "شارك مع اصدقائك كودك الشخصي للحصول علي 3 أيام VIP",
         xp: 200,
         condition: hasShared,
         to: "/Settings",
       },
-      {
-        icon: <FaAppleAlt className="text-orange-500" />,
-        label: "تناول وجباتك كاملة",
-        xp: 200,
-        condition: hasEatenAllMeals,
+       {
+        icon: <FaCalendarCheck className="text-orange-300" />,
+        label: "عيش مع IronFit يومان",
+        xp: 125,
+        condition: hasUsedTemplateToday,
+      },
+       {
+        icon: <FaCalendarCheck className="text-rose-400" />,
+        label: "عيش مع IronFit اربع أيام",
+        xp: 125,
+        condition: hasUsedTemplateToday,
+        to: "/templates",
+      },
+       {
+        icon: <FaCalendarCheck className="text-teal-400" />,
+        label: "عيش مع IronFit أسبوع",
+        xp: 125,
+        condition: hasUsedTemplateToday,
         to: "/templates",
       },
       {
@@ -315,7 +331,7 @@ export const TasksPanel: React.FC<TasksPanelProps> = ({ onClose }) => {
   return (
     <div
       onDoubleClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 show-first"
+      className="fixed inset-0  flex items-center justify-center p-4  z-50"
     >
       <div className="relative w-full max-w-sm max-h-3/4 bg-white/90 dark:bg-black/80 backdrop-blur-xl border border-amber-300/60 dark:border-gray-600/50 shadow-2xl rounded-3xl p-6 text-center">
         <button
@@ -361,14 +377,14 @@ export const TasksPanel: React.FC<TasksPanelProps> = ({ onClose }) => {
         </div>
 
         {activeTab === "tasks" ? (
-          <div className="space-y-2 text-right max-h-76 overflow-y-auto">
+          <div className="space-y-2 text-right max-h-76 overflow-y-auto active:scale-90 transition-all">
             {DAILY_TASKS.map((task, idx) => (
               <div
                 key={idx}
                 onClick={() => handleTaskClick(task)}
                 className={`flex items-center justify-between gap-3 border-2 p-3 ${
                   task.condition
-                    ? "bg-teal-100 border-teal-600 dark:border-teal-300 dark:bg-teal-500/20"
+                    ? "bg-teal-100 border-teal-600 dark:border-teal-300 dark:bg-teal-500/20 showAnim2"
                     : "bg-gray-50 dark:bg-black/20 border-gray-100 dark:border-gray-600/30"
                 } rounded-3xl hover:shadow-md transition-all`}
               >
@@ -385,6 +401,16 @@ export const TasksPanel: React.FC<TasksPanelProps> = ({ onClose }) => {
                     </div>
                   </div>
                 </div>
+                
+                {
+                  task.condition ? (
+                      <div className="text-teal-400 text-md ml-2">
+                    <BsCheckCircleFill />
+                  </div>
+                  ) : (  <div className=" text-gray-400 text-sm ml-2">
+                    <BsCaretLeftFill />
+                  </div>)
+                }
               </div>
             ))}
           </div>

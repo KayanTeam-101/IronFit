@@ -123,8 +123,6 @@ const CreateAUserName = ({
 
   return (
     <div className="w-full px-4 flex flex-col items-center">
-         <div className="absolute -top-10 -right-10 w-32 h-32 bg-rose-400 rounded-full animate-pulse opacity-35 blur-3xl" />
-        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-orange-400 rounded-full animate-pulse opacity-35 blur-3xl" />
 
       <div className="w-full max-w-sm space-y-6">
         {/* Image upload (kept same style as original but without absolute overlay) */}

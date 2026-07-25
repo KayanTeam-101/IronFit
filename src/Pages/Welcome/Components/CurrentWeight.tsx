@@ -13,7 +13,11 @@ const ChooseHight : React.FC = () => {
 
   return (
     <div className='  show-first h-3/4 flex items-center justify-around flex-col  ' >
-        <h2 className='text-3xl translate-y-10 text-amber-400 dark:text-white font-extrabold mb-4 text-center '> ايه وزنك الحالي بالـ كجم <span className='text-amber-500'>؟</span></h2>
+      <div className='w-fit relative'>
+        <h2 className='text-3xl  text-gray-800 dark:text-white font-extrabold mb-4 text-center '> ايه وزنك الحالي بالـ كجم <span className='text-amber-500'>؟</span></h2>
+        <div className="relative block h-1 w-12 bg-amber-400 mt-2 mx-auto rounded-full fullWidth" />
+        
+      </div>
        <CounterY arr={numbers} size={window.innerWidth <= 390 ? "md" : "lg"} onChange={handleChange} />
     </div>
   )

@@ -31,13 +31,13 @@ const S_Goals: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center px-4 pt-6 pb-2">
-         <div className="absolute -top-10 -right-10 w-32 h-32 bg-rose-400 rounded-full  blur-3xl animate-pulse" />
-        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-orange-400 rounded-full  blur-3xl animate-pulse" />
 
       {/* Header */}
       <div className="text-center mb-10 relative">
-        <h1 className="text-3xl font-extrabold dark:text-white tracking-wide">
+        <h1 className="text-3xl font-extrabold dark:text-white text-gray-800 tracking-wide">
           إيه أهدافك <span className="text-amber-500">؟</span>
+        <div className="relative block h-1 w-12 bg-amber-400 mt-2 mx-auto rounded-full fullWidth" />
+
         </h1>
         <p className="text-gray-400 mt-2">اختر هدفًا أو أكثر عشان أعرف اهدافك !</p>
       </div>
