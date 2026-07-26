@@ -114,7 +114,7 @@ const TodayTask = () => {
         >
           <GiBiceps className="text-3xl text-blue-600 mb-1" />
           <p className="text-[12px] p-1 font-medium dark:text-white">
-            البروتين
+           البروتين
           </p>
           <ProgressBar
             current={totalProtine}

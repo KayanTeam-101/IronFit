@@ -73,7 +73,7 @@ const Table = () => {
                 <span className="text-[9.5px] text-gray-400 dark:text-gray-100 mt-1.5 whitespace-nowrap">
                   {weekday}
                 </span>
-                <div className="w-10 h-10 rounded-full flex items-center justify-center text-md font-black">
+                <div className="w-10 h-10 rounded-full flex items-center text-gray-400 dark:text-gray-100 justify-center text-md font-black">
                   {day}
                 </div>
               </div>
