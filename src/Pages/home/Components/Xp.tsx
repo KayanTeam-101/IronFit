@@ -14,7 +14,7 @@ import {
   FaLock,
   FaFire,
 } from "react-icons/fa";
-import { GiNinjaHead } from "react-icons/gi";
+import { GiLibertyWing, GiNinjaHead } from "react-icons/gi";
 import { LuDumbbell } from "react-icons/lu";
 import { BsCaretLeftFill, BsCheckCircleFill, BsStar } from "react-icons/bs";
 import { getUsers, updateXp, getUserRank } from "../../../firebase/user";
@@ -226,8 +226,16 @@ export const TasksPanel: React.FC<TasksPanelProps> = ({ onClose }) => {
 
   const DAILY_TASKS = useMemo(
     () => [
+        {
+        icon: <GiLibertyWing className="text-blue-500" />,
+        label: "تحميل Iron Fit لتنضم إلي عائلتنا🫂",
+        xp: 125,
+        condition: UseFoodTemplate,
+        to: "/templates",
+        alert: "أغلق صفحة المهام و انظر أعلي الصفحة الرئيسة ثم أضغط علي تثبيت التطبيق"
+      },
       {
-        icon: <FaAppleAlt className="text-orange-500" />,
+        icon: <FaAppleAlt className="text-orange-300" />,
         label: "إستخدم قالب غذائي",
         xp: 125,
         condition: UseFoodTemplate,
@@ -323,6 +331,8 @@ export const TasksPanel: React.FC<TasksPanelProps> = ({ onClose }) => {
   const handleTaskClick = useCallback(
     (task: typeof DAILY_TASKS[number]) => {
       if (task.to && !task.condition) navigate(task.to);
+      if (task.alert && !task.condition) alert(task.alert);
+
     },
     [navigate]
   );

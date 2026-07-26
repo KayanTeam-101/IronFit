@@ -128,10 +128,10 @@ const CreateAUserName = ({
         {/* Image upload (kept same style as original but without absolute overlay) */}
         <div className="flex flex-col items-center">
           {photoUrl ? (
-            <div className="relative w-40 h-40">
+            <div className="relative w-40 h-40 flex justify-center items-center">
               <img
                 src={photoUrl}
-                alt="Preview"
+                alt="حدث خطأ ما يرجي رفع صورة اخري"
                 className="w-full h-full rounded-full object-cover  border-2 border-orange-400 shadow-lg"
               />
               <label
