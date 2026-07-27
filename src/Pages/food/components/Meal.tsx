@@ -8,18 +8,16 @@ import { LiaCookieBiteSolid } from "react-icons/lia";
 import { BiMoon } from "react-icons/bi";
 
 // ---------- Types ----------
-type FoodInfoEntry = [string, string, number, number, number,number,number];
+type FoodInfoEntry = [string, string, number, number, number, number, number];
 
-// The stored diet plan shape:
-// { [mealName]: [ dishNames[], [calories, protein, fat, carbs, vitamins[]] ] }
 type MealPlanData = {
   [key: string]: [string[], [number, number, number, number, string[]]];
 };
 
 interface MealProps {
-  mealName: any;
+  mealName: string;
   history: { [date: string]: { meals: { [mealName: string]: string[] } } };
-  foodInfoList:any;
+  foodInfoList: FoodInfoEntry[];
   dietPlan: MealPlanData | null;
   onToggleDish: (dish: string, mealName: string) => void;
   isSubscribed?: boolean;
@@ -40,7 +38,6 @@ const MEAL_NAMES_AR: Record<string, string> = {
   Dinner: "العشاء",
 };
 
-// ---------- Helpers ----------
 const getTodayKey = (): string => {
   const d = new Date();
   return `${d.getFullYear()}/${String(d.getMonth() + 1)}/${String(d.getDate())}`;
@@ -58,7 +55,6 @@ const Meal = React.memo(
   }: MealProps) => {
     const todayKey = getTodayKey();
 
-    // --- Derived data from props ---
     const eatenDishes: string[] = useMemo(
       () => history[todayKey]?.meals?.[mealName] || [],
       [history, todayKey, mealName]
@@ -76,20 +72,17 @@ const Meal = React.memo(
 
     // --- Consumed nutrition ---
     const consumedNutrition = useMemo(() => {
-      let cal = 0,
-        prot = 0,
-        fat = 0,
-        carb = 0;
+      let cal = 0, prot = 0, fat = 0, carb = 0;
 
       eatenDishes.forEach((dish) => {
         const entry = foodInfoList.find(
-          (e:any) => e[1] === dish && e[0] === mealName
+          (e) => e[1] === dish && e[0] === mealName
         );
         if (entry) {
-          cal += Number(entry[3]) || 0;
-          prot += Number(entry[4]) || 0;
-          fat += Number(entry[5]) || 0;
-          carb += Number(entry[6]) || 0;
+          cal += entry[3];
+          prot += entry[4];
+          fat += entry[5];
+          carb += entry[6];
         }
       });
 
@@ -119,7 +112,7 @@ const Meal = React.memo(
           allEaten ? "ring-2 ring-teal-500 shadow-green-100/50" : ""
         }`}
       >
-        {/* Header */}
+        {/* Header with meal name and progress ring */}
         <div className="flex items-center justify-between">
           <h2 className="text-2xl dark:text-white text-gray-800 flex items-center gap-2">
             {MEAL_NAMES_AR[mealName] || mealName}
@@ -159,7 +152,7 @@ const Meal = React.memo(
             {plannedDishes.map((dish, idx) => {
               const isEaten = eatenDishes.includes(dish);
               const dishInfo = foodInfoList.find(
-                (e :any) => e[1] === dish && e[0] === mealName
+                (e) => e[1] === dish && e[0] === mealName
               );
               const grams = dishInfo?.[2] || "-";
               const dishCal = dishInfo?.[3]?.toFixed(1) || "0";
@@ -224,18 +217,12 @@ const Meal = React.memo(
           <div className="flex gap-1 flex-wrap w-11/12">
             {isSubscribed
               ? getVitamins.map((vit, idx) => (
-                  <span
-                    key={idx}
-                    className="p-1 text-gray-600 bg-stone-100 rounded-xl dark:text-gray-100 dark:bg-[#121212] flex flex-row gap-1 px-2"
-                  >
+                  <span key={idx} className="p-1 text-gray-600 bg-stone-100 rounded-xl dark:text-gray-100 dark:bg-[#121212] flex flex-row gap-1 px-2">
                     {vit} <FaCheck className="text-sm mt-1 text-green-600" />
                   </span>
                 ))
               : getVitamins.map((_, idx) => (
-                  <div
-                    key={idx}
-                    className="p-1 text-amber-500 bg-stone-100 rounded-3xl dark:text-gray-100 dark:bg-black flex flex-row gap-1 px-3 justify-center items-center"
-                  >
+                  <div key={idx} className="p-1 text-amber-500 bg-stone-100 rounded-3xl dark:text-gray-100 dark:bg-black flex flex-row gap-1 px-3 justify-center items-center">
                     <IoDiamond className="mb-1 text-sm text-amber-400" /> VIP
                   </div>
                 ))}

@@ -62,7 +62,7 @@ Snacks: [
 { foodName: "عسل أسود", grams: 15 },
 ],
 Dinner: [
-{ foodName: "بطاطا حلوة مشوية", grams: 200 },
+{ foodName: "بطاطا", grams: 200 },
 { foodName: "كفتة", grams: 170 },
 { foodName: "خبز بلدي", grams: 80 },
 { foodName: "بابا غنوج", grams: 70 },
@@ -106,23 +106,23 @@ description: "نظام مستوحى من مسموحات الطيبات",
 type: "maintenance",
 meals: {
 Breakfast: [
-{ foodName: "أرز أبيض مطبوخ", grams: 300 },
-{ foodName: "لحم بقري مشوي", grams: 180 },
+{ foodName: "أرز أبيض", grams: 300 },
+{ foodName: "لحم بقري", grams: 180 },
 { foodName: "خيار", grams: 100 },
 ],
 Lunch: [
-{ foodName: "أرز أبيض مطبوخ", grams: 380 },
-{ foodName: "سمك مشوي", grams: 250 },
-{ foodName: "كوسة مطهية", grams: 200 },
+{ foodName: "أرز أبيض", grams: 380 },
+{ foodName: "سمك بلطي مشوي", grams: 250 },
+{ foodName: "كوسة", grams: 200 },
 { foodName: "زيت زيتون", grams: 15 },
 ],
 Snacks: [
 { foodName: "تمر", grams: 80 },
-{ foodName: "كمثرى", grams: 200 },
+{ foodName: "تفاح", grams: 200 },
 ],
 Dinner: [
 { foodName: "بطاطس مسلوقة", grams: 400 },
-{ foodName: "لحم بقري مشوي", grams: 220 },
+{ foodName: "لحم بقري", grams: 220 },
 { foodName: "خيار", grams: 150 },
 ],
 },
@@ -135,21 +135,21 @@ type: "maintenance",
 meals: {
 Breakfast: [
 { foodName: "بطاطس مسلوقة", grams: 350 },
-{ foodName: "سمك مشوي", grams: 180 },
+{ foodName: "سمك بلطي مشوي", grams: 180 },
 { foodName: "خيار", grams: 100 },
 ],
 Lunch: [
-{ foodName: "أرز أبيض مطبوخ", grams: 420 },
-{ foodName: "لحم ضأن مشوي", grams: 240 },
-{ foodName: "بامية مطهية", grams: 200 },
+{ foodName: "أرز أبيض", grams: 420 },
+{ foodName: "لحم ضأن", grams: 240 },
+{ foodName: "بامية", grams: 200 },
 ],
 Snacks: [
 { foodName: "تمر", grams: 100 },
 { foodName: "تفاح", grams: 300 },
 ],
 Dinner: [
-{ foodName: "بطاطس مشوية", grams: 400 },
-{ foodName: "سمك مشوي", grams: 250 },
+{ foodName: "بطاطس مسلوقة", grams: 400 },
+{ foodName: "سمك بلطي مشوي", grams: 250 },
 { foodName: "خس", grams: 150 },
 { foodName: "زيت زيتون", grams: 10 },
 ],
@@ -234,7 +234,7 @@ Snacks: [
 { foodName: "عسل أسود", grams: 20 },
 ],
 Dinner: [
-{ foodName: "بطاطا حلوة", grams: 300 },
+{ foodName: "بطاطا", grams: 300 },
 { foodName: "سمك بلطي مشوي", grams: 250 },
 { foodName: "بروكلي", grams: 150 },
 ],
@@ -252,12 +252,12 @@ Breakfast: [
 { foodName: "خيار", grams: 150 },
 ],
 Lunch: [
-{ foodName: "صدر دجاج مشوي", grams: 300 },
+{ foodName: "فراخ مشوية", grams: 300 },
 { foodName: "سلطة بلدي", grams: 250 },
 { foodName: "ليمون مخلل", grams: 20 },
 ],
 Snacks: [
-{ foodName: "جريب فروت", grams: 200 },
+{ foodName: "برتقال", grams: 200 },
 { foodName: "زبادي", grams: 150 },
 ],
 Dinner: [
@@ -311,7 +311,7 @@ Breakfast: [
 ],
 Lunch: [
 { foodName: "أرز بني", grams: 250 },
-{ foodName: "صدر دجاج مشوي", grams: 250 },
+{ foodName: "فراخ مشوية", grams: 250 },
 { foodName: "بروكلي", grams: 200 },
 { foodName: "زيت زيتون", grams: 10 },
 ],
@@ -321,7 +321,7 @@ Snacks: [
 { foodName: "تمر", grams: 40 },
 ],
 Dinner: [
-{ foodName: "بطاطا حلوة", grams: 250 },
+{ foodName: "بطاطا", grams: 250 },
 { foodName: "سمك بلطي مشوي", grams: 250 },
 { foodName: "سلطة بلدي", grams: 150 },
 { foodName: "طحينة", grams: 20 },
@@ -369,11 +369,11 @@ type: "cut",
 meals: {
 Breakfast: [
 { foodName: "بيض مسلوق", grams: 200 },
-{ foodName: "جبنة قريش", grams: 150 },
+{ foodName: "جبنة بيضاء (دمياطي)", grams: 150 },
 { foodName: "خيار", grams: 150 },
 ],
 Lunch: [
-{ foodName: "صدر دجاج مشوي", grams: 280 },
+{ foodName: "فراخ مشوية", grams: 280 },
 { foodName: "سلطة بلدي", grams: 250 },
 { foodName: "بروكلي", grams: 150 },
 { foodName: "زيت زيتون", grams: 5 },
@@ -403,10 +403,10 @@ Breakfast: [
 { foodName: "طماطم", grams: 150 },
 ],
 Lunch: [
-{ foodName: "سمك مشوي", grams: 250 },
+{ foodName: "سمك بلطي مشوي", grams: 250 },
 { foodName: "سلطة بلدي", grams: 200 },
 { foodName: "حمص", grams: 100 },
-{ foodName: "ليمون", grams: 30 },
+{ foodName: "ليمون مخلل", grams: 30 },
 ],
 Snacks: [
 { foodName: "زبادي يوناني", grams: 150 },
@@ -414,8 +414,8 @@ Snacks: [
 ],
 Dinner: [
 { foodName: "مكرونة مسلوقة", grams: 150 },
-{ foodName: "خضار مشوي", grams: 250 },
-{ foodName: "جبنة فيتا", grams: 50 },
+{ foodName: "كوسة", grams: 250 },
+{ foodName: "جبنة بيضاء (دمياطي)", grams: 50 },
 ],
 },
 },
@@ -439,7 +439,7 @@ Lunch: [
 Snacks: [
 { foodName: "تمر", grams: 100 },
 { foodName: "لوز", grams: 30 },
-{ foodName: "عصير برتقال", grams: 300 },
+{ foodName: "برتقال", grams: 300 },
 ],
 Dinner: [
 { foodName: "بطاطس مسلوقة", grams: 400 },
@@ -462,7 +462,7 @@ Breakfast: [
 { foodName: "زبدة", grams: 10 },
 ],
 Lunch: [
-{ foodName: "صدر دجاج مشوي", grams: 250 },
+{ foodName: "فراخ مشوية", grams: 250 },
 { foodName: "بروكلي", grams: 200 },
 { foodName: "زيت زيتون", grams: 15 },
 ],
@@ -471,7 +471,7 @@ Snacks: [
 { foodName: "خيار", grams: 200 },
 ],
 Dinner: [
-{ foodName: "سمك مشوي", grams: 250 },
+{ foodName: "سمك بلطي مشوي", grams: 250 },
 { foodName: "سلطة بلدي", grams: 200 },
 { foodName: "طحينة", grams: 20 },
 ],
@@ -492,7 +492,7 @@ Breakfast: [
 ],
 Lunch: [
 { foodName: "تمر", grams: 60 },
-{ foodName: "شوربة عدس", grams: 250 },
+{ foodName: "عدس شوربة", grams: 250 },
 { foodName: "أرز أبيض", grams: 200 },
 { foodName: "فراخ مشوية", grams: 200 },
 { foodName: "سلطة بلدي", grams: 150 },
@@ -530,7 +530,7 @@ Snacks: [
 Dinner: [
 { foodName: "مكرونة مسلوقة", grams: 200 },
 { foodName: "تونة", grams: 100 },
-{ foodName: "صلصة طماطم", grams: 50 },
+{ foodName: "طماطم", grams: 50 },
 ],
 },
 },
@@ -575,7 +575,7 @@ Breakfast: [
 { foodName: "خيار", grams: 150 },
 ],
 Lunch: [
-{ foodName: "صدر دجاج مشوي", grams: 220 },
+{ foodName: "فراخ مشوية", grams: 220 },
 { foodName: "سلطة بلدي", grams: 250 },
 { foodName: "بروكلي", grams: 150 },
 ],
@@ -1582,4 +1582,3 @@ exercises: [
 ],
 },
 ];
-

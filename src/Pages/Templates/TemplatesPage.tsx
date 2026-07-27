@@ -254,9 +254,9 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
 
   const getDifficultyColor = (level: ExerciseTemplate["difficulty"]) => {
     switch (level) {
-      case "beginner": return "text-green-400";
+      case "beginner": return "text-orange-400";
       case "intermediate": return "text-yellow-400";
-      case "advanced": return "text-red-400";
+      case "advanced": return "text-teal-400";
     }
   };
 
