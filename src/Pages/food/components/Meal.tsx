@@ -74,7 +74,7 @@ const Meal = React.memo(
     const consumedNutrition = useMemo(() => {
       let cal = 0, prot = 0, fat = 0, carb = 0;
 
-      eatenDishes.forEach((dish) => {
+      plannedDishes.forEach((dish) => {
         const entry = foodInfoList.find(
           (e) => e[1] === dish && e[0] === mealName
         );
