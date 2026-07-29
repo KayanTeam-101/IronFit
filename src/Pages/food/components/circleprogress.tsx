@@ -20,7 +20,7 @@ const ModernLinearProgress: React.FC<ModernLinearProgressProps> = ({
   return (
     <div
       dir={dir}
-      className="flex items-center gap-3 w-full bg-white dark:bg-[#222]/30 rounded-xl p-4 "
+      className="flex items-center gap-3 w-full bg-white dark:bg-[#222]/10 rounded-3xl p-4 "
       style={{ maxWidth: width }}
     >
    
@@ -46,8 +46,7 @@ const ModernLinearProgress: React.FC<ModernLinearProgressProps> = ({
       </div>
 
       {/* Percentage Indicator */}
-      <div className="flex flex-row gap-1 items-center justify-center w-7 h-11 rounded-xl  text-orange-400 font-black shrink-0">
-        <div className="h-7 w-0.5 bg-slate-200/50 dark:bg-slate-700/50 rounded-2xl"></div>
+      <div className="flex flex-row items-center justify-center w-5 h-11 rounded-xl  text-orange-400 font-black ">
         {useCountUp(Math.round(percent),700)}%
       </div>
     </div>

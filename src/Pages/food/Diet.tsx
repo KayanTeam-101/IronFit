@@ -162,7 +162,8 @@ const Diet = () => {
   // --- Congratulation check ---
   useEffect(() => {
     const checkAllMealsEaten = () => {
-      if (Number(localStorage.getItem("dailyCalories")) <= Number(localStorage.getItem("eatenCalories"))) {
+      
+      if (Number(localStorage.getItem("dailyCalories")) <= Number(localStorage.getItem("EatenCalories"))) {
         const todayISO = new Date().toISOString().split("T")[0];
         const DoneDays = localStorage.getItem("DoneDays") || "[]";
         const LikedDays = JSON.parse(DoneDays);
@@ -171,14 +172,14 @@ const Diet = () => {
           localStorage.setItem("DoneDays", JSON.stringify(LikedDays));
         }
       }
-    };
+      if (localStorage.getItem("Diet") && !localStorage.getItem("hasCongratulatedDiet")) {
+        localStorage.setItem("hasCongratulatedDiet", "done");
+        setShowCongratulation(true);
+        window.scrollBy(0, 150);
+      }
+    };  
+    
     checkAllMealsEaten();
-
-    if (localStorage.getItem("Diet") && !localStorage.getItem("hasCongratulatedDiet")) {
-      localStorage.setItem("hasCongratulatedDiet", "done");
-      setShowCongratulation(true);
-      window.scrollBy(0, 150);
-    }
   }, []);
 
   const hideCongratulation = () => {
@@ -376,7 +377,7 @@ const Diet = () => {
         />
         <div
           onClick={openAddModal}
-          className="bg-white dark:bg-[#222]/30 rounded-xl p-4 flex flex-row items-center justify-between cursor-pointer hover:shadow-lg transition"
+          className="bg-white dark:bg-[#222]/15 rounded-3xl p-4 flex flex-row items-center justify-between cursor-pointer hover:shadow-lg transition"
         >
           <span className="font-medium text-slate-600 dark:text-gray-100 mb-2 text-center">
             اكلت طعام غير مجدول

@@ -52,7 +52,7 @@ export function giveHealthAdvice(): string {
   // --- البيانات الأساسية ---
   const historyRaw = localStorage.getItem("History");
   const foodInfoRaw = localStorage.getItem("FoodInfo_s");
-  const dailyCal = parseFloat(localStorage.getItem("dailyCalories") || "0") || 0;
+  const dailyCal = parseFloat(localStorage.getItem("EatenCalories") || "0") || 0;
 
   const age = parseInt(localStorage.getItem("age") || "0", 10);
   const currentWeight = parseFloat(localStorage.getItem("currentWeight") || "0");

@@ -74,7 +74,7 @@ const Meal = React.memo(
     const consumedNutrition = useMemo(() => {
       let cal = 0, prot = 0, fat = 0, carb = 0;
 
-      plannedDishes.forEach((dish) => {
+      eatenDishes.forEach((dish) => {
         const entry = foodInfoList.find(
           (e) => e[1] === dish && e[0] === mealName
         );
@@ -88,12 +88,11 @@ const Meal = React.memo(
 
       // If nothing eaten, show planned totals
       if (eatenDishes.length === 0 && dietPlan?.[mealName]?.[1]) {
-        const planned = dietPlan[mealName][1];
         return {
-          calories: planned[0] || 0,
-          protein: planned[1] || 0,
-          fat: planned[2] || 0,
-          carb: planned[3] || 0,
+          calories:0,
+          protein:0,
+          fat:0,
+          carb:0,
         };
       }
 
@@ -108,7 +107,7 @@ const Meal = React.memo(
 
     return (
       <div
-        className={`relative bg-white/70 backdrop-blur-lg border dark:bg-[#222]/20 dark:border dark:border-gray-600/20 border-white/50 dark:shadow-none shadow-xl rounded-3xl p-6 space-y-5 transition-all duration-500 hover:shadow-2xl ${
+        className={`relative bg-white/70 backdrop-blur-lg border dark:bg-[#222]/20 dark:border dark:border-gray-600/20 border-white/50 dark:shadow-none shadow-xl rounded-4xl p-6 space-y-5 transition-all duration-500 hover:shadow-2xl ${
           allEaten ? "ring-2 ring-teal-500 shadow-green-100/50" : ""
         }`}
       >
