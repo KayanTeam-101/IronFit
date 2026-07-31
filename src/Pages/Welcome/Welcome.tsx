@@ -324,7 +324,7 @@ const Welcome: React.FC = () => {
       </div>
 
       {/* ---- New TikTok Browser Modal (copy & paste) ---- */}
-         { 1 && 1 && (
+{turn === 8 && isTikTokBrowser && showTikTokModal && (
   <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 showAnim2">
     <div className="w-full max-w-sm bg-white dark:bg-neutral-800 rounded-3xl overflow-hidden shadow-2xl">
 
