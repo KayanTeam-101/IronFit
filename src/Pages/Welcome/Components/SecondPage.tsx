@@ -52,13 +52,13 @@ const Second: React.FC = () => {
           </h1>
 
           <p className="mt-3 text-gray-600 dark:text-gray-300 leading-7 show-first">
-إشمعنا             
+ليه             
             <span className="font-black text-orange-500">
               {" "}
                 IronFit  
             </span>
 <span className="p-1">
-            ؟ 
+           تحديدا ؟
 
 </span>
           </p>
