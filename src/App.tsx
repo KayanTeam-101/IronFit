@@ -34,8 +34,8 @@ function RequireAuth() {
 function App() {
   // Avoid flash on desktop: initialize with actual value
   const [isDesktop, setIsDesktop] = useState(() => window.innerWidth > 868);
-  const location = useLocation();
-
+  const location = useLocation()
+  const [ShowNavBar,SetShowNavBar] = useState(true)
   // Keep desktop state updated
   useEffect(() => {
     const check = () => setIsDesktop(window.innerWidth > 868);
@@ -57,8 +57,11 @@ function App() {
   //}, []);
 
   // Navbar shown on all authenticated pages except /mkAdiet
-  const showNavbar = isAuthenticated() && location.pathname !== "/mkAdiet";
-
+  useEffect(() =>{
+    console.log("dlfjaskdl;jfsd");
+    
+    SetShowNavBar(isAuthenticated() && location.pathname !== "/MKADiet")
+  },[location.pathname])
   // ---------- Desktop guard ----------
   if (isDesktop) {
     return (
@@ -132,7 +135,7 @@ function App() {
       </Suspense>
 
       {/* Navbar rendered outside Suspense → never disappears on route change */}
-      {showNavbar && <Navbar />}
+      {ShowNavBar && <Navbar />}
     </>
   );
 }

@@ -29,6 +29,7 @@ const stepLabels = [
   { alert: "اختار اهدافك🎯", step: 10 },
   { alert: "مبروك🎖️", step: 15 },
 ];
+
 // ربط الخطوات بالأيقونات المخصصة
 const stepIconMap: Record<number, React.ComponentType<{ className?: string }>> = {
   5: IoScaleOutline,
@@ -45,26 +46,65 @@ const Welcome: React.FC = () => {
   const [isUserDataSaved, setIsUserDataSaved] = useState(false);
   const [isTikTokBrowser, setIsTikTokBrowser] = useState(false);
 
+  // ---- New states for the improved TikTok flow ----
+  const [showTikTokModal, setShowTikTokModal] = useState(true); // can be dismissed
+  const [linkCopied, setLinkCopied] = useState(false);
+
   // Detect TikTok browser
   useEffect(() => {
     const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
-    
-    // Check for TikTok browser user agent patterns
-    if (/tiktok/i.test(userAgent) || 
-        /aweme/i.test(userAgent) || 
-        /musical_ly/i.test(userAgent) ||
-        /Bytedance/i.test(userAgent)) {
+    if (
+      /tiktok/i.test(userAgent) ||
+      /aweme/i.test(userAgent) ||
+      /musical_ly/i.test(userAgent) ||
+      /Bytedance/i.test(userAgent)
+    ) {
       setIsTikTokBrowser(true);
     }
   }, []);
 
-  // حساب مؤشر كتلة الجسم
+  // ---- Replaced handleOpenLink with copy-first approach ----
+  const handleOpenLink = () => {
+    const url = 'https://iron-fit-blush.vercel.app';
+    const ua = navigator.userAgent || '';
+    const isIOS = /iPad|iPhone|iPod/.test(ua);
+    const isAndroid = /Android/.test(ua);
+
+    // Universal clipboard helper
+    const copyToClipboard = (text: string) => {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+      } else {
+        fallbackCopy(text);
+      }
+    };
+
+    const fallbackCopy = (text: string) => {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try { document.execCommand('copy'); } catch (_) {}
+      document.body.removeChild(textarea);
+    };
+
+    // Always copy the link immediately
+    copyToClipboard(url);
+    setLinkCopied(true);
+    setTimeout(() => setLinkCopied(false), 3000);
+
+
+    // No alert – the modal already provides instructions.
+  };
+
+  // ---- All your existing code (BMI calc, next, previous, etc.) unchanged ----
   const calcBMI = (weightKg: number, heightCm: number) => {
     if (heightCm <= 0) return 0;
     return weightKg / (heightCm / 100) ** 2;
   };
 
-  // تفاصيل مؤشر كتلة الجسم
   const getBMIDetails = (weightKg: number, heightCm: number) => {
     const heightM = heightCm / 100;
     const bmi = heightM > 0 ? weightKg / (heightM * heightM) : 0;
@@ -102,36 +142,8 @@ const Welcome: React.FC = () => {
     };
   };
 
-  // قراءة القيم من localStorage
   const currentWeight = Number(localStorage.getItem("currentWeight") || 0);
   const height = Number(localStorage.getItem("height") || 0);
-
-  const handleOpenLink = () => {
-  // Try multiple methods
-  const url = 'https://iron-fit-blush.vercel.app';
-  
-  // Method 1: window.open
-  const win = window.open(url, '_blank');
-  
-  // Method 2: If window.open fails, try using location
-  if (!win || win.closed) {
-    // Some TikTok WebViews block window.open, so try this
-    const a = document.createElement('a');
-    a.href = url;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
-  
-  // Method 3: As a last resort, try to redirect the current window
-  setTimeout(() => {
-    if (!win || win.closed) {
-      window.location.href = url;
-    }
-  }, 100);
-};
 
   const next = () => {
     if (loading) return;
@@ -218,13 +230,13 @@ const Welcome: React.FC = () => {
       <div className="absolute -top-20 right-1/2 w-70 h-50 dark:bg-amber-400 blur-[120px] opacity-75 animate-pulse" />
       <div className="w-screen max-w-md flex flex-col h-screen">
         {/* الهيدر – شريط الخطوات المحسن */}
-       {turn > 2 && <header className="px-6 pt-6 pb-2">
+        {turn > 2 && <header className="px-6 pt-6 pb-2">
           <div className="relative w-full mt-6  flex items-center">
             { stepLabels.map((label) => {
                const stepNumber = label.step;
 
-  const isCompleted = turn > stepNumber;
-  const isCurrent = turn === stepNumber;
+              const isCompleted = turn > stepNumber;
+              const isCurrent = turn === stepNumber;
 
               const IconComponent = stepIconMap[stepNumber];
 
@@ -239,7 +251,6 @@ const Welcome: React.FC = () => {
                           : " bg-[#D9D9D955]"
                       }`}
                     >
-                      {/* المحتوى داخل الدائرة (أيقونة أو علامة صح) */}
                       <span
                         className={`absolute inset-0 flex items-center justify-center text-white transition-all duration-300 ${
                           isCompleted || isCurrent
@@ -310,26 +321,44 @@ const Welcome: React.FC = () => {
           </button>
         </footer>
       </div>
-      {/* Notification for TikTok browser - shows only when turn is 8 AND user is on TikTok browser */}
-      {turn === 8 && isTikTokBrowser && (
-        <div className='absolute w-screen h-screen bg-[#33333390] flex justify-center items-center show-first'>
-          <div className='w-11/12 min-h-40 bg-gray-50 flex flex-col justify-between rounded-2xl overflow-hidden'>
-            <article className='text-center p-6 text-gray-900'>
-              <div className='text-xl font-black'>IronFit لا يدعم المتصفح الحالي</div>
-              <p className='mt-2'>للحصول علي أفضل تجربة يمكنك فتح IronFit  علي  
-                {" "}
-                <span className='font-black'>Chrome</span>
-                {" "}
-                أو 
-                {" "}
-                <span className='font-black'>Safari</span>
+
+      {/* ---- New TikTok Browser Modal (copy & paste) ---- */}
+           {turn === 8 && isTikTokBrowser && showTikTokModal && (
+        <div className='absolute inset-0 bg-black/60 flex justify-center items-center z-50 p-4 backdrop-blur-sm show-fast'>
+          <div className='w-full max-w-sm bg-white dark:bg-neutral-800 rounded-3xl overflow-hidden shadow-2xl'>
+            <article className='text-center p-6'>
+              <div className='text-2xl font-black text-gray-900 dark:text-gray-100 mb-2'>
+IronFit
+غير مدعوم من متصفح تيك توك 
+              </div>
+              <p className='text-gray-600 dark:text-gray-300 text-sm leading-relaxed'>
+                للحصول على أفضل تجربة، يُرجى فتح الرابط في متصفح{' '}
+                <span className='font-bold'>Chrome</span> أو{' '}
+                <span className='font-bold'>Safari</span>.
               </p>
+              {linkCopied && (
+                <div className='mt-3 text-green-600 dark:text-green-400 font-medium text-sm animate-pulse'>
+                  ✅ تم نسخ الرابط بنجاح
+                </div>
+              )}
             </article>
-              <button 
-              onClick={handleOpenLink}
-              className='w-full h-12  bg-orange-400 text-white flex flex-row gap-1 justify-center items-center'>
-                الإستمرار <FaCaretLeft className='mb-1'/>
+            <div className='flex flex-col gap-2 p-4 bg-gray-50 dark:bg-neutral-900'>
+              <button
+                onClick={handleOpenLink}
+                className='w-full h-12 bg-orange-500 hover:bg-orange-600 active:scale-[0.98] text-white rounded-xl font-semibold flex items-center justify-center flex-row text-sm  gap-2 transition-all'
+              >
+<div>
+                  نسخ الرابط والمتابعة {"  "} 
+
+</div>
+                <FaCaretLeft className="text-lg" />
               </button>
+              <button
+                onClick={() => setShowTikTokModal(false)}
+                className='w-full h-10 text-sm text-gray-500 dark:text-gray-400 underline underline-offset-2'
+              >
+              </button>
+            </div>
           </div>
         </div>
       )}

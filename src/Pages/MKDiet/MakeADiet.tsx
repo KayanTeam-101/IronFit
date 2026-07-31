@@ -39,10 +39,10 @@ const MEAL_NAMES_AR: Record<MealKey, string> = {
 };
 
 const MEAL_ICONS: Record<MealKey, React.ReactNode> = {
-  Breakfast: <BsSun className="text-amber-500" />,
-  Lunch: <FaBowlFood className="text-orange-500" />,
-  Snacks: <BiCookie className="text-yellow-600" />,
-  Dinner: <BsMoon className="text-indigo-400" />,
+  Breakfast: <div className="p-3 bg-amber-100 rounded-xl"><BsSun className="text-amber-500  text-xl" /></div>,
+  Lunch: <div className="p-3 bg-orange-50 rounded-xl"><FaBowlFood className="text-orange-500  text-xl" /></div>,
+  Snacks: <div className="p-3 bg-yellow-50 rounded-xl "><BiCookie className="text-yellow-600 text-xl"   /></div>,
+  Dinner: <div className="p-3 bg-indigo-50 rounded-xl"><BsMoon className="text-indigo-400 text-xl" /></div>,
 };
 
 
@@ -279,8 +279,7 @@ const MakeADiet: React.FC = () => {
             onClick={() => (navigate('/templates'))}
             className="text-amber-400 cursor-pointer underline p-2 text-shadow-xs"
           >
-          __هنا__
-          </span>
+          هنا         </span>
         </div>
 
         </div>
@@ -292,12 +291,12 @@ const MakeADiet: React.FC = () => {
           <div
             id={`meal-${meal}`}
             key={meal}
-            className="relative bg-white/70 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-lg border border-white/60 shadow-xl rounded-3xl overflow-hidden transition-all duration-500 ease-in-out"
+            className="relative bg-white/70 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-lg border border-white/60 shadow-[0_0_14px_-10px_#000] active:scale-95 rounded-3xl overflow-hidden transition-all duration-500 ease-in-out"
             style={{ height: "60px" }}
           >
             <div
               onClick={() => toggleMeal(meal)}
-              className="flex items-center justify-between px-5 py-4 cursor-pointer select-none"
+              className="flex items-center justify-between px-5 pb-4 pt-2 cursor-pointer select-none"
             >
               <div className="flex items-center gap-3">
                 {MEAL_ICONS[meal]}
@@ -415,7 +414,7 @@ const MakeADiet: React.FC = () => {
       <div className="relative p-5 left-0 right-0 flex justify-center z-50">
         <button
           onClick={saveDiet}
-          className="flex items-center justify-center w-full gap-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-full text-lg font-bold shadow-2xl active:scale-95 transition hover:shadow-3xl"
+          className="flex items-center justify-center w-full gap-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-full text-lg font-bold active:scale-95 transition hover:shadow-3xl"
         >
           <BsSave2Fill size={22} />
           حفظ النظام

@@ -137,7 +137,7 @@ const CounterY = ({ arr, size = "md", value, delValue, onChange }: CounterYProps
               style={{
                 height: ITEM_HEIGHT,
                 opacity,
-                color: opacity > 0.5 ? "orange" : "#94a3b8",
+                color: opacity > 0.5 ? "#ff6900" : "#94a3b8",
               }}
             >
               {num}

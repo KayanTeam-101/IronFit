@@ -53,10 +53,14 @@ const Second: React.FC = () => {
 
           <p className="mt-3 text-gray-600 dark:text-gray-300 leading-7 show-first">
 إشمعنا             
-            <span className="font-semibold text-orange-500">
+            <span className="font-black text-orange-500">
               {" "}
-                IronFit ؟  
+                IronFit  
             </span>
+<span className="p-1">
+            ؟ 
+
+</span>
           </p>
         </div>
 
@@ -66,9 +70,9 @@ const Second: React.FC = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="group p-1 rounded-2xl border border-orange-50 dark:border-neutral-700/60 bg-white dark:bg-neutral-900  text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 show-third"
+              className="group p-1 py-3 rounded-2xl border border-amber-50 dark:border-neutral-700/60 bg-white dark:bg-neutral-900  text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 show-third"
             >
-              <div className="mx-auto mb-2 flex h-7 w-14 items-center justify-center rounded-full bg-orange-50 dark:bg-orange-500/5  text-orange-400 text-xl group-hover:scale-110 transition-transform duration-300">
+              <div className="mx-auto mb-2 flex h-7 w-14 items-center justify-center rounded-full bg-amber-50/90 dark:bg-orange-500/5  text-orange-400 text-xl group-hover:scale-110 transition-transform duration-300">
                 {feature.icon}
               </div>
 
