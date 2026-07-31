@@ -23,7 +23,7 @@ const Firstturn: React.FC = () => {
       {/* Welcome card – positioned at the bottom with padding */}
       <div className="absolute bottom-15 z-20 px-6">
 
-        <div className="mx-auto max-w-sm backdrop-blur-xl dark:bg-black/40 bg-white/80 rounded-3xl p-6 text-center space-y-5 shadow-xl animate-fade-slide-up">
+        <div className="mx-auto max-w-sm backdrop-blur-xl dark:bg-black/40 bg-white rounded-3xl p-6 text-center space-y-5 shadow-xl animate-fade-slide-up">
           {/* Logo */}
           <div className="flex justify-center -mt-14">
             <div className="w-16 h-16 rounded-full overflow-hidden pop">
@@ -37,39 +37,40 @@ const Firstturn: React.FC = () => {
 
           {/* Welcome text */}
         <div>
-  <h1 className="text-5xl font-black dark:text-white text-gray-900">
+  <h1 className="text-3xl font-black dark:text-white text-gray-700">
     أهلاً بك في
   </h1>
 
-  <h2 className="text-5xl font-black mt-2 bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">
+  <h2 className="text-5xl font-thin mt-2 bg-linear-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">
     IronFit
   </h2>
+        <div className="relative block h-1 w-12 bg-amber-400 mt-2 mx-auto rounded-full fullWidth" />
 
-  <p className="mt-5 dark:text-gray-200 leading-8 text-lg">
-    مساعدك الذكي لبناء أسلوب حياة صحي ومتوازن.
+
+  <p className="mt-5 dark:text-gray-200 leading-8 text-lg px-6">
+    مساعدك الذكي لبناء أسلوب حياة صحي ومتوازن
   </p>
 </div>
-
 <div className="space-y-4 mt-6">
 
-  <div className="flex items-center gap-4 bg-white/10 rounded-3xl shadow-xl p-3 backdrop-blur-md text-right">
-    <span className="text-2xl"><FaUtensils className="text-emerald-500"/></span>
-    <p className="dark:text-white text-gray-900">
-      تنظيم وجباتك وحساب السعرات بسهولة.
+  <div className="flex items-center gap-4 bg-emerald-50 rounded-3xl  p-3 backdrop-blur-md text-right">
+    <div  className="text-2xl bg-emerald-100 p-2 rounded-2xl"><FaUtensils className="text-emerald-500"/></div>
+    <p className=" text-gray-900">
+      تنظيم وجباتك وحساب السعرات بسهولة
     </p>
   </div>
 
-  <div className="flex items-center gap-4 bg-white/10 rounded-3xl shadow-xl p-3 backdrop-blur-md">
-    <span className="text-2xl"><LuDumbbell className="text-orange-500"/></span>
-    <p className="dark:text-white text-gray-900">
-      متابعة التمارين وتطور أدائك.
+  <div className="flex items-center gap-4 bg-orange-50 rounded-3xl  p-3 backdrop-blur-md">
+    <div className="text-2xl bg-orange-100 p-2 rounded-2xl"><LuDumbbell className="text-orange-500"/></div>
+    <p className=" text-gray-900">
+      متابعة التمارين وتطور أدائك
     </p>
   </div>
 
-  <div className="flex items-center gap-4 bg-white/10 rounded-3xl shadow-xl p-3 backdrop-blur-md">
-    <span className="text-2xl"><RiCopperCoinFill className="text-blue-600"/></span>
-    <p className="dark:text-white text-gray-900 text-right">
-      تحديات يومية ونظام XP يحفزك للاستمرار.
+  <div className="flex items-center gap-4 bg-blue-50 rounded-3xl  p-3 backdrop-blur-md">
+    <div className="text-2xl bg-blue-100 p-2 rounded-2xl"><RiCopperCoinFill className="text-blue-600"/></div>
+    <p className=" text-gray-900 text-right">
+      تحديات يومية ونظام XP يحفزك للاستمرار
     </p>
   </div>
 

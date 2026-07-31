@@ -86,7 +86,7 @@ const Second: React.FC = () => {
           <img
             src={img}
             alt="Fitness"
-            className="w-50 "
+            className="w-full "
           />
         </div>
 

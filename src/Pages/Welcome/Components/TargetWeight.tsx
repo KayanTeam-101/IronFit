@@ -72,14 +72,7 @@ const TargetWhight: React.FC = () => {
         size={window.innerWidth <= 390 ? "md" : "lg"}
         onChange={handleChange}
       />
-      <div className='w-full h-fit p-4 dark:text-white rounded-2xl  bg-gray-100 shadow dark:bg-[#666]/20 font-black'>
-         فرق الوزن بين الحالي و المُستهدف  
-        <span className={`${color} p-1 transition-all`}>
-           
-          {Dif} كجم
-        </span>
-        <span>{directionLabel}</span>
-      </div>
+<div></div>
     </div>
     
   )

@@ -24,7 +24,7 @@ const TOTAL_STEPS = 15;
 
 // تسمية المراحل
 const stepLabels = [
-  { alert: "مرحباً👋", step: 1 },
+  { alert: "أهلاً👋", step: 1 },
   { alert: "تحليل المعلومات📊", step: 5 },
   { alert: "اختار اهدافك🎯", step: 10 },
   { alert: "مبروك🎖️", step: 15 },
@@ -105,6 +105,33 @@ const Welcome: React.FC = () => {
   // قراءة القيم من localStorage
   const currentWeight = Number(localStorage.getItem("currentWeight") || 0);
   const height = Number(localStorage.getItem("height") || 0);
+
+  const handleOpenLink = () => {
+  // Try multiple methods
+  const url = 'https://iron-fit-blush.vercel.app';
+  
+  // Method 1: window.open
+  const win = window.open(url, '_blank');
+  
+  // Method 2: If window.open fails, try using location
+  if (!win || win.closed) {
+    // Some TikTok WebViews block window.open, so try this
+    const a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+  
+  // Method 3: As a last resort, try to redirect the current window
+  setTimeout(() => {
+    if (!win || win.closed) {
+      window.location.href = url;
+    }
+  }, 100);
+};
 
   const next = () => {
     if (loading) return;
@@ -298,11 +325,11 @@ const Welcome: React.FC = () => {
                 <span className='font-black'>Safari</span>
               </p>
             </article>
-            <a href="https://iron-fit-blush.vercel.app" target="_blank">
-              <button className='w-full h-12  bg-orange-400 text-white flex flex-row gap-1 justify-center items-center'>
+              <button 
+              onClick={handleOpenLink}
+              className='w-full h-12  bg-orange-400 text-white flex flex-row gap-1 justify-center items-center'>
                 الإستمرار <FaCaretLeft className='mb-1'/>
               </button>
-            </a>
           </div>
         </div>
       )}
