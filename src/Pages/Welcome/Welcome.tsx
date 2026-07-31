@@ -19,6 +19,7 @@ const BreakPage = lazy(() => import('./Components/BreakPage'));
 import { GoGoal } from "react-icons/go";
 import { PiConfettiLight } from "react-icons/pi";
 import { IoScaleOutline } from 'react-icons/io5';
+import { BsCheckCircleFill } from 'react-icons/bs';
 
 const TOTAL_STEPS = 15;
 
@@ -93,7 +94,7 @@ const Welcome: React.FC = () => {
     // Always copy the link immediately
     copyToClipboard(url);
     setLinkCopied(true);
-    setTimeout(() => setLinkCopied(false), 3000);
+    setTimeout(() => setLinkCopied(false), 7000);
 
 
     // No alert – the modal already provides instructions.
@@ -323,45 +324,59 @@ const Welcome: React.FC = () => {
       </div>
 
       {/* ---- New TikTok Browser Modal (copy & paste) ---- */}
-           {turn === 8 && isTikTokBrowser && showTikTokModal && (
-        <div className='absolute inset-0 bg-black/60 flex justify-center items-center z-50 p-4 backdrop-blur-sm show-fast'>
-          <div className='w-full max-w-sm bg-white dark:bg-neutral-800 rounded-3xl overflow-hidden shadow-2xl'>
-            <article className='text-center p-6'>
-              <div className='text-2xl font-black text-gray-900 dark:text-gray-100 mb-2'>
-IronFit
-غير مدعوم من متصفح تيك توك 
-              </div>
-              <p className='text-gray-600 dark:text-gray-300 text-sm leading-relaxed'>
-                للحصول على أفضل تجربة، يُرجى فتح الرابط في متصفح{' '}
-                <span className='font-bold'>Chrome</span> أو{' '}
-                <span className='font-bold'>Safari</span>.
-              </p>
-              {linkCopied && (
-                <div className='mt-3 text-green-600 dark:text-green-400 font-medium text-sm animate-pulse'>
-                  ✅ تم نسخ الرابط بنجاح
-                </div>
-              )}
-            </article>
-            <div className='flex flex-col gap-2 p-4 bg-gray-50 dark:bg-neutral-900'>
-              <button
-                onClick={handleOpenLink}
-                className='w-full h-12 bg-orange-500 hover:bg-orange-600 active:scale-[0.98] text-white rounded-xl font-semibold flex items-center justify-center flex-row text-sm  gap-2 transition-all'
-              >
-<div>
-                  نسخ الرابط والمتابعة {"  "} 
+         { 1 && 1 && (
+  <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 showAnim2">
+    <div className="w-full max-w-sm bg-white dark:bg-neutral-800 rounded-3xl overflow-hidden shadow-2xl">
+
+<article className='text-center p-6 flex gap-6 flex-col'>
+  <div className='text-2xl font-black text-gray-900 dark:text-gray-100 mb-2 '>
+    IronFit
+    غير قادر علي العمل بشكل صحيح هنا
+  </div>
+
+  <p className='text-gray-600 dark:text-gray-300 text-sm leading-relaxed px-6'>
+    <span className='font-bold'>IronFit</span>،
+    للحصول على أفضل تجربة، افتح الموقع في{' '}
+    <span className='font-bold text-emerald-600'>Chrome</span> أو{' '}
+    <span className='font-bold text-emerald-600'>Safari</span>.
+  </p>
+
+
+  <div className='mt-3 text-xl text-gray-700 font-mono break-all select'>
+    <span>http</span>
+    <span className='text-green-600 font-bold'>s</span>
+    <span>://iron-fit-blush.vercel.app</span>
+  </div>
+
+  {linkCopied && (
+    <div className='mt-3 text-emerald-600 dark:text-green-400 text-sm animate-pulse flex flex-row'>
+      تم نسخ الرابط بنجاح , إذهب الآن للمتصفح و قم بلصقه با بطل
+     <BsCheckCircleFill className='text-xl'/>
+    </div>
+  )}
+</article>
+
+<div className='flex flex-col gap-2 p-4 bg-gray-50 dark:bg-neutral-900'>
+  <button
+    onClick={handleOpenLink}
+    className='w-full h-12 bg-orange-500 hover:bg-orange-600 active:scale-[0.98] text-white rounded-xl font-semibold flex items-center justify-center flex-row text-sm gap-2 transition-all'
+  >
+    <div>
+      الإستمرار 
+      </div>
+    <FaCaretLeft className="text-lg" />
+  </button>
+
+  <div className='text-center text-sm text-gray-500 dark:text-gray-400 px-2'>
+    قم بالمتابعة علي Chrome أو Safari.
+  </div>
+
 
 </div>
-                <FaCaretLeft className="text-lg" />
-              </button>
-              <button
-                onClick={() => setShowTikTokModal(false)}
-                className='w-full h-10 text-sm text-gray-500 dark:text-gray-400 underline underline-offset-2'
-              >
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+
+    </div>
+  </div>
+)}
     </div>
   );
 };
