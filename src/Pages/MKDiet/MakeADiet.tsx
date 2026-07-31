@@ -39,10 +39,10 @@ const MEAL_NAMES_AR: Record<MealKey, string> = {
 };
 
 const MEAL_ICONS: Record<MealKey, React.ReactNode> = {
-  Breakfast: <div className="p-3 bg-amber-100 rounded-xl"><BsSun className="text-amber-500  text-xl" /></div>,
-  Lunch: <div className="p-3 bg-orange-50 rounded-xl"><FaBowlFood className="text-orange-500  text-xl" /></div>,
-  Snacks: <div className="p-3 bg-yellow-50 rounded-xl "><BiCookie className="text-yellow-600 text-xl"   /></div>,
-  Dinner: <div className="p-3 bg-indigo-50 rounded-xl"><BsMoon className="text-indigo-400 text-xl" /></div>,
+  Breakfast: <div className="p-3 bg-amber-100 dark:bg-amber-800/20 rounded-xl"><BsSun className="text-amber-500  text-xl" /></div>,
+  Lunch: <div className="p-3 bg-orange-50 dark:bg-orange-800/20 rounded-xl"><FaBowlFood className="text-orange-500  text-xl" /></div>,
+  Snacks: <div className="p-3 bg-yellow-50 dark:bg-yellow-800/20 rounded-xl "><BiCookie className="text-yellow-600 text-xl"   /></div>,
+  Dinner: <div className="p-3 bg-indigo-50 dark:bg-indigo-800/20 rounded-xl"><BsMoon className="text-indigo-400 text-xl" /></div>,
 };
 
 
@@ -291,8 +291,8 @@ const MakeADiet: React.FC = () => {
           <div
             id={`meal-${meal}`}
             key={meal}
-            className="relative bg-white/70 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-lg border border-white/60 shadow-[0_0_14px_-10px_#000] active:scale-95 rounded-3xl overflow-hidden transition-all duration-500 ease-in-out"
-            style={{ height: "60px" }}
+            className="relative max-h-screen  bg-white/70 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-lg border border-white/60 shadow-[0_0_14px_-10px_#000] active:scale-95 rounded-3xl overflow-hidden transition-all duration-500 ease-in-out"
+            // style={{ height: "60px" }}
           >
             <div
               onClick={() => toggleMeal(meal)}
@@ -312,7 +312,7 @@ const MakeADiet: React.FC = () => {
               <HiOutlineChevronUpDown className="text-gray-400 text-xl" />
             </div>
 
-            <div className="px-5 pb-5 space-y-3">
+            <div className="px-5  pb-5 space-y-3">
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -328,7 +328,7 @@ const MakeADiet: React.FC = () => {
                   {mealPlan[meal][0].map((dish, idx) => (
                     <div
                       key={`${meal}-${idx}`}
-                      className="flex items-center justify-between bg-orange-100 dark:bg-amber-50/20 p-3 rounded-xl"
+                      className="flex items-center justify-between bg-orange-100/70 dark:bg-amber-50/20 p-3 rounded-2xl"
                     >
                       <span className="text-[#111] dark:text-gray-50 font-black">
                         {dish}
@@ -342,7 +342,7 @@ const MakeADiet: React.FC = () => {
                 </p>
               )}
 
-              <div className="flex flex-wrap gap-2 overflow-scroll mb-20">
+              <div className="flex flex-wrap gap-2 overflow-scroll mb-3">
                 {mealPlan[meal][1].map((value, idx) => {
                   if (idx === 0) {
                     return (

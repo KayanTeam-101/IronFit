@@ -1,8 +1,8 @@
 import React, { useState, useMemo, useEffect } from "react";
 import foods from "../../assets/FoodsList.json"; // this is a large Json file 36.7KB
-import { FaArrowLeft, FaCaretRight, FaSearch, FaTimes } from "react-icons/fa";
+import { FaArrowLeft, FaCaretRight, FaLeaf, FaSearch, FaTimes } from "react-icons/fa";
 import { IoClose, IoDiamond } from "react-icons/io5";
-import { BsSave } from "react-icons/bs";
+import { BsCheckCircleFill, BsSave } from "react-icons/bs";
 import { GiFruitBowl } from "react-icons/gi";
 import { BiInfoCircle } from "react-icons/bi";
 
@@ -313,26 +313,26 @@ const AdditionPage = ({ Meal, onClose }: AdditionPageProps) => {
 
           <div className="grid grid-cols-2 gap-3">
             <div className="p-3">
-              <div className="text-xs text-orange-600 mb-1">السعرات</div>
-              <div className="text-xl font-bold text-orange-700">
+              <div className="text-sm text-orange-600 mb-1">السعرات</div>
+              <div className="text-xl font-black text-orange-700">
                 {totals.cal.toFixed(0)}
               </div>
             </div>
             <div className="rounded-xl p-3">
-              <div className="text-xs text-teal-600 mb-1">بروتين</div>
-              <div className="text-xl font-bold text-teal-700">
+              <div className="text-sm text-teal-600 mb-1">بروتين</div>
+              <div className="text-xl font-black text-teal-700">
                 {totals.prot.toFixed(1)} غ
               </div>
             </div>
             <div className="rounded-xl p-3">
-              <div className="text-xs text-blue-700 mb-1">الدهون</div>
-              <div className="text-xl font-bold text-blue-700">
+              <div className="text-sm text-blue-700 mb-1">الدهون</div>
+              <div className="text-xl font-black text-blue-700">
                 {totals.Fat.toFixed(1)} غ
               </div>
             </div>
             <div className="rounded-xl p-3">
-              <div className="text-xs text-amber-600 mb-1">كاربهايدريت</div>
-              <div className="text-xl font-bold text-amber-700">
+              <div className="text-sm text-amber-600 mb-1">كاربهايدريت</div>
+              <div className="text-xl font-black text-amber-700">
                 {totals.Carb.toFixed(1)} غ
               </div>
             </div>
@@ -340,25 +340,26 @@ const AdditionPage = ({ Meal, onClose }: AdditionPageProps) => {
 
           {totals.vitamins.length > 0 && (
             <div className="mt-3 rounded-xl p-3">
-              <div className="text-xs text-purple-600 mb-1">
+              <div className="text-sm text-emerald-600 mb-1 flex flex-row gap-2">
                 الفيتامينات و المعادن
+                <FaLeaf className="text-emerald-400"/>
               </div>
               <div className="flex flex-wrap gap-1">
                 {IsActive
                   ? totals.vitamins.map((vit, i) => (
                       <span
                         key={i}
-                        className="px-2 py-0.5 bg-white rounded-full text-xs font-medium text-purple-700"
+                        className="px-2 py-0.5  rounded-full text-xs font-medium text-gray-700"
                       >
-                        {vit}
+                        {vit} <BsCheckCircleFill className="text-emerald-400"/>
                       </span>
                     ))
                   : totals.vitamins.map((i) => (
                       <span
                         key={i}
-                        className="px-2 py-0.5 bg-white rounded-full text-xs font-medium text-purple-700"
+                        className="px-2 py-0.5  rounded-full text-xs font-medium text-gray-700"
                       >
-                        VIP <IoDiamond />
+                        VIP <IoDiamond className="text-amber-400"/>
                       </span>
                     ))}
               </div>
