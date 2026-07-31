@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import { FaFire, FaHeartbeat, FaBullseye, FaRulerVertical } from "react-icons/fa";
+import { useCountUp } from "../../../Hooks/Increasing";
 
 // دوال الحساب
 const calcBMI = (weightKg: number, heightCm: number) => {
@@ -81,7 +82,7 @@ const ShowBmi: React.FC = () => {
   // الحسابات الأساسية
   const bmr = calcBMR(userData.currentWeight, userData.height, userData.age, userData.gender);
  
-  const animatedBMR = Math.round(bmr);
+  const animatedBMR = useCountUp(Math.round(bmr));
 
   // سلسلة التمارين (اختياري)
   const streak = useMemo(() => {

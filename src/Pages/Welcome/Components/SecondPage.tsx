@@ -1,34 +1,95 @@
 import React from "react";
-import { GoGoal } from "react-icons/go";
-import { LiaDumbbellSolid } from "react-icons/lia";
+import {
+  FaBullseye,
+  FaFire,
+  FaChartLine,
+  FaTrophy,
+  FaBrain,
+  FaUtensils,
+  FaMoneyBillAlt,
+} from "react-icons/fa";
+import img from "/undraw_fitness-stats_bd09.svg";
+import { FaDumbbell } from "react-icons/fa6";
+import { TbFriends } from "react-icons/tb";
+
+const features = [
+  {
+    title: "متابعة لتمارينك",
+    icon: <FaDumbbell />,
+  },
+  {
+    title: "وجبات ذكية",
+    icon: <FaUtensils />,
+  },
+  {
+    title: "مجاني",
+    icon: <FaMoneyBillAlt />,
+  },
+  {
+    title: "متابعة التقدم",
+    icon: <FaChartLine />,
+  },
+  {
+    title: "XP وإنجازات",
+    icon: <FaTrophy />,
+  },
+  {
+    title: "مجتمع للرياضيين",
+    icon: <TbFriends />,
+  },
+];
+
 const Second: React.FC = () => {
   return (
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-lg showInTwoSecond">
-      {/* Glowing background blobs */}
- 
-      {/* Main card */}
-      <div className="relative bg-linear-to-b from-orange-500 to-amber-400  show-second  shadow-2xl rounded-4xl p-8 text-center space-y-6">
-        {/* Icon with glowing ring */}
-        <div className="flex justify-center">
-          <div className="relative">
-            <div className="absolute inset-0 rounded-full blur-xl " />
-            
-          <h1 className=" text-9xl font-black mt-2 text-white showAnim2"><GoGoal /></h1>
-          </div>
-        </div>
+    <div className="w-full h-full flex items-center justify-center px-5 ">
+      <div className="w-full max-w-lg">
 
-        {/* Welcome text */}
-        <div className="show-second ">
-          <p className="text-3xl font-extrabold text-white"> بسم اللّه</p>
-          <p className="text-2xl font-black mt-2 text-white">
-        هنحتاج دقيقة واحدة عشان تكّمل الأسئلة الجاية          
+       
+        {/* Title */}
+        <div className="text-center mb-8">
+          <h1 className="text-2xl font-thin text-gray-900 dark:text-white mt-10 show-fast">
+            بسم الله الرحمن الرحيم
+          </h1>
+
+          <p className="mt-3 text-gray-600 dark:text-gray-300 leading-7 show-first">
+إشمعنا             
+            <span className="font-semibold text-orange-500">
+              {" "}
+                IronFit ؟  
+            </span>
           </p>
         </div>
 
-        {/* Tagline */}
-      
+        {/* Features */}
+        <div className="grid grid-cols-2 gap-4 mb-10">
 
-        {/* Subtle divider */}
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className="group p-1 rounded-2xl border border-orange-50 dark:border-neutral-700/60 bg-white dark:bg-neutral-900  text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 show-third"
+            >
+              <div className="mx-auto mb-2 flex h-7 w-14 items-center justify-center rounded-full bg-orange-50 dark:bg-orange-500/5  text-orange-400 text-xl group-hover:scale-110 transition-transform duration-300">
+                {feature.icon}
+              </div>
+
+              <p className="font-semibold text-gray-800 dark:text-white">
+                {feature.title}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom Text */}
+   
+         {/* SVG */}
+        <div className="flex justify-center">
+          <img
+            src={img}
+            alt="Fitness"
+            className="w-50 "
+          />
+        </div>
+
       </div>
     </div>
   );

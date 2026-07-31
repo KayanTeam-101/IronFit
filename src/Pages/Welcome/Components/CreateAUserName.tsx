@@ -125,7 +125,7 @@ const CreateAUserName = ({
     <div className="w-full px-4 flex flex-col items-center">
 
       <div className="w-full max-w-sm space-y-6">
-        {/* Image upload (kept same style as original but without absolute overlay) */}
+        Image upload (kept same style as original but without absolute overlay)
         <div className="flex flex-col items-center">
           {photoUrl ? (
             <div className="relative w-40 h-40 flex justify-center items-center">

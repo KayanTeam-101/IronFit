@@ -1,9 +1,7 @@
-import React, { lazy, Suspense,useState } from 'react';
-import {
-  FaCaretLeft,
-} from "react-icons/fa6";
-
-import Firstturn from './Components/Firstturn'; // eager
+import React, { lazy, useState, useEffect } from 'react';
+import { FaCaretLeft } from "react-icons/fa6";
+import { FaCalendarAlt, FaBullseye, FaUser, FaCheck } from "react-icons/fa";
+import Firstturn from './Components/Firstturn';
 
 const ChooseHight = lazy(() => import('./Components/ChooseHight'));
 const ChooseAge = lazy(() => import('./Components/ChooseAge'));
@@ -17,24 +15,56 @@ const Second = lazy(() => import('./Components/SecondPage'));
 const ShowBmi = lazy(() => import('./Components/ShowBmi'));
 const CreateAUserName = lazy(() => import('./Components/CreateAUserName'));
 const BreakPage = lazy(() => import('./Components/BreakPage'));
+
 import { GoGoal } from "react-icons/go";
 import { PiConfettiLight } from "react-icons/pi";
 import { IoScaleOutline } from 'react-icons/io5';
+
 const TOTAL_STEPS = 15;
+
+// تسمية المراحل
+const stepLabels = [
+  { alert: "مرحباً👋", step: 1 },
+  { alert: "تحليل المعلومات📊", step: 5 },
+  { alert: "اختار اهدافك🎯", step: 10 },
+  { alert: "مبروك🎖️", step: 15 },
+];
+// ربط الخطوات بالأيقونات المخصصة
+const stepIconMap: Record<number, React.ComponentType<{ className?: string }>> = {
+  5: IoScaleOutline,
+  7: GoGoal,
+  10: FaCalendarAlt,
+  12: FaBullseye,
+  14: FaUser,
+};
 
 const Welcome: React.FC = () => {
   const [turn, setTurn] = useState(1);
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [isUserDataSaved, setIsUserDataSaved] = useState(false);
+  const [isTikTokBrowser, setIsTikTokBrowser] = useState(false);
 
-  // BMI calculator (raw value)
+  // Detect TikTok browser
+  useEffect(() => {
+    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+    
+    // Check for TikTok browser user agent patterns
+    if (/tiktok/i.test(userAgent) || 
+        /aweme/i.test(userAgent) || 
+        /musical_ly/i.test(userAgent) ||
+        /Bytedance/i.test(userAgent)) {
+      setIsTikTokBrowser(true);
+    }
+  }, []);
+
+  // حساب مؤشر كتلة الجسم
   const calcBMI = (weightKg: number, heightCm: number) => {
     if (heightCm <= 0) return 0;
     return weightKg / (heightCm / 100) ** 2;
   };
 
-  // BMI details function (no doctor mentions)
+  // تفاصيل مؤشر كتلة الجسم
   const getBMIDetails = (weightKg: number, heightCm: number) => {
     const heightM = heightCm / 100;
     const bmi = heightM > 0 ? weightKg / (heightM * heightM) : 0;
@@ -47,28 +77,22 @@ const Welcome: React.FC = () => {
       description = "يرجى إدخال طول صحيح";
     } else if (bmi < 18.5) {
       category = "نقص في الوزن";
-      description =
-        "وزنك أقل من الطبيعي، يُنصح بزيادة السعرات الصحية والتركيز على بناء العضلات.";
+      description = "وزنك أقل من الطبيعي، يُنصح بزيادة السعرات الصحية والتركيز على بناء العضلات.";
     } else if (bmi >= 18.5 && bmi < 25) {
       category = "وزن طبيعي";
-      description =
-        "وزنك مثالي – استمر على نظامك المتوازن وتمارينك!";
+      description = "وزنك مثالي – استمر على نظامك المتوازن وتمارينك!";
     } else if (bmi >= 25 && bmi < 30) {
       category = "زيادة في الوزن";
-      description =
-        "هناك زيادة بسيطة، تحسين التغذية وزيادة النشاط كفيلان بإعادتك للمسار الصحي.";
+      description = "هناك زيادة بسيطة، تحسين التغذية وزيادة النشاط كفيلان بإعادتك للمسار الصحي.";
     } else if (bmi >= 30 && bmi < 35) {
       category = "سمنة من الدرجة الأولى";
-      description =
-        "الانتباه مطلوب – ابدأ بخطة غذائية ورياضية منظمة.";
+      description = "الانتباه مطلوب – ابدأ بخطة غذائية ورياضية منظمة.";
     } else if (bmi >= 35 && bmi < 40) {
       category = "سمنة من الدرجة الثانية";
-      description =
-        "مرحلة تحتاج إلى التزام قوي، تغيير العادات هو المفتاح.";
+      description = "مرحلة تحتاج إلى التزام قوي، تغيير العادات هو المفتاح.";
     } else {
       category = "سمنة مفرطة (الدرجة الثالثة)";
-      description =
-        "الأولوية لصحتك – تغيير جذري في نمط الحياة يصنع الفرق.";
+      description = "الأولوية لصحتك – تغيير جذري في نمط الحياة يصنع الفرق.";
     }
 
     return {
@@ -78,14 +102,9 @@ const Welcome: React.FC = () => {
     };
   };
 
-  // Read values from localStorage (as before)
-  const targetWeight = Number(localStorage.getItem("targetWeight") || 0);
-  const age = Number(localStorage.getItem("age") || 0);
-  const challengePeriod = Number(localStorage.getItem("challengePeriod") || 0);
-  const gender = localStorage.getItem("SelectedGender") || "";
+  // قراءة القيم من localStorage
   const currentWeight = Number(localStorage.getItem("currentWeight") || 0);
   const height = Number(localStorage.getItem("height") || 0);
-  const bmi = calcBMI(currentWeight, height);
 
   const next = () => {
     if (loading) return;
@@ -115,12 +134,14 @@ const Welcome: React.FC = () => {
         return <CurrentWeight />;
       case 4:
         return <TargetWeight />;
-      case 5 :
-      return <BreakPage
-              heading={ 'فرق الوزن  ' + " " + localStorage.getItem("abs") + "كجم" }
-              text={ localStorage.getItem("directionLabel")}
-              SvgComponent={IoScaleOutline} />
-              
+      case 5:
+        return (
+          <BreakPage
+            heading={'فرق الوزن  ' + " " + localStorage.getItem("abs") + "كجم"}
+            text={localStorage.getItem("directionLabel") || ""}
+            SvgComponent={IoScaleOutline}
+          />
+        );
       case 6:
         return <ChooseHight />;
       case 7: {
@@ -136,21 +157,28 @@ const Welcome: React.FC = () => {
       case 8:
         return <ChooseAge />;
       case 9:
-          return <SelectGender />;
-      case 10 : 
-          return <ChPreiod />
+        return <SelectGender />;
+      case 10:
+        return <ChPreiod />;
       case 11:
         return <ShowBmi />;
-  
       case 12:
         return <S_Goals />;
-      case 13 :
-        return <BreakPage heading="اقتربت أن تكون فرداً منا!" text="متبقي فقط أن تعرفنا علي نفسك" SvgComponent={PiConfettiLight}/>
+      case 13:
+        return (
+          <BreakPage
+            heading="اقتربت أن تكون فرداً منا!"
+            text="متبقي فقط أن تعرفنا علي نفسك"
+            SvgComponent={PiConfettiLight}
+          />
+        );
       case 14:
-        return  <CreateAUserName
-      setUsername={setUsername}
-      onSaveSuccess={() => setIsUserDataSaved(true)}
-    />;
+        return (
+          <CreateAUserName
+            setUsername={setUsername}
+            onSaveSuccess={() => setIsUserDataSaved(true)}
+          />
+        );
       case 15:
         return <FinalSection />;
       default:
@@ -160,27 +188,80 @@ const Welcome: React.FC = () => {
 
   return (
     <div className="min-h-screen dark:bg-neutral-950 flex justify-center">
-      <div  className='absolute -top-20 right-1/2 w-70 h-50 dark:bg-amber-400 blur-[120px] opacity-75 animate-pulse '/>
-      {/* Content Width */}
+      <div className="absolute -top-20 right-1/2 w-70 h-50 dark:bg-amber-400 blur-[120px] opacity-75 animate-pulse" />
       <div className="w-screen max-w-md flex flex-col h-screen">
-        {/* Header */}
-        <header className="px-6 pt-6 pb-2">
-          <div className="mt-6 w-full h-2 rounded-full bg-zinc-200 dark:bg-zinc-800/20 overflow-hidden z-50">
-            <div
-              className="h-full bg-linear-to-l from-amber-700 via-amber-400 to-amber-600 transition-all duration-500 rounded-full  "
-              style={{
-                width: `${(turn / TOTAL_STEPS) * 100}%`,
-              }}
-            />
-          </div>
-        </header>
+        {/* الهيدر – شريط الخطوات المحسن */}
+       {turn > 2 && <header className="px-6 pt-6 pb-2">
+          <div className="relative w-full mt-6  flex items-center">
+            { stepLabels.map((label) => {
+               const stepNumber = label.step;
 
-        {/* Page */}
+  const isCompleted = turn > stepNumber;
+  const isCurrent = turn === stepNumber;
+
+              const IconComponent = stepIconMap[stepNumber];
+
+              return (
+                <React.Fragment key={stepNumber}>
+                  {/* الدائرة مع النص */}
+                  <div className="relative flex flex-col items-center">
+                    <div
+                      className={`relative w-5 h-5 rounded-full flex items-center justify-center transition-all duration-300 ${
+                        isCompleted || isCurrent
+                          ? "bg-gradient-to-br from-orange-500 to-orange-600 shadow-md shadow-orange-500/20"
+                          : " bg-[#D9D9D955]"
+                      }`}
+                    >
+                      {/* المحتوى داخل الدائرة (أيقونة أو علامة صح) */}
+                      <span
+                        className={`absolute inset-0 flex items-center justify-center text-white transition-all duration-300 ${
+                          isCompleted || isCurrent
+                            ? "opacity-100 scale-100"
+                            : "opacity-0 scale-0"
+                        }`}
+                      >
+                        {IconComponent ? (
+                          <IconComponent className="w-3 h-3" />
+                        ) : (
+                          <span className="text-[10px] leading-none"><FaCheck /></span>
+                        )}
+                      </span>
+                    </div>
+                    <span
+                      className={`absolute w-full top-6 text-[10px] leading-tight text-center transition-colors duration-300 ${
+                        isCurrent
+                          ? "text-orange-600 dark:text-orange-400 font-bold"
+                          : isCompleted
+                          ? "text-[#222222] dark:text-gray-200"
+                          : "text-[#8E8E93] dark:text-gray-500"
+                      }`}
+                    >
+                      {label.alert}
+                    </span>
+                  </div>
+
+                  {/* الخط الواصل */}
+                  {label.step < TOTAL_STEPS - 1 && (
+                    <div
+                      className={`flex-1 h-1 rounded-full mx-1 transition-all duration-500 ${
+                        stepNumber < turn
+                          ? "bg-gradient-to-r from-orange-500 to-orange-400"
+                          : "bg-[#D9D9D9]"
+                      }`}
+                    />
+                  )}
+                </React.Fragment>
+              );
+            })}
+          </div>
+        </header>}
+
+        {/* المحتوى الرئيسي */}
         <main className="flex-1 w-screen overflow-x-hidden flex items-center justify-around px-6 overflow-y-auto">
           <div className="w-full h-10/12 animate-fade-in">{renderPage()}</div>
         </main>
 
-        {/* Footer */}
+        {/* الفوتر مع زر المتابعة */}
         <footer className="p-6">
           <button
             disabled={loading || (turn === 14 && !isUserDataSaved)}
@@ -191,17 +272,40 @@ const Welcome: React.FC = () => {
                 : "bg-orange-500 hover:bg-orange-600 active:scale-[0.98]"
             }`}
           >
-       {loading
-  ? " إنتظر قليلا.."
-  : turn === 13 && !isUserDataSaved
-  ? "احفظ البيانات أولاً"
-  : turn === TOTAL_STEPS
-  ? "إبدء !"
-  : "استمر"}
+            {loading
+              ? " إنتظر قليلا.."
+              : turn === 13 && !isUserDataSaved
+              ? "احفظ البيانات أولاً"
+              : turn === TOTAL_STEPS
+              ? "إبدء !"
+              : "استمر"}
             <FaCaretLeft />
           </button>
         </footer>
       </div>
+      {/* Notification for TikTok browser - shows only when turn is 8 AND user is on TikTok browser */}
+      {turn === 8 && isTikTokBrowser && (
+        <div className='absolute w-screen h-screen bg-[#33333390] flex justify-center items-center show-first'>
+          <div className='w-11/12 min-h-40 bg-gray-50 flex flex-col justify-between rounded-2xl overflow-hidden'>
+            <article className='text-center p-6 text-gray-900'>
+              <div className='text-xl font-black'>IronFit لا يدعم المتصفح الحالي</div>
+              <p className='mt-2'>للحصول علي أفضل تجربة يمكنك فتح IronFit  علي  
+                {" "}
+                <span className='font-black'>Chrome</span>
+                {" "}
+                أو 
+                {" "}
+                <span className='font-black'>Safari</span>
+              </p>
+            </article>
+            <a href="https://iron-fit-blush.vercel.app" target="_blank">
+              <button className='w-full h-12  bg-orange-400 text-white flex flex-row gap-1 justify-center items-center'>
+                الإستمرار <FaCaretLeft className='mb-1'/>
+              </button>
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

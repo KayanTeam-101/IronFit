@@ -31,7 +31,7 @@ const ChanlangePreiod: React.FC = () => {
   return (
        <div className='  show-first h-3/4 flex items-center justify-between flex-col  ' >
       <div className="px-3">
-        <h2 className="text-3xl translate-y-10 text-gray-800 dark:text-white font-extrabold mb-4 text-center ">
+        <h2 className="text-3xl text-gray-800 dark:text-white font-extrabold text-center ">
           عايز توصل لهدفك بعد كام شهر <span className="text-amber-500">؟</span>
         <div className="relative block h-1 w-12 bg-amber-400 mt-2 mx-auto rounded-full fullWidth" />
 

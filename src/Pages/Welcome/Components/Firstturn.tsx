@@ -1,28 +1,29 @@
 import React, { useEffect } from "react";
 import Video from "../../../assets/Screenshot from 2026-07-20 09-33-11.png";
+import { FaUtensils } from "react-icons/fa";
+import { TbDumpling } from "react-icons/tb";
+import { RiCopperCoinFill } from "react-icons/ri";
+import { LuDumbbell } from "react-icons/lu";
 
 const Firstturn: React.FC = () => {
 
     window.scrollBy(0,200),[]
 
   return (
-    <div className="absolute top-1/2 left-1/2 -translate-1/2 w-full h-10/12 showAnim2">
+    <div className="absolute top-1/2  left-1/2 -translate-1/2 w-full h-10/12 showAnim2">
 
       {/* Full‑screen background video */}
       <img
         src={Video}
-        className="absolute -top-15 left-1/2 -translate-x-1/2 object-cover w-screen scale-110 opacity-70 blur-[3px] animate-pulse   h-full "
+        className="absolute -top-15 left-1/2 -translate-x-1/2 object-cover w-screen scale-110 opacity-70 blur-[3px] animate-pulse  h-full "
       />
       {/* Gradient overlay: transparent top → semi‑transparent middle → solid black bottom */}
       <div className="absolute inset-0 " />
 
       {/* Welcome card – positioned at the bottom with padding */}
-      <div className="absolute bottom-40 left-0 right-0 z-20 px-6">
-            <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-72 h-72 bg-amber-400 rounded-full opacity-20 blur-3xl animate-pulse" />
-      <div className="absolute top-0 left-0 w-48 h-48 bg-cyan-500 rounded-full opacity-20 blur-3xl animate-pulse delay-1000" />
-      <div className="absolute bottom-0 right-0 w-56 h-56 bg-blue-500 rounded-full opacity-20 blur-3xl animate-pulse delay-2000" />
- 
-        <div className="mx-auto max-w-sm backdrop-blur-xl dark:bg-black/40 rounded-3xl p-6 text-center space-y-5 shadow-2xl animate-fade-slide-up">
+      <div className="absolute bottom-15 z-20 px-6">
+
+        <div className="mx-auto max-w-sm backdrop-blur-xl dark:bg-black/40 bg-white/80 rounded-3xl p-6 text-center space-y-5 shadow-xl animate-fade-slide-up">
           {/* Logo */}
           <div className="flex justify-center -mt-14">
             <div className="w-16 h-16 rounded-full overflow-hidden pop">
@@ -35,25 +36,54 @@ const Firstturn: React.FC = () => {
           </div>
 
           {/* Welcome text */}
-          <div>
-            <p className="text-5xl font-extrabold text-white tracking-wide show-third">
-              أهلاً
-            </p>
-            <p className="text-4xl font-black mt-1 text-white show-third">
-              بك في{" "}
-              <span className="bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent drop-shadow-lg showAnim2">
-                IronFit
-              </span>
-            </p>
-          </div>
+        <div>
+  <h1 className="text-5xl font-black dark:text-white text-gray-900">
+    أهلاً بك في
+  </h1>
+
+  <h2 className="text-5xl font-black mt-2 bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">
+    IronFit
+  </h2>
+
+  <p className="mt-5 dark:text-gray-200 leading-8 text-lg">
+    مساعدك الذكي لبناء أسلوب حياة صحي ومتوازن.
+  </p>
+</div>
+
+<div className="space-y-4 mt-6">
+
+  <div className="flex items-center gap-4 bg-white/10 rounded-3xl shadow-xl p-3 backdrop-blur-md text-right">
+    <span className="text-2xl"><FaUtensils className="text-emerald-500"/></span>
+    <p className="dark:text-white text-gray-900">
+      تنظيم وجباتك وحساب السعرات بسهولة.
+    </p>
+  </div>
+
+  <div className="flex items-center gap-4 bg-white/10 rounded-3xl shadow-xl p-3 backdrop-blur-md">
+    <span className="text-2xl"><LuDumbbell className="text-orange-500"/></span>
+    <p className="dark:text-white text-gray-900">
+      متابعة التمارين وتطور أدائك.
+    </p>
+  </div>
+
+  <div className="flex items-center gap-4 bg-white/10 rounded-3xl shadow-xl p-3 backdrop-blur-md">
+    <span className="text-2xl"><RiCopperCoinFill className="text-blue-600"/></span>
+    <p className="dark:text-white text-gray-900 text-right">
+      تحديات يومية ونظام XP يحفزك للاستمرار.
+    </p>
+  </div>
+
+</div>
+
+<div className="w-3/4 mx-auto h-0.5 bg-gradient-to-r from-transparent via-orange-400 to-transparent rounded-full animate-pulse mt-6" />
+
+<p className="text-center text-orange-400 font-semibold mt-5">
+    جاهز لنبدأ رحلتك؟
+</p>
 
           {/* Tagline */}
-          <p className="text-lg font-light text-gray-300 dark:text-white leading-relaxed showAnim">
-    هنا تقدر تنظم حياتك الصحية و البدنية و حتي النفسية
-          </p>
-
+     
           {/* Animated divider */}
-          <div className="w-3/4 mx-auto h-0.5 bg-gradient-to-r from-transparent via-amber-400 to-transparent rounded-full animate-pulse" />
         </div>
       </div>
 
