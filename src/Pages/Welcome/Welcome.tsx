@@ -65,9 +65,20 @@ const Welcome: React.FC = () => {
       })
       .catch((err) => {
         console.error('Firebase error:', err);
+        incrementOnboardingStep(err);
+
       });
   }, [turn]);
-
+  useEffect(() =>{
+    function if_() {
+      if(turn === 1){
+        setTimeout(() => {
+          setTurn(2)
+        }, 7000)
+      }
+    };
+    if_();
+  },[])
   // كشف متصفح تيك توك
   useEffect(() => {
     const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
