@@ -9,7 +9,7 @@ import {
   FaAppleAlt,
   FaHeartbeat,
 } from "react-icons/fa";
-import { IoDiamond, IoDiamondOutline } from "react-icons/io5";
+import { IoAnalyticsOutline, IoDiamond, IoDiamondOutline } from "react-icons/io5";
 import { getUsers, updateUserSubscription } from "../../firebase/user";
 import Subscribe from "../Settings/Subsribed";
 import SubscriptionActivationOverlay from "./Activated";
@@ -42,7 +42,7 @@ const exclusiveFeatures = [
     desc: "أظهر الفايتامينات لكل وجبة",
   },
   {
-    icon: <SiGoogleanalytics />,
+    icon: <IoAnalyticsOutline />,
     label: "تحليل البيانات",
     desc: "جدول تطور الاوزان ",
   },
@@ -284,7 +284,7 @@ const Subscription: React.FC = () => {
     <>
       {Number(localStorage.getItem("SubscriptionPeriod")) <
       new Date().getTime() ? (
-        <div className="min-h-screen bg-white dark:bg-black/20 relative overflow-hidden showAnim2 ">
+        <div className="min-h-screen bg-white dark:bg-black/20 relative overflow-hidden showAnim2 z-0">
           {/* Decorative blobs */}
           <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-72 h-72 bg-amber-400 rounded-full opacity-10 blur-3xl animate-pulse" />
           <div className="absolute top-70 right-0 w-64 h-64 bg-amber-300 rounded-full opacity-10 blur-3xl animate-pulse delay-1000" />
@@ -474,7 +474,7 @@ const Subscription: React.FC = () => {
                           السعر:
                         </span>
                         <span className="text-xl font-bold text-amber-600 dark:text-amber-400">
-                          {customPrice} ج.م
+                         {/* {customPrice} ج.م */}
                         </span>
                       </div>
 
@@ -519,11 +519,10 @@ const Subscription: React.FC = () => {
                           </div>
                           <div className="text-right">
                             <span className="text-xl font-bold text-gray-800 dark:text-white">
-                              {plan.price}
+                              {/* {plan.price} */}
                             </span>
                             <span className="text-sm text-gray-500 dark:text-gray-400">
                               {" "}
-                              ج.م
                             </span>
                           </div>
                         </div>
@@ -535,12 +534,12 @@ const Subscription: React.FC = () => {
                             handleActivate();
                             handleGotoWhatsApp(plan.price, plan.days, localStorage.getItem("UserName") || "", localStorage.getItem("userId_") || "");
                           }}
-                          className="mt-4 relative overflow-hidden w-full flex flex-row items-center justify-center gap-2.5 bg-linear-to-r from-green-400 to-emerald-600 hover:from-amber-500 hover:to-amber-700 text-white font-bold py-3  transition shadow-md"
+                          className="mt-4 relative overflow-hidden w-full flex flex-row items-center justify-center gap-2.5 bg-linear-120 from-yellow-300 to-orange-500 hover:from-amber-500 hover:to-amber-700 text-white font-bold py-3  transition shadow-md"
                         >
                           {subscribeSuccess ? (
                             <AnimatedCheck />
                           ) : (
-                            `اشترك بـ ${plan.price} ج.م` 
+                            `اشترك من هنا` 
                           )}
                           <BsWhatsapp />
                         </button>

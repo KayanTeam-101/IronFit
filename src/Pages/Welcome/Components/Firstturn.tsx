@@ -10,7 +10,7 @@ const Firstturn: React.FC = () => {
     window.scrollBy(0,200),[]
 
   return (
-    <div className="absolute top-1/2  left-1/2 -translate-1/2 w-full h-10/12 showAnim2">
+    <div className="absolute top-1/2  left-[45%] -translate-1/2 w-full h-10/12 showAnim2">
 
       {/* Full‑screen background video */}
       <img

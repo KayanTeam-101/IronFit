@@ -268,9 +268,9 @@ const MakeADiet: React.FC = () => {
         </div>
       </div>
       <div className="p-4 flex items-center justify-center w-screen ">
-          <div className="card-enter relative overflow-hidden rounded-3xl p-5 dark:text-gray-200 bg-gradient-to-br from-orange-500/10 via-amber-500/5 to-transparent dark:from-orange-500/15 dark:via-amber-500/5 border border-orange-200/60 dark:border-orange-500/20 backdrop-blur-sm">
+          <div className="card-enter relative overflow-hidden rounded-3xl p-5 dark:text-gray-200 bg-gradient-to-br from-orange-400/10 via-amber-400/5 to-transparent dark:from-orange-400/15 dark:via-amber-400/5 border border-orange-200/60 dark:border-orange-500/20 backdrop-blur-sm">
         <div className="w-full h-5 mb-2">
-          <TiWarning className="text-amber-500 text-[25px]" />
+          <TiWarning className="text-amber-400 text-[25px]" />
         </div>
         <div>
             بدل مــــتعمل نظامك بنفسك, تقدر تختار القوالب الجاهزة من 

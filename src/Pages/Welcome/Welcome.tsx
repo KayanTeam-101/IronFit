@@ -19,6 +19,7 @@ import { GoGoal } from "react-icons/go";
 import { PiConfettiLight } from "react-icons/pi";
 import { IoScaleOutline } from 'react-icons/io5';
 import { BsCheckCircleFill } from 'react-icons/bs';
+import { incrementOnboardingStep } from '../../firebase/trakingUser';
 
 const TOTAL_STEPS = 15;
 
@@ -47,9 +48,20 @@ const Welcome: React.FC = () => {
   const [isTikTokBrowser, setIsTikTokBrowser] = useState(false);
 
   // ---- New states for the improved TikTok flow ----
-  const [showTikTokModal, setShowTikTokModal] = useState(true); // can be dismissed
   const [linkCopied, setLinkCopied] = useState(false);
 
+
+
+
+
+useEffect(() => {
+  if (turn < 1) return;
+  incrementOnboardingStep(turn).then(() => {
+    console.log("Onboarding step incremented successfully");
+  }).catch(err => {
+    console.error("Firebase error:", err);
+  });
+}, [turn]);
   // Detect TikTok browser
   useEffect(() => {
     const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
@@ -67,9 +79,7 @@ const Welcome: React.FC = () => {
   const handleOpenLink = () => {
     const url = 'https://iron-fit-blush.vercel.app';
     const ua = navigator.userAgent || '';
-    const isIOS = /iPad|iPhone|iPod/.test(ua);
-    const isAndroid = /Android/.test(ua);
-
+   
     // Universal clipboard helper
     const copyToClipboard = (text: string) => {
       if (navigator.clipboard) {
@@ -323,7 +333,7 @@ const Welcome: React.FC = () => {
       </div>
 
       {/* ---- New TikTok Browser Modal (copy & paste) ---- */}
-{turn === 8 && isTikTokBrowser && showTikTokModal && (
+{turn === 8 && isTikTokBrowser  && (
   <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 showAnim2">
     <div className="w-full max-w-sm bg-white dark:bg-neutral-800 rounded-3xl overflow-hidden shadow-2xl">
 
@@ -357,7 +367,7 @@ const Welcome: React.FC = () => {
   )}
 </article>
 
-<div className='flex flex-col gap-2 p-4 bg-gray-50 dark:bg-neutral-900'>
+<div className='flex flex-col gap-2 p-6 bg-gray-50 dark:bg-neutral-900'>
   <button
     onClick={handleOpenLink}
     className='w-full h-12 bg-orange-500 hover:bg-orange-600 active:scale-[0.98] text-white rounded-xl font-semibold flex items-center justify-center flex-row text-sm gap-2 transition-all'
