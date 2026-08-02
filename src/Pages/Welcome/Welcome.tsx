@@ -3,10 +3,10 @@ import { FaCaretLeft } from "react-icons/fa6";
 import { FaCalendarAlt, FaBullseye, FaUser, FaCheck } from "react-icons/fa";
 import Firstturn from './Components/Firstturn';
 import Second from './Components/SecondPage';
+import CurrentWeight from './Components/CurrentWeight';
+import TargetWeight from './Components/TargetWeight';
 const ChooseHight = lazy(() => import('./Components/ChooseHight'));
 const ChooseAge = lazy(() => import('./Components/ChooseAge'));
-const CurrentWeight = lazy(() => import('./Components/CurrentWeight'));
-const TargetWeight = lazy(() => import('./Components/TargetWeight'));
 const SelectGender = lazy(() => import('./Components/SelectGender'));
 const FinalSection = lazy(() => import('./Components/FinalSection'));
 const ChPreiod = lazy(() => import('./Components/ChPreiod'));
@@ -103,7 +103,7 @@ useEffect(() => {
     // Always copy the link immediately
     copyToClipboard(url);
     setLinkCopied(true);
-    setTimeout(() => setLinkCopied(false), 1200);
+    setTimeout(() => setLinkCopied(false), 12000);
 
 
     // No alert – the modal already provides instructions.

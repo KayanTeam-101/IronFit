@@ -16,6 +16,7 @@ import { LuDumbbell } from "react-icons/lu";
 import { SiGoogleanalytics } from "react-icons/si";
 import { GiDiamondTrophy } from "react-icons/gi";
 import { IoAnalyticsOutline } from "react-icons/io5";
+import { LiaUserFriendsSolid } from "react-icons/lia";
 
 const features = [
   {
@@ -40,7 +41,7 @@ const features = [
   },
   {
     title: "مجتمع للرياضيين",
-    icon: <TbFriends className="text-emerald-400"/>,
+    icon: <LiaUserFriendsSolid className="text-emerald-400"/>,
   },
 ];
 
@@ -75,16 +76,16 @@ const Second: React.FC = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              style={{ "--time": `${(index + 1 ) * 0.8}s` } as React.CSSProperties}
-              className="group p-1 py-3 flex flex-col gap-3.5 rounded-3xl active:scale-95 border border-gray-200 dark:border-neutral-700/60 bg-white dark:bg-neutral-900  text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animation-with-delay"
+              style={{ "--time": `${(index + 1 ) * 0.5}s` } as React.CSSProperties}
+              className={`group p-1 py-3 flex flex-col gap-1.5 rounded-3xl active:scale-95 border-b-8 shadow  dark:border-neutral-700/60 bg-white dark:bg-neutral-900 ${index === 0 ? 'border-blue-500' : ''} ${index === 1 ? 'border-orange-500' : ''} ${index === 2 ? 'border-yellow-500' : ''} ${index === 3 ? 'border-indigo-500' : ''} ${index === 4 ? 'border-blue-500' : ''} ${index === 5 ? 'border-emerald-500' : ''}  text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animation-with-delay`}
             >
 
-              <p className="font-semibold text-gray-800 dark:text-white">
-                {feature.title}
-              </p>
               <div className="mx-auto mb-2 flex h-7 w-14 items-center justify-center rounded-full     text-3xl  group-hover:scale-110 transition-transform duration-300">
                 {feature.icon}
               </div>
+              <p className="font-semibold text-gray-500 dark:text-white">
+                {feature.title}
+              </p>
             </div>
           ))}
         </div>
