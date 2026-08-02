@@ -21,9 +21,9 @@ const Firstturn: React.FC = () => {
       <div className="absolute inset-0 " />
 
       {/* Welcome card – positioned at the bottom with padding */}
-      <div className="absolute -top-5 -z-10 px-6">
+      <div className="absolute max-h-1/2 -top-5 -z-10 px-6">
 
-        <div className="mx-auto max-h-1/2 max-w-sm backdrop-blur-xl dark:bg-black/40 bg-white rounded-3xl p-6 text-center space-y-5 shadow-xl animate-fade-slide-up">
+        <div className="mx-auto max-h-1/2  max-w-sm backdrop-blur-xl dark:bg-black/40 bg-white rounded-3xl p-6 text-center space-y-5 shadow-xl animate-fade-slide-up">
           {/* Logo */}
           <div className="flex justify-center -mt-14">
             <div className="w-16 h-16 rounded-full overflow-hidden pop">
@@ -47,7 +47,7 @@ const Firstturn: React.FC = () => {
         <div className="relative block h-1 w-12 bg-amber-400 mt-2 mx-auto rounded-full fullWidth" />
 
 
-  <p className="mt-5 dark:text-gray-200 leading-8 text-lg px-6">
+  <p className="mt-5 dark:text-gray-200 leading-8 text-lg px-6  text-sm">
 احصل علي خطة غذائية و متابعة لمتارين تتناسب مع احتياج جمسك مجاناً
   </p>
 </div>
