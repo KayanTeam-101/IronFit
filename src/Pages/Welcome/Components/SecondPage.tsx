@@ -54,29 +54,29 @@ const Second: React.FC = () => {
       <div className="w-full max-w-lg flex flex-col items-center justify-center">
 
         {/* Marquee replacement */}
-  <div className="bg-gray-200 text-gray-500 p-1 dark:bg-[#22222237] dark:text-gray-200    overflow-hidden w-2/3 rounded-xl   relative top-8 z-50 shrink-0">
+  <div className="bg-gray-200 text-slate-400 p-1 dark:bg-[#22222237] dark:text-gray-200  overflow-hidden w-full rounded-xl   relative top-2  z-50 shrink-0">
     <p className="text-sm font-bold whitespace-nowrap animate-marquee-right">
      إن شاء الله الموضوع هيتسغرف أقل من دقيقة
-     😄
+     
     </p>
   </div>
         {/* Title */}
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-thin text-gray-800 dark:text-white mt-10 show-fast">
-            بسم الله الرحمن الرحيم
-          </h1>
+        <div className="relative text-center">
+         
 
-          <p className="mt-3 text-xl text-gray-600 dark:text-gray-300 leading-7 show-first">
+          <p className="mt-8 mb-8 font-thin text-2xl text-gray-600 dark:text-gray-300 leading-7 show-first">
 ليه             
             <span className="font-black text-orange-500">
               {" "}
                 IronFit  
             </span>
 <span className="p-1">
-           تحديدا ؟
+           تحديداً ؟
 
 </span>
           </p>
+          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 rounded-2xl w-15 h-1 bg-gray-300 "/>
+          <div className="absolute bottom-3.5 left-1/2 -translate-x-1/2 rounded-2xl w-7 h-1 bg-gray-200 "/>
         </div>
 
         {/* Features */}
