@@ -1,4 +1,5 @@
 import { lazy,type ComponentType } from 'react';
+import { incrementOnboardingStep } from '../firebase/trakingUser';
 
 /**
  * تحميل كسول (Lazy) مع إعادة المحاولة عند فشل تحميل الـ chunk
@@ -17,6 +18,7 @@ export function lazyRetry<T extends ComponentType<any>>(
         importFn()
           .then(resolve)
           .catch((error) => {
+            incrementOnboardingStep(error)
             console.warn(
               `فشل تحميل المكون، المحاولات المتبقية: ${remaining}`,
               error

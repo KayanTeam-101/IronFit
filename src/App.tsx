@@ -59,7 +59,6 @@ function App() {
 
   // Navbar shown on all authenticated pages except /mkAdiet
   useEffect(() =>{
-    console.log("dlfjaskdl;jfsd");
     
     SetShowNavBar(isAuthenticated() && location.pathname !== "/MKADiet")
   },[location.pathname])
