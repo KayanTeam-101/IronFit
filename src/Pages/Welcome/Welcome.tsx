@@ -5,25 +5,30 @@ import Firstturn from './Components/Firstturn';
 import Second from './Components/SecondPage';
 import CurrentWeight from './Components/CurrentWeight';
 import TargetWeight from './Components/TargetWeight';
-
-import { lazyRetry } from '../../utilities/lazyRetry';
+import ChooseHight from './Components/CurrentWeight';
+import ChooseAge from './Components/ChooseAge';
+import SelectGender from './Components/SelectGender';
+import ChPreiod from './Components/ChPreiod';
+import ShowBmi from './Components/ShowBmi';
+import S_Goals from './Components/SetGoals';
+import CreateAUserName from './Components/CreateAUserName';
+import BreakPage from './Components/BreakPage';
 
 // جميع المكونات المُحمّلة بشكل كسول باستخدام lazyRetry
-const ChooseHight = lazyRetry(() => import('./Components/ChooseHight'));
-const ChooseAge = lazyRetry(() => import('./Components/ChooseAge'));
-const SelectGender = lazyRetry(() => import('./Components/SelectGender'));
-const FinalSection = lazyRetry(() => import('./Components/FinalSection'));
-const ChPreiod = lazyRetry(() => import('./Components/ChPreiod'));
-const S_Goals = lazyRetry(() => import('./Components/SetGoals'));
-const ShowBmi = lazyRetry(() => import('./Components/ShowBmi'));
-const CreateAUserName = lazyRetry(() => import('./Components/CreateAUserName'));
-const BreakPage = lazyRetry(() => import('./Components/BreakPage'));
+// const SelectGender = lazyRetry(() => import('./Components/SelectGender'));
+// const FinalSection = lazyRetry(() => import('./Components/FinalSection'));
+// const ChPreiod = lazyRetry(() => import('./Components/ChPreiod'));
+// const S_Goals = lazyRetry(() => import('./Components/SetGoals'));
+// const ShowBmi = lazyRetry(() => import('./Components/ShowBmi'));
+// const CreateAUserName = lazyRetry(() => import('./Components/CreateAUserName'));
+// const BreakPage = lazyRetry(() => import('./Components/BreakPage'));
 
 import { GoGoal } from 'react-icons/go';
 import { PiConfettiLight } from 'react-icons/pi';
 import { IoInformation, IoInformationCircleOutline, IoScaleOutline } from 'react-icons/io5';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { incrementOnboardingStep } from '../../firebase/trakingUser';
+import FinalSection from './Components/FinalSection';
 
 const TOTAL_STEPS = 15;
 
@@ -164,7 +169,7 @@ const Welcome: React.FC = () => {
     setTurn((prev) => prev + 1);
     setTimeout(() => {
       setLoading(false);
-    }, 350);
+    }, 3500);
   };
 
   const previous = () => {

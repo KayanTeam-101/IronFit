@@ -2,20 +2,21 @@ import { Routes, Route, Navigate, useLocation, Outlet } from "react-router-dom";
 import { useState, useEffect, Suspense, lazy } from "react";
 import Loading from "./Components/layouts/Loading";
 // import { getUser } from "./Pages/Settings/settings";
+import { lazyRetry } from './utilities/lazyRetry';
 
 // Eagerly loaded – always needed
 import Welcome from "./Pages/Welcome/Welcome";
 import Navbar from "./Components/layouts/Navbar";   // ← eager, avoids extra Suspense
 
 // Lazy‑loaded page components (code‑split at route level)
-const Home = lazy(() => import("./Pages/home/Home"));
-const FoodPage = lazy(() => import("./Pages/food/FoodPage"));
-const MakeADiet = lazy(() => import("./Pages/MKDiet/MakeADiet"));
-const ExercisePage = lazy(() => import("./Pages/Exersices/Exersice"));
-const TemplatesPage = lazy(() => import("./Pages/Templates/TemplatesPage"));
-const SocialPage = lazy(() => import("./Pages/SocialPage/Page"));
-const Settings = lazy(() => import("./Pages/Settings/settings"));
-const Page = lazy(() => import("./Pages/food/History/page"));
+const Home = lazyRetry(() => import("./Pages/home/Home"));
+const FoodPage = lazyRetry(() => import("./Pages/food/FoodPage"));
+const MakeADiet = lazyRetry(() => import("./Pages/MKDiet/MakeADiet"));
+const ExercisePage = lazyRetry(() => import("./Pages/Exersices/Exersice"));
+const TemplatesPage = lazyRetry(() => import("./Pages/Templates/TemplatesPage"));
+const SocialPage = lazyRetry(() => import("./Pages/SocialPage/Page"));
+const Settings = lazyRetry(() => import("./Pages/Settings/settings"));
+const Page = lazyRetry(() => import("./Pages/food/History/page"));
 
 // ---------- helpers ----------
 const isAuthenticated = () =>
