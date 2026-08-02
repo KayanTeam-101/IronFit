@@ -5,7 +5,7 @@ import Firstturn from './Components/Firstturn';
 import Second from './Components/SecondPage';
 import CurrentWeight from './Components/CurrentWeight';
 import TargetWeight from './Components/TargetWeight';
-import ChooseHight from './Components/CurrentWeight';
+import ChooseHight from './Components/ChooseHight';
 import ChooseAge from './Components/ChooseAge';
 import SelectGender from './Components/SelectGender';
 import ChPreiod from './Components/ChPreiod';

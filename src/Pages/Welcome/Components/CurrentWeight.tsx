@@ -2,7 +2,7 @@ import React from 'react'
 import { period } from '../../../utilities/utilities';
 import CounterY from '../../../utilities/CounterY';
 
-const ChooseHight : React.FC = () => {
+const CurrentWeight : React.FC = () => {
     let numbers: number[] = period(30, 140);
   let [Value, setValue] :any = React.useState('')
      const handleChange = (value: number) => {
@@ -25,4 +25,4 @@ const ChooseHight : React.FC = () => {
 
 
 
-export default ChooseHight
+export default CurrentWeight
