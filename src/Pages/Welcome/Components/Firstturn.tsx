@@ -21,7 +21,7 @@ const Firstturn: React.FC = () => {
       <div className="absolute inset-0 " />
 
       {/* Welcome card – positioned at the bottom with padding */}
-      <div className="absolute max-h-1/2 -top-5 -z-10 px-6">
+      <div className="absolute max-h-1/2 top-25 -z-10 px-6">
 
         <div className="mx-auto max-h-1/2  max-w-sm backdrop-blur-xl dark:bg-black/40 bg-white rounded-3xl p-6 text-center space-y-5 shadow-xl animate-fade-slide-up">
           {/* Logo */}
