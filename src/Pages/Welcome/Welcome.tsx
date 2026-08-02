@@ -34,8 +34,8 @@ const TOTAL_STEPS = 15;
 // تسمية المراحل
 const stepLabels = [
   { alert: 'أهلاً👋', step: 1 },
-  { alert: 'انت مين؟', step: 5 },
-  { alert: 'اختار اهدافك🎯', step: 10 },
+  { alert: 'تحليل..', step: 5 },
+  { alert: 'أهدافك؟', step: 10 },
   { alert: 'مبروووك', step: 15 },
 ];
 
@@ -323,20 +323,7 @@ const Welcome: React.FC = () => {
         )}
 
         {/* المحتوى الرئيسي مع Suspense */}
-        <main className="flex-1 w-screen overflow-x-hidden flex items-center justify-around px-6 overflow-y-auto">
-          <Suspense
-            fallback={
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="animate-pulse text-lg font-semibold">جاري التحميل...</div>
-              </div>
-            }
-          >
-            <div className="w-full h-9/12 animate-fade-in z-0">{renderPage()}</div>
-          </Suspense>
-        </main>
-
-        {/* الفوتر مع زر المتابعة */}
-        <footer className="p-6 z-50">
+           <header className="relative top-5  p-6 z-50">
           <button
             disabled={loading || (turn === 14 && !isUserDataSaved)}
             onClick={next}
@@ -355,7 +342,22 @@ const Welcome: React.FC = () => {
               : 'استمر'}
             <FaCaretLeft />
           </button>
-        </footer>
+        </header> 
+        <main className="flex-1 w-screen overflow-x-hidden flex items-center justify-around px-6 overflow-y-auto">
+         
+          <Suspense
+            fallback={
+              <div className="w-full h-full flex items-center justify-center">
+                <div className="animate-pulse text-lg font-semibold">جاري التحميل...</div>
+              </div>
+            }
+          >
+            <div className="w-full h-9/12 animate-fade-in z-0">{renderPage()}</div>
+          </Suspense>
+        </main>
+
+        {/* الفوتر مع زر المتابعة */}
+      
       </div>
 
       {/* مودال تيك توك (نسخ الرابط) */}
