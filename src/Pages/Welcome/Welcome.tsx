@@ -165,7 +165,10 @@ const Welcome: React.FC = () => {
       return;
     }
     setLoading(true);
+    setTimeout(() => {
     setTurn((prev) => prev + 1);
+
+    },200)
     setTimeout(() => {
       setLoading(false);
     }, 3500);
@@ -350,11 +353,19 @@ const Welcome: React.FC = () => {
           <div className="w-full max-w-sm bg-white dark:bg-neutral-800 rounded-3xl overflow-hidden shadow-2xl">
             <article className="text-center p-6 flex gap-6 flex-col">
               <div className="text-2xl font-black text-gray-900 dark:text-gray-100 mb-2">
-                IronFit غير قادر علي العمل بشكل كامل هنا
+بعض المزايا تعمل بشكل أفضل عند فتح 
+IronFit 
+علي 
+{"  "}
+Chrome أو Safari
               </div>
               <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed px-6">
-                <span className="font-bold">IronFit</span>، للحصول على أفضل تجربة،
-                افتح الموقع في{' '}
+ افتح 
+{" "}
+ IronFit
+{" "}
+
+ للحصول علي أفضل تجربة  🚀               
                 <span className="font-bold text-emerald-600">Chrome</span> أو{' '}
                 <span className="font-bold text-emerald-600">Safari</span>.
               </p>

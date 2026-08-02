@@ -48,7 +48,7 @@ const Firstturn: React.FC = () => {
 
 
   <p className="mt-5 dark:text-gray-200 leading-8 text-lg px-6">
-    مساعدك الذكي لبناء أسلوب حياة صحي ومتوازن
+احصل علي خطة غذائية و متابعة لمتارين تتناسب مع احتياج جمسك مجاناً
   </p>
 </div>
 <div className="space-y-4 mt-6">

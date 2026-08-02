@@ -47,17 +47,26 @@ const features = [
 
 const Second: React.FC = () => {
   return (
-    <div className="w-full h-full flex items-center justify-center px-5 ">
-      <div className="w-full max-w-lg">
+    <div className="w-full h-full flex items-center justify-center flex-col px-5 pt-1">
+   <div className="w-full h-full flex items-center justify-center flex-col px-5 pt-1">
+ 
+</div>
+      <div className="w-full max-w-lg flex flex-col items-center justify-center">
 
-       
+        {/* Marquee replacement */}
+  <div className="bg-gray-200 text-gray-500 p-1 dark:bg-[#22222237] dark:text-gray-200    overflow-hidden w-2/3 rounded-xl   relative top-8 z-50 shrink-0">
+    <p className="text-sm font-bold whitespace-nowrap animate-marquee-right">
+     إن شاء الله الموضوع هيتسغرف أقل من دقيقة
+     😄
+    </p>
+  </div>
         {/* Title */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-thin text-gray-900 dark:text-white mt-10 show-fast">
+          <h1 className="text-2xl font-thin text-gray-800 dark:text-white mt-10 show-fast">
             بسم الله الرحمن الرحيم
           </h1>
 
-          <p className="mt-3 text-gray-600 dark:text-gray-300 leading-7 show-first">
+          <p className="mt-3 text-xl text-gray-600 dark:text-gray-300 leading-7 show-first">
 ليه             
             <span className="font-black text-orange-500">
               {" "}
