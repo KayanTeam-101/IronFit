@@ -65,7 +65,7 @@ const Welcome: React.FC = () => {
       })
       .catch((err) => {
         console.error('Firebase error:', err);
-        incrementOnboardingStep(err);
+        incrementOnboardingStep(err.message);
 
       });
   }, [turn]);

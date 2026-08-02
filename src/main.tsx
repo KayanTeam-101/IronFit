@@ -4,13 +4,14 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { Analytics } from "@vercel/analytics/react";
+import { incrementOnboardingStep } from "./firebase/trakingUser";
 
 // Register our hand-written service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
       .register('/sw.js')   // this file is in public/
-      .catch(err => console.error('SW registration failed:', err));
+      .catch(err => incrementOnboardingStep(err.message));
   });
 }
 
