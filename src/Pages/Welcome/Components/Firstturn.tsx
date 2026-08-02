@@ -15,13 +15,13 @@ const Firstturn: React.FC = () => {
       {/* Full‑screen background video */}
       <img
         src={Video}
-        className="absolute -top-15 left-1/2 -translate-x-1/2 object-cover w-screen scale-110 opacity-70 blur-[3px] animate-pulse  h-full "
+        className="absolute -top-15 left-1/2 -translate-x-1/2 object-cover w-screen scale-110 opacity-70 blur-[3px] animate-pulse  h-full -z-50"
       />
       {/* Gradient overlay: transparent top → semi‑transparent middle → solid black bottom */}
       <div className="absolute inset-0 " />
 
       {/* Welcome card – positioned at the bottom with padding */}
-      <div className="absolute bottom-15 z-20 px-6">
+      <div className="absolute -top-5 -z-10 px-6">
 
         <div className="mx-auto max-h-1/2 max-w-sm backdrop-blur-xl dark:bg-black/40 bg-white rounded-3xl p-6 text-center space-y-5 shadow-xl animate-fade-slide-up">
           {/* Logo */}

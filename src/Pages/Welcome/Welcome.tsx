@@ -325,7 +325,7 @@ const Welcome: React.FC = () => {
         </main>
 
         {/* الفوتر مع زر المتابعة */}
-        <footer className="p-6">
+        <footer className="p-6 z-50">
           <button
             disabled={loading || (turn === 14 && !isUserDataSaved)}
             onClick={next}
