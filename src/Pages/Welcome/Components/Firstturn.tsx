@@ -10,7 +10,7 @@ const Firstturn: React.FC = () => {
     window.scrollBy(0,200),[]
 
   return (
-    <div className="absolute top-1/2  left-[45%] -translate-1/2 w-full h-10/12 showAnim2">
+    <div className="absolute top-1/2  left-[50%] -translate-1/2 w-full h-10/12 showAnim2">
 
       {/* Full‑screen background video */}
       <img
@@ -23,7 +23,7 @@ const Firstturn: React.FC = () => {
       {/* Welcome card – positioned at the bottom with padding */}
       <div className="absolute bottom-15 z-20 px-6">
 
-        <div className="mx-auto max-w-sm backdrop-blur-xl dark:bg-black/40 bg-white rounded-3xl p-6 text-center space-y-5 shadow-xl animate-fade-slide-up">
+        <div className="mx-auto max-h-1/2 max-w-sm backdrop-blur-xl dark:bg-black/40 bg-white rounded-3xl p-6 text-center space-y-5 shadow-xl animate-fade-slide-up">
           {/* Logo */}
           <div className="flex justify-center -mt-14">
             <div className="w-16 h-16 rounded-full overflow-hidden pop">
