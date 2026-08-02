@@ -13,7 +13,6 @@ import ShowBmi from './Components/ShowBmi';
 import S_Goals from './Components/SetGoals';
 import CreateAUserName from './Components/CreateAUserName';
 import BreakPage from './Components/BreakPage';
-
 // جميع المكونات المُحمّلة بشكل كسول باستخدام lazyRetry
 // const SelectGender = lazyRetry(() => import('./Components/SelectGender'));
 // const FinalSection = lazyRetry(() => import('./Components/FinalSection'));
@@ -169,7 +168,7 @@ const Welcome: React.FC = () => {
     setTurn((prev) => prev + 1);
     setTimeout(() => {
       setLoading(false);
-    }, 3500);
+    }, 35);
   };
 
   const previous = () => {

@@ -93,7 +93,9 @@ const CreateAUserName = ({
       await SetUser(trimmed, email, photoUrl, userId);
       setSaveState("success");
       onSaveSuccess?.(); // notify parent
-    } catch {
+    } catch (e){
+      console.log(e);
+      alert(e)
       setSaveState("error");
     }
   };
@@ -170,7 +172,7 @@ const CreateAUserName = ({
             onChange={(e) => setText(e.target.value)}
             maxLength={USERNAME_MAX_LENGTH}
             placeholder="أكتب اسم المستخدم, مثال: Ahmed-Fit1"
-            className="w-full bg-transparent border-2 rounded-2xl border-gray-600/40 px-4 py-6 dark:text-white text-slate-900 placeholder-gray-500 focus:outline-none focus:border-orange-400 transition-colors"
+            className="w-full bg-transparent border-2 rounded-2xl border-gray-600/40 px-4 py-4 dark:text-white text-slate-900 placeholder-gray-500 focus:outline-none focus:border-orange-400 transition-colors"
           />
             {validationError && <p className="text-rose-400 text-sm mt-2">{validationError}</p>}
             {!validationError && isChecking && <p className="text-gray-400 text-sm mt-2">التحقق...</p>}
@@ -190,7 +192,7 @@ const CreateAUserName = ({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="البريد الإلكتروني (اختياري)"
-            className="w-full bg-transparent border-2 rounded-2xl border-gray-600/40 px-4 py-6 dark:text-white text-slate-900 placeholder-gray-500 focus:outline-none focus:border-orange-400 transition-colors"
+            className="w-full bg-transparent border-2 rounded-2xl border-gray-600/40 px-4 py-4 dark:text-white text-slate-900 placeholder-gray-500 focus:outline-none focus:border-orange-400 transition-colors"
           />
         </div>
 
