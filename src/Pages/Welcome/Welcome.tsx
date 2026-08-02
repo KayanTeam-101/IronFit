@@ -103,7 +103,7 @@ useEffect(() => {
     // Always copy the link immediately
     copyToClipboard(url);
     setLinkCopied(true);
-    setTimeout(() => setLinkCopied(false), 12000);
+    setTimeout(() => setLinkCopied(false), 20000);
 
 
     // No alert – the modal already provides instructions.
@@ -358,10 +358,10 @@ useEffect(() => {
   </div>
 
   {linkCopied && (
-    <div className='mt-3 text-emerald-500 dark:text-green-400 text-sm animate-pulse flex flex-col'>
-           <BsCheckCircleFill className='text-xl'/>
+    <div className='mt-3 text-emerald-500 dark:text-green-400 text-sm animate-pulse flex flex-col items-center'>
+           <BsCheckCircleFill className='text-3xl mb-4'/>
 
-      تم النسخ بنجاح! تقدر الآن تفتح الرابط في متصفحك ,بدلا من متصفح التيك توك لأنه غير مدعوم بميزة "تطبيق الويب التقدمي", مستنيك هناك يا صديقي
+       تقدر الآن تفتح الرابط في متصفحك ,بدلا من متصفح التيك توك لأنه غير مدعوم بميزة "تطبيق الويب التقدمي", مستنيك هناك يا صديقي
       😄
     </div>
   )}
