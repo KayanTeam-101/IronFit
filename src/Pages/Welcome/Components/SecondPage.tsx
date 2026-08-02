@@ -77,7 +77,7 @@ const Second: React.FC = () => {
             <div
               key={index}
               style={{ "--time": `${(index + 1 ) * 0.5}s` } as React.CSSProperties}
-              className={`group p-1 py-3 flex flex-col gap-1.5 rounded-3xl active:scale-95 border-b-8 shadow  dark:border-neutral-700/60 bg-white dark:bg-neutral-900 ${index === 0 ? 'border-blue-500' : ''} ${index === 1 ? 'border-orange-500' : ''} ${index === 2 ? 'border-yellow-500' : ''} ${index === 3 ? 'border-indigo-500' : ''} ${index === 4 ? 'border-blue-500' : ''} ${index === 5 ? 'border-emerald-500' : ''}  text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animation-with-delay`}
+              className={`group p-1 py-3 flex flex-col gap-1.5 rounded-3xl active:scale-95 border-b-8 shadow bg-white dark:bg-neutral-900 ${index === 0 ? 'border-blue-500' : ''} ${index === 1 ? 'border-orange-500' : ''} ${index === 2 ? 'border-yellow-500' : ''} ${index === 3 ? 'border-indigo-500' : ''} ${index === 4 ? 'border-blue-500' : ''} ${index === 5 ? 'border-emerald-500' : ''}  text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animation-with-delay`}
             >
 
               <div className="mx-auto mb-2 flex h-7 w-14 items-center justify-center rounded-full     text-3xl  group-hover:scale-110 transition-transform duration-300">
