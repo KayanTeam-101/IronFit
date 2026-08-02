@@ -59,7 +59,7 @@ const Welcome: React.FC = () => {
   // تتبع الخطوة في Firebase
   useEffect(() => {
     if (turn < 1) return;
-    incrementOnboardingStep(turn)
+    incrementOnboardingStep(turn === 1 ? 1.3 : turn )
       .then(() => {
         console.log('Onboarding step incremented successfully');
       })
