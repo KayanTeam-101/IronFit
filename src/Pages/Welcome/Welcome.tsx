@@ -2,7 +2,7 @@ import React, { lazy, useState, useEffect } from 'react';
 import { FaCaretLeft } from "react-icons/fa6";
 import { FaCalendarAlt, FaBullseye, FaUser, FaCheck } from "react-icons/fa";
 import Firstturn from './Components/Firstturn';
-
+import Second from './Components/SecondPage';
 const ChooseHight = lazy(() => import('./Components/ChooseHight'));
 const ChooseAge = lazy(() => import('./Components/ChooseAge'));
 const CurrentWeight = lazy(() => import('./Components/CurrentWeight'));
@@ -11,7 +11,6 @@ const SelectGender = lazy(() => import('./Components/SelectGender'));
 const FinalSection = lazy(() => import('./Components/FinalSection'));
 const ChPreiod = lazy(() => import('./Components/ChPreiod'));
 const S_Goals = lazy(() => import('./Components/SetGoals'));
-const Second = lazy(() => import('./Components/SecondPage'));
 const ShowBmi = lazy(() => import('./Components/ShowBmi'));
 const CreateAUserName = lazy(() => import('./Components/CreateAUserName'));
 const BreakPage = lazy(() => import('./Components/BreakPage'));
@@ -26,9 +25,9 @@ const TOTAL_STEPS = 15;
 // تسمية المراحل
 const stepLabels = [
   { alert: "أهلاً👋", step: 1 },
-  { alert: "تحليل المعلومات📊", step: 5 },
+  { alert: "انت مين؟", step: 5 },
   { alert: "اختار اهدافك🎯", step: 10 },
-  { alert: "مبروك🎖️", step: 15 },
+  { alert: "مبروووك", step: 15 },
 ];
 
 // ربط الخطوات بالأيقونات المخصصة
@@ -94,7 +93,7 @@ const Welcome: React.FC = () => {
     // Always copy the link immediately
     copyToClipboard(url);
     setLinkCopied(true);
-    setTimeout(() => setLinkCopied(false), 7000);
+    setTimeout(() => setLinkCopied(false), 1200);
 
 
     // No alert – the modal already provides instructions.
@@ -331,7 +330,7 @@ const Welcome: React.FC = () => {
 <article className='text-center p-6 flex gap-6 flex-col'>
   <div className='text-2xl font-black text-gray-900 dark:text-gray-100 mb-2 '>
     IronFit
-    غير قادر علي العمل بشكل صحيح هنا
+    غير قادر علي العمل بشكل كامل هنا
   </div>
 
   <p className='text-gray-600 dark:text-gray-300 text-sm leading-relaxed px-6'>
@@ -349,11 +348,11 @@ const Welcome: React.FC = () => {
   </div>
 
   {linkCopied && (
-    <div className='mt-3 text-emerald-600 dark:text-green-400 text-sm animate-pulse flex flex-row'>
-
-      تم النسخ بنجاح! يمكنك الآن فتح الرابط في متصفحك ,بدلا من متصفح التيك توك لأنه غير مدعوم بميزة "تطبيق الويب التقدمي", انتظرك هناك يا صديقي
-      😄
+    <div className='mt-3 text-emerald-500 dark:text-green-400 text-sm animate-pulse flex flex-col'>
            <BsCheckCircleFill className='text-xl'/>
+
+      تم النسخ بنجاح! تقدر الآن تفتح الرابط في متصفحك ,بدلا من متصفح التيك توك لأنه غير مدعوم بميزة "تطبيق الويب التقدمي", مستنيك هناك يا صديقي
+      😄
     </div>
   )}
 </article>
@@ -369,7 +368,7 @@ const Welcome: React.FC = () => {
     <FaCaretLeft className="text-lg" />
   </button>
 
-  <div className='text-center text-sm text-gray-500 dark:text-gray-400 px-2'>
+  <div className='text-center text-sm text-gray-500 dark:text-gray-400 px-2 underline '>
     قم بالمتابعة علي Chrome أو Safari.
   </div>
 
