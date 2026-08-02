@@ -168,7 +168,7 @@ const Welcome: React.FC = () => {
     setTurn((prev) => prev + 1);
     setTimeout(() => {
       setLoading(false);
-    }, 35);
+    }, 3500);
   };
 
   const previous = () => {
