@@ -17,6 +17,7 @@ import { VscSettings } from "react-icons/vsc";
 import { GiShoulderArmor } from "react-icons/gi";
 import { giveExerciseAdvice } from "../../utilities/GiveAdvice";
 import { useNavigate } from "react-router";
+import { TiWarning } from "react-icons/ti";
 
 // Lazy‑loaded components
 const SelectDays = lazy(() => import("../Welcome/Components/SelectDays"));
@@ -305,12 +306,30 @@ const ExercisePage: React.FC = () => {
   if (!system && showSystemModal) {
     return (
       <div className="min-h-screen bg-white dark:bg-transparent flex items-center justify-center pb-16">
-        <div className="relative bg-white/70 backdrop-blur-lg border dark:bg-transparent border-white/50 dark:border-none shadow-xl rounded-xl p-8 w-11/12 max-w-md space-y-6">
+        <div className="relative w-full bg-white/70 backdrop-blur-lg border dark:bg-transparent border-white/50 dark:border-none  rounded-3xl p-8 w-11/12 max-w-md space-y-6">
           <h2 className="text-2xl font-bold text-gray-800 dark:text-white text-center">اختر نظام التمرين</h2>
-          <div className="space-y-4">
+          <div className="space-y-4 flex flex-col items-center">
+              <div className="p-7 flex items-center justify-center w-screen ">
+                    <div className="card-enter relative overflow-hidden rounded-3xl p-5 dark:text-gray-200 bg-gradient-to-br from-orange-500/10 via-amber-500/5 to-transparent dark:from-orange-500/15 dark:via-amber-500/5 border border-orange-200/60 dark:border-orange-500/20 backdrop-blur-sm">
+                  <div className="w-full h-5 mb-2">
+                    <TiWarning className="text-amber-500 text-[25px]" />
+                  </div>
+                  <div>
+                      بدل مــــتعمل نظامك بنفسك, تقدر تختار القوالب الجاهزة من 
+                    {" "}
+                    
+                    <span
+                      onClick={() => (navigate('/templates'))}
+                      className="text-amber-400 cursor-pointer underline p-2 text-shadow-xs"
+                    >
+                    هنا         </span>
+                  </div>
+          
+                  </div>
+                </div>
             {(Object.keys(SYSTEMS) as SystemName[]).map((sys) => (
               <button key={sys} onClick={() => handleSystemSelect(sys)}
-                className="w-full show-first rounded-3xl flex justify-between items-center flex-col bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 dark:from-black/20 dark:to-slate-800/30 dark:border-2 dark:border-gray-600/20 hover:to-orange-600 text-white font-semibold py-4 px-6 transition-all shadow-md hover:shadow-lg active:scale-[0.98]">
+                className="w-full show-first rounded-3xl flex justify-between items-center flex-col bg-gray-200 dark:bg-[#222]/30  hover:to-orange-600 text-gray-600 font-semibold py-6 px-6 transition-all  hover:shadow-lg active:scale-[0.98]">
                 <div>
                   {sys}
                   {sys === "ارنو سبلت" && <FaDumbbell className="inline mr-2" />}
@@ -319,17 +338,14 @@ const ExercisePage: React.FC = () => {
                 </div>
                 <div className="flex w-full flex-row justify-around ">
                   {SYSTEMS[sys].map((w, i) => (
-                    <span key={i} className="text-sm rounded-lg bg-white p-1 text-amber-500 dark:bg-slate-600/30 dark:text-white mt-2">
+                    <span key={i} className="text-sm rounded-lg bg-white p-1 text-amber-500 dark:bg-[#111] dark:text-white mt-2">
                       {w}
                     </span>
                   ))}
                 </div>
               </button>
             ))}
-          </div>
-          <div className="bg-amber-300/60 dark:bg-amber-300/20 border border-amber-400/50 rounded-xl w-11/12 p-2 dark:text-white text-black min-h-10 animate-pulse">
-            مكسل تجدول تمارينك؟! <br /> تقدر تجرب القوالب الجاهزة من{" "}
-            <span onClick={() => (navigate('/templates'))} className="text-amber-400 cursor-pointer underline">هنا</span>
+            
           </div>
         </div>
       </div>
@@ -363,7 +379,7 @@ const ExercisePage: React.FC = () => {
 
       {/* Next workout */}
       <div className="px-4 mb-6">
-        <div className="w-full rounded-3xl mb-2 p-5 shadow-sm dark:bg-black/20 dark:border-2 dark:border-gray-600/20 bg-white flex flex-row gap-2">
+        <div className="w-full rounded-3xl mb-2 p-5 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 bg-white flex flex-row gap-2">
           <FaCookieBite className="text-2xl text-amber-500 dark:text-amber-300" />
           <p className="font-light text-md show-third dark:text-white">{giveExerciseAdvice()}</p>
         </div>
@@ -375,7 +391,7 @@ const ExercisePage: React.FC = () => {
               <div className="absolute top-0 left-0 w-48 h-48 bg-indigo-400 rounded-full opacity-20 blur-3xl animate-pulse delay-1000" />
               <div className="absolute bottom-0 right-0 w-56 h-56 bg-teal-400 rounded-full opacity-20 blur-3xl animate-pulse delay-2000" />
             </div>
-            <div className="relative z-20 min-h-[250px] overflow-hidden w-full p-5 bg-orange-500 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-2xl border border-amber-50 flex flex-col gap-4 transition-all hover:shadow-lg">
+            <div className="relative z-20 min-h-[250px] overflow-hidden w-full p-5 bg-orange-500 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-3xl border border-amber-50 flex flex-col gap-4 transition-all hover:shadow-lg">
               <div className="flex flex-row items-center justify-between">
                 <span className="text-white/80 text-sm">تمرين اليوم</span>
                 <span className="text-white/80 text-sm">{getTodayWeekday()}</span>
@@ -385,31 +401,31 @@ const ExercisePage: React.FC = () => {
             <GiShoulderArmor className="absolute text-[150px] scale-150 left-0 top-0 opacity-10 text-white" />
               </div>
             </div>
-            <div className="relative z-10 -top-4 w-full min-h-1 scale-97 bg-amber-400/20 py-6 dark:text-white dark:bg-gray-600/20 p-2 flex items-end rounded-2xl">
+            <div className="relative z-10 -top-4 w-full min-h-1 scale-97 bg-amber-400/20 py-6 dark:text-white dark:bg-gray-600/20 p-2 flex items-end rounded-3xl">
               {selectedDays.join(" - ")} (أيام التمرين)
             </div>
           </>
         ) : schedule.length > 0 ? (
-         <> <div className="relative min-h-[250px] w-full p-5 bg-slate-300 dark:bg-slate-800/20 dark:border-2 dark:border-gray-600/20 overflow-hidden rounded-2xl border border-gray-200 flex flex-col gap-4 transition-all hover:shadow-lg">
+         <> <div className="relative min-h-[250px] w-full p-5 bg-slate-300 dark:bg-slate-800/20 dark:border-2 dark:border-gray-600/20 overflow-hidden rounded-3xl border border-gray-200 flex flex-col gap-4 transition-all hover:shadow-lg">
             <div className="flex flex-row items-center justify-between">
               <h1 className="text-4xl text-white font-bold m-3"> إستراحة محارب !</h1>
             </div>
             <h1 className="text-xl text-white">استرح يا بطل!</h1>
             <GiShoulderArmor className="absolute text-[150px] scale-150 left-0 top-10 opacity-10 text-white" />
           </div>
-           <div className="relative z-10 -top-4 w-full min-h-1 scale-97 bg-amber-400/50 py-6 dark:text-white dark:bg-gray-600/20 p-2 flex items-end rounded-2xl">
+           <div className="relative z-10 -top-4 w-full min-h-1 scale-97 bg-amber-400/50 py-6 dark:text-white dark:bg-gray-600/20 p-2 flex items-end rounded-3xl">
               {selectedDays.join(" - ")} (أيام التمرين)
             </div>
           </>
         ) : (
-          <div className="relative min-h-[150px] w-full p-5 bg-slate-300 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-2xl border border-gray-200 flex flex-col gap-4 transition-all hover:shadow-lg">
+          <div className="relative min-h-[150px] w-full p-5 bg-slate-300 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-3xl border border-gray-200 flex flex-col gap-4 transition-all hover:shadow-lg">
             <div className="flex flex-row items-center justify-between">
               <h2 className="text-3xl text-white font-bold">أيام التمرين</h2>
             </div>
             <h1 className="text-xl text-white">لم تقم باختيار أيام التمرين بعد!</h1>
             <button
               onClick={() => { setShowSystemModal(true); setIsDisabled(true); }}
-              className="flex items-center gap-2 bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 p-3 shadow-2xl w-fit rounded-xl text-amber-500 font-bold active:scale-95 transition"
+              className="flex items-center gap-2 bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 p-3 shadow-2xl w-fit rounded-3xl text-amber-500 font-bold active:scale-95 transition"
             >
               اختر أيام التمرين <FaArrowRight />
             </button>
@@ -423,7 +439,7 @@ const ExercisePage: React.FC = () => {
           <h2 className="text-xl font-semibold text-gray-700 px-4 mb-3">جدول التمرين</h2>
           <div className="flex overflow-auto snap-x snap-mandatory gap-4 p-4 scrollbar-thin scrollbar-thumb-gray-300">
             {days.map((day, idx) => (
-              <div key={idx} className={`snap-center flex dark:bg-black/70 dark:border-2 dark:border-gray-600/20 justify-between flex-col shrink-0 w-full min-h-80 relative bg-white/70 backdrop-blur-lg border border-white/50 shadow-2xl rounded-xl p-5 space-y-4 transition-all hover:shadow-2xl ${idx === currentDayIndex ? "ring-4 ring-amber-400/20" : ""}`}>
+              <div key={idx} className={`snap-center flex dark:bg-black/20 dark:border-2 dark:border-gray-600/20 justify-between flex-col shrink-0 w-full min-h-80 relative bg-white/70 backdrop-blur-lg border border-white/50 shadow-2xl rounded-3xl p-5 space-y-4 transition-all hover:shadow-2xl ${idx === currentDayIndex ? "ring-4 ring-amber-400/20" : ""}`}>
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-lg font-bold text-gray-800 dark:text-white">{day.workout}</h3>
@@ -437,10 +453,10 @@ const ExercisePage: React.FC = () => {
                 {day.exercises.length > 0 ? (
                   <ul className="space-y-2">
                     {day.exercises.map((ex, exIdx) => (
-                      <li key={exIdx} className="relative flex items-center justify-between bg-white dark:bg-black/20 border-2 border-gray-600/20 p-3 py-6 rounded-2xl shadow-xl transition-all hover:shadow-md">
+                      <li key={exIdx} className="relative flex items-center justify-between bg-white dark:bg-black/20 border-2 border-gray-600/20 p-3 py-6 rounded-3xl shadow-xl transition-all hover:shadow-md">
                         <div className="absolute top-13 text-sm text-gray-500 dark:text-white/70 pl-2">{ex.weight} كغ</div>
                         <span
-                          className="font-medium cursor-pointer dark:text-white underline text-gray-700 truncate flex-1"
+                          className="font-medium cursor-pointer dark:text-white  text-gray-700 truncate flex-1"
                           onClick={() => handleShowAnalysis(ex.name)}
                         >
                           {ex.name}
@@ -455,7 +471,7 @@ const ExercisePage: React.FC = () => {
                                 currentWeight: ex.weight,
                               })
                             }
-                            className="p-1 text-amber-500 hover:text-amber-700 transition flex justify-center items-center flex-col rounded-full gap-1"
+                            className="p-2 text-amber-500 dark:bg-gray-500/10 hover:text-amber-700 transition flex justify-center items-center flex-col rounded-xl gap-1"
                           >
                             <FaExchangeAlt />
                             
@@ -475,7 +491,7 @@ const ExercisePage: React.FC = () => {
                 <div className="flex flex-col gap-2.5">
                   <button
                     onClick={() => handleAddExercise(idx)}
-                    className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-amber-400 to-orange-500 text-white py-3.5 rounded-xl font-medium shadow-md hover:shadow-lg active:scale-[0.98] transition"
+                    className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-amber-400 to-orange-500 text-white py-3.5 rounded-3xl font-medium shadow-md hover:shadow-lg active:scale-[0.98] transition"
                   >
                     إضافة تمرين <FaPlus />
                   </button>
@@ -483,7 +499,7 @@ const ExercisePage: React.FC = () => {
                     <button
                       onClick={() => handleMarkTodayCompleted(idx)}
                       disabled={day.completedToday}
-                      className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl font-semibold transition ${
+                      className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-3xl font-semibold transition ${
                         day.completedToday ? "bg-green-100 text-teal-700 cursor-not-allowed" : "bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-md hover:shadow-lg"
                       }`}
                     >
@@ -534,7 +550,7 @@ const ExercisePage: React.FC = () => {
 // ---------- Modal ----------
 const Modal: React.FC<{ children: React.ReactNode; onClose: () => void }> = ({ children, onClose }) => (
   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-4 animate-fadeIn">
-    <div className="relative bg-white dark:bg-black/5 backdrop-blur-md border border-white/50 dark:border-none shadow-2xl rounded-xl p-6 w-full max-w-sm show-first">
+    <div className="relative bg-white dark:bg-black/5 backdrop-blur-md border border-white/50 dark:border-none shadow-2xl rounded-3xl p-6 w-full max-w-sm show-first">
       <button onClick={onClose} className="absolute -top-9 right-3 hover:text-gray-600 transition">
         <FaXmark size={20} className="text-rose-400" />
       </button>
@@ -552,10 +568,10 @@ const AddExerciseForm: React.FC<{ onSave: (name: string, weight: number) => void
     <form onSubmit={(e) => { e.preventDefault(); if (!name.trim() || !weight) return; onSave(name.trim(), Number(weight)); }} className="space-y-5">
       <h3 className="text-xl font-bold text-gray-800 dark:text-white pr-5">تمرين جديد</h3>
       <input type="text" placeholder="اسم التمرين" autoFocus value={name} onChange={(e) => setName(e.target.value)}
-        className="w-full bg-gray-50 border border-gray-200 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white rounded-b-2xl rounded-xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-orange-400 transition" required />
+        className="w-full bg-gray-50 border border-gray-200 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white rounded-b-2xl rounded-3xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-orange-400 transition" required />
       <input type="number" placeholder="الوزن (كغ)" value={weight} onChange={(e) => setWeight(e.target.value)}
-        className="w-full bg-gray-50 border border-gray-200 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white rounded-b-2xl rounded-xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-orange-400 transition" required step="0.5" />
-      <button type="submit" className="w-full bg-gradient-to-r from-amber-400 to-orange-500 text-white py-3 rounded-xl font-bold shadow-md hover:shadow-lg active:scale-[0.98] transition">
+        className="w-full bg-gray-50 border border-gray-200 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white rounded-b-2xl rounded-3xl py-3 pr-10 pl-4 outline-none focus:ring-2 focus:ring-orange-400 transition" required step="0.5" />
+      <button type="submit" className="w-full bg-gradient-to-r from-amber-400 to-orange-500 text-white py-3 rounded-3xl font-bold shadow-md hover:shadow-lg active:scale-[0.98] transition">
         حفظ التمرين
       </button>
     </form>
@@ -602,11 +618,11 @@ const ModernAnalysisView: React.FC<{ exerciseName: string; weightsHistory: numbe
       </div>
       {weightsHistory.length > 0 && (
         <div className="grid grid-cols-2 gap-3">
-          <div className="bg-gray-100 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white backdrop-blur-sm rounded-xl p-6 border border-gray-100 transition-all hover:shadow-md">
+          <div className="bg-gray-100 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white backdrop-blur-sm rounded-3xl p-6 border border-gray-100 transition-all hover:shadow-md">
             <span className="text-xs text-gray-500">أعلى وزن</span>
             <p className="text-lg font-bold text-gray-800 dark:text-white">{maxWeight} كغ</p>
           </div>
-          <div className="bg-gray-100 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white backdrop-blur-sm rounded-xl p-3 border border-gray-100/80 transition-all hover:shadow-md">
+          <div className="bg-gray-100 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-white backdrop-blur-sm rounded-3xl p-3 border border-gray-100/80 transition-all hover:shadow-md">
             <span className="text-xs text-gray-500">عدد الجلسات</span>
             <p className="text-lg font-bold text-gray-800 dark:text-white">{weightsHistory.length}</p>
           </div>
@@ -619,11 +635,11 @@ const ModernAnalysisView: React.FC<{ exerciseName: string; weightsHistory: numbe
 // ---------- Settings ----------
 const Settings = () => (
   <div className="fixed min-h-screen show-first top-0 transform-none left-0 z-50 w-screen flex flex-col gap-4 justify-center items-center bg-black/15 backdrop-blur-sm">
-    <div className="w-10/12 min-h-32 p-5 bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-xl">
+    <div className="w-10/12 min-h-32 p-5 bg-white dark:bg-black/20 dark:border-2 dark:border-gray-600/20 rounded-3xl">
       <div className="w-full h-full flex flex-col gap-3 justify-around">
         <div className="flex justify-between w-full p-3.5 rounded-lg text-md cursor-pointer dark:text-white activeAnim">
           الاعدادات
-          <div onClick={() => window.location.reload()} className="p-1.5 rounded-2xl">
+          <div onClick={() => window.location.reload()} className="p-1.5 rounded-3xl">
             <FaXmark className="text-rose-600" />
           </div>
         </div>
@@ -638,8 +654,8 @@ const Settings = () => (
           إعادة تعيين نظام التدريب <RiResetRightFill />
         </div>
       </div>
-    </div>
     <SelectDays />
+    </div>
   </div>
 );
 

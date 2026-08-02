@@ -350,8 +350,10 @@ const Welcome: React.FC = () => {
 
   {linkCopied && (
     <div className='mt-3 text-emerald-600 dark:text-green-400 text-sm animate-pulse flex flex-row'>
-      تم نسخ الرابط بنجاح , إذهب الآن للمتصفح و قم بلصقه با بطل
-     <BsCheckCircleFill className='text-xl'/>
+
+      تم النسخ بنجاح! يمكنك الآن فتح الرابط في متصفحك ,بدلا من متصفح التيك توك لأنه غير مدعوم بميزة "تطبيق الويب التقدمي", انتظرك هناك يا صديقي
+      😄
+           <BsCheckCircleFill className='text-xl'/>
     </div>
   )}
 </article>

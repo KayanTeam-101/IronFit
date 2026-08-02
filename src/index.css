@@ -205,49 +205,44 @@ h1, h2, h3, h4, h5, h6{
     animation: outlineAnim1 2s ease-out infinite;
 }
 @keyframes outlineAnim1 {
-    0%{
+    0%,100%{
         opacity: 1;
-        scale: 1;
+        scale: 1.1;
         rotate: 0deg;
     }
     20%{
-        opacity: .9;
+        opacity: .5;
         scale: .93;
         rotate:1deg;
     }
       30%{
-        opacity: .9;
+        opacity: .5;
         scale: .93;
         rotate:-1deg;
     }
     40%{
-     opacity: .9;
+     opacity: .5;
         scale: .93;
         rotate: 1deg;   
     }
      50%{
-        opacity: .9;
+        opacity: .5;
         scale: .93;
         rotate:-2deg;
     }
     60%{
-opacity: .9;
+opacity: .5;
         scale: .93;
         rotate:2deg;
     }
     80%{
-        opacity: .9;
+        opacity: .5;
         scale: .93;
         rotate: -1deg;
     }
    
   
-    100%{
-       opacity: 1;
-        scale: 1;
-        rotate: 0deg;
 
-    }
 }
 .Currentday{
   position: relative;

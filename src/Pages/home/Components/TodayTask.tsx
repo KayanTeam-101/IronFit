@@ -53,7 +53,7 @@ const TodayTask = () => {
       current !== null ? Math.min((current / target) * 100, 100) : 0;
     return (
       <div className="w-full mt-1">
-        <div className="w-full h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+        <div className="w-full h-1.5 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
           <div
             className={`h-full rounded-full transition-all duration-300 show-fast ${color}`}
             style={{ width: `${percent}%` }}
@@ -71,7 +71,7 @@ const TodayTask = () => {
   };
 
   return (
-    <div className="bg-white dark:bg-[#222]/20 dark:border-2 dark:border-gray-600/20 rounded-4xl border border-amber-100 p-4 shadow-sm mb-6.5">
+    <div className=" p-4 mb-6.5">
       <div
         className={`${
           localStorage.getItem("Diet") ? "" : "opacity-30"
@@ -90,29 +90,29 @@ const TodayTask = () => {
         </h3>
       </div>
 
-      <div className="flex flex-row gap-2 justify-center">
+      <div className="flex flex-col gap-2 justify-center">
         <div
-          className={`flex flex-col items-center min-w-[100px] active:scale-95 transition delay-100 flex-1 p-3 rounded-xl ${Number(eatenCalories) >= dailyCalories ? "border-teal-400 border-2 " : "bg-gray-50 shadow dark:bg-[#222]/50 "} ${
+          className={`flex flex-col items-start min-w-[100px] active:scale-90 active:opacity-50 transition delay-100 flex-1  ${Number(eatenCalories) >= dailyCalories ? "opacity-50 " : " "} ${
             localStorage.getItem("Diet") ? "" : "opacity-10"
           }`}
         >
-          <FaFire className="text-3xl text-red-500 mb-1" />
+          <FaFire className="text-2xl text-red-500 mb-1" />
           <p className="text-[12px] p-1 font-medium dark:text-white">
             السعرات
           </p>
           <ProgressBar
             current={eatenCalories}
             target={dailyCalories}
-            color="bg-red-500"
+            color="bg-rose-500"
           />
         </div>
 
         <div
           className={`${
             localStorage.getItem("Diet") ? "" : "opacity-10"
-          } flex flex-col items-center min-w-[100px] active:scale-95 transition delay-100 flex-1 p-3 rounded-xl ${ Number(localStorage.getItem("currentWeight")) * 1.6 <= Number(totalProtine) ? "border-teal-400 border-2 " : "bg-gray-50 shadow dark:bg-[#222]/50 "}`}
+          } flex flex-col items-start min-w-[100px] active:scale-90 active:opacity-50 transition delay-100 flex-1  ${ Number(localStorage.getItem("currentWeight")) * 1.6 <= Number(totalProtine) ? "opacity-50 " : ""}`}
         >
-          <GiBiceps className="text-3xl text-blue-600 mb-1" />
+          <GiBiceps className="text-2xl text-blue-600 mb-1" />
           <p className="text-[12px] p-1 font-medium dark:text-white">
            البروتين
           </p>
@@ -130,7 +130,7 @@ const TodayTask = () => {
             localStorage.getItem("Diet") ? "" : "opacity-10"
           }`}
         >
-          <GiWheat className="text-3xl text-amber-500 mb-1" />
+          <GiWheat className="text-2xl text-amber-500 mb-1" />
           <p className="text-[12px] p-1 font-medium dark:text-white">
             الكربوهيدريت
           </p>
@@ -143,13 +143,16 @@ const TodayTask = () => {
       </div>
 
       {!localStorage.getItem("Diet") && (
-        <div
-          onClick={() => navigate("/me/food")}
-          className="outline-swealing2 bg-linear-to-l from-amber-400 to-orange-500 flex justify-center items-center p-2 font-black mt-2 text-white rounded-xl"
-        >
-          اضغط هنا لإنشاء نظامك{" "}
-          <BsCaretLeftFill className="mb-1 text-sm" />
-        </div>
+        <div className="slide-up w-full flex flex-col items-center gap-3" style={{ animationDelay: '180ms' }}>
+                     <button
+                       onClick={() => navigate('/me/food')}
+                       className="btn-press relative overflow-hidden flex items-center justify-center gap-2 bg-linear-120 from-orange-400 to-amber-300 px-8 py-4 text-white w-full rounded-2xl font-bold text-lg shadow-lg shadow-orange-500/20 outline-swealing2"
+                     >
+                       عمل نظامي الغذائي  <BsCaretLeftFill />
+                     </button>
+                     
+                   </div>
+       
       )}
     </div>
   );

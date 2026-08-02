@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaCopy, FaCheck, FaTimes, FaWhatsapp } from "react-icons/fa";
 import { IoDiamond } from "react-icons/io5";
+import { TbClipboardCopy } from "react-icons/tb";
 
 interface SubscribeProps {
   onClose: () => void;
@@ -29,8 +30,8 @@ const Subscribe: React.FC<SubscribeProps> = ({
   if (localStorage.getItem("SubscriptionPeriod")) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[5px] p-4">
-      <div className="relative w-full max-w-sm border dark:bg-black/95 dark:border-2 dark:border-gray-600/20 border-amber-300 bg-white/95 shadow-2xl p-6 text-center overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[5px] bg-black/10 p-4">
+      <div className="relative w-full max-w-sm border dark:bg-black/95 dark:border-2 dark:border-gray-600/20 border-amber-300 active:scale-90 active:opacity-40 transition bg-white/95 shadow-2xl p-6 text-center overflow-hidden">
       <div className="absolute -top-20 right-1/2  w-50 h-50 bg-amber-400 blur-[70px] rounded-full animate-pulse"></div>
         <button
           onClick={onClose}
@@ -83,7 +84,7 @@ const Subscribe: React.FC<SubscribeProps> = ({
               onClick={handleCopyCode}
               className="p-2 rounded-xl bg-amber-100 dark:bg-amber-800/30 hover:bg-amber-200 dark:hover:bg-amber-700/40 transition text-amber-700 dark:text-amber-300"
             >
-              {copied ? <FaCheck className="text-green-500" /> : <FaCopy />}
+              {copied ? <FaCheck className="text-green-500" /> : <TbClipboardCopy />}
             </button>
             <span className="p-1 dark:text-gray-400">أو</span>
             <button

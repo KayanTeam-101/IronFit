@@ -265,7 +265,7 @@ const bmi = calcBMI(userData.currentWeight, userData.height);
       </div>
       <div className="min-h-fit show-first z-0 sm:p-5 font-arabic relative overflow-hidden ">
       {/* Decorative blur */}
-        <div className="absolute w-full h-full  dark:bg-black/10 backdrop-blur-[4px] z-40 rounded-3xl flex justify-center items-center ">
+        <div className="absolute w-full h-full  dark:bg-black/10 backdrop-blur-[10px] z-40 rounded-3xl flex justify-center items-center ">
       <div className="z-40 flex items-center justify-center flex-col gap-2">
           <IoDiamondOutline className="text-amber-400 z-50 text-3xl" />
         <p className="text-amber-400 text-xl ">اشترك في VIP</p>

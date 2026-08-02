@@ -22,6 +22,7 @@ import {
   GiWheat,
 } from "react-icons/gi";
 import { IoWarning } from "react-icons/io5";
+import { TiWarning } from "react-icons/ti";
 
 const AdditionPage = lazy(() => import("./AdditionPage"));
 
@@ -39,10 +40,10 @@ const MEAL_NAMES_AR: Record<MealKey, string> = {
 };
 
 const MEAL_ICONS: Record<MealKey, React.ReactNode> = {
-  Breakfast: <div className="p-3 bg-amber-100 dark:bg-amber-800/20 rounded-xl"><BsSun className="text-amber-500  text-xl" /></div>,
-  Lunch: <div className="p-3 bg-orange-50 dark:bg-orange-800/20 rounded-xl"><FaBowlFood className="text-orange-500  text-xl" /></div>,
-  Snacks: <div className="p-3 bg-yellow-50 dark:bg-yellow-800/20 rounded-xl "><BiCookie className="text-yellow-600 text-xl"   /></div>,
-  Dinner: <div className="p-3 bg-indigo-50 dark:bg-indigo-800/20 rounded-xl"><BsMoon className="text-indigo-400 text-xl" /></div>,
+  Breakfast: <div className="p-3 bg-amber-100 dark:bg-amber-800/20 rounded-2xl"><BsSun className="text-amber-500  text-xl" /></div>,
+  Lunch: <div className="p-3 bg-orange-50 dark:bg-orange-800/20 rounded-2xl"><FaBowlFood className="text-orange-500  text-xl" /></div>,
+  Snacks: <div className="p-3 bg-yellow-50 dark:bg-yellow-800/20 rounded-2xl "><BiCookie className="text-yellow-600 text-xl"   /></div>,
+  Dinner: <div className="p-3 bg-indigo-50 dark:bg-indigo-800/20 rounded-2xl"><BsMoon className="text-indigo-400 text-xl" /></div>,
 };
 
 
@@ -130,7 +131,7 @@ const MakeADiet: React.FC = () => {
     const el = document.getElementById(`meal-${meal}`);
     if (!el) return;
     if (el.classList.contains("opened")) {
-      el.style.height = "60px";
+      el.style.height = "65px";
       el.classList.remove("opened");
     } else {
       el.style.height = el.scrollHeight + "px";
@@ -267,9 +268,9 @@ const MakeADiet: React.FC = () => {
         </div>
       </div>
       <div className="p-4 flex items-center justify-center w-screen ">
-        <div className="bg-amber-300/20 dark:bg-amber-300/20 border border-amber-400/50  animate-bounce rounded-xl w-11/12 p-2 dark:text-white text-black min-h-10 flex flex-col">
-        <div className="w-full h-5">
-          <IoWarning className="text-amber-600 text-[18px]" />
+          <div className="card-enter relative overflow-hidden rounded-3xl p-5 dark:text-gray-200 bg-gradient-to-br from-orange-500/10 via-amber-500/5 to-transparent dark:from-orange-500/15 dark:via-amber-500/5 border border-orange-200/60 dark:border-orange-500/20 backdrop-blur-sm">
+        <div className="w-full h-5 mb-2">
+          <TiWarning className="text-amber-500 text-[25px]" />
         </div>
         <div>
             بدل مــــتعمل نظامك بنفسك, تقدر تختار القوالب الجاهزة من 
@@ -292,7 +293,7 @@ const MakeADiet: React.FC = () => {
             id={`meal-${meal}`}
             key={meal}
             className="relative max-h-screen  bg-white/70 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 backdrop-blur-lg border border-white/60 shadow-[0_0_14px_-10px_#000] active:scale-95 rounded-3xl overflow-hidden transition-all duration-500 ease-in-out"
-            // style={{ height: "60px" }}
+            style={{height:"65px"}}
           >
             <div
               onClick={() => toggleMeal(meal)}

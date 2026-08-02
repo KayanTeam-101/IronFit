@@ -108,7 +108,7 @@ const Meal = React.memo(
     return (
       <div
         className={`relative bg-white/70 backdrop-blur-lg border dark:bg-[#222]/20 dark:border dark:border-gray-600/20 border-white/50 dark:shadow-none shadow-xl rounded-4xl p-6 space-y-5 transition-all duration-500 hover:shadow-2xl ${
-          allEaten ? "ring-2 ring-teal-500 shadow-green-100/50" : ""
+          allEaten ? "ring-2 ring-teal-500 opacity-70 scale-97" : ""
         }`}
       >
         {/* Header with meal name and progress ring */}
@@ -161,7 +161,7 @@ const Meal = React.memo(
                 <button
                   key={`${mealName}-${dish}-${idx}`}
                   onClick={() => onToggleDish(dish, mealName)}
-                  className={`group relative flex items-center dark:bg-black/20 border-2 border-gray-600/10 justify-between p-4 rounded-2xl transition-all duration-300 hover:shadow-lg active:scale-[0.98] ${
+                  className={`group relative flex items-center dark:bg-black/20 border-2 border-gray-600/10 justify-between p-4 rounded-3xl transition-all duration-300 hover:shadow-lg active:scale-[0.98] ${
                     isEaten
                       ? "bg-green-50 dark:text-green-500 border-green-400/50 dark:bg-teal-500/10 text-green-700 hover:opacity-50"
                       : "bg-blue-50 dark:bg-slate-600/20 dark:text-white border-amber-100/30 hover:border-amber-300"
@@ -221,8 +221,8 @@ const Meal = React.memo(
                   </span>
                 ))
               : getVitamins.map((_, idx) => (
-                  <div key={idx} className="p-1 text-amber-500 bg-stone-100 rounded-3xl dark:text-gray-100 dark:bg-black flex flex-row gap-1 px-3 justify-center items-center">
-                    <IoDiamond className="mb-1 text-sm text-amber-400" /> VIP
+                  <div key={idx} className="p-1 text-amber-500 bg-stone-100 rounded-3xl dark:text-gray-100 dark:bg-[#111] flex flex-row gap-1 px-3 justify-center items-center">
+                    <IoDiamond className="mb-1 text-xs text-amber-400" /> VIP
                   </div>
                 ))}
           </div>

@@ -146,7 +146,7 @@ const ExerciseDay: React.FC = () => {
   // No training days selected
   return (
     <div
-      className={`relative min-h-60 w-full p-5 bg-gray-200 dark:bg-black/20 rounded-4xl flex flex-col justify-between transition-all hover:shadow-2xl ${
+      className={`relative min-h-60 w-full p-5  rounded-4xl flex flex-col justify-between transition-all hover:shadow-2xl ${
         localStorage.getItem("Diet") ? "" : "opacity-10"
       }`}
     >
@@ -155,13 +155,12 @@ const ExerciseDay: React.FC = () => {
           جدول التدريب
         </h2>
       </div>
-      <h1 className="text-2xl dark:text-gray-300 text-gray-400 font-bold mb-2">
+      <h1 className="text-2xl dark:text-gray-500 text-gray-400 font-bold mb-2">
         لسة مش موجود جدول لحد دلوقتي
       </h1>
-      <SlCalender className="absolute text-8xl left-10 top-10 scale-170 opacity-20 text-white" />
       <button
         onClick={() => navigate("/me/exercises")}
-        className="flex items-center gap-2 bg-white p-3 shadow-2xl w-fit rounded-xl text-amber-500 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-slate-300 font-bold"
+        className="flex items-center gap-2 bg-white p-3 shadow-2xl w-fit rounded-3xl text-amber-500 dark:bg-black/20 dark:border-2 dark:border-gray-600/20 dark:text-slate-300 font-bold"
       >
         صفحة التمرين <FaCaretLeft />
       </button>

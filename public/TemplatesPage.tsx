@@ -430,7 +430,7 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
           className="segmented-pill absolute inset-y-1.5 rounded-xl shadow-md"
           style={{
             width: "calc(50% - 9px)",
-            transform: activeTab === "diet" ? "translateX(0px)" : "translateX(-150px)",
+            transform: activeTab === "diet" ? "translateX(0px)" : "translateX(calc(100% + 6px))",
             background:
               activeTab === "diet"
                 ? "linear-gradient(135deg,#3b82f6,#2563eb)"
@@ -473,7 +473,7 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
       <div className="grid gap-4 max-w-lg mx-auto">
         {/* Daily calories card — diet tab only */}
         {activeTab === "diet" && (
-          <div className="card-enter relative overflow-hidden rounded-3xl p-5 bg-gradient-to-br from-orange-500/10 via-amber-500/5 to-transparent dark:from-orange-500/15 dark:via-amber-500/5  backdrop-blur-sm">
+          <div className="card-enter relative overflow-hidden rounded-3xl p-5 bg-gradient-to-br from-orange-500/10 via-amber-500/5 to-transparent dark:from-orange-500/15 dark:via-amber-500/5 border border-orange-200/60 dark:border-orange-500/20 backdrop-blur-sm">
             <p className="text-sm text-gray-500 dark:text-gray-400 font-semibold mb-1">احتياجك اليومي</p>
             <p className="text-3xl font-black bg-gradient-to-r from-orange-500 to-amber-400 bg-clip-text text-transparent">
               {dailyCalories !== null ? <AnimatedNumber value={dailyCalories} /> : "—"} سعرة
@@ -502,16 +502,16 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
               return (
                 <div
                   key={template.id}
-                  className={`template-card card-enter relative bg-white dark:bg-black/20 dark:border backdrop-blur-sm shadow-lg rounded-3xl p-5 group ${
+                  className={`template-card card-enter relative bg-white dark:bg-black/20 dark:border-2 backdrop-blur-sm shadow-lg rounded-3xl p-5 group ${
                     isRecommended
-                      ? "border-orange-400/70 dark:border-orange-400 "
+                      ? "border-orange-400/70 dark:border-orange-400/50 recommended"
                       : "border border-gray-200/70 dark:border-gray-600/20"
                   }`}
                   style={{ animationDelay: `${idx * 60}ms` }}
                 >
                   {isRecommended && (
-                    <span className="absolute -top-2.5 right-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
-                       موصى به بالإحتياجك ( مُقترح من  الـ Ai)
+                    <span className="absolute -top-2.5 right-4 bg-gradient-to-r from-orange-400 to-amber-500 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
+                      موصى به
                     </span>
                   )}
 
@@ -528,8 +528,8 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
                   <p className="text-xs text-gray-400 dark:text-gray-500 font-medium mb-3">مناسب حسب احتياجك الخاص</p>
 
                   <div className="flex gap-4 text-sm mb-4">
-                    <span className="flex items-center gap-1.5 text-rose-500 dark:text-rose-500 font-semibold">
-                      <FaFire className="text-xs" /> <AnimatedNumber value={Math.round(nut.calories)} /> سعرة
+                    <span className="flex items-center gap-1.5 text-orange-500 dark:text-orange-400 font-semibold">
+                      <FaFire className="text-xs" /> <AnimatedNumber value={Math.round(nut.calories)} /> كال
                     </span>
                     <span className="flex items-center gap-1.5 text-teal-500 dark:text-teal-400 font-semibold">
                       <GiBiceps className="text-xs" /> <AnimatedNumber value={Math.round(nut.protein)} />غ بروتين
@@ -579,7 +579,9 @@ const applyExerciseTemplate = (template: ExerciseTemplate) => {
                   <span className="flex items-center gap-1.5 text-gray-500 dark:text-gray-300 font-semibold">
                     <FaRunning /> {template.daysPerWeek} أيام
                   </span>
-     
+                  <span className={`font-semibold ${getDifficultyColor(template.difficulty)}`}>
+                    {template.difficulty === "beginner" ? "مبتدئ" : template.difficulty === "intermediate" ? "متوسط" : "متقدم"}
+                  </span>
                 </div>
 
                 <div className="flex items-center gap-2.5">

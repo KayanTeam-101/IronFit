@@ -39,7 +39,7 @@ interface ExerciseTemplate {
 export const DIET_TEMPLATES: DietTemplate[] = [
 {
 id: "d1",
-name: "ضخامة 3500 سعرة",
+name: "ضخامة 4200 سعرة",
 description: "نظام عالي السعرات لبناء العضلات وزيادة الوزن",
 type: "bulk",
 meals: {
@@ -106,14 +106,14 @@ description: "نظام مستوحى من مسموحات الطيبات",
 type: "maintenance",
 meals: {
 Breakfast: [
-{ foodName: "أرز أبيض", grams: 300 },
-{ foodName: "لحم بقري", grams: 180 },
+{ foodName: "أرز أبيض", grams: 200 },
+{ foodName: "لحم بقري", grams: 150 },
 { foodName: "خيار", grams: 100 },
 ],
 Lunch: [
-{ foodName: "أرز أبيض", grams: 380 },
-{ foodName: "سمك بلطي مشوي", grams: 250 },
-{ foodName: "كوسة", grams: 200 },
+{ foodName: "أرز أبيض", grams: 200 },
+{ foodName: "سمك بلطي مشوي", grams: 150 },
+{ foodName: "كوسة", grams: 150 },
 { foodName: "زيت زيتون", grams: 15 },
 ],
 Snacks: [
@@ -122,14 +122,13 @@ Snacks: [
 ],
 Dinner: [
 { foodName: "بطاطس مسلوقة", grams: 400 },
-{ foodName: "لحم بقري", grams: 220 },
 { foodName: "خيار", grams: 150 },
 ],
 },
 },
 {
 id: "d10",
-name: "الطيبات 2 - 2800 سعرة",
+name: "الطيبات 2 - 4300 سعرة",
 description: "نظام متنوع من أطعمة الطيبات",
 type: "maintenance",
 meals: {
@@ -157,7 +156,7 @@ Dinner: [
 },
 {
 id: "d3",
-name: "ثبات الوزن 2500 سعرة",
+name: "ثبات الوزن 3200 سعرة",
 description: "نظام متوازن للمحافظة على الوزن الحالي",
 type: "maintenance",
 meals: {
@@ -299,7 +298,7 @@ Dinner: [
 
 {
 id: "d11",
-name: "ضخامة بدون دهون 3200 سعرة",
+name: "ضخامة بدون دهون 3800 سعرة",
 description: "زيادة عضلية نظيفة مع دهون متحكم بها",
 type: "bulk",
 meals: {
@@ -327,6 +326,38 @@ Dinner: [
 { foodName: "طحينة", grams: 20 },
 ],
 },
+},
+{
+  id: "d23",
+  name: "نظام متوازن 3500 سعرة",
+  description: "نظام متوازن للمحافظة على الوزن مع 3500 سعرة حرارية",
+  type: "maintenance",
+  meals: {
+    Breakfast: [
+      { foodName: "شوفان", grams: 120 },
+      { foodName: "بيض مسلوق", grams: 200 },
+      { foodName: "لبن كامل الدسم", grams: 400 },
+      { foodName: "موز", grams: 150 },
+      { foodName: "عسل أسود", grams: 20 },
+    ],
+    Lunch: [
+      { foodName: "أرز أبيض", grams: 350 },
+      { foodName: "فراخ مشوية", grams: 250 },
+      { foodName: "سلطة بلدي", grams: 150 },
+      { foodName: "زيت زيتون", grams: 15 },
+    ],
+    Snacks: [
+      { foodName: "زبادي يوناني", grams: 250 },
+      { foodName: "لوز", grams: 40 },
+      { foodName: "تمر", grams: 60 },
+    ],
+    Dinner: [
+      { foodName: "بطاطس مسلوقة", grams: 350 },
+      { foodName: "سمك بلطي مشوي", grams: 250 },
+      { foodName: "بروكلي", grams: 150 },
+      { foodName: "زيت زيتون", grams: 10 },
+    ],
+  },
 },
 {
 id: "d12",
@@ -392,7 +423,7 @@ Dinner: [
 
 {
 id: "d16",
-name: "بحر المتوسط 2200 سعرة",
+name: "بحر المتوسط 1800 سعرة",
 description: "نظام غني بالخضروات والأسماك وزيت الزيتون",
 type: "maintenance",
 meals: {
@@ -421,7 +452,7 @@ Dinner: [
 },
 {
 id: "d17",
-name: "رياضي عالي الكربوهيدرات 3500 سعرة",
+name: "رياضي عالي الكربوهيدرات 4500 سعرة",
 description: "نظام غني بالكربوهيدرات للرياضيين",
 type: "bulk",
 meals: {
@@ -479,7 +510,7 @@ Dinner: [
 },
 {
 id: "d19",
-name: "رجيم رمضان 2500 سعرة",
+name: "  3500 سعرة",
 description: "نظام مناسب لشهر رمضان موزع بين السحور والإفطار",
 type: "maintenance",
 meals: {
@@ -536,7 +567,7 @@ Dinner: [
 },
 {
 id: "d21",
-name: "عضلات مبتدئ 2800 سعرة",
+name: "عضلات  3500 سعرة",
 description: "نظام لتضخيم بسيط للمبتدئين في بناء العضلات",
 type: "bulk",
 meals: {

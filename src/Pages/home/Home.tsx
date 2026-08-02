@@ -5,6 +5,7 @@ import { RiCopperCoinLine } from "react-icons/ri";
 import { calculateAllTimeXP } from "./Components/Xp";
 import { ImInfo } from "react-icons/im";
 import Subscribe from "./Components/Subscribe";
+import { useCountUp } from "../../Hooks/Increasing";
 
 const ExerciseDay = lazy(() => import("./Components/ExcrsiceDay"));
 const Table = lazy(() => import("./Components/Table"));
@@ -146,8 +147,9 @@ const Home = () => {
 
   return (
     <div className="relative min-h-screen w-screen overflow-hidden p-2 flex flex-col gap-5 showAnim2">
+      
       {showSubscribe && !isActive && (
-        <Subscribe onClose={() => setShowSubscribe(false)} />
+        <Subscribe onClose={() => setTimeout(() => setShowSubscribe(false),150)} />
       )}
 
       <Suspense fallback={null}>
@@ -179,6 +181,74 @@ const Home = () => {
           <br />
 
           <Table />
+
+          {/* Streak and XP cards */}
+          <div className="relative flex flex-row  my-4 ">
+            <div
+              onClick={() =>
+                alert(
+                  "الأيام النشطة عبارة عن الأيام ال إنتظمت فيها حيث كان يوم تمرين و لعبتو أو أكلت وجبة اليوم كاملة"
+                )
+              }
+              className={`${
+                localStorage.getItem("Diet") ? "" : "opacity-10"
+              } relative rounded-3xl h-20 active:scale-85 transition-all  text-xl font-black tracking-tight flex flex-col w-1/2 justify-between items-center p-2 ${
+                localStorage.getItem("hasCongratulatedDiet") &&
+                !localStorage.getItem("openXpBefore")
+                  ? "opacity-20"
+                  : ""
+              }`}
+            >
+              <ImInfo className="absolute top-2 left-3 text-gray-400/50 text-[12px]" />
+              <p className="relative text-[16px] flex flex-row bg-linear-to-r from-rose-300 via-orange-400 to-yellow-400 bg-clip-text text-transparent items-center gap-1 mt-2">
+                الأيام النشطة
+              </p>
+              <div className="flex  rounded-xl items-center gap-2.5">
+                {streak > 0 ? (
+                  <img src={Fire} alt="Fire" className="w-6 h-6 animate-pulse" />
+                ) : (
+                  <FaFire className="text-gray-400" />
+                )}
+                <span className="text-amber-500 font-extrabold mt-1">
+ {useCountUp(streak, 800)}
+ 
+                 </span>
+              </div>
+            </div>
+
+            <div
+              onClick={() => {
+                setShowTasks(true);
+                localStorage.setItem("openXpBefore", "done");
+              }}
+              className={`relative h-20 rounded-3xl  active:scale-85 active:opacity-65 transition delay-75 text-white  font-black tracking-tight flex flex-col w-1/2 justify-center text-xl items-center  ${
+                localStorage.getItem("Diet") ? "" : "opacity-10"
+              } ${
+                localStorage.getItem("hasCongratulatedDiet") &&
+                !localStorage.getItem("openXpBefore")
+                  ? "outline-swealing2"
+                  : ""
+              }`}
+            >
+              <p className="flex flex-row text-[16px] bg-linear-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent items-center gap-1 mt-2">
+                نقاط Xp
+              </p>
+              <div className="flex  rounded-xl items-center gap-2.5">
+                <RiCopperCoinLine className="text-blue-500" />
+                {!localStorage.getItem("hasCongratulatedDiet") &&
+                localStorage.getItem("openXpBefore") ? (
+                  <ImInfo className="absolute top-2 right-3 text-gray-400 text-[12px]" />
+                ) : (
+                  ""
+                )}
+                <span className="dark:text-white text-gray-600 font-extrabold mt-2">
+                  {useCountUp(allTimeXP, 2500)}
+                </span>
+              </div>
+            </div>
+            <div className="w-20 h-1 dark:bg-gray-300/10 bg-gray-300/70 rounded-2xl absolute -bottom-2 left-1/2 -translate-1/2"/>
+            <div className="w-6 h-1 dark:bg-gray-300/5 bg-gray-200 rounded-2xl absolute -bottom-4  left-1/2 -translate-1/2"/>
+          </div>
           <TodayTask />
 
           {showTasks && (
@@ -191,70 +261,6 @@ const Home = () => {
             />
           )}
 
-          {/* Streak and XP cards */}
-          <div className="flex flex-row gap-3">
-            <div
-              onClick={() =>
-                alert(
-                  "الأيام النشطة عبارة عن الأيام ال إنتظمت فيها حيث كان يوم تمرين و لعبتو أو أكلت وجبة اليوم كاملة"
-                )
-              }
-              className={`${
-                localStorage.getItem("Diet") ? "" : "opacity-10"
-              } relative rounded-3xl active:scale-85 transition-all bg-white dark:bg-[#222]/50 dark:border-2 dark:border-gray-600/20 text-white text-xl font-black tracking-tight flex flex-row w-1/2 justify-between items-center p-2 shadow-sm ${
-                localStorage.getItem("hasCongratulatedDiet") &&
-                !localStorage.getItem("openXpBefore")
-                  ? "opacity-20"
-                  : ""
-              }`}
-            >
-              <ImInfo className="absolute top-2 left-3 text-gray-400 text-[12px]" />
-              <p className="relative flex flex-row bg-linear-to-r from-rose-300 via-orange-400 to-yellow-400 bg-clip-text text-transparent items-center gap-1 mt-2">
-                الأيام النشطة
-              </p>
-              <div className="flex p-2 rounded-xl items-center gap-2.5">
-                {streak > 0 ? (
-                  <img src={Fire} alt="Fire" className="w-6 h-6 animate-pulse" />
-                ) : (
-                  <FaFire className="text-gray-400" />
-                )}
-                <span className="text-amber-500 font-extrabold mt-1">
-                  {streak}
-                </span>
-              </div>
-            </div>
-
-            <div
-              onClick={() => {
-                setShowTasks(true);
-                localStorage.setItem("openXpBefore", "done");
-              }}
-              className={`relative rounded-3xl bg-white dark:bg-[#222]/50 dark:border-2 dark:border-gray-600/20 active:scale-85 active:opacity-65 transition delay-75 text-white text-xl font-black tracking-tight flex flex-row w-1/2 justify-between items-center p-2 shadow-sm ${
-                localStorage.getItem("Diet") ? "" : "opacity-10"
-              } ${
-                localStorage.getItem("hasCongratulatedDiet") &&
-                !localStorage.getItem("openXpBefore")
-                  ? "outline-swealing2"
-                  : ""
-              }`}
-            >
-              <p className="flex flex-row bg-linear-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent items-center gap-1 mt-2">
-                نقاط Xp
-              </p>
-              <div className="flex p-2 rounded-xl items-center gap-2.5">
-                <RiCopperCoinLine className="text-blue-500" />
-                {!localStorage.getItem("hasCongratulatedDiet") &&
-                localStorage.getItem("openXpBefore") ? (
-                  <ImInfo className="absolute top-2 right-3 text-gray-400 text-[12px]" />
-                ) : (
-                  ""
-                )}
-                <span className="dark:text-white text-gray-600 font-extrabold mt-2">
-                  {allTimeXP}
-                </span>
-              </div>
-            </div>
-          </div>
         </div>
 
         <ExerciseDay />

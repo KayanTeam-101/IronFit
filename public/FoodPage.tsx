@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { FaArrowLeft, FaXmark } from 'react-icons/fa6';
 import { useNavigate } from 'react-router';
 import Diet from './Diet';
-import { BsCaretLeftFill } from 'react-icons/bs';
 
 // Lightweight ripple, spawned from the real click position on the primary CTA.
 function createRipple(event: React.MouseEvent<HTMLButtonElement>) {
@@ -32,12 +31,11 @@ const HOW_IT_WORKS_STEPS = [
 
 const FoodPage = () => {
   const navigate = useNavigate();
+  const [showHowItWorks, setShowHowItWorks] = useState(false);
   const IsThere_A_Diet: string | null = localStorage.getItem('Diet') || null;
   const IsValid = IsThere_A_Diet ? (JSON.parse(IsThere_A_Diet) && IsThere_A_Diet.length > 130) : null;
-const diet = localStorage.getItem("Diet");
-if (diet && diet.length < 120) {
-  localStorage.removeItem("Diet");
-}  return (
+
+  return (
     <div className='relative show-first page-fade-in min-h-screen max-w-screen p-5 flex flex-col gap-5'>
       <style>{`
         @keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -93,9 +91,11 @@ if (diet && diet.length < 120) {
       `}</style>
 
       {IsValid ? (
+        <div className='relative min-h-screen w-full flex flex-col gap-5 '>
           <Diet />
+        </div>
       ) : (
-        <div className='relative min-h-[85vh] z-0 w-full flex flex-col items-center justify-center '>
+        <div className='relative min-h-[85vh] w-full flex flex-col items-center justify-center overflow-hidden'>
           {/* Ambient halo — same palette as before, now drifting slowly instead of pulsing */}
           <div className="absolute top-10 z-0 w-full h-[400px] gradient-drift blur-[100px] bg-gradient-to-r from-blue-600 to-teal-500 opacity-70" />
 
@@ -134,7 +134,25 @@ if (diet && diet.length < 120) {
               </p>
             </div>
 
-   
+            {/* Helper checklist card */}
+            <div
+              className="slide-up w-full dark:bg-black/20 bg-white/70 dark:border-2 dark:border-gray-600/20 border border-gray-200/70 backdrop-blur-sm rounded-3xl p-5 flex flex-col gap-3"
+              style={{ animationDelay: '120ms' }}
+            >
+              {CHECKLIST_ITEMS.map((item, i) => (
+                <div
+                  key={item}
+                  className="checklist-item flex items-center gap-2.5"
+                  style={{ animationDelay: `${180 + i * 70}ms` }}
+                >
+                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-500/15 text-green-600 dark:text-green-400 flex items-center justify-center text-xs font-bold">
+                    ✔
+                  </span>
+                  <span className="text-sm dark:text-gray-200 text-gray-700 font-medium">{item}</span>
+                </div>
+              ))}
+            </div>
+
             {/* Primary CTA + secondary action */}
             <div className="slide-up w-full flex flex-col items-center gap-3" style={{ animationDelay: '180ms' }}>
               <button
@@ -142,19 +160,67 @@ if (diet && diet.length < 120) {
                 onClick={() => navigate('/MKADiet')}
                 className="btn-press relative overflow-hidden flex items-center justify-center gap-2 bg-linear-120 from-orange-400 to-amber-300 px-8 py-4 text-white w-full rounded-2xl font-bold text-lg shadow-lg shadow-orange-500/20 outline-swealing2"
               >
-                عمل نظامي الغذائي  <BsCaretLeftFill />
+                ابدأ إنشاء نظامي <FaArrowLeft />
               </button>
-              
+              <button
+                onClick={() => setShowHowItWorks(true)}
+                className="text-sm font-semibold dark:text-gray-400 text-gray-500 hover:dark:text-gray-200 hover:text-gray-700 transition-colors underline-offset-4 hover:underline"
+              >
+                كيف يعمل النظام؟
+              </button>
             </div>
 
             {/* Motivation card */}
-          
+            <div
+              className="slide-up w-full dark:bg-black/20 bg-white/70 dark:border-2 dark:border-gray-600/20 border border-gray-200/70 backdrop-blur-sm rounded-3xl p-5"
+              style={{ animationDelay: '240ms' }}
+            >
+              <p className="text-sm font-bold dark:text-white text-gray-800 mb-2">⭐ لماذا أبدأ؟</p>
+              <ul className="flex flex-col gap-1.5 text-sm dark:text-gray-300 text-gray-600">
+                <li>• يوفر عليك حساب السعرات يدوياً</li>
+                <li>• يساعدك على الوصول لهدفك</li>
+                <li>• ينظم وجباتك تلقائياً</li>
+              </ul>
+            </div>
           </div>
         </div>
       )}
 
       {/* "How it works" explanation modal */}
-    
+      {showHowItWorks && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center dark:bg-black/40 bg-black/20 backdrop-blur-sm p-4 modal-fade-in"
+          onClick={() => setShowHowItWorks(false)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="dark:bg-gray-900/90 bg-white dark:border-2 dark:border-gray-600/20 rounded-3xl p-6 w-full max-w-sm shadow-2xl"
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold dark:text-white text-gray-800">كيف يعمل النظام؟</h3>
+              <button onClick={() => setShowHowItWorks(false)} className="text-gray-400 hover:text-gray-200">
+                <FaXmark size={18} />
+              </button>
+            </div>
+            <ol className="flex flex-col gap-3">
+              {HOW_IT_WORKS_STEPS.map((step, i) => (
+                <li key={step} className="flex items-start gap-3 text-sm dark:text-gray-300 text-gray-600">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-orange-400 to-amber-300 text-white text-xs font-bold flex items-center justify-center">
+                    {i + 1}
+                  </span>
+                  <span className="pt-0.5 leading-relaxed">{step}</span>
+                </li>
+              ))}
+            </ol>
+            <button
+              onClick={() => setShowHowItWorks(false)}
+              className="btn-press w-full mt-5 py-3 rounded-xl font-bold text-sm dark:bg-gray-700/70 bg-slate-100 dark:text-gray-200 text-slate-700"
+            >
+              تمام، فهمت
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
