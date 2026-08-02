@@ -320,7 +320,7 @@ const Welcome: React.FC = () => {
               </div>
             }
           >
-            <div className="w-full h-10/12 animate-fade-in">{renderPage()}</div>
+            <div className="w-full h-9/12 animate-fade-in z-0">{renderPage()}</div>
           </Suspense>
         </main>
 
