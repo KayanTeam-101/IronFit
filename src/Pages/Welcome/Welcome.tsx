@@ -21,7 +21,7 @@ const BreakPage = lazyRetry(() => import('./Components/BreakPage'));
 
 import { GoGoal } from 'react-icons/go';
 import { PiConfettiLight } from 'react-icons/pi';
-import { IoScaleOutline } from 'react-icons/io5';
+import { IoInformation, IoInformationCircleOutline, IoScaleOutline } from 'react-icons/io5';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { incrementOnboardingStep } from '../../firebase/trakingUser';
 
@@ -37,9 +37,9 @@ const stepLabels = [
 
 // ربط الخطوات بالأيقونات المخصصة
 const stepIconMap: Record<number, React.ComponentType<{ className?: string }>> = {
-  5: IoScaleOutline,
-  7: GoGoal,
-  10: FaCalendarAlt,
+  5: IoInformationCircleOutline,
+  7: IoInformationCircleOutline,
+  10: GoGoal,
   12: FaBullseye,
   14: FaUser,
 };
@@ -164,7 +164,7 @@ const Welcome: React.FC = () => {
     setTurn((prev) => prev + 1);
     setTimeout(() => {
       setLoading(false);
-    }, 3500);
+    }, 350);
   };
 
   const previous = () => {
@@ -330,7 +330,7 @@ const Welcome: React.FC = () => {
           >
             {loading
               ? ' إنتظر قليلا..'
-              : turn === 13 && !isUserDataSaved
+              : turn === 14 && !isUserDataSaved
               ? 'احفظ البيانات أولاً'
               : turn === TOTAL_STEPS
               ? 'إبدء !'
@@ -362,7 +362,7 @@ const Welcome: React.FC = () => {
               {linkCopied && (
                 <div className="mt-3 text-emerald-500 dark:text-green-400 text-sm animate-pulse flex flex-col items-center">
                   <BsCheckCircleFill className="text-3xl mb-4" />
-                  تقدر الآن تفتح الرابط في متصفحك ,بدلا من متصفح التيك توك لأنه غير
+                  تقدر الآن تفتح الرابط في متصفحك ,بدلاً من متصفح التيك توك لأنه غير
                   مدعوم بميزة "تطبيق الويب التقدمي", مستنيك هناك يا صديقي 😄
                 </div>
               )}

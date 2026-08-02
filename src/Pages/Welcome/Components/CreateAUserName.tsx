@@ -52,8 +52,10 @@ const CreateAUserName = ({
       );
       const snapshot = await getDocs(q);
       setIsAvailable(snapshot.empty);
-    } catch {
+    } catch(e) {
       setIsAvailable(null);
+      console.log(e);
+      
     } finally {
       setIsChecking(false);
     }
@@ -170,14 +172,15 @@ const CreateAUserName = ({
             placeholder="أكتب اسم المستخدم, مثال: Ahmed-Fit1"
             className="w-full bg-transparent border-2 rounded-2xl border-gray-600/40 px-4 py-3 dark:text-white text-slate-900 placeholder-gray-500 focus:outline-none focus:border-orange-400 transition-colors"
           />
-          {validationError && <p className="text-rose-400 text-sm mt-2">{validationError}</p>}
-          {!validationError && isChecking && <p className="text-gray-400 text-sm mt-2">التحقق...</p>}
-          {!validationError && isAvailable === true && (
-            <p className="text-emerald-400 text-sm mt-2">✓ اسم المستخدم متاح</p>
-          )}
-          {!validationError && isAvailable === false && (
-            <p className="text-rose-400 text-sm mt-2">✗ هذا الاسم مستخدم من قبل</p>
-          )}
+            {validationError && <p className="text-rose-400 text-sm mt-2">{validationError}</p>}
+            {!validationError && isChecking && <p className="text-gray-400 text-sm mt-2">التحقق...</p>}
+            {!validationError && isAvailable === true && (
+              <p className="text-emerald-400 text-sm mt-2"> اسم المستخدم متاح</p>
+            )}
+            {!validationError && isAvailable === false && (
+              <p className="text-rose-400 text-sm mt-2"> هذا الاسم مستخدم من قبل</p>
+            )}
+            
         </div>
 
         {/* Email input */}
@@ -197,7 +200,7 @@ const CreateAUserName = ({
           disabled={!canSave}
           className={`w-fit p-3 rounded-xl font-semibold transition-all duration-200 ${
             canSave
-              ? "bg-gradient-to-r from-teal-500 to-emerald-500 text-white hover:from-teal-600 hover:to-emerald-600 shadow-lg shadow-teal-500/25"
+              ? "bg-gradient-to-r from-amber-500 to-amber-500 text-white hover:from-teal-600 hover:to-emerald-600 "
               : "dark:bg-gray-700/50 dark:text-gray-400 bg-gray-300 text-gray-400 cursor-not-allowed"
           } ${saveState === "success" ? "hidden" : ""}`}
         >
