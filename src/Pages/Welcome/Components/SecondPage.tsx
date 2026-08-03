@@ -47,7 +47,7 @@ const features = [
 
 const Second: React.FC = () => {
   return (
-    <div className="w-full h-full flex items-center justify-center flex-col px-5 pt-1">
+    <div className="w-full h-full flex items-center justify-center flex-col px-5 pt-1 showAnim2">
    <div className="w-full h-full flex items-center justify-center flex-col px-5 pt-1">
  
 </div>
