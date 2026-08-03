@@ -355,7 +355,7 @@ const Welcome: React.FC = () => {
           <button
             disabled={loading || (turn === 14 && !isUserDataSaved)}
             onClick={next}
-            className={`w-full h-15 z-50 rounded-3xl  delay-75 font-semibold text-white flex items-center justify-center gap-3 transition-all
+            className={`w-full h-15 z-50 rounded-3xl   delay-150 font-semibold text-white flex items-center justify-center gap-3 transition-all
               ${
                 turn === 1 ?
                 "outline-swealing2"
