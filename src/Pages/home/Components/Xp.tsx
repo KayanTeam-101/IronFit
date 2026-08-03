@@ -55,9 +55,9 @@ export const calculateAllTimeXP = async (): Promise<number> => {
   let total = 0;
   repeatable.forEach(({ key, xp }) => {
     if (
-      key === "SetDietManually" ||
-      key === "SystemStartDate" ||
-      key === "UseDietTemplate"
+      key === "SetDietManually" && localStorage.getItem("SetDietManually") ||
+      key === "SystemStartDate" && localStorage.getItem("SystemStartDate") ||
+      key === "UseDietTemplate" && localStorage.getItem("UseDietTemplate")
     ) {
       total += 125;
     } else {
@@ -230,8 +230,7 @@ export const TasksPanel: React.FC<TasksPanelProps> = ({ onClose }) => {
         icon: <GiLibertyWing className="text-blue-500" />,
         label: "تحميل Iron Fit لتنضم إلي عائلتنا🫂",
         xp: 125,
-        condition: UseFoodTemplate,
-        to: "/templates",
+        condition: false,
         alert: "أغلق صفحة المهام و انظر أعلي الصفحة الرئيسة ثم أضغط علي تثبيت التطبيق"
       },
       {
