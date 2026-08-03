@@ -58,7 +58,6 @@ const Welcome: React.FC = () => {
 
   // تتبع الخطوة في Firebase
   useEffect(() => {
-    if (turn < 1) return;
     incrementOnboardingStep(turn)
       .then(() => {
         console.log('Onboarding step incremented successfully');
@@ -323,26 +322,29 @@ const Welcome: React.FC = () => {
         )}
 
         {/* المحتوى الرئيسي مع Suspense */}
-           <header className="relative top-5  p-6 z-50">
+        {turn === 1 && (
+             <footer className="relative top-5  p-6 z-50">
           <button
-            disabled={loading || (turn === 14 && !isUserDataSaved)}
+            disabled={loading}
             onClick={next}
-            className={`w-full h-15 z-50 rounded-3xl  delay-75 font-semibold text-white flex items-center justify-center gap-3 transition-all ${
+            className={`w-full h-15 z-50 rounded-3xl  delay-75 font-semibold text-white flex items-center justify-center gap-3 transition-all
+              ${
+                turn === 1 ?
+                "outline-swealing2"
+                :"showAnim2"
+              }
+              ${
               loading
                 ? 'bg-gray-400'
-                : 'bg-orange-500 hover:bg-orange-600 active:scale-[0.90]'
+                :"btn-press relative overflow-hidden flex items-center justify-center gap-2 bg-linear-120 from-orange-400 to-amber-300 px-8 py-4 text-white w-full rounded-2xl font-bold text-lg shadow-lg shadow-orange-500/20 outline-swealing2"
+
             }`}
           >
-            {loading
-              ? ' إنتظر قليلا..'
-              : turn === 14 && !isUserDataSaved
-              ? 'احفظ البيانات أولاً'
-              : turn === TOTAL_STEPS
-              ? 'إبدء !'
-              : 'استمر'}
+            <span className="text-lg">يلا بينا!</span>
             <FaCaretLeft />
           </button>
-        </header> 
+        </footer> 
+        )}
         <main className="flex-1 w-screen overflow-x-hidden flex items-center justify-around px-6 overflow-y-auto">
          
           <Suspense
@@ -357,7 +359,34 @@ const Welcome: React.FC = () => {
         </main>
 
         {/* الفوتر مع زر المتابعة */}
-      
+          {turn != 1 && (
+           <footer className="relative bottom-3  p-6 z-50">
+          <button
+            disabled={loading || (turn === 14 && !isUserDataSaved)}
+            onClick={next}
+            className={`w-full h-15 z-50 rounded-3xl  delay-75 font-semibold text-white flex items-center justify-center gap-3 transition-all
+              ${
+                turn === 1 ?
+                "outline-swealing2"
+                :"showAnim2"
+              }
+              ${
+              loading
+                ? 'bg-gray-400'
+                : 'bg-orange-500 hover:bg-orange-600 active:scale-[0.90]'
+            }`}
+          >
+            {loading
+              ? ' إنتظر قليلا..'
+              : turn === 14 && !isUserDataSaved
+              ? 'احفظ البيانات أولاً'
+              : turn === TOTAL_STEPS
+              ? 'إبدء !'
+              : 'استمر'}
+            <FaCaretLeft />
+          </button>
+        </footer> 
+      )}
       </div>
 
       {/* مودال تيك توك (نسخ الرابط) */}
@@ -410,6 +439,7 @@ Chrome أو Safari
           </div>
         </div>
       )}
+  
     </div>
   );
 };

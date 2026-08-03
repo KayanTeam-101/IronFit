@@ -38,6 +38,7 @@ const Firstturn: React.FC = () => {
           {/* Welcome text */}
         <div>
   <h1 className="text-3xl font-black dark:text-white text-gray-700">
+    <h1>بــــــسم الله </h1>
     أهلاً بك في
   </h1>
 

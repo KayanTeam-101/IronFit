@@ -54,9 +54,9 @@ const Second: React.FC = () => {
       <div className="w-full max-w-lg flex flex-col items-center justify-center">
 
         {/* Marquee replacement */}
-  <div className="bg-gray-200 text-slate-400 p-1 dark:bg-[#22222237] dark:text-gray-200  overflow-hidden w-full rounded-xl   relative top-2  z-50 shrink-0">
+  <div className="bg-gray-200 text-slate-400 p-1 dark:bg-[#22222237] dark:text-gray-200  overflow-hidden w-full rounded-xl animate-pulse   relative top-2  z-50 shrink-0">
     <p className="text-sm font-bold whitespace-nowrap animate-marquee-right">
-     إن شاء الله الموضوع هيتسغرف أقل من دقيقة
+     إن شاء الله تسجيل الدخول هيتسغرف أقل من دقيقة
      
     </p>
   </div>
@@ -64,7 +64,7 @@ const Second: React.FC = () => {
         <div className="relative text-center">
          
 
-          <p className="mt-8 mb-8 font-thin text-2xl text-gray-600 dark:text-gray-300 leading-7 show-first">
+          <p className="mt-8 mb-8 font-thin text-3xl text-gray-600 dark:text-gray-300 leading-7 show-first">
 ليه             
             <span className="font-black text-orange-500">
               {" "}
